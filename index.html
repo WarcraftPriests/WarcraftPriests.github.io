@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/main-chart.css">
+<title>Shadow Priest Charts</title>
+
+</head>
+
+<body style="background-color: rgb(52, 58, 64);">
+	<img src="https://i.imgur.com/M12BeGV.png" alt="WCP Banner" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+	<div id="pad" style="padding-bottom: 30px;"></div>
+	<p class="labels">PTR Switch</p>
+	<label class="switch">
+		<input type="checkbox">
+		<span class="slider round"></span>
+	</label>
+	<div id="pad" style="padding-bottom: 30px;"></div>
+	<script>var whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: false};</script>
+	<script src="https://wow.zamimg.com/widgets/power.js"></script>
+	<div id="empty"></div>
+	<div id="container"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript" src="js/Chart_Building.js"></script>
+	<script>
+	var wcp_charts = new WCP_Chart('Chart-Display-div', {
+		charts : {
+		//Trinkets
+		'DATrinketsC' : { type: 'trinket', src: 'trinkets_DA_C', title: 'Trinkets - Dark Ascension - Composite' },
+		'DATrinketsST' : { type: 'trinket', src: 'trinkets_DA_ST', title: 'Trinkets - Dark Ascension - Single Target'},
+		'DATrinketsD'  : { type: 'trinket', src: 'trinkets_DA_D', title: 'Trinkets - Dark Ascension - Dungeon'},
+		'LotVTrinketsC' : { type: 'trinket', src: 'trinkets_LotV_C', title: 'Trinkets - Legacy of the Void - Composite' },
+		'LotVTrinketsST' : { type: 'trinket', src: 'trinkets_LotV_ST', title: 'Trinkets - Legacy of the Void - Single Target'},
+		'LotVTrinketsD'  : { type: 'trinket', src: 'trinkets_LotV_D', title: 'Trinkets - Legacy of the Void - Dungeon'},
+		//Traits
+		'DATraitsC' : { type: 'trait', src: 'traits_DA_C', title: 'Azerite Traits - Dark Ascension - Composite' },
+		'DATraitsST' : { type: 'trait', src: 'traits_DA_ST', title: 'Azerite Traits - Dark Ascension - Single Target'},
+		'DATraitsD'  : { type: 'trait', src: 'traits_DA_D', title: 'Azerite Traits - Dark Ascension - Dungeon'},
+		'LotVTraitsC' : { type: 'trait', src: 'traits_LotV_C', title: 'Azerite Traits - Legacy of the Void - Composite' },
+		'LotVTraitsST' : { type: 'trait', src: 'traits_LotV_ST', title: 'Azerite Traits - Legacy of the Void - Single Target'},
+		'LotVTraitsD'  : { type: 'trait', src: 'traits_LotV_D', title: 'Azerite Traits - Legacy of the Void - Dungeon'},
+		}
+	});
+	wcp_charts.init();
+	wcp_charts.changeChart();
+	</script>
+	<div id="pad" style="padding-top: 10px; padding-bottom: 10px; color: white;"><i> - All sim data is subject to a certain error percentage and should be taken with a grain of salt.</i></div>
+</body>
+</html>
