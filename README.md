@@ -1,3 +1,3 @@
-# djriff.github.io
+# warcraftpriests.github.io
 
-Testbed of charts for www.warcraftpriests.com
+Homepage of charts for www.warcraftpriests.com
