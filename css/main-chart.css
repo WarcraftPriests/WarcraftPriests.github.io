@@ -220,6 +220,11 @@ input:checked + .slider:before {
   opacity: 0.7;
 }
 
+.fa-github {
+  background: #24292e;
+  color: white;
+}
+
 .fa-discord {
   background: #7289DA;
   color: white;
