@@ -184,6 +184,14 @@ input:checked + .slider:before {
   text-align: center;
 }
 
+/* Header */
+.header {
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
 /* Footer */
 .footer {
   margin: 0 auto;
