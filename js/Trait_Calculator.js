@@ -513,7 +513,7 @@ function addtraitToChart()
 		fightChoice = "C";
 	}
 
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@/json_Charts/traits_" + talentChoice + "_" + fightChoice + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/traits_" + talentChoice + "_" + fightChoice + ".json" , function(data) {
 		let chartItems = [];		
 		let graphData = [];
 		let primarydpsData = [0,0,0];

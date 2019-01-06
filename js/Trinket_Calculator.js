@@ -329,7 +329,7 @@ addTrinketDiv.appendChild(addTrinket);
 
 function displayTrinkets(trinketID)
 {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@/json_Charts/" + "trinkets_DA_C" + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/" + "trinkets_DA_C" + ".json" , function(data) {
 		let sortedItems = [];
 		let dpsSortedData = data["sorted_data_keys"];
 		dpsSortedData = dpsSortedData.sort();
@@ -379,7 +379,7 @@ function updateTrinketText(click)
 
 function addIlvlDropdown(parentDiv)
 {
-	jQuery.getJSON(("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@/json_Charts/" + "trinkets_DA_C" + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/" + "trinkets_DA_C" + ".json" , function(data) {
 		let sortedItems = [];
 		let regExp = new RegExp("[0-9]+", "g"); //Accounts for all 2 digit numbers
 		let tempNumber = regExp.exec(parentDiv.id); // Pulls the number out of the parent div so we don't accidently create the wrong ilvl dropdown
@@ -485,7 +485,7 @@ function addTrinketToChart()
 	}
 	console.log(talentChoice + '-' + fightChoice)
 
-	jQuery.getJSON(("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@/json_Charts/trinkets_" + talentChoice + "_" + fightChoice + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/trinkets_" + talentChoice + "_" + fightChoice + ".json" , function(data) {
 		let chartItems = [];		
 		let graphData = [];
 		for (var i = 0; i < number; i++)
