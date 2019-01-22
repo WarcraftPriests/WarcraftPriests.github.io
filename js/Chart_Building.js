@@ -381,8 +381,12 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 	});
 };
 
+"https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/json_Charts/traits_DA_C.json"
+"https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_charts/traits_DA_C.json"
+
+
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@" + repoOption + "/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@" + repoOption + "/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
 		let sortedItems = [];
 		let dpsSortedData = data["sorted_data_keys"];
 		//Check if the traits are primary or secondary and adjust the graph accordingly

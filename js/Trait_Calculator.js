@@ -8,6 +8,8 @@ const dark_color = "#343a40";
 
 const light_blue = '#05B8CC'
 const green = '#00b200'
+const red = '#ff0000'
+const light_purple = '#9370DB'
 
 const ilevel_color_table = {
 /*
@@ -500,6 +502,36 @@ function getFightSetup()
 		return "D";
 }
 
+var csvData;
+function getIntValues()
+{
+	
+	Papa.parse("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/azerite-traits/Results_DA.csv", {
+		download: true,
+		complete: function(results) {
+			csvData = results
+			for (let intCount of [100, 90, 80, 70, 60, 50, 40, 30, 20, 10])
+			{
+				temp = "int_"+ intCount;
+				for (c of results)
+				{
+					if (c[1] == temp)
+					{
+						console.log(c[2])
+					}
+				}
+			}
+		}
+		//data = csvData
+	})
+
+}
+
+var averageIntValue = 20.39263333
+
+
+
+
 function addtraitToChart()
 {
 	talentChoice = getTalentSetup();
@@ -518,6 +550,8 @@ function addtraitToChart()
 		let graphData = [];
 		let primarydpsData = [0,0,0];
 		let secondarydpsData = [0,0,0];
+		let primaryIntData = [0,0,0];
+		let secondaryIntData = [0,0,0];
 		let primarydpsName = ["","",""];
 		let secondarydpsName = ["","",""];
 		for (var i = 0; i < number; i++)
@@ -538,36 +572,68 @@ function addtraitToChart()
 				secondarydpsData[i] = secondarytraitDPS;
 				primarydpsName[i] = traitName;
 				secondarydpsName[i] = traitIlvl;
+				primaryIntData[i] = Math.round(primarytraitDPS / averageIntValue)
+				secondaryIntData[i] = Math.round(secondarytraitDPS / averageIntValue)
 			}	
 		}
 			graphData.push({
-				name: [secondarydpsName[0]],
-				data: [secondarydpsData[0],0,0],
+				name: [secondarydpsName[0] + " (DPS)"],
+				data: [secondarydpsData[0],0,0,0,0,0],
 				color: light_blue
 			}, {
-				name: [primarydpsName[0]],
-				data: [primarydpsData[0],0,0],
+				name: [primarydpsName[0] + " (DPS)"],
+				data: [primarydpsData[0],0,0,0,0,0],
+				color: green
+			})
+
+			graphData.push({
+				name: [secondarydpsName[0] + " (Int)"],
+				data: [0, secondaryIntData[0],0,0,0,0],
+				color: red
+			}, {
+				name: [primarydpsName[0] + " (Int)"],
+				data: [0, primaryIntData[0],0,0,0,0],
+				color: light_purple
+			})
+
+			graphData.push({
+				name: [secondarydpsName[1]],
+				data: [0,0, secondarydpsData[1],0,0,0],
+				color: light_blue
+			}, {
+				name: [primarydpsName[1]],
+				data: [0, 0, primarydpsData[1],0,0,0],
 				color: green
 			})
 
 			graphData.push({
 				name: [secondarydpsName[1]],
-				data: [0,secondarydpsData[1],0],
-				color: light_blue
+				data: [0,0, 0, secondaryIntData[1],0,0],
+				color: red
 			}, {
 				name: [primarydpsName[1]],
-				data: [0, primarydpsData[1],0],
+				data: [0, 0, 0, primaryIntData[1],0,0],
+				color: light_purple
+			})
+
+			graphData.push({
+				name: [secondarydpsName[2]],
+				data: [0,0,0,0, secondarydpsData[2],0],
+				color: light_blue
+			}, {
+				name: [primarydpsName[2]],
+				data: [0,0,0,0, primarydpsData[2],0],
 				color: green
 			})
 
 			graphData.push({
 				name: [secondarydpsName[2]],
-				data: [0,0,secondarydpsData[2]],
-				color: light_blue
+				data: [0,0, 0,0,0, secondaryIntData[2]],
+				color: red
 			}, {
 				name: [primarydpsName[2]],
-				data: [0,0,primarydpsData[2]],
-				color: green
+				data: [0,0,0,0,0, primaryIntData[2]],
+				color: light_purple
 			})
 
 
@@ -617,7 +683,7 @@ function renderChart(graphData, chartItems)
 	            }
     	},
 	    xAxis: {
-	    	categories:['Trait Combo 1', 'Trait Combo 2', 'Trait Combo 3'],
+	    	categories:['Trait Combo (DPS) 1', 'Trait Combo (Int) 1', 'Trait Combo (DPS) 2', 'Trait Combo (Int) 2', 'Trait Combo (DPS) 3', 'Trait Combo (Int) 3'],
 	        labels: {
 	        	useHTML: false,
 	            style: {
