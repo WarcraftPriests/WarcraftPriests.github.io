@@ -71,6 +71,7 @@ const primary_azerite_traits = [
 	'Thought Harvester',
 	'Thunderous Blast',
 	'Tidal Surge',
+	'Treacherous Covenant',
 	'Tradewinds',
 	'Unstable Catalyst',
 	'Whispers of the Damned'
