@@ -211,9 +211,10 @@ WCP_Chart.prototype.init = function() {
     }
 };
 
+//https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/f5554d28a291ea3a2eee16307c9101b159609861/json_Charts/traits_DA_C.json
  
 WCP_Chart.prototype.updateTrinketChart = function(chartName) {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
+	jQuery.getJSON("https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/f5554d28a291ea3a2eee16307c9101b159609861/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
 		var sortedItems = [];
 		var dpsSortedData = data["sorted_data_keys"];
 		var wowheadTooltips = [];
@@ -331,22 +332,37 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 						//Check to make sure DPS isn't 0
 						if(dps > 0)
 							{
-						   
 							if(currIlevel == minItemLevel)
 								{
 									//If lowest ilvl is looked at, subtract base DPS
-									itemLevelDpsValues.push(dps - baselineDPS);
+									if(dps - baselineDPS <  0)
+									{
+										itemLevelDpsValues.push(0);
+									}
+									else
+									{
+										itemLevelDpsValues.push(dps - baselineDPS);
+									}
+									
 								}
 							else
 							{
-								itemLevelDpsValues.push(dps - data["data"][sortedData][currIlevel - 5]);
+								if(dps - data["data"][sortedData][currIlevel - 5] < 0)
+								{
+									itemLevelDpsValues.push(0);
+								}
+								else
+								{
+									itemLevelDpsValues.push(dps - data["data"][sortedData][currIlevel - 5]);
+								}
 							}
 						}
 						else
 							{
 							if (currIlevel in data["data"][sortedData])
 								{
-								itemLevelDpsValues.push(dps);
+									
+								itemLevelDpsValues.push(0);
 								}
 							else
 								{
@@ -388,7 +404,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 
 
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
+	jQuery.getJSON("https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/f5554d28a291ea3a2eee16307c9101b159609861/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
 		let sortedItems = [];
 		let dpsSortedData = data["sorted_data_keys"];
 		//Check if the traits are primary or secondary and adjust the graph accordingly
