@@ -68,6 +68,7 @@ const primary_azerite_traits = [
 	'Thunderous Blast',
 	'Tidal Surge',
 	'Tradewinds',
+	'Treacherous Covenant',
 	'Unstable Catalyst',
 	'Whispers of the Damned'
 ]
@@ -211,7 +212,7 @@ WCP_Chart.prototype.init = function() {
 
  
 WCP_Chart.prototype.updateTrinketChart = function(chartName) {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@" + repoOption + "/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
 		var sortedItems = [];
 		var dpsSortedData = data["sorted_data_keys"];
 		var wowheadTooltips = [];
@@ -386,7 +387,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 
 
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@" + repoOption + "/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
 		let sortedItems = [];
 		let dpsSortedData = data["sorted_data_keys"];
 		//Check if the traits are primary or secondary and adjust the graph accordingly
@@ -419,6 +420,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 
 						if (dpsName == s)
 						{
+							console.log(s);
 							traitSelect.push(dpsName);
 						}
 					}
@@ -447,7 +449,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 			chartLink += "</a>";
 			chartLink += "</div>";
 			//Push link into array
-			console.log(chartLink);
+			//console.log(chartLink);
 			wowheadTooltipsTraits.push(chartLink);
 		}
 		while (this.chart.series.length > 0){
