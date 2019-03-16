@@ -40,6 +40,7 @@ const primary_azerite_traits = [
 	'Battlefield Focus',
 	'Blightborne Infusion',
 	'Blood Rite',
+	'Bonded Souls',
 	'Champion of Azeroth',
 	'Chorus of Insanity',
 	'Collective Will',
