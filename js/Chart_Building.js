@@ -199,7 +199,7 @@ WCP_Chart.prototype.init = function() {
 	if (this.options.hasOwnProperty('buttons')){
 		this.buildButtons();
 	}
-	var first = Object.keys(this.options.charts)[0];
+	var first = Object.keys(this.options.charts)[3];
 	if (this.options.charts[first].type == 'trinket'){
         this.updateTrinketChart(first); // Setup the initial chart
     } else if (this.options.charts[first].type == 'azerite-trait') {
@@ -826,7 +826,7 @@ fightStyleDiv.appendChild(dungeonBtn)
 //Set vars for btns
 var repoOption = 'master'
 var btnGroup = document.getElementsByClassName("button");
-var talentsBtn = 'DA';
+var talentsBtn = 'LotV';
 var itemBtn = 'Trinkets';
 var fightBtn = 'C';
 var traits = 'P';
@@ -855,10 +855,12 @@ function talentClick(clicked)
 		if (talents[i].id.toLowerCase() == clickedID.toLowerCase())
 		{
 			talents[i].style.borderColor = '#DDA0DD';
+			talents[i].style.backgroundColor = "#330066";
 		}
 		else
 		{
 			talents[i].style.borderColor = 'white';
+			talents[i].style.backgroundColor = default_background_color;
 		}
 	}
 }
@@ -880,15 +882,18 @@ function itemClick(clicked)
 	var trinketTraits = document.getElementById('Trinket-Trait-div').children;
 	for(i = 0; i< trinketTraits.length; i++)
 	{
-		if (trinketTraits[i].id.toLowerCase() == clickedID.toLowerCase())
+		if (trinketTraits[i].id.toLowerCase() == clickedID.toLowerCase() && trinketTraits[i].id.toLowerCase() != 'primary' && trinketTraits[i].id.toLowerCase() != 'secondary')
 		{
 			trinketTraits[i].style.borderColor = '#DDA0DD';
+			trinketTraits[i].style.backgroundColor = "#330066";
 		}
 		else
 		{
 			trinketTraits[i].style.borderColor = 'white';
+			trinketTraits[i].style.backgroundColor = default_background_color;
 		}
 	}
+
 	
 }
 
@@ -902,10 +907,12 @@ function fightClick(clicked)
 		if (fight[i].id.toLowerCase() == clickedID.toLowerCase())
 		{
 			fight[i].style.borderColor = '#DDA0DD';
+			fight[i].style.backgroundColor = "#330066";
 		}
 		else
 		{
 			fight[i].style.borderColor = 'white';
+			fight[i].style.backgroundColor = default_background_color;
 		}
 	}
 }
@@ -954,13 +961,15 @@ function styleButtons(){
 		btn.style.fontSize = "16px";
 		btn.style.display = "inline-block";
 		btn.style.justifyContent = "center";
-		if (btn.id == 'DABtn' || btn.id == 'TrinketsBtn' || btn.id == 'CBtn')
+		if (btn.id == 'LotvBtn' || btn.id == 'TrinketsBtn' || btn.id == 'CBtn')
 		{
 			btn.style.borderColor = "#DDA0DD";
+			btn.style.backgroundColor = "#330066";
 		}
 		else
 		{
 			btn.style.borderColor = "white";
+			btn.style.backgroundColor = default_background_color;
 		}
 		btn.style.cursor = 'pointer';
 
@@ -1009,7 +1018,7 @@ var DATrinketsCTest = createTabs("DATrinketsC");
 
 
 //Show DA Trinekts Composite by Default
-DATrinketTab_C.style.display = "none";
+LotVTrinketTab_C.style.display = "none";
 
 
 //Button Clicking
