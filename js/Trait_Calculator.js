@@ -13,11 +13,11 @@ const light_purple = '#9370DB'
 
 const ilevel_color_table = {
 /*
-"300": "#1abc9c", 
-"305": "#000000", 
-"310": "#3498db", 
-"315": "#9b59b6", 
-"320": "#34495e", 
+"300": "#1abc9c",
+"305": "#000000",
+"310": "#3498db",
+"315": "#9b59b6",
+"320": "#34495e",
 "325": "#f1c40f",
 "330": "#e67e22",
 "335": "#e74c3c",
@@ -78,14 +78,14 @@ const primary_azerite_traits = [
 ]
 
 const secondary_azerite_traits = [
-	'Azerite Globules', 
-	'Blood Siphon', 
+	'Azerite Globules',
+	'Blood Siphon',
 	'Earthlink',
-	'Elemental Whirl', 
+	'Elemental Whirl',
 	'Gutripper',
 	'Heed My Call',
-	'On My Way', 
-	'Overwhelming Power', 
+	'On My Way',
+	'Overwhelming Power',
 	'Unstable Flames'
 ]
 
@@ -198,7 +198,7 @@ number = 0
 function talentSelectMenu()
 {
 
-	talents = ["Dark Ascension", "Legacy of the Void"];
+	talents = ["Shadow Crash", "Auspicious Spirits"];
 	for (t of talents)
 	{
 		let talent = document.createElement("p");
@@ -214,7 +214,7 @@ function talentSelectMenu()
 }
 
 function selectTalent(click)
-{	
+{
 	let dropDownElement = document.getElementById(click).parentElement;
 	talentBtn.childNodes[0].nodeValue = click;
 
@@ -266,7 +266,7 @@ function updateTraitText(click)
 	//addSecondaryTrait(traitDropDownParent);
 
 	//Remove all the traits.
-	while (traitDropDownElement.firstChild) 
+	while (traitDropDownElement.firstChild)
 	{
     	traitDropDownElement.removeChild(traitDropDownElement.firstChild);
 	}
@@ -275,7 +275,7 @@ function updateTraitText(click)
 
 function generatetraitMenu(number){
 	//Create Div which holds traits dropdown
-	
+
 	var traitDiv = document.createElement("div");
 	traitDiv.setAttribute("id", "trait-div" + number);
 	traitDiv.setAttribute("class", "dropdown");
@@ -326,7 +326,7 @@ function generateIlvlMenu(number){
 
 	number++;
 
-	
+
 }
 
 function generatehorizontalSpacer(div)
@@ -384,7 +384,7 @@ function displayPrimaryTraits(traitID)
 		let traitDrop = traitID.parentElement.childNodes[1];
 		let traitDropDown = traitID.parentElement.childNodes[0];
 		for (p of primary_azerite_traits)
-		{	
+		{
 			let newtrait = document.createElement("p");
 			newtrait.setAttribute("id", p);
 			newtrait.setAttribute("class", "dropdown-content");
@@ -411,7 +411,7 @@ function updateTraitText(click)
 	//addSecondaryTrait(traitDropDownParent);
 
 	//Remove all the traits.
-	while (traitDropDownElement.firstChild) 
+	while (traitDropDownElement.firstChild)
 	{
     	traitDropDownElement.removeChild(traitDropDownElement.firstChild);
 	}
@@ -436,7 +436,7 @@ function addSecondaryTrait(parentDiv)
 			newIlvl.appendChild(newIlvlText);
 			ilvlDrop.appendChild(newIlvl);
 		}
-		
+
 		//let traitDrop = document.getElementById(traitID);
 		ilvlDrop.classList.toggle("show");
 }
@@ -456,7 +456,7 @@ function updateIlvlText(click)
 
 
 	//Remove all the ilvls.
-	while (ilvlDropDownElement.firstChild) 
+	while (ilvlDropDownElement.firstChild)
 	{
     	ilvlDropDownElement.removeChild(ilvlDropDownElement.firstChild);
 	}
@@ -486,10 +486,10 @@ document.body.append(chartDiv);
 function getTalentSetup()
 {
 	talentSetup = talentBtn.childNodes[0].nodeValue;
-	if (talentSetup == "Legacy of the Void")
-		return "LotV";
-	else if (talentSetup == "Dark Ascension")
-		return "DA";
+	if (talentSetup == "Auspicious Spirits")
+		return "AS";
+	else if (talentSetup == "Shadow Crash")
+		return "SC";
 }
 
 function getFightSetup()
@@ -506,8 +506,8 @@ function getFightSetup()
 var csvData;
 function getIntValues()
 {
-	
-	Papa.parse("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/azerite-traits/Results_DA.csv", {
+
+	Papa.parse("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/azerite-traits/Results_SC.csv", {
 		download: true,
 		complete: function(results) {
 			csvData = results
@@ -538,7 +538,7 @@ function addtraitToChart()
 	talentChoice = getTalentSetup();
 	if (talentChoice == undefined)
 	{
-		talentChoice = "DA";
+		talentChoice = "SC";
 	}
 	fightChoice = getFightSetup();
 	if (fightChoice == undefined)
@@ -547,7 +547,7 @@ function addtraitToChart()
 	}
 
 	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/traits_" + talentChoice + "_" + fightChoice + ".json" , function(data) {
-		let chartItems = [];		
+		let chartItems = [];
 		let graphData = [];
 		let primarydpsData = [0,0,0];
 		let secondarydpsData = [0,0,0];
@@ -563,7 +563,7 @@ function addtraitToChart()
 			let baseDPS = data["data"]["Base"]["1_stack"];
 			if (traitName != "Select Primary trait" && traitIlvl != "Select Secondary Trait")
 			{
-				
+
 				primarytraitDPS = data["data"][traitName]['1_stack']
 				secondarytraitDPS = data["data"][traitIlvl]['1_stack']
 				primarytraitDPS -= baseDPS;
@@ -575,7 +575,7 @@ function addtraitToChart()
 				secondarydpsName[i] = traitIlvl;
 				primaryIntData[i] = Math.round(primarytraitDPS / averageIntValue)
 				secondaryIntData[i] = Math.round(secondarytraitDPS / averageIntValue)
-			}	
+			}
 		}
 			graphData.push({
 				name: [secondarydpsName[0] + " (DPS)"],

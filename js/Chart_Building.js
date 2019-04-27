@@ -9,11 +9,11 @@ const dark_color = "#343a40";
 //Commented out for now until I can decide on colors.
 const ilevel_color_table = {
 /*
-"300": "#1abc9c", 
-"305": "#000000", 
-"310": "#3498db", 
-"315": "#9b59b6", 
-"320": "#34495e", 
+"300": "#1abc9c",
+"305": "#000000",
+"310": "#3498db",
+"315": "#9b59b6",
+"320": "#34495e",
 "325": "#f1c40f",
 "330": "#e67e22",
 "335": "#e74c3c",
@@ -75,14 +75,14 @@ const primary_azerite_traits = [
 ]
 
 const secondary_azerite_traits = [
-	'Azerite Globules', 
-	'Blood Siphon', 
+	'Azerite Globules',
+	'Blood Siphon',
 	'Earthlink',
-	'Elemental Whirl', 
+	'Elemental Whirl',
 	'Gutripper',
 	'Heed My Call',
-	'On My Way', 
-	'Overwhelming Power', 
+	'On My Way',
+	'Overwhelming Power',
 	'Unstable Flames'
 ]
 
@@ -90,7 +90,7 @@ var WCP_Chart = function WCP_Chart(id, options) {
     this.chartId = id;
 	this.options = options;
 	this.default
-   
+
     this.chartOptions = {
         chart: {
             renderTo: this.chartId,
@@ -102,7 +102,7 @@ var WCP_Chart = function WCP_Chart(id, options) {
                 color: default_font_color,
                 fontWeight: 'bold'
                 },
-            text: "Trinket Chart - Dark Ascension"
+            text: "Trinket Chart - Shadow Crash"
             },
         plotOptions: {
             series: {
@@ -192,7 +192,7 @@ var WCP_Chart = function WCP_Chart(id, options) {
         }
     };
 };
- 
+
 WCP_Chart.prototype.init = function() {
     // Setup your dummy charts, tabs, initiate the inial chart
 	this.chart = Highcharts.chart(this.chartId, this.chartOptions); // Empty chart.
@@ -211,8 +211,8 @@ WCP_Chart.prototype.init = function() {
     }
 };
 
-//https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/f5554d28a291ea3a2eee16307c9101b159609861/json_Charts/traits_DA_C.json
- 
+//https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/f5554d28a291ea3a2eee16307c9101b159609861/json_Charts/traits_SC_C.json
+
 WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 	jQuery.getJSON("https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/f5554d28a291ea3a2eee16307c9101b159609861/json_Charts/"+ this.options.charts[chartName].src + ".json" , function(data) {
 		var sortedItems = [];
@@ -299,8 +299,8 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
                             {
                             	s+= '% (decrease)';
                             }
-                            
-                            
+
+
 
 
                     }
@@ -308,7 +308,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
                 s+= '</div>';
                 return s;
                },
-                
+
             },
 
 		})
@@ -323,12 +323,12 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 						var keys = [];
 						for(var k in data["data"][sortedData]) keys.push(k); //Pull all item levels of the trinket.
 						let minItemLevel = keys[0];
-					   
+
 						sortedData = sortedData.trim();
-					   
+
 						let dps = data["data"][sortedData][currIlevel];
 						let baselineDPS = data["data"]["Base"]["300"];
-					   
+
 						//Check to make sure DPS isn't 0
 						if(dps > 0)
 							{
@@ -343,7 +343,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 									{
 										itemLevelDpsValues.push(dps - baselineDPS);
 									}
-									
+
 								}
 							else
 							{
@@ -361,7 +361,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 							{
 							if (currIlevel in data["data"][sortedData])
 								{
-									
+
 								itemLevelDpsValues.push(0);
 								}
 							else
@@ -369,10 +369,10 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 								itemLevelDpsValues.push(0);
 								}
 							}
-					   
+
 					}
 				//this.chart.yAxis[0].update({categories: dpsSortedData});
-			   
+
 				this.chart.addSeries({
 					color: ilevel_color_table[currIlevel],
 					data: itemLevelDpsValues,
@@ -383,24 +383,24 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 		document.getElementById(this.chartId).style.height = 200 + dpsSortedData.length * 30 + "px";
 		this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
 		//this.chart.renderTo(this.chartId);
-		
+
 		this.chart.redraw();
 		try {
 			$WowheadPower.refreshLinks();
-				} 
+				}
 		catch (error) {
   				console.log(error);}
-		
+
 
 	}.bind(this)).fail(function(xhr, status){
 		console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
-		console.log(status);	
+		console.log(status);
 		alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
 	});
 };
 
-"https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/json_Charts/traits_DA_C.json"
-"https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_charts/traits_DA_C.json"
+"https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/json_Charts/traits_SC_C.json"
+"https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_charts/traits_SC_C.json"
 
 
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
@@ -425,10 +425,10 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 					}
 				}
 			}
-		else 
+		else
 		{
 			{
-				
+
 				for (dpsName of dpsSortedData)
 				{
 					dpsName = dpsName.trim();
@@ -502,8 +502,8 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
             pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
             padding: 5,
             //shared: true
-           
-            
+
+
             formatter: function() {
                 var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
                 s += dark_color;
@@ -532,8 +532,8 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
                             {
                             	s+= '% (decrease)';
                             }
-                            
-                            
+
+
 
 
                     }
@@ -541,7 +541,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
                 s+= '</div>';
                 return s;
                },
-                
+
             },
 		});
 		for (let stackCount of [3,2,1])
@@ -553,36 +553,36 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 				{
 
 					sortedData = sortedData.trim();
-					
+
 					let dps = data["data"][sortedData][stackName];
 					let baselineDPS = data["data"]["Base"]["1_"+maxItemLevel];
-					
+
 					//Check to make sure DPS isn't 0
-					if(dps > 0) 
+					if(dps > 0)
 						{
-						
-						if(stackCount == 1) 
+
+						if(stackCount == 1)
 							{
 								//If lowest ilvl is looked at, subtract base DPS
 								itemLevelDpsValues.push(dps - baselineDPS);
 							}
-						else 
+						else
 						{
 							itemLevelDpsValues.push(dps - data["data"][sortedData][stackCount - 1 + "_" + maxItemLevel]);
 						}
 					}
-					else 
+					else
 						{
-						if (stackName in data["data"][sortedData]) 
+						if (stackName in data["data"][sortedData])
 							{
 						itemLevelDpsValues.push(dps);
-							} 
-						else 
+							}
+						else
 							{
 						itemLevelDpsValues.push(0);
 							}
 						}
-					
+
 				}
 			let newStackName = stackName.split("_")[0];
 			//standard_chart.yAxis[0].update({categories: dpsSortedData});
@@ -599,10 +599,10 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 		this.chart.redraw();
 		try {
 			$WowheadPower.refreshLinks();
-				} 
+				}
 		catch (error) {
   				console.log(error);}
-			
+
 	}.bind(this)).fail(function(){
 		console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
 		alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
@@ -627,7 +627,7 @@ WCP_Chart.prototype.buildButtons = function() {
 };
 
 WCP_Chart.prototype.changeChart = function(event) {
-	
+
 }
 
 WCP_Chart.prototype.tabClicked = function(event) {
@@ -639,7 +639,7 @@ WCP_Chart.prototype.tabClicked = function(event) {
             this.updateTraitChart(chartName); // Setup the initial chart
     }
 };
-    
+
 
 function generatehorizontalSpacer(div)
 {
@@ -654,7 +654,7 @@ function generatehorizontalSpacer(div)
 
 /*
 Button Layout:
-[Dark Ascension][Legacy of the Void] --"talent-div"
+[Shadow Crash][Auspicious Spirits] --"talent-div"
 [Trinket][Azerite Trait] --"Trinket-Trait-div"
 [Composite][Single Target][Dungeon] --"Fight-Style-Div"
 */
@@ -697,31 +697,31 @@ talentDiv.setAttribute("id", "talent-div");
 talentDiv.setAttribute("class","tabcontent");
 
 //Talent Buttons
-//DA
-var DABtn = document.createElement("BUTTON");
-DABtn.setAttribute("id", "DABtn");
-DABtn.setAttribute("class", "button");
-DABtn.setAttribute("onClick", "talentClick('DA')");
+//SC
+var SCBtn = document.createElement("BUTTON");
+SCBtn.setAttribute("id", "SCBtn");
+SCBtn.setAttribute("class", "button");
+SCBtn.setAttribute("onClick", "talentClick('SC')");
 
 
-//DABtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
-var DAText = document.createTextNode("Dark Ascension");
-DABtn.appendChild(DAText);
+//SCBtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
+var SCText = document.createTextNode("Shadow Crash");
+SCBtn.appendChild(SCText);
 document.body.appendChild(talentDiv);
-talentDiv.appendChild(DABtn)
+talentDiv.appendChild(SCBtn)
 
 generatehorizontalSpacer(talentDiv);
 
-//LotV
-var LotVBtn = document.createElement("BUTTON");
-LotVBtn.setAttribute("id", "LotvBtn");
-LotVBtn.setAttribute("class", "button");
-LotVBtn.setAttribute("onClick", "talentClick('LotV')");
-//LotVBtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
-var LotVText = document.createTextNode("Legacy of the Void");
-LotVBtn.appendChild(LotVText);
+//AS
+var ASBtn = document.createElement("BUTTON");
+ASBtn.setAttribute("id", "ASBtn");
+ASBtn.setAttribute("class", "button");
+ASBtn.setAttribute("onClick", "talentClick('AS')");
+//ASBtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
+var ASText = document.createTextNode("Auspicious Spirits");
+ASBtn.appendChild(ASText);
 document.body.appendChild(talentDiv);
-talentDiv.appendChild(LotVBtn)
+talentDiv.appendChild(ASBtn)
 
 
 
@@ -826,7 +826,7 @@ fightStyleDiv.appendChild(dungeonBtn)
 //Set vars for btns
 var repoOption = 'master'
 var btnGroup = document.getElementsByClassName("button");
-var talentsBtn = 'LotV';
+var talentsBtn = 'AS';
 var itemBtn = 'Trinkets';
 var fightBtn = 'C';
 var traits = 'P';
@@ -873,7 +873,7 @@ function itemClick(clicked)
 		traits = clicked.split("-")[1];
 	}
 
-	else 
+	else
 	{
 		itemBtn = clicked;
 	}
@@ -894,7 +894,7 @@ function itemClick(clicked)
 		}
 	}
 
-	
+
 }
 
 function fightClick(clicked)
@@ -952,7 +952,7 @@ function styleButtons(){
 	for(var i = 0; i< btnGroup.length; i++)
 	{
 		let btn = document.getElementById(btnGroup[i].id)
-		
+
 		btn.style.backgroundColor = default_background_color;
 		btn.style.color = "white";
 		btn.style.border = "1px solid white"
@@ -961,7 +961,7 @@ function styleButtons(){
 		btn.style.fontSize = "16px";
 		btn.style.display = "inline-block";
 		btn.style.justifyContent = "center";
-		if (btn.id == 'LotvBtn' || btn.id == 'TrinketsBtn' || btn.id == 'CBtn')
+		if (btn.id == 'ASBtn' || btn.id == 'TrinketsBtn' || btn.id == 'CBtn')
 		{
 			btn.style.borderColor = "#DDA0DD";
 			btn.style.backgroundColor = "#330066";
@@ -995,38 +995,33 @@ chartDiv.setAttribute("class", "tabcontent");
 document.body.appendChild(chartDiv);
 
 //Trinket Tabs
-var DATrinketTab_C = createTabs("DA-Trinket-Tab-Composite");
-var DATrinketTab_ST = createTabs("DA-Trinket-Tab-SingleTarget");
-var DATrinketTab_D = createTabs("DA-Trinket-Tab-Dungeon");
-var LotVTrinketTab_C = createTabs("LotV-Trinket-Tab-Composite");
-var LotVTrinketTab_ST = createTabs("LotV-Trinket-Tab-SingleTarget");
-var LotVTrinketTab_D = createTabs("LotV-Trinket-Tab-Dungeon");
+var SCTrinketTab_C = createTabs("SC-Trinket-Tab-Composite");
+var SCTrinketTab_ST = createTabs("SC-Trinket-Tab-SingleTarget");
+var SCTrinketTab_D = createTabs("SC-Trinket-Tab-Dungeon");
+var ASTrinketTab_C = createTabs("AS-Trinket-Tab-Composite");
+var ASTrinketTab_ST = createTabs("AS-Trinket-Tab-SingleTarget");
+var ASTrinketTab_D = createTabs("AS-Trinket-Tab-Dungeon");
 
 //Trait Tabs
-var DATraitTab_C = createTabs("DA-Trait-Tab-Composite");
-var DATraitTab_ST = createTabs("DA-Trait-Tab-SingleTarget");
-var DATraitTab_D = createTabs("DA-Trait-Tab-Dungeon");
-var LotVTraitTab_C = createTabs("LotV-Trait-Tab-Composite");
-var LotVTraitTab_ST = createTabs("LotV-Trait-Tab-SingleTarget");
-var LotVTraitTab_D = createTabs("LotV-Trait-Tab-Dungeon");
+var SCTraitTab_C = createTabs("SC-Trait-Tab-Composite");
+var SCTraitTab_ST = createTabs("SC-Trait-Tab-SingleTarget");
+var SCTraitTab_D = createTabs("SC-Trait-Tab-Dungeon");
+var ASTraitTab_C = createTabs("AS-Trait-Tab-Composite");
+var ASTraitTab_ST = createTabs("AS-Trait-Tab-SingleTarget");
+var ASTraitTab_D = createTabs("AS-Trait-Tab-Dungeon");
 
-var DATrinketsCTest = createTabs("DATrinketsC");
-
-
+var SCTrinketsCTest = createTabs("SCTrinketsC");
 
 
 
 
-//Show DA Trinekts Composite by Default
-LotVTrinketTab_C.style.display = "none";
+
+
+//Show AS Trinekts Composite by Default
+ASTrinketTab_C.style.display = "none";
 
 
 //Button Clicking
 function openChart() {
-    var x = document.getElementById 
+    var x = document.getElementById
 }
-
-
-
-
-
