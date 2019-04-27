@@ -14,11 +14,11 @@ const trinketColors = [
 
 const ilevel_color_table = {
 /*
-"300": "#1abc9c", 
-"305": "#000000", 
-"310": "#3498db", 
-"315": "#9b59b6", 
-"320": "#34495e", 
+"300": "#1abc9c",
+"305": "#000000",
+"310": "#3498db",
+"315": "#9b59b6",
+"320": "#34495e",
 "325": "#f1c40f",
 "330": "#e67e22",
 "335": "#e74c3c",
@@ -146,7 +146,7 @@ number = 0
 function talentSelectMenu()
 {
 
-	talents = ["Dark Ascension", "Legacy of the Void"];
+	talents = ["Shadow Crash", "Auspicious Spirits"];
 	for (t of talents)
 	{
 		let talent = document.createElement("p");
@@ -162,7 +162,7 @@ function talentSelectMenu()
 }
 
 function selectTalent(click)
-{	
+{
 	let dropDownElement = document.getElementById(click).parentElement;
 	talentBtn.childNodes[0].nodeValue = click;
 
@@ -214,7 +214,7 @@ function updateTrinketText(click)
 	//addIlvlDropdown(trinketDropDownParent);
 
 	//Remove all the trinkets.
-	while (trinketDropDownElement.firstChild) 
+	while (trinketDropDownElement.firstChild)
 	{
     	trinketDropDownElement.removeChild(trinketDropDownElement.firstChild);
 	}
@@ -223,7 +223,7 @@ function updateTrinketText(click)
 
 function generateTrinketMenu(number){
 	//Create Div which holds trinkets dropdown
-	
+
 	var trinketDiv = document.createElement("div");
 	trinketDiv.setAttribute("id", "trinket-div" + number);
 	trinketDiv.setAttribute("class", "dropdown");
@@ -274,7 +274,7 @@ function generateIlvlMenu(number){
 
 	number++;
 
-	
+
 }
 
 function generatehorizontalSpacer(div)
@@ -329,7 +329,7 @@ addTrinketDiv.appendChild(addTrinket);
 
 function displayTrinkets(trinketID)
 {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/" + "trinkets_DA_C" + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/" + "trinkets_SC_C" + ".json" , function(data) {
 		let sortedItems = [];
 		let dpsSortedData = data["sorted_data_keys"];
 		dpsSortedData = dpsSortedData.sort();
@@ -345,10 +345,10 @@ function displayTrinkets(trinketID)
 			newTrinket.appendChild(newTrinketText);
 			trinketDrop.appendChild(newTrinket);
 		}
-		
+
 		//let trinketDrop = document.getElementById(trinketID);
 		trinketDrop.classList.toggle("show");
-		
+
 
 		}.bind(this)).fail(function(){
 		console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
@@ -369,7 +369,7 @@ function updateTrinketText(click)
 	//addIlvlDropdown(trinketDropDownParent);
 
 	//Remove all the trinkets.
-	while (trinketDropDownElement.firstChild) 
+	while (trinketDropDownElement.firstChild)
 	{
     	trinketDropDownElement.removeChild(trinketDropDownElement.firstChild);
 	}
@@ -379,7 +379,7 @@ function updateTrinketText(click)
 
 function addIlvlDropdown(parentDiv)
 {
-	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/" + "trinkets_DA_C" + ".json" , function(data) {
+	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/" + "trinkets_SC_C" + ".json" , function(data) {
 		let sortedItems = [];
 		let regExp = new RegExp("[0-9]+", "g"); //Accounts for all 2 digit numbers
 		let tempNumber = regExp.exec(parentDiv.id); // Pulls the number out of the parent div so we don't accidently create the wrong ilvl dropdown
@@ -398,10 +398,10 @@ function addIlvlDropdown(parentDiv)
 			newIlvl.appendChild(newIlvlText);
 			ilvlDrop.appendChild(newIlvl);
 		}
-		
+
 		//let trinketDrop = document.getElementById(trinketID);
 		ilvlDrop.classList.toggle("show");
-		
+
 
 		}.bind(this)).fail(function(){
 		console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
@@ -424,7 +424,7 @@ function updateIlvlText(click)
 
 
 	//Remove all the ilvls.
-	while (ilvlDropDownElement.firstChild) 
+	while (ilvlDropDownElement.firstChild)
 	{
     	ilvlDropDownElement.removeChild(ilvlDropDownElement.firstChild);
 	}
@@ -454,10 +454,10 @@ document.body.append(chartDiv);
 function getTalentSetup()
 {
 	talentSetup = talentBtn.childNodes[0].nodeValue;
-	if (talentSetup == "Legacy of the Void")
-		return "LotV";
-	else if (talentSetup == "Dark Ascension")
-		return "DA";
+	if (talentSetup == "Auspicious Spirits")
+		return "AS";
+	else if (talentSetup == "Shadow Crash")
+		return "SC";
 }
 
 function getFightSetup()
@@ -476,7 +476,7 @@ function addTrinketToChart()
 	talentChoice = getTalentSetup();
 	if (talentChoice == undefined)
 	{
-		talentChoice = "DA";
+		talentChoice = "SC";
 	}
 	fightChoice = getFightSetup();
 	if (fightChoice == undefined)
@@ -486,7 +486,7 @@ function addTrinketToChart()
 	console.log(talentChoice + '-' + fightChoice)
 
 	jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/trinkets_" + talentChoice + "_" + fightChoice + ".json" , function(data) {
-		let chartItems = [];		
+		let chartItems = [];
 		let graphData = [];
 		for (var i = 0; i < number; i++)
 		{
@@ -501,11 +501,11 @@ function addTrinketToChart()
 				trinketDPS -= baseDPS
 				chartItems.push(trinketName);
 				graphData.push({
-					name: trinketName + ' - ' + trinketIlvl, 
+					name: trinketName + ' - ' + trinketIlvl,
 					data: [trinketDPS],
 					color: trinketColors[i]
 				});
-			}	
+			}
 		}
 		renderChart(graphData, chartItems);
 		}.bind(this)).fail(function(){

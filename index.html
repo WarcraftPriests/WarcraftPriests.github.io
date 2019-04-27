@@ -20,7 +20,7 @@
 		<input type="checkbox">
 		<span class="slider round"></span>
 	</label>
-	<div id="pad" style="padding-bottom: 30px;"></div> 
+	<div id="pad" style="padding-bottom: 30px;"></div>
 	-->
 	<script>var whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: false};</script>
 	<script src="https://wow.zamimg.com/widgets/power.js"></script>
@@ -33,26 +33,26 @@
 	var wcp_charts = new WCP_Chart('Chart-Display-div', {
 		charts : {
 		//Trinkets
-		'DATrinketsC' : { type: 'trinket', src: 'trinkets_DA_C', title: 'Trinkets - Dark Ascension - Composite' },
-		'DATrinketsST' : { type: 'trinket', src: 'trinkets_DA_ST', title: 'Trinkets - Dark Ascension - Single Target'},
-		'DATrinketsD'  : { type: 'trinket', src: 'trinkets_DA_D', title: 'Trinkets - Dark Ascension - Dungeon'},
-		'LotVTrinketsC' : { type: 'trinket', src: 'trinkets_LotV_C', title: 'Trinkets - Legacy of the Void - Composite' },
-		'LotVTrinketsST' : { type: 'trinket', src: 'trinkets_LotV_ST', title: 'Trinkets - Legacy of the Void - Single Target'},
-		'LotVTrinketsD'  : { type: 'trinket', src: 'trinkets_LotV_D', title: 'Trinkets - Legacy of the Void - Dungeon'},
+		'SCTrinketsC' : { type: 'trinket', src: 'trinkets_SC_C', title: 'Trinkets - Shadow Crash - Composite' },
+		'SCTrinketsST' : { type: 'trinket', src: 'trinkets_SC_ST', title: 'Trinkets - Shadow Crash - Single Target'},
+		'SCTrinketsD'  : { type: 'trinket', src: 'trinkets_SC_D', title: 'Trinkets - Shadow Crash - Dungeon'},
+		'ASTrinketsC' : { type: 'trinket', src: 'trinkets_AS_C', title: 'Trinkets - Auspicious Sprits - Composite' },
+		'ASTrinketsST' : { type: 'trinket', src: 'trinkets_AS_ST', title: 'Trinkets - Auspicious Sprits - Single Target'},
+		'ASTrinketsD'  : { type: 'trinket', src: 'trinkets_AS_D', title: 'Trinkets - Auspicious Sprits - Dungeon'},
 		//Traits
-		'DATraitsC' : { type: 'trait', src: 'traits_DA_C', title: 'Azerite Traits - Dark Ascension - Composite' },
-		'DATraitsST' : { type: 'trait', src: 'traits_DA_ST', title: 'Azerite Traits - Dark Ascension - Single Target'},
-		'DATraitsD'  : { type: 'trait', src: 'traits_DA_D', title: 'Azerite Traits - Dark Ascension - Dungeon'},
-		'LotVTraitsC' : { type: 'trait', src: 'traits_LotV_C', title: 'Azerite Traits - Legacy of the Void - Composite' },
-		'LotVTraitsST' : { type: 'trait', src: 'traits_LotV_ST', title: 'Azerite Traits - Legacy of the Void - Single Target'},
-		'LotVTraitsD'  : { type: 'trait', src: 'traits_LotV_D', title: 'Azerite Traits - Legacy of the Void - Dungeon'},
+		'SCTraitsC' : { type: 'trait', src: 'traits_SC_C', title: 'Azerite Traits - Shadow Crash - Composite' },
+		'SCTraitsST' : { type: 'trait', src: 'traits_SC_ST', title: 'Azerite Traits - Shadow Crash - Single Target'},
+		'SCTraitsD'  : { type: 'trait', src: 'traits_SC_D', title: 'Azerite Traits - Shadow Crash - Dungeon'},
+		'ASTraitsC' : { type: 'trait', src: 'traits_AS_C', title: 'Azerite Traits - Auspicious Sprits - Composite' },
+		'ASTraitsST' : { type: 'trait', src: 'traits_AS_ST', title: 'Azerite Traits - Auspicious Sprits - Single Target'},
+		'ASTraitsD'  : { type: 'trait', src: 'traits_AS_D', title: 'Azerite Traits - Auspicious Sprits - Dungeon'},
 		//Trait Combos
-		'DATraitsCCombo' : { type: 'trait', src: 'traits_DA_C_Combo', title: 'Azerite Traits - Dark Ascension - Composite - Combos' },
-		'DATraitsSTCombo' : { type: 'trait', src: 'traits_DA_ST_Combo', title: 'Azerite Traits - Dark Ascension - Single Target - Combos'},
-		'DATraitsDCombo'  : { type: 'trait', src: 'traits_DA_D_Combo', title: 'Azerite Traits - Dark Ascension - Dungeon - Combos'},
-		'LotVTraitsCCombo' : { type: 'trait', src: 'traits_LotV_C_Combo', title: 'Azerite Traits - Legacy of the Void - Composite - Combos' },
-		'LotVTraitsSTCombo' : { type: 'trait', src: 'traits_LotV_ST_Combo', title: 'Azerite Traits - Legacy of the Void - Single Target - Combos'},
-		'LotVTraitsDCombo'  : { type: 'trait', src: 'traits_LotV_D_Combo', title: 'Azerite Traits - Legacy of the Void - Dungeon - Combos'},
+		'SCTraitsCCombo' : { type: 'trait', src: 'traits_SC_C_Combo', title: 'Azerite Traits - Shadow Crash - Composite - Combos' },
+		'SCTraitsSTCombo' : { type: 'trait', src: 'traits_SC_ST_Combo', title: 'Azerite Traits - Shadow Crash - Single Target - Combos'},
+		'SCTraitsDCombo'  : { type: 'trait', src: 'traits_SC_D_Combo', title: 'Azerite Traits - Shadow Crash - Dungeon - Combos'},
+		'ASTraitsCCombo' : { type: 'trait', src: 'traits_AS_C_Combo', title: 'Azerite Traits - Auspicious Sprits - Composite - Combos' },
+		'ASTraitsSTCombo' : { type: 'trait', src: 'traits_AS_ST_Combo', title: 'Azerite Traits - Auspicious Sprits - Single Target - Combos'},
+		'ASTraitsDCombo'  : { type: 'trait', src: 'traits_AS_D_Combo', title: 'Azerite Traits - Auspicious Sprits - Dungeon - Combos'},
 		}
 	});
 	wcp_charts.init();
