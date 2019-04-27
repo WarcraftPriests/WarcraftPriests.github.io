@@ -13,7 +13,7 @@
 .dropbtn {
   background-color: #3498DB;
   color: white;
-  padding: 16px;  
+  padding: 16px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -75,10 +75,14 @@
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content p:hover {background-color: #ddd}
+.dropdown-content p:hover {
+  background-color: #ddd
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:inline-block;}
+.show {
+  display: inline-block;
+}
 
 .chart-div {
   display: none;
@@ -88,7 +92,6 @@
 .chart-div-show {
   display: inline-block;
 }
-
 
 /* Header */
 .header {

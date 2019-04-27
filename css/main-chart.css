@@ -7,7 +7,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width:50%
+  width: 50%
 }
 
 /* Main Div */
@@ -26,7 +26,6 @@
   color: white;
   font-size: 22px;
 }
-
 
 /* Dropdown Button */
 .dropbtn {
@@ -96,11 +95,13 @@
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content p:hover {background-color: #ddd}
+.dropdown-content p:hover {
+  background-color: #ddd
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
-  display:block;
+  display: block;
   justify-content: center;
   text-align: center;
   font-size: 16px;
@@ -154,15 +155,15 @@
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
