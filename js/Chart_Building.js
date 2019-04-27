@@ -235,7 +235,6 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
       chartLink += dpsName.trim();
       chartLink += "</a>";
       chartLink += "</div>";
-
       //Push link into array
       wowheadTooltips.push(chartLink);
     }
@@ -293,20 +292,13 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
               } else {
                 s += '% (decrease)';
               }
-
-
-
-
             }
           }
           s += '</div>';
           return s;
         },
-
       },
-
     })
-
     let itemLevels = data["simulated_steps"];
     for (currIlevel of itemLevels) {
       let maxItemLevel = data["simulated_steps"][0];
@@ -315,12 +307,9 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
         var keys = [];
         for (var k in data["data"][sortedData]) keys.push(k); //Pull all item levels of the trinket.
         let minItemLevel = keys[0];
-
         sortedData = sortedData.trim();
-
         let dps = data["data"][sortedData][currIlevel];
         let baselineDPS = data["data"]["Base"]["300"];
-
         //Check to make sure DPS isn't 0
         if (dps > 0) {
           if (currIlevel == minItemLevel) {
@@ -330,7 +319,6 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
             } else {
               itemLevelDpsValues.push(dps - baselineDPS);
             }
-
           } else {
             if (dps - data["data"][sortedData][currIlevel - 5] < 0) {
               itemLevelDpsValues.push(0);
@@ -340,16 +328,13 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
           }
         } else {
           if (currIlevel in data["data"][sortedData]) {
-
             itemLevelDpsValues.push(0);
           } else {
             itemLevelDpsValues.push(0);
           }
         }
-
       }
       //this.chart.yAxis[0].update({categories: dpsSortedData});
-
       this.chart.addSeries({
         color: ilevel_color_table[currIlevel],
         data: itemLevelDpsValues,
@@ -360,15 +345,12 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
     document.getElementById(this.chartId).style.height = 200 + dpsSortedData.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
-
     this.chart.redraw();
     try {
       $WowheadPower.refreshLinks();
     } catch (error) {
       console.log(error);
     }
-
-
   }.bind(this)).fail(function(xhr, status) {
     console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
     console.log(status);
@@ -379,7 +361,6 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 "https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/json_Charts/traits_SC_C.json"
 "https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_charts/traits_SC_C.json"
 
-
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
   jQuery.getJSON("https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
@@ -388,9 +369,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
     let traitSelect = [];
     if (traits == 'P') {
       for (dpsName of dpsSortedData) {
-
         dpsName = dpsName.trim();
-
         for (p of primary_azerite_traits) {
           if (dpsName == p) {
             traitSelect.push(dpsName);
@@ -399,11 +378,9 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
       }
     } else {
       {
-
         for (dpsName of dpsSortedData) {
           dpsName = dpsName.trim();
           for (s of secondary_azerite_traits) {
-
             if (dpsName == s) {
               console.log(s);
               traitSelect.push(dpsName);
@@ -412,7 +389,6 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
         }
       }
     }
-
     var wowheadTooltipsTraits = [];
     for (dpsName of traitSelect) {
       chartLink = "";
@@ -469,8 +445,6 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
         pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
         padding: 5,
         //shared: true
-
-
         formatter: function() {
           var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
           s += dark_color;
@@ -496,16 +470,11 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
               } else {
                 s += '% (decrease)';
               }
-
-
-
-
             }
           }
           s += '</div>';
           return s;
         },
-
       },
     });
     for (let stackCount of [3, 2, 1]) {
@@ -513,15 +482,12 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
       let stackName = stackCount + "_" + maxItemLevel;
       let itemLevelDpsValues = [];
       for (sortedData of traitSelect) {
-
         sortedData = sortedData.trim();
-
         let dps = data["data"][sortedData][stackName];
         let baselineDPS = data["data"]["Base"]["1_" + maxItemLevel];
 
         //Check to make sure DPS isn't 0
         if (dps > 0) {
-
           if (stackCount == 1) {
             //If lowest ilvl is looked at, subtract base DPS
             itemLevelDpsValues.push(dps - baselineDPS);
@@ -535,7 +501,6 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
             itemLevelDpsValues.push(0);
           }
         }
-
       }
       let newStackName = stackName.split("_")[0];
       //standard_chart.yAxis[0].update({categories: dpsSortedData});
@@ -593,7 +558,6 @@ WCP_Chart.prototype.tabClicked = function(event) {
   }
 };
 
-
 function generatehorizontalSpacer(div) {
   var horizontalSpacer = document.createElement("span");
   horizontalSpacer.setAttribute("class", "divider");
@@ -602,7 +566,6 @@ function generatehorizontalSpacer(div) {
   horizontalSpacer.style.display = 'inline-block';
   div.appendChild(horizontalSpacer);
 }
-
 
 /*
 Button Layout:
@@ -636,11 +599,8 @@ externalLinks.appendChild(traitCalc);
 
 document.body.appendChild(externalLinks);
 
-
-
 var hr = document.createElement("hr");
 document.body.appendChild(hr);
-
 
 //Create all the HTML for the elements for the charts.
 //Main Div
@@ -654,8 +614,6 @@ var SCBtn = document.createElement("BUTTON");
 SCBtn.setAttribute("id", "SCBtn");
 SCBtn.setAttribute("class", "button");
 SCBtn.setAttribute("onClick", "talentClick('SC')");
-
-
 //SCBtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
 var SCText = document.createTextNode("Shadow Crash");
 SCBtn.appendChild(SCText);
@@ -674,9 +632,6 @@ var ASText = document.createTextNode("Auspicious Spirits");
 ASBtn.appendChild(ASText);
 document.body.appendChild(talentDiv);
 talentDiv.appendChild(ASBtn)
-
-
-
 
 //Trinket/Trait div's
 var TrinketTraitDiv = document.createElement("div");
@@ -831,8 +786,6 @@ function itemClick(clicked) {
       trinketTraits[i].style.backgroundColor = default_background_color;
     }
   }
-
-
 }
 
 function fightClick(clicked) {
@@ -872,7 +825,6 @@ function styleDivs() {
     divClass.style.paddingBottom = "5px";
     divClass.style.paddingRight = "5px";
   }
-
 }
 
 //Style Buttons
@@ -888,6 +840,7 @@ function styleButtons() {
     btn.style.fontSize = "16px";
     btn.style.display = "inline-block";
     btn.style.justifyContent = "center";
+
     if (btn.id == 'ASBtn' || btn.id == 'TrinketsBtn' || btn.id == 'CBtn') {
       btn.style.borderColor = "#DDA0DD";
       btn.style.backgroundColor = "#330066";
@@ -896,8 +849,6 @@ function styleButtons() {
       btn.style.backgroundColor = default_background_color;
     }
     btn.style.cursor = 'pointer';
-
-
   }
 }
 styleDivs();
@@ -936,14 +887,8 @@ var ASTraitTab_D = createTabs("AS-Trait-Tab-Dungeon");
 
 var SCTrinketsCTest = createTabs("SCTrinketsC");
 
-
-
-
-
-
 //Show AS Trinekts Composite by Default
 ASTrinketTab_C.style.display = "none";
-
 
 //Button Clicking
 function openChart() {

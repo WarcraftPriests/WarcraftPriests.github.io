@@ -89,7 +89,6 @@ const secondary_azerite_traits = [
   'Unstable Flames'
 ]
 
-
 /*
 <div class="dropdown">
   <button onclick="myFunction()" class="dropbtn">Dropdown</button>
@@ -99,7 +98,6 @@ const secondary_azerite_traits = [
     <a href="#">Link 3</a>
   </div>
 </div>
-
 */
 
 //Create Div for other charts
@@ -129,7 +127,6 @@ document.body.appendChild(externalLinks);
 
 var hr = document.createElement("hr");
 document.body.appendChild(hr);
-
 
 //Create Div which holds all buttons
 var setupDiv = document.createElement("div");
@@ -163,8 +160,6 @@ fightDiv.setAttribute("id", "fight-div");
 fightDiv.setAttribute("class", "dropdown");
 setupDiv.appendChild(fightDiv);
 
-
-
 var fightBtn = document.createElement("button");
 fightBtn.setAttribute("id", "fightbtn")
 fightBtn.setAttribute("class", "dropbtn");
@@ -190,8 +185,6 @@ mainDiv.setAttribute("id", "main-div");
 mainDiv.setAttribute("class", "main");
 document.body.appendChild(mainDiv);
 
-
-
 number = 0
 
 function talentSelectMenu() {
@@ -206,20 +199,17 @@ function talentSelectMenu() {
     talent.appendChild(talentText);
     talentDropDiv.appendChild(talent);
   }
-
   talentDropDiv.classList.toggle("show");
 }
 
 function selectTalent(click) {
   let dropDownElement = document.getElementById(click).parentElement;
   talentBtn.childNodes[0].nodeValue = click;
-
   while (dropDownElement.firstChild) {
     dropDownElement.removeChild(dropDownElement.firstChild);
   }
   addtraitToChart();
 }
-
 
 function fightSelectMenu() {
   fights = ["Composite", "Single Target", "Dungeon Slice"];
@@ -232,14 +222,12 @@ function fightSelectMenu() {
     fight.appendChild(fightText);
     fightDropDiv.appendChild(fight);
   }
-
   fightDropDiv.classList.toggle("show");
 }
 
 function selectFight(click) {
   let dropDownElement = document.getElementById(click).parentElement;
   fightBtn.childNodes[0].nodeValue = click;
-
   while (dropDownElement.firstChild) {
     dropDownElement.removeChild(dropDownElement.firstChild);
   }
@@ -254,12 +242,10 @@ function updateTraitText(click) {
   let ilvlText = traitDropDownParent.childNodes[3].childNodes[0];
   ilvlText.nodeValue = "Select Item Level";
   //addSecondaryTrait(traitDropDownParent);
-
   //Remove all the traits.
   while (traitDropDownElement.firstChild) {
     traitDropDownElement.removeChild(traitDropDownElement.firstChild);
   }
-
 }
 
 function generatetraitMenu(number) {
@@ -278,7 +264,6 @@ function generatetraitMenu(number) {
   var traitText = document.createTextNode("Select Primary Trait");
   traitBtn.appendChild(traitText);
   traitDiv.appendChild(traitBtn);
-
 
   var traitDropDown = document.createElement("div");
   traitDropDown.setAttribute("id", "traitDropDown" + number);
@@ -314,8 +299,6 @@ function generateIlvlMenu(number) {
   currtraitDiv.appendChild(ilvlDropDown);
 
   number++;
-
-
 }
 
 function generatehorizontalSpacer(div) {
@@ -331,7 +314,6 @@ function generateverticalSpacer() {
 }
 
 number = generatetraitMenu(number);
-
 generateIlvlMenu(number);
 number = generatetraitMenu(number);
 generateIlvlMenu(number);
@@ -352,7 +334,6 @@ var addtraitDiv = document.createElement("div");
 addtraitDiv.setAttribute("id", "add-trait-div");
 addtraitDiv.setAttribute("class", "main");
 document.body.appendChild(addtraitDiv)
-
 var addtrait = document.createElement("button");
 addtrait.setAttribute("id", "add-trait");
 addtrait.setAttribute("class", "add-trait");
@@ -361,10 +342,6 @@ var addtraitText = document.createTextNode("+");
 addtrait.appendChild(addtraitText);
 addtraitDiv.appendChild(addtrait);
 */
-
-
-
-
 
 function displayPrimaryTraits(traitID) {
   let traitDrop = traitID.parentElement.childNodes[1];
@@ -378,12 +355,9 @@ function displayPrimaryTraits(traitID) {
     newtrait.appendChild(newtraitText);
     traitDrop.appendChild(newtrait);
   }
-
   //let traitDrop = document.getElementById(traitID);
   traitDrop.classList.toggle("show");
 }
-
-
 
 function updateTraitText(click) {
   let traitDropDownElement = document.getElementById(click).parentElement;
@@ -393,12 +367,10 @@ function updateTraitText(click) {
   let ilvlText = traitDropDownParent.childNodes[3].childNodes[0];
   ilvlText.nodeValue = "Select Secondary Trait";
   //addSecondaryTrait(traitDropDownParent);
-
   //Remove all the traits.
   while (traitDropDownElement.firstChild) {
     traitDropDownElement.removeChild(traitDropDownElement.firstChild);
   }
-
 }
 
 
@@ -417,7 +389,6 @@ function addSecondaryTrait(parentDiv) {
     newIlvl.appendChild(newIlvlText);
     ilvlDrop.appendChild(newIlvl);
   }
-
   //let traitDrop = document.getElementById(traitID);
   ilvlDrop.classList.toggle("show");
 }
@@ -433,8 +404,6 @@ function updateIlvlText(click) {
     chart.classList.toggle("chart-div-show");
   traitName = ilvlDropDownParent.childNodes[0].childNodes[0].nodeValue
   addtraitToChart();
-
-
   //Remove all the ilvls.
   while (ilvlDropDownElement.firstChild) {
     ilvlDropDownElement.removeChild(ilvlDropDownElement.firstChild);
@@ -454,13 +423,10 @@ window.onclick = function(event) {
   }
 }
 
-
 var chartDiv = document.createElement("div");
 chartDiv.setAttribute("id", "chart-div");
 chartDiv.setAttribute("class", "chart-div");
 document.body.append(chartDiv);
-
-
 
 function getTalentSetup() {
   talentSetup = talentBtn.childNodes[0].nodeValue;
@@ -483,7 +449,6 @@ function getFightSetup() {
 var csvData;
 
 function getIntValues() {
-
   Papa.parse("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/azerite-traits/Results_SC.csv", {
     download: true,
     complete: function(results) {
@@ -499,13 +464,9 @@ function getIntValues() {
     }
     //data = csvData
   })
-
 }
 
 var averageIntValue = 20.39263333
-
-
-
 
 function addtraitToChart() {
   talentChoice = getTalentSetup();
@@ -516,7 +477,6 @@ function addtraitToChart() {
   if (fightChoice == undefined) {
     fightChoice = "C";
   }
-
   jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/traits_" + talentChoice + "_" + fightChoice + ".json", function(data) {
     let chartItems = [];
     let graphData = [];
@@ -532,7 +492,6 @@ function addtraitToChart() {
       let traitIlvl = traitDiv.childNodes[3].childNodes[0].nodeValue;
       let baseDPS = data["data"]["Base"]["1_stack"];
       if (traitName != "Select Primary trait" && traitIlvl != "Select Secondary Trait") {
-
         primarytraitDPS = data["data"][traitName]['1_stack']
         secondarytraitDPS = data["data"][traitIlvl]['1_stack']
         primarytraitDPS -= baseDPS;
@@ -605,9 +564,6 @@ function addtraitToChart() {
       data: [0, 0, 0, 0, 0, primaryIntData[2]],
       color: light_purple
     })
-
-
-
     renderChart(graphData, chartItems);
   }.bind(this)).fail(function() {
     console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
@@ -618,7 +574,6 @@ function addtraitToChart() {
 function renderChart(graphData, chartItems) {
   let talentSetup = talentBtn.childNodes[0].nodeValue;
   let fightSetup = fightBtn.childNodes[0].nodeValue;
-
   basic_chart = Highcharts.chart("chart-div", {
     chart: {
       renderTo: "chart-div",

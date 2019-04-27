@@ -47,7 +47,6 @@ const ilevel_color_table = {
     <a href="#">Link 3</a>
   </div>
 </div>
-
 */
 
 //Create Div for other charts
@@ -77,7 +76,6 @@ document.body.appendChild(externalLinks);
 
 var hr = document.createElement("hr");
 document.body.appendChild(hr);
-
 
 //Create Div which holds all buttons
 var setupDiv = document.createElement("div");
@@ -111,8 +109,6 @@ fightDiv.setAttribute("id", "fight-div");
 fightDiv.setAttribute("class", "dropdown");
 setupDiv.appendChild(fightDiv);
 
-
-
 var fightBtn = document.createElement("button");
 fightBtn.setAttribute("id", "fightbtn")
 fightBtn.setAttribute("class", "dropbtn");
@@ -138,8 +134,6 @@ mainDiv.setAttribute("id", "main-div");
 mainDiv.setAttribute("class", "main");
 document.body.appendChild(mainDiv);
 
-
-
 number = 0
 
 function talentSelectMenu() {
@@ -154,14 +148,12 @@ function talentSelectMenu() {
     talent.appendChild(talentText);
     talentDropDiv.appendChild(talent);
   }
-
   talentDropDiv.classList.toggle("show");
 }
 
 function selectTalent(click) {
   let dropDownElement = document.getElementById(click).parentElement;
   talentBtn.childNodes[0].nodeValue = click;
-
   while (dropDownElement.firstChild) {
     dropDownElement.removeChild(dropDownElement.firstChild);
   }
@@ -180,14 +172,12 @@ function fightSelectMenu() {
     fight.appendChild(fightText);
     fightDropDiv.appendChild(fight);
   }
-
   fightDropDiv.classList.toggle("show");
 }
 
 function selectFight(click) {
   let dropDownElement = document.getElementById(click).parentElement;
   fightBtn.childNodes[0].nodeValue = click;
-
   while (dropDownElement.firstChild) {
     dropDownElement.removeChild(dropDownElement.firstChild);
   }
@@ -202,17 +192,14 @@ function updateTrinketText(click) {
   let ilvlText = trinketDropDownParent.childNodes[3].childNodes[0];
   ilvlText.nodeValue = "Select Item Level";
   //addIlvlDropdown(trinketDropDownParent);
-
   //Remove all the trinkets.
   while (trinketDropDownElement.firstChild) {
     trinketDropDownElement.removeChild(trinketDropDownElement.firstChild);
   }
-
 }
 
 function generateTrinketMenu(number) {
   //Create Div which holds trinkets dropdown
-
   var trinketDiv = document.createElement("div");
   trinketDiv.setAttribute("id", "trinket-div" + number);
   trinketDiv.setAttribute("class", "dropdown");
@@ -226,7 +213,6 @@ function generateTrinketMenu(number) {
   var trinketText = document.createTextNode("Select Trinket");
   trinketBtn.appendChild(trinketText);
   trinketDiv.appendChild(trinketBtn);
-
 
   var trinketDropDown = document.createElement("div");
   trinketDropDown.setAttribute("id", "trinketDropDown" + number);
@@ -243,7 +229,6 @@ function generateTrinketMenu(number) {
 function generateIlvlMenu(number) {
   number--;
   var currTrinketDiv = document.getElementById('trinket-div' + number)
-
   //Crate ilvl button
   var ilvlBtn = document.createElement("button");
   ilvlBtn.setAttribute("id", "ilvlbtn" + number);
@@ -262,8 +247,6 @@ function generateIlvlMenu(number) {
   currTrinketDiv.appendChild(ilvlDropDown);
 
   number++;
-
-
 }
 
 function generatehorizontalSpacer(div) {
@@ -279,7 +262,6 @@ function generateverticalSpacer() {
 }
 
 number = generateTrinketMenu(number);
-
 generateIlvlMenu(number);
 number = generateTrinketMenu(number);
 generateIlvlMenu(number);
@@ -330,11 +312,8 @@ function displayTrinkets(trinketID) {
       newTrinket.appendChild(newTrinketText);
       trinketDrop.appendChild(newTrinket);
     }
-
     //let trinketDrop = document.getElementById(trinketID);
     trinketDrop.classList.toggle("show");
-
-
   }.bind(this)).fail(function() {
     console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
     alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
@@ -351,12 +330,10 @@ function updateTrinketText(click) {
   let ilvlText = trinketDropDownParent.childNodes[3].childNodes[0];
   ilvlText.nodeValue = "Select Item Level";
   //addIlvlDropdown(trinketDropDownParent);
-
   //Remove all the trinkets.
   while (trinketDropDownElement.firstChild) {
     trinketDropDownElement.removeChild(trinketDropDownElement.firstChild);
   }
-
 }
 
 
@@ -379,11 +356,8 @@ function addIlvlDropdown(parentDiv) {
       newIlvl.appendChild(newIlvlText);
       ilvlDrop.appendChild(newIlvl);
     }
-
     //let trinketDrop = document.getElementById(trinketID);
     ilvlDrop.classList.toggle("show");
-
-
   }.bind(this)).fail(function() {
     console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
     alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
@@ -401,8 +375,6 @@ function updateIlvlText(click) {
     chart.classList.toggle("chart-div-show");
   trinketName = ilvlDropDownParent.childNodes[0].childNodes[0].nodeValue
   addTrinketToChart();
-
-
   //Remove all the ilvls.
   while (ilvlDropDownElement.firstChild) {
     ilvlDropDownElement.removeChild(ilvlDropDownElement.firstChild);
@@ -427,8 +399,6 @@ var chartDiv = document.createElement("div");
 chartDiv.setAttribute("id", "chart-div");
 chartDiv.setAttribute("class", "chart-div");
 document.body.append(chartDiv);
-
-
 
 function getTalentSetup() {
   talentSetup = talentBtn.childNodes[0].nodeValue;
@@ -458,7 +428,6 @@ function addTrinketToChart() {
     fightChoice = "C";
   }
   console.log(talentChoice + '-' + fightChoice)
-
   jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/trinkets_" + talentChoice + "_" + fightChoice + ".json", function(data) {
     let chartItems = [];
     let graphData = [];
@@ -467,7 +436,6 @@ function addTrinketToChart() {
       let trinketName = trinketDiv.childNodes[0].childNodes[0].nodeValue;
       let trinketIlvl = trinketDiv.childNodes[3].childNodes[0].nodeValue;
       let baseDPS = data["data"]["Base"]["300"];
-
       if (trinketName != "Select Trinket" && trinketIlvl != "Select Item Level") {
         trinketDPS = data["data"][trinketName][trinketIlvl]
         trinketDPS -= baseDPS
@@ -489,7 +457,6 @@ function addTrinketToChart() {
 function renderChart(graphData, chartItems) {
   let talentSetup = talentBtn.childNodes[0].nodeValue;
   let fightSetup = fightBtn.childNodes[0].nodeValue;
-
   basic_chart = Highcharts.chart("chart-div", {
     chart: {
       renderTo: "chart-div",
