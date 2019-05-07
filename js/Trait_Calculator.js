@@ -36,7 +36,6 @@ const ilevel_color_table = {
   "400": "#2ecc71",
   */
 };
-
 const primary_azerite_traits = [
   'Apothecarys Concoctions',
   'Archive of the Titans',
@@ -44,6 +43,7 @@ const primary_azerite_traits = [
   'Battlefield Focus',
   'Blightborne Infusion',
   'Blood Rite',
+  'Bonded Souls',
   'Champion of Azeroth',
   'Chorus of Insanity',
   'Collective Will',
@@ -71,8 +71,8 @@ const primary_azerite_traits = [
   'Thought Harvester',
   'Thunderous Blast',
   'Tidal Surge',
-  'Treacherous Covenant',
   'Tradewinds',
+  'Treacherous Covenant',
   'Unstable Catalyst',
   'Whispers of the Damned'
 ]
@@ -449,7 +449,7 @@ function getFightSetup() {
 var csvData;
 
 function getIntValues() {
-  Papa.parse("https://cdn.jsdelivr.net/gh/WarcraftPriests/bfa-shadow-priest@master/azerite-traits/Results_SC.csv", {
+  Papa.parse("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/azerite-traits/Results_SC.csv", {
     download: true,
     complete: function(results) {
       csvData = results
@@ -477,7 +477,7 @@ function addtraitToChart() {
   if (fightChoice == undefined) {
     fightChoice = "C";
   }
-  jQuery.getJSON("https://cdn.jsdelivr.net/gh/warcraftpriests/bfa-shadow-priest@master/json_Charts/traits_" + talentChoice + "_" + fightChoice + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/traits_" + talentChoice + "_" + fightChoice + ".json", function(data) {
     let chartItems = [];
     let graphData = [];
     let primarydpsData = [0, 0, 0];
