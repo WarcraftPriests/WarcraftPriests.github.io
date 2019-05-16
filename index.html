@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" href="css/main-chart.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/brands.css" integrity="sha384-1KLgFVb/gHrlDGLFPgMbeedi6tQBLcWvyNUN+YKXbD7ZFbjX6BLpMDf0PJ32XJfX" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
@@ -11,7 +12,7 @@
 
 <body style="background-color: rgb(52, 58, 64);">
 	<div class=header>
-		<a href="https://warcraftpriests.com/" target="_blank"><img src="https://i.imgur.com/M12BeGV.png" alt="WCP Banner"></a>
+		<a href="https://warcraftpriests.com/" target="_blank"><img id="img-banner" src="https://i.imgur.com/M12BeGV.png" alt="WCP Banner"></a>
 	</div>
 	<div id="pad" style="padding-bottom: 30px;"></div>
 	<!-- PTR Switch
@@ -30,6 +31,11 @@
 		};
 	</script>
 	<script src="https://wow.zamimg.com/widgets/power.js"></script>
+	<div id="disclaimer">
+		<section>
+			Azerite trait sims are done in a vaccum, and this list does not display comibnations of traits, which alter your choices significantly. For this reason, just because something is higher on this chart does not mean it is the better choice. You should sim your available choices to determine what is best for your gear on <a href="https://www.raidbots.com/simbot/topgear">Raidbots</a>. To get a brief idea of what is better, check out the <a href="https://github.com/WarcraftPriests/bfa-shadow-priest/blob/master/azerite-traits/README.md#azerite-trait-results">GitHub Repo for Azerite traits</a> that shows combination tests.
+		</section>
+	</div>
 	<div id="empty"></div>
 	<div id="container"></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

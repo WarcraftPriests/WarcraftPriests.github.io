@@ -1,6 +1,15 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 .body {
   display: flex;
   position: relative;
+}
+
+#img-banner {
+  max-width: 100%;
+  max-height: 350px;
 }
 
 .banner {
@@ -262,4 +271,16 @@ input:checked+.slider:before {
 .fa-patreon {
   background: #e44727;
   color: white;
+}
+
+section {
+    color: white;
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+section a {
+    color: #a335ee;
 }
