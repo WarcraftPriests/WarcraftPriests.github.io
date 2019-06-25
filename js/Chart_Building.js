@@ -34,57 +34,64 @@ const ilevel_color_table = {
 };
 
 const primary_azerite_traits = [
-  'Apothecarys Concoctions',
-  'Archive of the Titans',
-  'Barrage Of Many Bombs',
-  'Battlefield Focus',
-  'Blightborne Infusion',
-  'Blood Rite',
-  'Bonded Souls',
-  'Champion of Azeroth',
-  'Chorus of Insanity',
-  'Collective Will',
-  'Combined Might',
-  'Dagger in the Back Behind',
-  'Dagger in the Back Front',
-  'Death Throes',
-  'Filthy Transfusion',
-  'Glory in Battle',
-  'Incite the Pack',
-  'Laser Matrix',
-  'Meticulous Scheming',
-  'Relational Normalization Gizmo',
-  'Retaliatory Fury',
-  'Rezans Fury',
-  'Ricocheting Inflatable Pyrosaw',
-  'Ruinous Bolt',
-  'Searing Dialogue',
-  'Secrets of the Deep',
-  'Shadow of Elune',
-  'Spiteful Apparitions',
-  'Swirling Sands',
-  'Sylvanas Resolve',
-  'Synaptic Spark Capacitor',
-  'Thought Harvester',
-  'Thunderous Blast',
-  'Tidal Surge',
-  'Tradewinds',
-  'Treacherous Covenant',
-  'Unstable Catalyst',
-  'Whispers of the Damned'
+'Ancients Bulwark',
+'Apothecarys Concoctions',
+'Arcane Heart',
+'Archive of the Titans',
+'Barrage Of Many Bombs',
+'Battlefield Focus',
+'Blightborne Infusion',
+'Blood Rite',
+'Bonded Souls',
+'Champion of Azeroth',
+'Chorus of Insanity',
+'Clockwork Heart',
+'Collective Will',
+'Combined Might',
+'Dagger in the Back Behind',
+'Dagger in the Back Front',
+'Death Throes',
+'Fight or Flight',
+'Filthy Transfusion',
+'Glory in Battle',
+'Incite the Pack',
+'Laser Matrix',
+'Loyal to the End',
+'Meticulous Scheming',
+'Relational Normalization Gizmo',
+'Retaliatory Fury',
+'Rezans Fury',
+'Ricocheting Inflatable Pyrosaw',
+'Ruinous Bolt',
+'Searing Dialogue',
+'Secrets of the Deep',
+'Seductive Power',
+'Shadow of Elune',
+'Spiteful Apparitions',
+'Swirling Sands',
+'Sylvanas Resolve',
+'Synaptic Spark Capacitor',
+'Thought Harvester',
+'Thunderous Blast',
+'Tidal Surge',
+'Tradewinds',
+'Treacherous Covenant',
+'Undulating Tides',
+'Unstable Catalyst',
+'Whispers of the Damned'
 ]
 
 const secondary_azerite_traits = [
-  'Azerite Globules',
-  'Blood Siphon',
-  'Earthlink',
-  'Elemental Whirl',
-  'Gutripper',
-  'Heed My Call',
-  'On My Way',
-  'Overwhelming Power',
-  'Unstable Flames'
-]
+'Azerite Globules',
+'Blood Siphon',
+'Earthlink',
+'Elemental Whirl',
+'Gutripper',
+'Heed My Call',
+'On My Way',
+'Overwhelming Power',
+'Unstable Flames'
+  ]
 
 var WCP_Chart = function WCP_Chart(id, options) {
   this.chartId = id;
@@ -381,7 +388,6 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
           dpsName = dpsName.trim();
           for (s of secondary_azerite_traits) {
             if (dpsName == s) {
-              console.log(s);
               traitSelect.push(dpsName);
             }
           }
@@ -520,8 +526,9 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
       console.log(error);
     }
 
-  }.bind(this)).fail(function() {
+  }.bind(this)).fail(function(xhr, status) {
     console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+    console.log(status);
     //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
   });
 };
