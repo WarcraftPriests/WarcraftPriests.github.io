@@ -114,7 +114,7 @@ const major_essence_powers = [
 ]
 
 const minor_essnece_powers = [
-"Blood-Soaked",
+"Blood Soaked",
 "Condensed Life-Force", 
 "Focused Energy", 
 "Purification Protocol", 
