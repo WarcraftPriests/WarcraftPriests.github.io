@@ -202,6 +202,28 @@ input:checked+.slider:before {
   text-align: center;
 }
 
+/* Divs */
+.tabcontent {
+  text-align: center;
+  padding-bottom: 5px;
+  padding-right: 5px;
+}
+
+.traitButtons {
+  display: block;
+}
+
+/* Buttons */
+.button {
+  background-color: #343a40;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  font-size: 16px;
+  display:inline-block;
+  justify-content: center;
+}
+
 /* Footer */
 .footer {
   margin: 0 auto;

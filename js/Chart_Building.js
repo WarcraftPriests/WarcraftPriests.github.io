@@ -93,6 +93,44 @@ const secondary_azerite_traits = [
 'Unstable Flames'
   ]
 
+const major_essence_powers = [
+"Focused Azerite Beam",
+"Guardian of Azeroth",
+"Purifying Blast",
+"The Unbound Force", 
+"Memory of Lucid Dreams", 
+"Vision of Perfection",
+"Conflict",
+"Concentrated Flame", 
+"Ripple in Space", 
+"Blood of the Enemy 100",
+"Blood of the Enemy 75",
+"Blood of the Enemy 50",
+"Worldvein Resonance 4 Allies", 
+"Worldvein Resonance 3 Allies",
+"Worldvein Resonance 2 Allies",
+"Worldvein Resonance 1 Allies",
+"Worldvein Resonance 0 Allies"
+]
+
+const minor_essnece_powers = [
+"Blood-Soaked",
+"Condensed Life-Force", 
+"Focused Energy", 
+"Purification Protocol", 
+"Reckless Force", 
+"Lucid Dreams", 
+"Strive for Perfection", 
+"Strife", 
+"Ancient Flame", 
+"Reality Shift", 
+"Lifeblood 4 Allies", 
+"Lifeblood 3 Allies", 
+"Lifeblood 2 Allies", 
+"Lifeblood 1 Allies", 
+"Lifeblood 0 Allies" 
+]
+
 var WCP_Chart = function WCP_Chart(id, options) {
   this.chartId = id;
   this.options = options;
@@ -533,6 +571,174 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
   });
 };
 
+WCP_Chart.prototype.updateEssenceChart = function(chartName) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+    let sortedItems = [];
+    let dpsSortedData = data["sorted_data_keys"];
+    //Check if the essences are major or minor and adjust the graph accordingly
+    let essenceSelect = [];
+
+    if (essence == 'Major') {
+      for (dpsName of dpsSortedData) {
+        dpsName = dpsName.trim();
+        for (m of major_essence_powers) {
+          if (dpsName == m) {
+            essenceSelect.push(dpsName);
+          }
+        }
+      }
+    } else {
+      {
+        for (dpsName of dpsSortedData) {
+          dpsName = dpsName.trim();
+          for (m of minor_essnece_powers) {
+            if (dpsName == m) {
+              essenceSelect.push(dpsName);
+            }
+          }
+        }
+      }
+    }
+    var wowheadTooltipsTraits = [];
+    for (dpsName of essenceSelect) {
+      chartLink = "";
+      dpsName = dpsName.trim()
+      spellID = data["spell_ids"][dpsName];
+      chartLink = "";
+      chartLink += "<div style=\"display:inline-block; margin-bottom:-3px\">";
+      chartLink += "<a style=\"color: white; font-size: 16px; padding: 3px; cursor: default\" href=#";
+      chartLink += " onclick=\"return false\"";
+      chartLink += " rel=\"https://www.wowhead.com/spell=";
+      chartLink += spellID;
+      chartLink += "/"
+      chartLink += dpsName.replace(/ /g, '-');
+      chartLink += "\" target=\"blank\"";
+      chartLink += " class=\"chart_link\"";
+      chartLink += ">";
+      chartLink += dpsName;
+      chartLink += "</a>";
+      chartLink += "</div>";
+      //Push link into array
+      //console.log(chartLink);
+      wowheadTooltipsTraits.push(chartLink);
+    }
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(false);
+    }
+    this.chart.update({
+      xAxis: {
+        categories: wowheadTooltipsTraits,
+        useHTML: true,
+        labels: {
+          x: -30,
+        },
+      },
+      title: {
+        style: {
+          color: default_font_color,
+          fontWeight: 'bold'
+        },
+        text: this.options.charts[chartName].title
+      },
+      legend: {
+        title: {
+          text: "Essence Rank"
+        }
+      },
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        headerFormat: "<b>(point.x)</b>", //'<span style="font-size: 14px"><b>{point.key}</b></span><br/>',
+        style: {
+          color: default_font_color,
+        },
+        pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
+        padding: 5,
+        //shared: true
+        formatter: function() {
+          var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
+          s += dark_color;
+          s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
+          var baseAmount = data["data"]["Base"]["rank_1"];
+          var cumulativeAmount = 0 + baseAmount;
+          for (var i = this.points.length - 1; i >= 0; i--) {
+            cumulativeAmount += this.points[i].y;
+            if (this.points[i].y != 0) {
+              s += '<div><span style=\"margin-left: 9px; border-left: 9px solid ' +
+                this.points[i].series.color + ';' +
+                ' padding-left: 4px;' +
+                '\">' +
+                this.points[i].series.name +
+                '</span>:&nbsp;&nbsp;' +
+                Intl.NumberFormat().format(cumulativeAmount - baseAmount);
+              s += ' dps';
+              s += ' - ';
+              let percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
+              s += percentage;
+              if (percentage > 0) {
+                s += '% (Increase)';
+              } else {
+                s += '% (decrease)';
+              }
+            }
+          }
+          s += '</div>';
+          return s;
+        },
+      },
+    });
+    for (let stackCount of [3, 2, 1]) {
+      let maxItemLevel = data["simulated_steps"][0].split("_")[0]; // Rank
+      let stackName = maxItemLevel + "_" + stackCount; //Rank_1
+      let itemLevelDpsValues = [];
+      for (sortedData of essenceSelect) {
+        sortedData = sortedData.trim();
+        let dps = data["data"][sortedData][stackName];
+        let baselineDPS = data["data"]["Base"][maxItemLevel + "_1"];
+
+        //Check to make sure DPS isn't 0
+        if (dps > 0) {
+          if (stackCount == 1) {
+            //If lowest ilvl is looked at, subtract base DPS
+            itemLevelDpsValues.push(dps - baselineDPS);
+          } else {
+            itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_1"]);
+          }
+        } else {
+          if (stackName in data["data"][maxItemLevel + "_" + (stackCount -1) ]) {
+            itemLevelDpsValues.push(dps);
+
+          } else {
+            itemLevelDpsValues.push(0);
+          }
+        }
+      }
+      let newStackName = stackName.split("_")[1];
+      //standard_chart.yAxis[0].update({categories: dpsSortedData});
+      this.chart.addSeries({
+        color: ilevel_color_table[stackName],
+        data: itemLevelDpsValues,
+        name: newStackName,
+        showInLegend: true
+      }, false);
+    }
+    document.getElementById(this.chartId).style.height = 200 + essenceSelect.length * 30 + "px";
+    this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
+    //this.chart.renderTo(this.chartId);
+    this.chart.redraw();
+    try {
+      $WowheadPower.refreshLinks();
+    } catch (error) {
+      console.log(error);
+    }
+
+  }.bind(this)).fail(function(xhr, status) {
+    console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+    console.log(status);
+    //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+  });
+};
+
 WCP_Chart.prototype.buildButtons = function() {
   var container = document.createElement('div');
   container.id = 'button-container';
@@ -561,6 +767,8 @@ WCP_Chart.prototype.tabClicked = function(event) {
     this.updateTrinketChart(chartName); // Setup the initial chart
   } else if (this.options.charts[chartName].type == 'azerite-trait') {
     this.updateTraitChart(chartName); // Setup the initial chart
+  } else if (this.options.charts[chartName].type == 'essence') {
+    this.updateEssenceChart(chartName); // Setup the initial chart
   }
 };
 
@@ -608,127 +816,7 @@ document.body.appendChild(externalLinks);
 var hr = document.createElement("hr");
 document.body.appendChild(hr);
 
-//Create all the HTML for the elements for the charts.
-//Main Div
-var talentDiv = document.createElement("div");
-talentDiv.setAttribute("id", "talent-div");
-talentDiv.setAttribute("class", "tabcontent");
 
-//Talent Buttons
-//SC
-var SCBtn = document.createElement("BUTTON");
-SCBtn.setAttribute("id", "SCBtn");
-SCBtn.setAttribute("class", "button");
-SCBtn.setAttribute("onClick", "talentClick('SC')");
-//SCBtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
-var SCText = document.createTextNode("Shadow Crash");
-SCBtn.appendChild(SCText);
-document.body.appendChild(talentDiv);
-talentDiv.appendChild(SCBtn)
-
-generatehorizontalSpacer(talentDiv);
-
-//AS
-var ASBtn = document.createElement("BUTTON");
-ASBtn.setAttribute("id", "ASBtn");
-ASBtn.setAttribute("class", "button");
-ASBtn.setAttribute("onClick", "talentClick('AS')");
-//ASBtn.setAttribute("onClick", "wcp_charts.tabClicked(this.id)");
-var ASText = document.createTextNode("Auspicious Spirits");
-ASBtn.appendChild(ASText);
-document.body.appendChild(talentDiv);
-talentDiv.appendChild(ASBtn)
-
-//Trinket/Trait div's
-var TrinketTraitDiv = document.createElement("div");
-TrinketTraitDiv.setAttribute("id", "Trinket-Trait-div");
-TrinketTraitDiv.setAttribute("class", "tabcontent");
-document.body.appendChild(TrinketTraitDiv);
-
-//Trinket / Trait Buttons
-//Trinket
-var TrinketBtn = document.createElement("BUTTON");
-TrinketBtn.setAttribute("id", "TrinketsBtn");
-TrinketBtn.setAttribute("class", "button");
-TrinketBtn.setAttribute("onClick", "itemClick('Trinkets')");
-var TrinketText = document.createTextNode("Trinket");
-TrinketBtn.appendChild(TrinketText);
-TrinketTraitDiv.appendChild(TrinketBtn)
-
-generatehorizontalSpacer(TrinketTraitDiv);
-
-//Trait
-var TraitBtn = document.createElement("BUTTON");
-TraitBtn.setAttribute("id", "TraitsBtn");
-TraitBtn.setAttribute("class", "button");
-TraitBtn.setAttribute("onClick", "itemClick('Traits')");
-var TraitText = document.createTextNode("Azerite Trait");
-TraitBtn.appendChild(TraitText);
-TrinketTraitDiv.appendChild(TraitBtn)
-
-//Primary and Secondary Traits
-var traitButtons = document.createElement("div");
-traitButtons.setAttribute("id", "traitButtons");
-traitButtons.setAttribute("class", "dropdown-content")
-
-
-var primaryTrait = document.createElement("BUTTON");
-primaryTrait.setAttribute("id", "primary");
-primaryTrait.setAttribute("class", "button");
-primaryTrait.setAttribute("onClick", "itemClick('Traits-P')")
-var primaryTraitText = document.createTextNode("Primary Traits");
-primaryTrait.appendChild(primaryTraitText);
-traitButtons.appendChild(primaryTrait);
-
-generatehorizontalSpacer(traitButtons);
-
-var secondaryTrait = document.createElement("BUTTON");
-secondaryTrait.setAttribute("id", "secondary");
-secondaryTrait.setAttribute("class", "button");
-secondaryTrait.setAttribute("onClick", "itemClick('Traits-S')")
-var secondaryTraitText = document.createTextNode("Secondary Traits");
-secondaryTrait.appendChild(secondaryTraitText);
-traitButtons.appendChild(secondaryTrait);
-document.body.appendChild(traitButtons);
-
-//Fight Style div's
-var fightStyleDiv = document.createElement("div");
-fightStyleDiv.setAttribute("id", "Fight-Style-div");
-fightStyleDiv.setAttribute("class", "tabcontent");
-fightStyleDiv.style.justifyContent = "center";
-document.body.appendChild(fightStyleDiv);
-
-//Fight Style Buttons
-//Composite
-var compositeBtn = document.createElement("BUTTON");
-compositeBtn.setAttribute("id", "CBtn");
-compositeBtn.setAttribute("class", "button");
-compositeBtn.setAttribute("onClick", "fightClick('C')");
-var compositeText = document.createTextNode("Composite");
-compositeBtn.appendChild(compositeText);
-fightStyleDiv.appendChild(compositeBtn)
-
-generatehorizontalSpacer(fightStyleDiv);
-
-//Single Target
-var singleTargetBtn = document.createElement("BUTTON");
-singleTargetBtn.setAttribute("id", "STBtn");
-singleTargetBtn.setAttribute("class", "button");
-singleTargetBtn.setAttribute("onClick", "fightClick('ST')");
-var singleTargetText = document.createTextNode("Single Target");
-singleTargetBtn.appendChild(singleTargetText);
-fightStyleDiv.appendChild(singleTargetBtn)
-
-generatehorizontalSpacer(fightStyleDiv);
-
-//Dungeon
-var dungeonBtn = document.createElement("BUTTON");
-dungeonBtn.setAttribute("id", "DBtn");
-dungeonBtn.setAttribute("class", "button");
-dungeonBtn.setAttribute("onClick", "fightClick('D')");
-var dungeonText = document.createTextNode("Dungeon");
-dungeonBtn.appendChild(dungeonText);
-fightStyleDiv.appendChild(dungeonBtn)
 
 
 
@@ -743,6 +831,7 @@ var talentsBtn = 'AS';
 var itemBtn = 'Trinkets';
 var fightBtn = 'C';
 var traits = 'P';
+var essence = 'Major';
 
 document.addEventListener('DOMContentLoaded', function() {
   var checkbox = document.querySelector('input[type="checkbox"]');
@@ -777,12 +866,15 @@ function itemClick(clicked) {
   if (clicked == 'Traits-P' || clicked == 'Traits-S') {
     itemBtn = 'Traits'
     traits = clicked.split("-")[1];
-  } else {
+  } else if (clicked == 'Essence-Major' || clicked == 'Essence-Minor') {
+    itemBtn = 'Essences';
+    essence = clicked.split("-")[1];
+  }else  {
     itemBtn = clicked;
   }
 
   clickedID = clicked + 'Btn';
-  var trinketTraits = document.getElementById('Trinket-Trait-div').children;
+  var trinketTraits = document.getElementById('sims-div').children;
   for (i = 0; i < trinketTraits.length; i++) {
     if (trinketTraits[i].id.toLowerCase() == clickedID.toLowerCase() && trinketTraits[i].id.toLowerCase() != 'primary' && trinketTraits[i].id.toLowerCase() != 'secondary') {
       trinketTraits[i].style.borderColor = '#DDA0DD';
@@ -809,43 +901,33 @@ function fightClick(clicked) {
   }
 }
 
+traitButtons = document.getElementById("traits-div");
+essenceButtons = document.getElementById("essence-div");
+
 for (var i = 0; i < btnGroup.length; i++) {
   btnGroup[i].addEventListener("click", function() {
     if (itemBtn == 'Trinkets') {
       wcp_charts.updateTrinketChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
+      essenceButtons.classList.remove("show");
     } else if (itemBtn == 'Traits') {
       wcp_charts.updateTraitChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.add("show");
+      essenceButtons.classList.remove("show");
+    } else if (itemBtn == 'Essences')
+    {
+      wcp_charts.updateEssenceChart(talentsBtn + itemBtn + fightBtn);
+      traitButtons.classList.remove("show");
+      essenceButtons.classList.add("show");
     }
   })
 }
 
-var divs = document.getElementsByClassName("tabcontent")
-
-//Style Divs
-function styleDivs() {
-  for (var i = 0; i < divs.length; i++) {
-    let divClass = document.getElementById(divs[i].id)
-    divClass.style.textAlign = "center";
-    divClass.style.paddingBottom = "5px";
-    divClass.style.paddingRight = "5px";
-  }
-}
 
 //Style Buttons
 function styleButtons() {
   for (var i = 0; i < btnGroup.length; i++) {
     let btn = document.getElementById(btnGroup[i].id)
-
-    btn.style.backgroundColor = default_background_color;
-    btn.style.color = "white";
-    btn.style.border = "1px solid white"
-    btn.style.padding = "15px 32px";
-    btn.style.textAlign = "center";
-    btn.style.fontSize = "16px";
-    btn.style.display = "inline-block";
-    btn.style.justifyContent = "center";
 
     if (btn.id == 'ASBtn' || btn.id == 'TrinketsBtn' || btn.id == 'CBtn') {
       btn.style.borderColor = "#DDA0DD";
@@ -857,7 +939,7 @@ function styleButtons() {
     btn.style.cursor = 'pointer';
   }
 }
-styleDivs();
+
 styleButtons();
 
 //Tab Function
@@ -890,6 +972,14 @@ var SCTraitTab_D = createTabs("SC-Trait-Tab-Dungeon");
 var ASTraitTab_C = createTabs("AS-Trait-Tab-Composite");
 var ASTraitTab_ST = createTabs("AS-Trait-Tab-SingleTarget");
 var ASTraitTab_D = createTabs("AS-Trait-Tab-Dungeon");
+
+//Essence Tabs
+var SCEssenceTab_C = createTabs("SC-Essence-Tab-Composite");
+var SCEssenceTab_ST = createTabs("SC-Essence-Tab-SingleTarget");
+var SCEssenceTab_D = createTabs("SC-Essence-Tab-Dungeon");
+var ASEssenceTab_C = createTabs("AS-Essence-Tab-Composite");
+var ASEssenceTab_ST = createTabs("AS-Essence-Tab-SingleTarget");
+var ASEssenceTab_D = createTabs("AS-Essence-Tab-Dungeon");
 
 var SCTrinketsCTest = createTabs("SCTrinketsC");
 

@@ -36,6 +36,28 @@
 			Azerite trait sims are done in a vaccum, and this list does not display combinations of traits, which alter your choices significantly. For this reason, just because something is higher on this chart does not mean it is the better choice. You should sim your available choices to determine what is best for your gear on <a href="https://www.raidbots.com/simbot/topgear">Raidbots</a>. To get a brief idea of what is better, check out the <a href="https://github.com/WarcraftPriests/bfa-shadow-priest/blob/master/azerite-traits/README.md#azerite-trait-results">GitHub Repo for Azerite traits</a> that shows combination tests.
 		</section>
 	</div>
+	<div id="talent-div" class=tabcontent>
+		<button id="SCBtn" class="button" onClick="talentClick('SC')">Shadow Crash</button>
+		<button id="ASBtn" class="button" onCLick="talentClick('AS')">Auspicious Spirits</button>
+	</div>
+	<div id="sims-div" class=tabcontent>
+		<button id="TrinketsBtn" class="button" onClick="itemClick('Trinkets')">Trinkets</button>
+		<button id="TraitsBtn" class="button" onClick="itemClick('Traits')">Traits</button>
+		<button id="EssencesBtn" class="button" onClick="itemClick('Essences')">Essences</button>
+	</div>
+	<div id="traits-div" class="dropdown-content">
+		<button id="Primary" class="button" onClick="itemClick('Traits-P')">Primary</button>
+		<button id="Secondary" class="button" onClick="itemClick('Traits-S')">Secondary</button>
+	</div>
+	<div id="essence-div" class="dropdown-content">
+		<button id="Major" class="button" onClick="itemClick('Essence-Major')">Major</button>
+		<button id="Minor" class="button" onClick="itemClick('Essence-Minor')">Minor</button>
+	</div>
+	<div id="Fight-Style-div" class=tabcontent>
+		<button id="CBtn" class="button" onClick="fightClick('C')">Composite</button>
+		<button id="STBtn" class="button" onClick="fightClick('ST')">Single Target</button>
+		<button id="DBtn" class="button" onClick="fightClick('D')">Dungeon</button>
+	</div>
 	<div id="empty"></div>
 	<div id="container"></div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -136,6 +158,37 @@
 					type: 'trait',
 					src: 'traits_AS_D_Combo',
 					title: 'Azerite Traits - Auspicious Sprits - Dungeon - Combos'
+				},
+				//Essences
+				'SCEssencesC': {
+					type: 'essence',
+					src: 'essences_SC_C',
+					title: 'Azerite essences - Shadow Crash - Composite'
+				},
+				'SCEssencesST': {
+					type: 'essence',
+					src: 'essences_SC_ST',
+					title: 'Azerite essences - Shadow Crash - Single Target'
+				},
+				'SCEssencesD': {
+					type: 'essence',
+					src: 'essences_SC_D',
+					title: 'Azerite essences - Shadow Crash - Dungeon'
+				},
+				'ASEssencesC': {
+					type: 'essence',
+					src: 'essences_AS_C',
+					title: 'Azerite essences - Auspicious Sprits - Composite'
+				},
+				'ASEssencesST': {
+					type: 'essence',
+					src: 'essences_AS_ST',
+					title: 'Azerite essences - Auspicious Sprits - Single Target'
+				},
+				'ASEssencesD': {
+					type: 'essence',
+					src: 'essences_AS_D',
+					title: 'Azerite essences - Auspicious Sprits - Dungeon'
 				},
 			}
 		});
