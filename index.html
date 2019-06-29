@@ -48,6 +48,11 @@
 		<button id="TrinketsBtn" class="button" onClick="itemClick('Trinkets')">Trinkets</button>
 		<button id="TraitsBtn" class="button" onClick="itemClick('Traits')">Traits</button>
 		<button id="EssencesBtn" class="button" onClick="itemClick('Essences')">Essences</button>
+		<button id="TalentsBtn" class="button" onClick="itemClick('Talents')">Talents</button> <!--
+		<button id="EnchantsBtn" class="button" onClick="itemClick('Enchants')">Enchants</button>
+		<button id="ConsumablesBtn" class="button" onClick="itemClick('Consumables')">Consumables</button>
+		<button id="RacialsBtn" class="button" onClick="itemClick('Racials')">Racials</button>
+		<button id="StatsBtn" class="button" onClick="itemClick('Stats')">Stats</button> -->
 	</div>
 	<div id="traits-div" class="dropdown-content">
 		<button id="Primary" class="button" onClick="itemClick('Traits-P')">Primary</button>
@@ -193,6 +198,21 @@
 					type: 'essence',
 					src: 'essences_AS_D',
 					title: 'Azerite essences - Auspicious Sprits - Dungeon'
+				},
+				'TalentsC' : {
+					type: 'talents',
+					src: 'talents_C',
+					title: 'Battle for Azeroth Talents - Composite'
+				},
+				'TalentsST' : {
+					type: 'talents',
+					src: 'talents_ST',
+					title: 'Battle for Azeroth Talents - Signle Target'
+				},
+				'TalentsD' : {
+					type: 'talents',
+					src: 'talents_D',
+					title: 'Battle for Azeroth Talents - Dungeon'
 				},
 			}
 		});
