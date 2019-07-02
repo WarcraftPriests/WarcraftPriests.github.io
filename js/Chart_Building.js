@@ -6,6 +6,10 @@ const light_color = "#eeeeee";
 const medium_color = "#999999";
 const dark_color = "#343a40";
 
+var lastUpdate = document.getElementById("updateData")
+
+
+
 //Commented out for now until I can decide on colors.
 const ilevel_color_table = {
   /*
@@ -258,6 +262,9 @@ WCP_Chart.prototype.init = function() {
 
 WCP_Chart.prototype.updateTrinketChart = function(chartName) {
   jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+    toUpdateData = "Last Updated: ";
+    toUpdateData += data["LastUpdated"];
+    updateData.innerHTML = toUpdateData;
     var sortedItems = [];
     var dpsSortedData = data["sorted_data_keys"];
     var wowheadTooltips = [];
@@ -572,7 +579,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateEssenceChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json")
+  
   jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
