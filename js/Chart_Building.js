@@ -762,9 +762,17 @@ WCP_Chart.prototype.updateEssenceChart = function(chartName) {
             //If lowest ilvl is looked at, subtract base DPS
             itemLevelDpsValues.push(dps - baselineDPS);
           } else if (stackCount == 2) {
-            itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_1"]);
+            if(dps - data["data"][sortedData][maxItemLevel + "_1"] > 0)
+              itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_1"]);
+            else {
+               itemLevelDpsValues.push(0);
+            }
           } else {
-            itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_2"]);
+            if(dps - data["data"][sortedData][maxItemLevel + "_2"] > 0)
+              itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_2"]);
+            else {
+               itemLevelDpsValues.push(0);
+             }
           }
         } else {
           if (stackName in data["data"][maxItemLevel + "_" + (stackCount -1) ]) {
