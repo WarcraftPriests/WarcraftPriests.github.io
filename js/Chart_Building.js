@@ -135,6 +135,53 @@ const minor_essnece_powers = [
 "Lifeblood 0 Allies" 
 ]
 
+const potion_flask = [
+"Potion of Unbridled Fury",
+"Potion of Focused Resolve",
+"Greater Flask of Endless Fathoms",
+"Flask of Endless Fathoms",
+"Superior Battle Potion of Intellect",
+"Potion of Rising Death",
+"Battle Potion of Intellect",
+"Potion of Empowered Proximity"
+]
+
+const food_consumables = [
+"Baked Port Tato",
+"Mech-Dowels Big Mech",
+"Swamp Fish n Chips",
+"Honey-Glazed Haunches",
+"Bil Tong",
+"Famine Evaluator and Snack Table",
+"Abyssal-Fried Rissole ",
+"Fancy Darkmoon Feast",
+"Spiced Snapper",
+"Bountiful Captains Feast",
+"Sailors Pie",
+"Galley Banquet"
+]
+
+const weapon_enchants = [
+"Weapon-Quick Navigation",
+"Weapon-Deadly Navigation",
+"Weapon-Machinists Brilliance",
+"Weapon-Torrent of Elements",
+"Weapon-Versatile Navigation",
+"Weapon-Masterful Navigation",
+"Weapon-Oceanic Restoration"
+]
+
+const ring_enchants = [
+"Ring Accord of Haste",
+"Ring Accord of Critical Strike",
+"Ring Accord of Versatility",
+"Ring Pact of Haste",
+"Ring Pact of Critical Strike",
+"Ring Accord of Mastery",
+"Ring Pact of Versatility",
+"Ring Pact of Mastery"
+]
+
 var WCP_Chart = function WCP_Chart(id, options) {
   this.chartId = id;
   this.options = options;
@@ -1036,6 +1083,322 @@ WCP_Chart.prototype.updateRacialsChart = function(chartName) {
   });
 };
 
+WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+    let sortedItems = [];
+    let dpsSortedData = data["sorted_data_keys"];
+    //Check if the essences are major or minor and adjust the graph accordingly
+    let enchantselect = [];
+      if (enchant == 'Weapon') {
+        for (dpsName of dpsSortedData) {
+          dpsName = dpsName.trim();
+          for (m of weapon_enchants) {
+            if (dpsName == m) {
+              enchantselect.push(dpsName);
+            }
+          }
+        }
+    } else {
+      {
+        for (dpsName of dpsSortedData) {
+          dpsName = dpsName.trim();
+          for (m of ring_enchants) {
+            if (dpsName == m) {
+              enchantselect.push(dpsName);
+            }
+          }
+        }
+      }
+    }
+
+
+    var wowheadTooltipsTraits = [];
+    for (dpsName of enchantselect) {
+      chartLink = "";
+      dpsName = dpsName.trim()
+      spellID = data["spell_ids"][dpsName];
+      chartLink = "";
+      chartLink += "<div style=\"display:inline-block; margin-bottom:-3px\">";
+      chartLink += "<a style=\"color: white; font-size: 16px; padding: 3px; cursor: default\" href=#";
+      chartLink += " onclick=\"return false\"";
+      chartLink += " rel=\"https://www.wowhead.com/spell=";
+      chartLink += spellID;
+      chartLink += "/"
+      chartLink += dpsName.replace(/ /g, '-');
+      chartLink += "\" target=\"blank\"";
+      chartLink += " class=\"chart_link\"";
+      chartLink += ">";
+      chartLink += dpsName;
+      chartLink += "</a>";
+      chartLink += "</div>";
+      //Push link into array
+      //console.log(chartLink);
+      wowheadTooltipsTraits.push(chartLink);
+    }
+
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(false);
+    }
+    this.chart.update({
+      xAxis: {
+        categories: wowheadTooltipsTraits,
+        useHTML: true,
+        labels: {
+          x: -40,
+        },
+      },
+      title: {
+        style: {
+          color: default_font_color,
+          fontWeight: 'bold'
+        },
+        text: this.options.charts[chartName].title
+      },
+      legend: {
+        title: {
+          text: "DPS"
+        }
+      },
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        headerFormat: "<b>(point.x)</b>", //'<span style="font-size: 14px"><b>{point.key}</b></span><br/>',
+        style: {
+          color: default_font_color,
+        },
+        pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
+        padding: 5,
+        //shared: true
+        formatter: function() {
+          var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
+          s += dark_color;
+          s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
+          var baseAmount = data["data"]["Base"]["DPS"];
+          var cumulativeAmount = 0 + baseAmount;
+          for (var i = this.points.length - 1; i >= 0; i--) {
+            cumulativeAmount += this.points[i].y;
+            if (this.points[i].y != 0) {
+              s += '<div><span style=\"margin-left: 9px; border-left: 9px solid ' +
+                this.points[i].series.color + ';' +
+                ' padding-left: 4px;' +
+                '\">' +
+                this.points[i].series.name +
+                '</span>:&nbsp;&nbsp;' +
+                Intl.NumberFormat().format(cumulativeAmount - baseAmount);
+              s += ' dps';
+              s += ' - ';
+              let percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
+              s += percentage;
+              if (percentage > 0) {
+                s += '% (Increase)';
+              } else {
+                s += '% (decrease)';
+              }
+            }
+          }
+          s += '</div>';
+          return s;
+        },
+      },
+    });
+      let itemLevelDpsValues = [];
+      for (sortedData of enchantselect) {
+        sortedData = sortedData.trim();
+        let dps = data["data"][sortedData]["DPS"];
+        let baselineDPS = data["data"]["Base"]["DPS"];
+
+        //Check to make sure DPS isn't 0
+        if (dps > 0) {
+            //If lowest ilvl is looked at, subtract base DPS
+            itemLevelDpsValues.push(dps - baselineDPS);          
+        } else {
+          itemLevelDpsValues.push(dps);
+        }
+      }
+      //standard_chart.yAxis[0].update({categories: dpsSortedData});
+      this.chart.addSeries({
+        color: ilevel_color_table["DPS"],
+        data: itemLevelDpsValues,
+        name: "DPS",
+        showInLegend: true
+      }, false);
+    
+    document.getElementById(this.chartId).style.height = 200 + enchantselect.length * 30 + "px";
+    this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
+    //this.chart.renderTo(this.chartId);
+    this.chart.redraw();
+    try {
+      $WowheadPower.refreshLinks();
+    } catch (error) {
+      console.log(error);
+    }
+
+  }.bind(this)).fail(function(xhr, status) {
+    console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+    console.log(status);
+    //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+  });
+};
+
+WCP_Chart.prototype.updateConsumablesChart = function(chartName) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+    let sortedItems = [];
+    let dpsSortedData = data["sorted_data_keys"];
+    //Check if the essences are major or minor and adjust the graph accordingly
+    let consumableselect = [];
+      if (consumable == 'Potion') {
+        for (dpsName of dpsSortedData) {
+          dpsName = dpsName.trim();
+          for (m of potion_flask) {
+            if (dpsName == m) {
+              consumableselect.push(dpsName);
+            }
+          }
+        }
+    } else {
+      {
+        for (dpsName of dpsSortedData) {
+          dpsName = dpsName.trim();
+          for (m of food_consumables) {
+            if (dpsName == m) {
+              consumableselect.push(dpsName);
+            }
+          }
+        }
+      }
+    }
+
+
+    var wowheadTooltipsTraits = [];
+    for (dpsName of consumableselect) {
+      chartLink = "";
+      dpsName = dpsName.trim()
+      spellID = data["spell_ids"][dpsName];
+      chartLink = "";
+      chartLink += "<div style=\"display:inline-block; margin-bottom:-3px\">";
+      chartLink += "<a style=\"color: white; font-size: 16px; padding: 3px; cursor: default\" href=#";
+      chartLink += " onclick=\"return false\"";
+      chartLink += " rel=\"https://www.wowhead.com/spell=";
+      chartLink += spellID;
+      chartLink += "/"
+      chartLink += dpsName.replace(/ /g, '-');
+      chartLink += "\" target=\"blank\"";
+      chartLink += " class=\"chart_link\"";
+      chartLink += ">";
+      chartLink += dpsName;
+      chartLink += "</a>";
+      chartLink += "</div>";
+      //Push link into array
+      //console.log(chartLink);
+      wowheadTooltipsTraits.push(chartLink);
+    }
+
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(false);
+    }
+    this.chart.update({
+      xAxis: {
+        categories: wowheadTooltipsTraits,
+        useHTML: true,
+        labels: {
+          x: -40,
+        },
+      },
+      title: {
+        style: {
+          color: default_font_color,
+          fontWeight: 'bold'
+        },
+        text: this.options.charts[chartName].title
+      },
+      legend: {
+        title: {
+          text: "DPS"
+        }
+      },
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        headerFormat: "<b>(point.x)</b>", //'<span style="font-size: 14px"><b>{point.key}</b></span><br/>',
+        style: {
+          color: default_font_color,
+        },
+        pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
+        padding: 5,
+        //shared: true
+        formatter: function() {
+          var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
+          s += dark_color;
+          s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
+          var baseAmount = data["data"]["Base"]["DPS"];
+          var cumulativeAmount = 0 + baseAmount;
+          for (var i = this.points.length - 1; i >= 0; i--) {
+            cumulativeAmount += this.points[i].y;
+            if (this.points[i].y != 0) {
+              s += '<div><span style=\"margin-left: 9px; border-left: 9px solid ' +
+                this.points[i].series.color + ';' +
+                ' padding-left: 4px;' +
+                '\">' +
+                this.points[i].series.name +
+                '</span>:&nbsp;&nbsp;' +
+                Intl.NumberFormat().format(cumulativeAmount - baseAmount);
+              s += ' dps';
+              s += ' - ';
+              let percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
+              s += percentage;
+              if (percentage > 0) {
+                s += '% (Increase)';
+              } else {
+                s += '% (decrease)';
+              }
+            }
+          }
+          s += '</div>';
+          return s;
+        },
+      },
+    });
+      let itemLevelDpsValues = [];
+      for (sortedData of consumableselect) {
+        sortedData = sortedData.trim();
+        let dps = data["data"][sortedData]["DPS"];
+        let baselineDPS = data["data"]["Base"]["DPS"];
+
+        //Check to make sure DPS isn't 0
+        if (dps > 0) {
+            //If lowest ilvl is looked at, subtract base DPS
+            itemLevelDpsValues.push(dps - baselineDPS);          
+        } else {
+          itemLevelDpsValues.push(dps);
+        }
+      }
+      //standard_chart.yAxis[0].update({categories: dpsSortedData});
+      this.chart.addSeries({
+        color: ilevel_color_table["DPS"],
+        data: itemLevelDpsValues,
+        name: "DPS",
+        showInLegend: true
+      }, false);
+    
+    document.getElementById(this.chartId).style.height = 200 + consumableselect.length * 30 + "px";
+    this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
+    //this.chart.renderTo(this.chartId);
+    this.chart.redraw();
+    try {
+      $WowheadPower.refreshLinks();
+    } catch (error) {
+      console.log(error);
+    }
+
+  }.bind(this)).fail(function(xhr, status) {
+    console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+    console.log(status);
+    //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+  });
+};
+
 WCP_Chart.prototype.buildButtons = function() {
   var container = document.createElement('div');
   container.id = 'button-container';
@@ -1131,6 +1494,8 @@ var itemBtn = 'Trinkets';
 var fightBtn = 'C';
 var traits = 'P';
 var essence = 'Major';
+var enchant = 'Weapon';
+var consumable = "Potion"
 
 document.addEventListener('DOMContentLoaded', function() {
   var checkbox = document.querySelector('input[type="checkbox"]');
@@ -1168,6 +1533,12 @@ function itemClick(clicked) {
   } else if (clicked == 'Essence-Major' || clicked == 'Essence-Minor') {
     itemBtn = 'Essences';
     essence = clicked.split("-")[1];
+  } else if (clicked == 'Enchant-Weapon' || clicked == 'Enchant-Ring') {
+    itemBtn = 'Enchants';
+    enchant = clicked.split("-")[1];
+  } else if (clicked == 'Consumable-Potion' || clicked == 'Consumable-Food') {
+    itemBtn = 'Consumables';
+    consumable = clicked.split("-")[1];
   }else  {
     itemBtn = clicked;
   }
@@ -1202,6 +1573,8 @@ function fightClick(clicked) {
 
 traitButtons = document.getElementById("traits-div");
 essenceButtons = document.getElementById("essence-div");
+enchantButtons = document.getElementById("enchant-div");
+consumableButtons = document.getElementById("consumable-div");
 
 for (var i = 0; i < btnGroup.length; i++) {
   btnGroup[i].addEventListener("click", function() {
@@ -1210,22 +1583,44 @@ for (var i = 0; i < btnGroup.length; i++) {
       wcp_charts.updateTrinketChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.remove("show");
     } else if (itemBtn == 'Traits') {
       wcp_charts.updateTraitChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.add("show");
       essenceButtons.classList.remove("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.remove("show");
     } else if (itemBtn == 'Essences') {
       wcp_charts.updateEssenceChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.add("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.remove("show");
     } else if (itemBtn == 'Talents') {
       wcp_charts.updateTalentsChart(itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.remove("show");
     } else if (itemBtn == 'Racials') {
       wcp_charts.updateRacialsChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.remove("show");
+    } else if (itemBtn == "Enchants") {
+      wcp_charts.updateEnchantsChart(talentsBtn + itemBtn + fightBtn);
+      traitButtons.classList.remove("show");
+      essenceButtons.classList.remove("show");
+      enchantButtons.classList.add("show");
+      consumableButtons.classList.remove("show");
+    }else if (itemBtn == "Consumables") {
+      wcp_charts.updateConsumablesChart(talentsBtn + itemBtn + fightBtn);
+      traitButtons.classList.remove("show");
+      essenceButtons.classList.remove("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.add("show");
     }
   })
 }
@@ -1288,9 +1683,36 @@ var ASEssenceTab_C = createTabs("AS-Essence-Tab-Composite");
 var ASEssenceTab_ST = createTabs("AS-Essence-Tab-SingleTarget");
 var ASEssenceTab_D = createTabs("AS-Essence-Tab-Dungeon");
 
+//Talent Tabs
 var Talent_C = createTabs("Talents-Composite");
 var Talent_ST = createTabs("Talents-SingleTarget");
 var Talent_D = createTabs("Talents-Dungeon");
+
+//Racial Tabs
+var SCRacialTab_C = createTabs("SC-Racial-Tab-Composite");
+var SCRacialTab_ST = createTabs("SC-Racial-Tab-SingleTarget");
+var SCRacialTab_D = createTabs("SC-Racial-Tab-Dungeon");
+var ASRacialTab_C = createTabs("AS-Racial-Tab-Composite");
+var ASRacialTab_ST = createTabs("AS-Racial-Tab-SingleTarget");
+var ASRacialTab_D = createTabs("AS-Racial-Tab-Dungeon");
+
+//Enchant Tabs
+var SCEnchantTab_C = createTabs("SC-Enchant-Tab-Composite");
+var SCEnchantTab_ST = createTabs("SC-Enchant-Tab-SingleTarget");
+var SCEnchantTab_D = createTabs("SC-Enchant-Tab-Dungeon");
+var ASEnchantTab_C = createTabs("AS-Enchant-Tab-Composite");
+var ASEnchantTab_ST = createTabs("AS-Enchant-Tab-SingleTarget");
+var ASEnchantTab_D = createTabs("AS-Enchant-Tab-Dungeon");
+
+//Consumable Tabs
+var SCConsumableTab_C = createTabs("SC-Consumable-Tab-Composite");
+var SCConsumableTab_ST = createTabs("SC-Consumable-Tab-SingleTarget");
+var SCConsumableTab_D = createTabs("SC-Consumable-Tab-Dungeon");
+var ASConsumableTab_C = createTabs("AS-Consumable-Tab-Composite");
+var ASConsumableTab_ST = createTabs("AS-Consumable-Tab-SingleTarget");
+var ASConsumableTab_D = createTabs("AS-Consumable-Tab-Dungeon");
+
+
 
 var SCTrinketsCTest = createTabs("SCTrinketsC");
 

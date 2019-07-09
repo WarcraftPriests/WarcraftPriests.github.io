@@ -53,10 +53,10 @@
 		<button id="TraitsBtn" class="button" onClick="itemClick('Traits')">Traits</button>
 		<button id="EssencesBtn" class="button" onClick="itemClick('Essences')">Essences</button>
 		<button id="TalentsBtn" class="button" onClick="itemClick('Talents')">Talents</button>
-		<button id="RacialsBtn" class="button" onClick="itemClick('Racials')">Racials</button> <!--
+		<button id="RacialsBtn" class="button" onClick="itemClick('Racials')">Racials</button> 
 		<button id="EnchantsBtn" class="button" onClick="itemClick('Enchants')">Enchants</button>
 		<button id="ConsumablesBtn" class="button" onClick="itemClick('Consumables')">Consumables</button>
-		<button id="RacialsBtn" class="button" onClick="itemClick('Racials')">Racials</button>
+		<!--		
 		<button id="StatsBtn" class="button" onClick="itemClick('Stats')">Stats</button> -->
 	</div>
 	<div id="traits-div" class="dropdown-content">
@@ -66,6 +66,14 @@
 	<div id="essence-div" class="dropdown-content">
 		<button id="Major" class="button" onClick="itemClick('Essence-Major')">Major</button>
 		<button id="Minor" class="button" onClick="itemClick('Essence-Minor')">Minor</button>
+	</div>
+	<div id="enchant-div" class="dropdown-content">
+		<button id="Weapons" class="button" onClick="itemClick('Enchant-Weapon')">Weapon</button>
+		<button id="Rings" class="button" onClick="itemClick('Enchant-Ring')">Ring</button>
+	</div>
+	<div id="consumable-div" class="dropdown-content">
+		<button id="Potion" class="button" onClick="itemClick('Consumable-Potion')">Potion/Flask</button>
+		<button id="Food" class="button" onClick="itemClick('Consumable-Food')">Food</button>
 	</div>
 	<div id="Fight-Style-div" class=tabcontent>
 		<button id="CBtn" class="button" onClick="fightClick('C')">Composite</button>
@@ -248,6 +256,66 @@
 					type: 'racials',
 					src: 'racials_SC_D',
 					title: 'Battle for Azeroth Racials - Dungeon'
+				},
+				'ASEnchantsC' : {
+					type: 'enchants',
+					src: 'enchants_AS_C',
+					title: 'Battle for Azeroth Enchants - Composite'
+				},
+				'ASEnchantsST' : {
+					type: 'enchants',
+					src: 'enchants_AS_ST',
+					title: 'Battle for Azeroth Enchants - Single Target'
+				},
+				'ASEnchantsD' : {
+					type: 'enchants',
+					src: 'enchants_AS_D',
+					title: 'Battle for Azeroth Enchants - Dungeon'
+				},
+				'SCEnchantsC' : {
+					type: 'enchants',
+					src: 'enchants_SC_C',
+					title: 'Battle for Azeroth Enchants - Composite'
+				},
+				'SCEnchantsST' : {
+					type: 'enchants',
+					src: 'enchants_SC_ST',
+					title: 'Battle for Azeroth Enchants - Single Target'
+				},
+				'SCEnchantsD' : {
+					type: 'enchants',
+					src: 'enchants_SC_D',
+					title: 'Battle for Azeroth Enchants - Dungeon'
+				},
+				'ASConsumablesC' : {
+					type: 'consumables',
+					src: 'consumables_AS_C',
+					title: 'Battle for Azeroth Consumables - Composite'
+				},
+				'ASConsumablesST' : {
+					type: 'consumables',
+					src: 'consumables_AS_ST',
+					title: 'Battle for Azeroth Consumables - Single Target'
+				},
+				'ASConsumablesD' : {
+					type: 'consumables',
+					src: 'consumables_AS_D',
+					title: 'Battle for Azeroth Consumables - Dungeon'
+				},
+				'SCConsumablesC' : {
+					type: 'consumables',
+					src: 'consumables_SC_C',
+					title: 'Battle for Azeroth Consumables - Composite'
+				},
+				'SCConsumablesST' : {
+					type: 'consumables',
+					src: 'consumables_SC_ST',
+					title: 'Battle for Azeroth Consumables - Single Target'
+				},
+				'SCConsumablesD' : {
+					type: 'consumables',
+					src: 'consumables_SC_D',
+					title: 'Battle for Azeroth Consumables - Dungeon'
 				},
 			}
 		});
