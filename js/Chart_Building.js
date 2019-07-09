@@ -761,8 +761,10 @@ WCP_Chart.prototype.updateEssenceChart = function(chartName) {
           if (stackCount == 1) {
             //If lowest ilvl is looked at, subtract base DPS
             itemLevelDpsValues.push(dps - baselineDPS);
-          } else {
+          } else if (stackCount == 2) {
             itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_1"]);
+          } else {
+            itemLevelDpsValues.push(dps - data["data"][sortedData][maxItemLevel + "_2"]);
           }
         } else {
           if (stackName in data["data"][maxItemLevel + "_" + (stackCount -1) ]) {
