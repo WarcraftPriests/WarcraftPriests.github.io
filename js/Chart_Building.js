@@ -759,7 +759,6 @@ WCP_Chart.prototype.updateTalentsChart = function(chartName) {
         dpsName = dpsName.trim();
         talentSelect.push(dpsName);
     }
-    console.log(talentSelect);
 
 /*
     var wowheadTooltipsTraits = [];
@@ -877,6 +876,150 @@ WCP_Chart.prototype.updateTalentsChart = function(chartName) {
       }, false);
     
     document.getElementById(this.chartId).style.height = 200 + talentSelect.length * 30 + "px";
+    this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
+    //this.chart.renderTo(this.chartId);
+    this.chart.redraw();
+    try {
+      $WowheadPower.refreshLinks();
+    } catch (error) {
+      console.log(error);
+    }
+
+  }.bind(this)).fail(function(xhr, status) {
+    console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+    console.log(status);
+    //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+  });
+};
+
+WCP_Chart.prototype.updateRacialsChart = function(chartName) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+    let sortedItems = [];
+    let dpsSortedData = data["sorted_data_keys"];
+    //Check if the essences are major or minor and adjust the graph accordingly
+    let racialSelect = [];
+    for (dpsName of dpsSortedData) {
+        dpsName = dpsName.trim();
+        racialSelect.push(dpsName);
+    }
+
+/*
+    var wowheadTooltipsTraits = [];
+    for (dpsName of racialSelect) {
+      chartLink = "";
+      dpsName = dpsName.trim()
+      racialArray = dpsName.split(" ");
+      chartLink = "";
+      chartLink += "<div style=\"display:inline-block; margin-bottom:-3px; padding-right:10px;\">";
+      for (t of racialArray) {
+        chartLink += "<a style=\"color: white; font-size: 16px; padding: 3px; cursor: default\" href=#";
+        chartLink += " onclick=\"return false\"";
+        chartLink += " rel=\"https://www.wowhead.com/spell=";
+        spellID = data["spell_ids"][t];
+        chartLink += spellID;
+        chartLink += "/"
+        chartLink += t
+        chartLink += "\" target=\"blank\"";
+        chartLink += " class=\"chart_link\"";
+        chartLink += ">";
+        chartLink += t;
+        chartLink += "</a>";
+        chartLink += " / ";
+      }
+      //Push link into array
+      //console.log(chartLink);
+      wowheadTooltipsTraits.push(chartLink);
+    }
+*/
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(false);
+    }
+    this.chart.update({
+      xAxis: {
+        categories: racialSelect,
+        useHTML: true,
+        labels: {
+          x: -40,
+        },
+      },
+      title: {
+        style: {
+          color: default_font_color,
+          fontWeight: 'bold'
+        },
+        text: this.options.charts[chartName].title
+      },
+      legend: {
+        title: {
+          text: "DPS"
+        }
+      },
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        headerFormat: "<b>(point.x)</b>", //'<span style="font-size: 14px"><b>{point.key}</b></span><br/>',
+        style: {
+          color: default_font_color,
+        },
+        pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
+        padding: 5,
+        //shared: true
+        formatter: function() {
+          var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
+          s += dark_color;
+          s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
+          var baseAmount = data["data"]["Base"]["DPS"];
+          var cumulativeAmount = 0 + baseAmount;
+          for (var i = this.points.length - 1; i >= 0; i--) {
+            cumulativeAmount += this.points[i].y;
+            if (this.points[i].y != 0) {
+              s += '<div><span style=\"margin-left: 9px; border-left: 9px solid ' +
+                this.points[i].series.color + ';' +
+                ' padding-left: 4px;' +
+                '\">' +
+                this.points[i].series.name +
+                '</span>:&nbsp;&nbsp;' +
+                Intl.NumberFormat().format(cumulativeAmount - baseAmount);
+              s += ' dps';
+              s += ' - ';
+              let percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
+              s += percentage;
+              if (percentage > 0) {
+                s += '% (Increase)';
+              } else {
+                s += '% (decrease)';
+              }
+            }
+          }
+          s += '</div>';
+          return s;
+        },
+      },
+    });
+      let itemLevelDpsValues = [];
+      for (sortedData of racialSelect) {
+        sortedData = sortedData.trim();
+        let dps = data["data"][sortedData]["DPS"];
+        let baselineDPS = data["data"]["Base"]["DPS"];
+
+        //Check to make sure DPS isn't 0
+        if (dps > 0) {
+            //If lowest ilvl is looked at, subtract base DPS
+            itemLevelDpsValues.push(dps - baselineDPS);          
+        } else {
+          itemLevelDpsValues.push(dps);
+        }
+      }
+      //standard_chart.yAxis[0].update({categories: dpsSortedData});
+      this.chart.addSeries({
+        color: ilevel_color_table["DPS"],
+        data: itemLevelDpsValues,
+        name: "DPS",
+        showInLegend: true
+      }, false);
+    
+    document.getElementById(this.chartId).style.height = 200 + racialSelect.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
     this.chart.redraw();
@@ -1077,6 +1220,10 @@ for (var i = 0; i < btnGroup.length; i++) {
       essenceButtons.classList.add("show");
     } else if (itemBtn == 'Talents') {
       wcp_charts.updateTalentsChart(itemBtn + fightBtn);
+      traitButtons.classList.remove("show");
+      essenceButtons.classList.remove("show");
+    } else if (itemBtn == 'Racials') {
+      wcp_charts.updateRacialsChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
     }
