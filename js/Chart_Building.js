@@ -105,16 +105,16 @@ const major_essence_powers = [
 "Focused Azerite Beam",
 "Guardian of Azeroth",
 "Purifying Blast",
-"The Unbound Force", 
-"Memory of Lucid Dreams", 
+"The Unbound Force",
+"Memory of Lucid Dreams",
 "Vision of Perfection",
 "Conflict",
-"Concentrated Flame", 
-"Ripple in Space", 
+"Concentrated Flame",
+"Ripple in Space",
 "Blood of the Enemy 100",
 "Blood of the Enemy 75",
 "Blood of the Enemy 50",
-"Worldvein Resonance 4 Allies", 
+"Worldvein Resonance 4 Allies",
 "Worldvein Resonance 3 Allies",
 "Worldvein Resonance 2 Allies",
 "Worldvein Resonance 1 Allies",
@@ -123,20 +123,20 @@ const major_essence_powers = [
 
 const minor_essnece_powers = [
 "Blood Soaked",
-"Condensed Life-Force", 
-"Focused Energy", 
-"Purification Protocol", 
-"Reckless Force", 
-"Lucid Dreams", 
-"Strive for Perfection", 
-"Strife", 
-"Ancient Flame", 
-"Reality Shift", 
-"Lifeblood 4 Allies", 
-"Lifeblood 3 Allies", 
-"Lifeblood 2 Allies", 
-"Lifeblood 1 Allies", 
-"Lifeblood 0 Allies" 
+"Condensed Life Force", 
+"Focused Energy",
+"Purification Protocol",
+"Reckless Force",
+"Lucid Dreams",
+"Strive for Perfection",
+"Strife",
+"Ancient Flame",
+"Reality Shift",
+"Lifeblood 4 Allies",
+"Lifeblood 3 Allies",
+"Lifeblood 2 Allies",
+"Lifeblood 1 Allies",
+"Lifeblood 0 Allies"
 ]
 
 const potion_flask = [
@@ -630,7 +630,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateEssenceChart = function(chartName) {
-  
+
   jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
@@ -923,7 +923,7 @@ WCP_Chart.prototype.updateTalentsChart = function(chartName) {
         //Check to make sure DPS isn't 0
         if (dps > 0) {
             //If lowest ilvl is looked at, subtract base DPS
-            itemLevelDpsValues.push(dps - baselineDPS);          
+            itemLevelDpsValues.push(dps - baselineDPS);
         } else {
           itemLevelDpsValues.push(dps);
         }
@@ -935,7 +935,7 @@ WCP_Chart.prototype.updateTalentsChart = function(chartName) {
         name: "DPS",
         showInLegend: true
       }, false);
-    
+
     document.getElementById(this.chartId).style.height = 200 + talentSelect.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
@@ -1067,7 +1067,7 @@ WCP_Chart.prototype.updateRacialsChart = function(chartName) {
         //Check to make sure DPS isn't 0
         if (dps > 0) {
             //If lowest ilvl is looked at, subtract base DPS
-            itemLevelDpsValues.push(dps - baselineDPS);          
+            itemLevelDpsValues.push(dps - baselineDPS);
         } else {
           itemLevelDpsValues.push(dps);
         }
@@ -1079,7 +1079,7 @@ WCP_Chart.prototype.updateRacialsChart = function(chartName) {
         name: "DPS",
         showInLegend: true
       }, false);
-    
+
     document.getElementById(this.chartId).style.height = 200 + racialSelect.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
@@ -1225,7 +1225,7 @@ WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
         //Check to make sure DPS isn't 0
         if (dps > 0) {
             //If lowest ilvl is looked at, subtract base DPS
-            itemLevelDpsValues.push(dps - baselineDPS);          
+            itemLevelDpsValues.push(dps - baselineDPS);
         } else {
           itemLevelDpsValues.push(dps);
         }
@@ -1237,7 +1237,7 @@ WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
         name: "DPS",
         showInLegend: true
       }, false);
-    
+
     document.getElementById(this.chartId).style.height = 200 + enchantselect.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
@@ -1383,7 +1383,7 @@ WCP_Chart.prototype.updateConsumablesChart = function(chartName) {
         //Check to make sure DPS isn't 0
         if (dps > 0) {
             //If lowest ilvl is looked at, subtract base DPS
-            itemLevelDpsValues.push(dps - baselineDPS);          
+            itemLevelDpsValues.push(dps - baselineDPS);
         } else {
           itemLevelDpsValues.push(dps);
         }
@@ -1395,7 +1395,7 @@ WCP_Chart.prototype.updateConsumablesChart = function(chartName) {
         name: "DPS",
         showInLegend: true
       }, false);
-    
+
     document.getElementById(this.chartId).style.height = 200 + consumableselect.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
@@ -1592,7 +1592,7 @@ consumableButtons = document.getElementById("consumable-div");
 
 for (var i = 0; i < btnGroup.length; i++) {
   btnGroup[i].addEventListener("click", function() {
-      
+
     if (itemBtn == 'Trinkets') {
       wcp_charts.updateTrinketChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
