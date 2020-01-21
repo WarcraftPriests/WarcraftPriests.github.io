@@ -58,6 +58,7 @@ const primary_azerite_traits = [
 'Fight or Flight',
 'Filthy Transfusion',
 'Glory in Battle',
+'Heart of Darkness',
 'Incite the Pack',
 'Laser Matrix',
 'Loyal to the End 4 Allies',
@@ -118,12 +119,15 @@ const major_essence_powers = [
 "Worldvein Resonance 3 Allies",
 "Worldvein Resonance 2 Allies",
 "Worldvein Resonance 1 Allies",
-"Worldvein Resonance 0 Allies"
+"Worldvein Resonance 0 Allies",
+"Replica of Knowledge",
+"Moment of Glory",
+"Reaping Flames"
 ]
 
 const minor_essnece_powers = [
 "Blood Soaked",
-"Condensed Life Force", 
+"Condensed Life Force",
 "Focused Energy",
 "Purification Protocol",
 "Reckless Force",
@@ -136,7 +140,10 @@ const minor_essnece_powers = [
 "Lifeblood 3 Allies",
 "Lifeblood 2 Allies",
 "Lifeblood 1 Allies",
-"Lifeblood 0 Allies"
+"Lifeblood 0 Allies",
+"Symbiotic Presence",
+"Unified Strength",
+"Lethal Strikes"
 ]
 
 const potion_flask = [
@@ -312,7 +319,7 @@ WCP_Chart.prototype.init = function() {
 //https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/traits_SC_C.json
 
 WCP_Chart.prototype.updateTrinketChart = function(chartName) {
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     toUpdateData = "Last Updated: ";
     toUpdateData += data["LastUpdated"];
     updateData.innerHTML = toUpdateData;
@@ -403,18 +410,20 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
       },
     })
     let itemLevels = data["simulated_steps"];
+
     for (currIlevel of itemLevels) {
       let maxItemLevel = data["simulated_steps"][0];
       let itemLevelDpsValues = [];
       for (sortedData of dpsSortedData) {
         var keys = [];
         for (var k in data["data"][sortedData]) keys.push(k); //Pull all item levels of the trinket.
+        let ilvldifference = keys[1] - keys[0];
         let minItemLevel = keys[0];
         sortedData = sortedData.trim();
         let dps = data["data"][sortedData][currIlevel];
         let baselineDPS = data["data"]["Base"]["300"];
         //Check to make sure DPS isn't 0
-        if (dps > 0) {
+        if (dps >= 0) {
           if (currIlevel == minItemLevel) {
             //If lowest ilvl is looked at, subtract base DPS
             if (dps - baselineDPS < 0) {
@@ -423,10 +432,10 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
               itemLevelDpsValues.push(dps - baselineDPS);
             }
           } else {
-            if (dps - data["data"][sortedData][currIlevel - 5] < 0) {
+            if (dps - data["data"][sortedData][currIlevel - ilvldifference] < 0) {
               itemLevelDpsValues.push(0);
             } else {
-              itemLevelDpsValues.push(dps - data["data"][sortedData][currIlevel - 5]);
+              itemLevelDpsValues.push(dps - data["data"][sortedData][currIlevel - ilvldifference]);
             }
           }
         } else {
@@ -436,6 +445,8 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
             itemLevelDpsValues.push(0);
           }
         }
+
+
       }
       //this.chart.yAxis[0].update({categories: dpsSortedData});
       this.chart.addSeries({
@@ -463,7 +474,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 
 
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the traits are primary or secondary and adjust the graph accordingly
@@ -631,7 +642,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 
 WCP_Chart.prototype.updateEssenceChart = function(chartName) {
 
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -809,9 +820,158 @@ WCP_Chart.prototype.updateEssenceChart = function(chartName) {
   });
 };
 
+//FINDME
+WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+    let sortedItems = [];
+    let dpsSortedData = data["sorted_data_keys"];
+    //Check if the traits are primary or secondary and adjust the graph accordingly
+    let traitSelect = [];
+
+    var wowheadTooltipsTraits = [];
+    for (dpsName of dpsSortedData) {
+      chartLink = "";
+      dpsName = dpsName.trim()
+      spellID = data["spell_ids"][dpsName.replace(" ", "_")];
+      chartLink = "";
+      chartLink += "<div style=\"display:inline-block; margin-bottom:-3px\">";
+      chartLink += "<a style=\"color: white; font-size: 16px; padding: 3px; cursor: default\" href=#";
+      chartLink += " onclick=\"return false\"";
+      chartLink += " rel=\"https://www.wowhead.com/spell=";
+      chartLink += spellID;
+      chartLink += "/"
+      chartLink += dpsName.replace(/ /g, '-');
+      chartLink += "\" target=\"blank\"";
+      chartLink += " class=\"chart_link\"";
+      chartLink += ">";
+      chartLink += dpsName;
+      chartLink += "</a>";
+      chartLink += "</div>";
+      //Push link into array
+      //console.log(chartLink);
+      wowheadTooltipsTraits.push(chartLink);
+    }
+    console.log(wowheadTooltipsTraits);
+
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(false);
+    }
+    this.chart.update({
+      xAxis: {
+        categories: wowheadTooltipsTraits,
+        useHTML: true,
+        labels: {
+          x: -30,
+        },
+      },
+      title: {
+        style: {
+          color: default_font_color,
+          fontWeight: 'bold'
+        },
+        text: this.options.charts[chartName].title
+      },
+      legend: {
+        title: {
+          text: "Tier Level"
+        }
+      },
+      tooltip: {
+        shared: true,
+        useHTML: true,
+        headerFormat: "<b>(point.x)</b>", //'<span style="font-size: 14px"><b>{point.key}</b></span><br/>',
+        style: {
+          color: default_font_color,
+        },
+        pointFormat: '<span style=color: "{point.color}"><b>{series.name}</b></span>: <b>{point.y}</b><br/>',
+        padding: 5,
+        //shared: true
+        formatter: function() {
+          var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
+          s += dark_color;
+          s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
+          var baseAmount = data["data"]["Base"]["1_stack"];
+          var cumulativeAmount = 0 + baseAmount;
+          for (var i = this.points.length - 1; i >= 0; i--) {
+            cumulativeAmount += this.points[i].y;
+            if (this.points[i].y != 0) {
+              s += '<div><span style=\"margin-left: 9px; border-left: 9px solid ' +
+                this.points[i].series.color + ';' +
+                ' padding-left: 4px;' +
+                '\">' +
+                this.points[i].series.name +
+                '</span>:&nbsp;&nbsp;' +
+                Intl.NumberFormat().format(cumulativeAmount - baseAmount);
+              s += ' dps';
+              s += ' - ';
+              let percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
+              s += percentage;
+              if (percentage > 0) {
+                s += '% (Increase)';
+              } else {
+                s += '% (decrease)';
+              }
+            }
+          }
+          s += '</div>';
+          return s;
+        },
+      },
+    });
+    for (let stackCount of [3, 2, 1]) {
+      let maxItemLevel = data["simulated_steps"][0].split("_")[1];
+      let stackName = stackCount + "_" + maxItemLevel;
+      let itemLevelDpsValues = [];
+      for (sortedData of dpsSortedData) {
+        sortedData = sortedData.trim();
+        let dps = data["data"][sortedData][stackName];
+        let baselineDPS = data["data"]["Base"]["1_" + maxItemLevel];
+
+        //Check to make sure DPS isn't 0
+        if (dps > 0) {
+          if (stackCount == 1) {
+            //If lowest ilvl is looked at, subtract base DPS
+            itemLevelDpsValues.push(dps - baselineDPS);
+          } else {
+            itemLevelDpsValues.push(dps - data["data"][sortedData][stackCount - 1 + "_" + maxItemLevel]);
+          }
+        } else {
+          if (stackName in data["data"][sortedData]) {
+            itemLevelDpsValues.push(dps);
+          } else {
+            itemLevelDpsValues.push(0);
+          }
+        }
+      }
+      let newStackName = stackName.split("_")[0];
+      //standard_chart.yAxis[0].update({categories: dpsSortedData});
+      this.chart.addSeries({
+        color: ilevel_color_table[stackName],
+        data: itemLevelDpsValues,
+        name: newStackName,
+        showInLegend: true
+      }, false);
+    }
+    document.getElementById(this.chartId).style.height = 200 + dpsSortedData.length * 30 + "px";
+    this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
+    //this.chart.renderTo(this.chartId);
+    this.chart.redraw();
+    try {
+      $WowheadPower.refreshLinks();
+    } catch (error) {
+      console.log(error);
+    }
+
+  }.bind(this)).fail(function(xhr, status) {
+    console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+    console.log(status);
+    //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+  });
+};
+
 WCP_Chart.prototype.updateTalentsChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -954,8 +1114,8 @@ WCP_Chart.prototype.updateTalentsChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateRacialsChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -1098,8 +1258,8 @@ WCP_Chart.prototype.updateRacialsChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -1256,8 +1416,8 @@ WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateConsumablesChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -1445,6 +1605,8 @@ WCP_Chart.prototype.tabClicked = function(event) {
     this.updateEssenceChart(chartName); // Setup the initial chart
   } else if (this.options.charts[chartName].type == 'talents') {
     this.updateTalentsChart(chartName); // Setup the initial chart
+  } else if (this.options.charts[chartName].type == 'corruption') {
+    this.updateCorruptionChart(chartName); //Setup the initial chart
   }
 };
 
@@ -1635,6 +1797,12 @@ for (var i = 0; i < btnGroup.length; i++) {
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.add("show");
+    }else if (itemBtn == "Corruption") {
+      wcp_charts.updateCorruptionChart(talentsBtn + itemBtn + fightBtn);
+      traitButtons.classList.remove("show");
+      essenceButtons.classList.remove("show");
+      enchantButtons.classList.remove("show");
+      consumableButtons.classList.remove("show");
     }
   })
 }
