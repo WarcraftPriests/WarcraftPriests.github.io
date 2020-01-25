@@ -822,7 +822,7 @@ WCP_Chart.prototype.updateEssenceChart = function(chartName) {
 
 //FINDME
 WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the traits are primary or secondary and adjust the graph accordingly
@@ -832,7 +832,10 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
     for (dpsName of dpsSortedData) {
       chartLink = "";
       dpsName = dpsName.trim()
+      dpsName = dpsName.replace(" ","_")
+      dpsName = dpsName.replace(" ","_")
       spellID = data["spell_ids"][dpsName.replace(" ", "_")];
+
       chartLink = "";
       chartLink += "<div style=\"display:inline-block; margin-bottom:-3px\">";
       chartLink += "<a style=\"color: white; font-size: 16px; padding: 3px; cursor: default\" href=#";
@@ -851,7 +854,8 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
       //console.log(chartLink);
       wowheadTooltipsTraits.push(chartLink);
     }
-    console.log(wowheadTooltipsTraits);
+    
+    //console.log(wowheadTooltipsTraits);
 
     while (this.chart.series.length > 0) {
       this.chart.series[0].remove(false);
@@ -890,7 +894,7 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
           var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
           s += dark_color;
           s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
-          var baseAmount = data["data"]["Base"]["1_stack"];
+          var baseAmount = data["data"]["Base"];
           var cumulativeAmount = 0 + baseAmount;
           for (var i = this.points.length - 1; i >= 0; i--) {
             cumulativeAmount += this.points[i].y;
@@ -918,40 +922,28 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
         },
       },
     });
-    for (let stackCount of [3, 2, 1]) {
-      let maxItemLevel = data["simulated_steps"][0].split("_")[1];
-      let stackName = stackCount + "_" + maxItemLevel;
-      let itemLevelDpsValues = [];
+    let itemLevelDpsValues = [];
+    console.log(data["data"]["Infinite Star 3"]);
       for (sortedData of dpsSortedData) {
         sortedData = sortedData.trim();
-        let dps = data["data"][sortedData][stackName];
-        let baselineDPS = data["data"]["Base"]["1_" + maxItemLevel];
+        let dps = data["data"][sortedData]["DPS"];
+        let baselineDPS = data["data"]["Base"]["DPS"];
 
         //Check to make sure DPS isn't 0
         if (dps > 0) {
-          if (stackCount == 1) {
             //If lowest ilvl is looked at, subtract base DPS
             itemLevelDpsValues.push(dps - baselineDPS);
-          } else {
-            itemLevelDpsValues.push(dps - data["data"][sortedData][stackCount - 1 + "_" + maxItemLevel]);
-          }
         } else {
-          if (stackName in data["data"][sortedData]) {
-            itemLevelDpsValues.push(dps);
-          } else {
-            itemLevelDpsValues.push(0);
-          }
+          itemLevelDpsValues.push(dps);
         }
       }
-      let newStackName = stackName.split("_")[0];
       //standard_chart.yAxis[0].update({categories: dpsSortedData});
       this.chart.addSeries({
-        color: ilevel_color_table[stackName],
+        color: ilevel_color_table["DPS"],
         data: itemLevelDpsValues,
-        name: newStackName,
+        name: "DPS",
         showInLegend: true
       }, false);
-    }
     document.getElementById(this.chartId).style.height = 200 + dpsSortedData.length * 30 + "px";
     this.chart.setSize(document.getElementById(this.chartId).style.width, document.getElementById(this.chartId).style.height);
     //this.chart.renderTo(this.chartId);
