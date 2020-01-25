@@ -923,18 +923,17 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
       },
     });
     let itemLevelDpsValues = [];
-    console.log(data["data"]["Infinite Star 3"]);
       for (sortedData of dpsSortedData) {
         sortedData = sortedData.trim();
         let dps = data["data"][sortedData]["DPS"];
         let baselineDPS = data["data"]["Base"]["DPS"];
 
         //Check to make sure DPS isn't 0
-        if (dps > 0) {
+        if (dps-baselineDPS > 0) {
             //If lowest ilvl is looked at, subtract base DPS
             itemLevelDpsValues.push(dps - baselineDPS);
         } else {
-          itemLevelDpsValues.push(dps);
+          itemLevelDpsValues.push(0);
         }
       }
       //standard_chart.yAxis[0].update({categories: dpsSortedData});
