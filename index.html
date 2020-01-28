@@ -64,6 +64,10 @@
 		<button id="Major" class="button" onClick="itemClick('Essence-Major')">Major</button>
 		<button id="Minor" class="button" onClick="itemClick('Essence-Minor')">Minor</button>
 	</div>
+	<div id="corruption-div" class="dropdown-content">
+		<button id="DPSValues" class="button" onClick="itemClick('Corruption')">DPS Values</button>
+		<button id="DPSPerPoint" class="button" onClick="itemClick('Corruption-DPS')">DPS Per Corruption Point</button>
+	</div>
 	<div id="enchant-div" class="dropdown-content">
 		<button id="Weapons" class="button" onClick="itemClick('Enchant-Weapon')">Weapon</button>
 		<button id="Rings" class="button" onClick="itemClick('Enchant-Ring')">Ring</button>
@@ -238,6 +242,37 @@
 				'ASCorruptionD': {
 					type: 'corruption',
 					src: 'corruption_AS_D',
+					title: 'Corruption - Auspicious Sprits - Dungeon'
+				},
+				//Corruption Point DPS
+				'SCCorruption-DPSC': {
+					type: 'corruption',
+					src: 'corruption_point_SC_C',
+					title: 'Corruption - Shadow Crash - Composite'
+				},
+				'SCCorruption-DPSST': {
+					type: 'corruption',
+					src: 'corruption_point_SC_ST',
+					title: 'Corruption - Shadow Crash - Single Target'
+				},
+				'SCCorruption-DPSD': {
+					type: 'corruption',
+					src: 'corruption_point_SC_D',
+					title: 'Corruption - Shadow Crash - Dungeon'
+				},
+				'ASCorruption-DPSC': {
+					type: 'corruption',
+					src: 'corruption_point_AS_C',
+					title: 'Corruption - Auspicious Sprits - Composite'
+				},
+				'ASCorruption-DPSST': {
+					type: 'corruption',
+					src: 'corruption_point_AS_ST',
+					title: 'Corruption - Auspicious Sprits - Single Target'
+				},
+				'ASCorruption-DPSD': {
+					type: 'corruption',
+					src: 'corruption_point_AS_D',
 					title: 'Corruption - Auspicious Sprits - Dungeon'
 				},
 				//Talents

@@ -820,7 +820,7 @@ WCP_Chart.prototype.updateEssenceChart = function(chartName) {
   });
 };
 
-//FINDME
+
 WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
   jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
@@ -927,14 +927,33 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
         sortedData = sortedData.trim();
         let dps = data["data"][sortedData]["DPS"];
         let baselineDPS = data["data"]["Base"]["DPS"];
+        let corruptionPoints = 0;
+        if (corruptionPointflag)
+        {
+          corruptionPoints = data["data"][sortedData]["Corruption"];;
+        }
 
         //Check to make sure DPS isn't 0
-        if (dps-baselineDPS > 0) {
-            //If lowest ilvl is looked at, subtract base DPS
-            itemLevelDpsValues.push(dps - baselineDPS);
-        } else {
-          itemLevelDpsValues.push(0);
-        }
+        if(corruptionPointflag)
+            {
+              if(dps > 0 && dps != baselineDPS)
+              {              
+                itemLevelDpsValues.push(dps);
+              }
+              else
+              {
+                itemLevelDpsValues.push(0);
+              }
+            }
+        else
+        {
+          if (dps-baselineDPS > 0) {
+              //If lowest ilvl is looked at, subtract base DPS
+              itemLevelDpsValues.push(dps-baselineDPS)
+          } else {
+            itemLevelDpsValues.push(0);
+          }
+      }
       }
       //standard_chart.yAxis[0].update({categories: dpsSortedData});
       this.chart.addSeries({
@@ -959,6 +978,8 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
     //alert("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
   });
 };
+
+
 
 WCP_Chart.prototype.updateTalentsChart = function(chartName) {
   console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
@@ -1663,20 +1684,8 @@ var traits = 'P';
 var essence = 'Major';
 var enchant = 'Weapon';
 var consumable = "Potion"
+var corruptionPointflag = false;
 
-document.addEventListener('DOMContentLoaded', function() {
-  var checkbox = document.querySelector('input[type="checkbox"]');
-
-  checkbox.addEventListener('change', function() {
-    if (checkbox.checked) {
-      repoOption = 'ptr'
-      console.log('Checked');
-    } else {
-      repoOption = 'master'
-      console.log('Not checked');
-    }
-  });
-});
 
 function talentClick(clicked) {
   talentsBtn = clicked;
@@ -1706,7 +1715,13 @@ function itemClick(clicked) {
   } else if (clicked == 'Consumable-Potion' || clicked == 'Consumable-Food') {
     itemBtn = 'Consumables';
     consumable = clicked.split("-")[1];
-  }else  {
+  } else if (clicked == 'Corruption-DPS') {
+    corruptionPointflag = true;
+    itemBtn = "Corruption-DPS";
+  } else if (clicked == 'Corruption') {
+    corruptionPointflag = false;
+    itemBtn = clicked;
+  } else  {
     itemBtn = clicked;
   }
 
@@ -1742,6 +1757,7 @@ traitButtons = document.getElementById("traits-div");
 essenceButtons = document.getElementById("essence-div");
 enchantButtons = document.getElementById("enchant-div");
 consumableButtons = document.getElementById("consumable-div");
+corruptionButtons = document.getElementById("corruption-div");
 
 for (var i = 0; i < btnGroup.length; i++) {
   btnGroup[i].addEventListener("click", function() {
@@ -1752,48 +1768,56 @@ for (var i = 0; i < btnGroup.length; i++) {
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.remove("show");
     } else if (itemBtn == 'Traits') {
       wcp_charts.updateTraitChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.add("show");
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.remove("show");
     } else if (itemBtn == 'Essences') {
       wcp_charts.updateEssenceChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.add("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.remove("show");
     } else if (itemBtn == 'Talents') {
       wcp_charts.updateTalentsChart(itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.remove("show");
     } else if (itemBtn == 'Racials') {
       wcp_charts.updateRacialsChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.remove("show");
     } else if (itemBtn == "Enchants") {
       wcp_charts.updateEnchantsChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
       enchantButtons.classList.add("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.remove("show");
     }else if (itemBtn == "Consumables") {
       wcp_charts.updateConsumablesChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.add("show");
-    }else if (itemBtn == "Corruption") {
+      corruptionButtons.classList.remove("show");
+    }else if (itemBtn == "Corruption" || itemBtn == "Corruption-DPS") {
       wcp_charts.updateCorruptionChart(talentsBtn + itemBtn + fightBtn);
       traitButtons.classList.remove("show");
       essenceButtons.classList.remove("show");
       enchantButtons.classList.remove("show");
       consumableButtons.classList.remove("show");
+      corruptionButtons.classList.add("show");
     }
   })
 }
