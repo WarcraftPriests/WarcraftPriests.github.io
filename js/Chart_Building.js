@@ -894,7 +894,7 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
           var s = '<div style="margin: -4px -6px -11px -7px; padding: 3px 3px 6px 3px; background-color:';
           s += dark_color;
           s += '"><div style=\"margin-left: 9px; margin-right: 9px; margin-bottom: 6px; font-weight: 700;\">' + this.x + '</div>'
-          var baseAmount = data["data"]["Base"];
+          var baseAmount = data["data"]["Base"]["DPS"];
           var cumulativeAmount = 0 + baseAmount;
           for (var i = this.points.length - 1; i >= 0; i--) {
             cumulativeAmount += this.points[i].y;
