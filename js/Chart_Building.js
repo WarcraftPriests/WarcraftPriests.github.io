@@ -319,7 +319,8 @@ WCP_Chart.prototype.init = function() {
 //https://rawcdn.githack.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/traits_SC_C.json
 
 WCP_Chart.prototype.updateTrinketChart = function(chartName) {
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     toUpdateData = "Last Updated: ";
     toUpdateData += data["LastUpdated"];
     updateData.innerHTML = toUpdateData;
@@ -474,7 +475,7 @@ WCP_Chart.prototype.updateTrinketChart = function(chartName) {
 
 
 WCP_Chart.prototype.updateTraitChart = function(chartName) {
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the traits are primary or secondary and adjust the graph accordingly
@@ -642,7 +643,7 @@ WCP_Chart.prototype.updateTraitChart = function(chartName) {
 
 WCP_Chart.prototype.updateEssenceChart = function(chartName) {
 
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -908,8 +909,16 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
                 Intl.NumberFormat().format(cumulativeAmount - baseAmount);
               s += ' dps';
               s += ' - ';
-              let percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
-              s += percentage;
+              let percentage = 0;
+              if (corruptionPointflag)
+              {
+                percentage = (cumulativeAmount / 1 * 100 - 100).toFixed(2);
+              }
+              else
+              {
+                percentage = (cumulativeAmount / baseAmount * 100 - 100).toFixed(2);
+              }
+                s += percentage;
               if (percentage > 0) {
                 s += '% (Increase)';
               } else {
@@ -982,8 +991,7 @@ WCP_Chart.prototype.updateCorruptionChart = function(chartName) {
 
 
 WCP_Chart.prototype.updateTalentsChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -1126,8 +1134,7 @@ WCP_Chart.prototype.updateTalentsChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateRacialsChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -1270,8 +1277,7 @@ WCP_Chart.prototype.updateRacialsChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
@@ -1428,8 +1434,7 @@ WCP_Chart.prototype.updateEnchantsChart = function(chartName) {
 };
 
 WCP_Chart.prototype.updateConsumablesChart = function(chartName) {
-  console.log("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json");
-  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/ptr/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
+  jQuery.getJSON("https://raw.githubusercontent.com/WarcraftPriests/bfa-shadow-priest/master/json_Charts/" + this.options.charts[chartName].src + ".json", function(data) {
     let sortedItems = [];
     let dpsSortedData = data["sorted_data_keys"];
     //Check if the essences are major or minor and adjust the graph accordingly
