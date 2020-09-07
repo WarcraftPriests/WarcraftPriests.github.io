@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="css/main-chart.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/brands.css" integrity="sha384-1KLgFVb/gHrlDGLFPgMbeedi6tQBLcWvyNUN+YKXbD7ZFbjX6BLpMDf0PJ32XJfX" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
+	<title>Shadow Priest Charts</title>
+</head>
+
+<body style="background-color: rgb(52, 58, 64);">
+	<div class=header>
+		<a href="https://warcraftpriests.com/" target="_blank"><img id="img-banner" src="https://i.imgur.com/M12BeGV.png" alt="WCP Banner"></a>
+	</div>
+	<div id="pad" style="padding-bottom: 30px;"></div>
+	<!-- PTR Switch
+	<p class="labels">PTR Switch</p>
+	<label class="switch">
+		<input type="checkbox">
+		<span class="slider round"></span>
+	</label>
+	<div id="pad" style="padding-bottom: 30px;"></div>
+	-->
+	<script>
+		var whTooltips = {
+			colorLinks: true,
+			iconizeLinks: true,
+			renameLinks: false
+		};
+	</script>
+	<script src="https://wow.zamimg.com/widgets/power.js"></script>
+	<div id="disclaimer">
+		<section>
+			This is very preliminary info on shadow for the upcoming Shadowlands Expansion. This is not meant to be a concrete view on how shadow will perform in the next expansion, but rather a place where you can view the in progress data for shadow.</section>
+		<br>
+		<section>
+			<b id="updateData"></b>
+		</section>
+	</div>
+	<div id="talent-div" class=tabcontent>
+	</div>
+	<div id="sims-div" class=tabcontent>
+	</div>
+	<div id="conduits-div" class="dropdown-content">
+		<button id="kyrianbtn" class="button" onClick="itemClick('conduit-Kyrian')">Kyrian</button>
+		<button id="necrolordbtn" class="button" onClick="itemClick('conduit-Necrolord')">Necrolord</button>
+		<button id="nightfaebtn" class="button" onClick="itemClick('conduit-Night_Fae')">Night Fae</button>
+		<button id="venthyrbtn" class="button" onClick="itemClick('conduit-Venthyr')">Venthyr</button>
+	</div>
+	<div id="soulbinds-div" class="dropdown-content">
+		<button id="kyrianbtn" class="button" onClick="itemClick('soulbind-Kyrian')">Kyrian</button>
+		<button id="necrolordbtn" class="button" onClick="itemClick('soulbind-Necrolord')">Necrolord</button>
+		<button id="nightfaebtn" class="button" onClick="itemClick('soulbind-Night_Fae')">Night Fae</button>
+		<button id="venthyrbtn" class="button" onClick="itemClick('soulbind-Venthyr')">Venthyr</button>
+	</div>
+	<div id="legendary-div" class="dropdown-content">
+		<button id="kyrianbtn" class="button" onClick="itemClick('legendaries-Kyrian')">Kyrian</button>
+		<button id="necrolordbtn" class="button" onClick="itemClick('legendaries-Necrolord')">Necrolord</button>
+		<button id="nightfaebtn" class="button" onClick="itemClick('legendaries-Night_Fae')">Night Fae</button>
+		<button id="venthyrbtn" class="button" onClick="itemClick('legendaries-Venthyr')">Venthyr</button>
+	</div>
+	<div id="enchant-div" class="dropdown-content">
+		<button id="Weapons" class="button" onClick="itemClick('Enchant-Weapon')">Weapon</button>
+		<button id="Rings" class="button" onClick="itemClick('Enchant-Ring')">Ring</button>
+	</div>
+	<div id="consumable-div" class="dropdown-content">
+		<button id="Potion" class="button" onClick="itemClick('Consumable-Potion')">Potion/Flask</button>
+		<button id="Food" class="button" onClick="itemClick('Consumable-Food')">Food</button>
+	</div>
+	<div id="Fight-Style-div" class=tabcontent>
+	</div>
+	<div id="empty"></div>
+	<div id="container"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="./js/js-yaml/dist/js-yaml.min.js"></script>
+	<script src="./js/AcronymConverter.js" language="javascript"></script>
+	<script type="text/javascript" src="js/Chart_Building.js"></script>
+	<script>
+		var wcp_charts = new WCP_Chart('Chart-Display-div');
+		console.log(wcp_charts);
+		wcp_charts.init();
+	</script>
+	<div class="pad"><i> - All sim data is subject to a certain error percentage and should be taken with a grain of salt.</i></div>
+
+	<div class="footer">
+		<a href="https://warcraftpriests.com/"><img class="wcp" src="https://i.imgur.com/Db8QurA.png" alt="WarcraftPriests website"></a>
+		<a href="https://www.youtube.com/WarcraftPriests/" class="fab fa-youtube"></a>
+		<a href="https://www.facebook.com/WarcraftPriests/" class="fab fa-facebook"></a>
+		<a href="https://www.twitch.tv/WarcraftPriests" class="fab fa-twitch"></a>
+		<a href="https://www.twitter.com/WarcraftPriests" class="fab fa-twitter"></a>
+		<a href="https://www.patreon.com/warcraftpriests" class="fab fa-patreon"></a>
+		<a href="https://github.com/WarcraftPriests" class="fab fa-github"></a>
+		<a href="https://www.discord.gg/warcraftpriests" class="fab fa-discord"></a>
+	</div>
+</body>
+
+</html>

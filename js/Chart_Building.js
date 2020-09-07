@@ -1666,6 +1666,14 @@ var traitCalcText = document.createTextNode("Trait Calculator");
 traitCalc.appendChild(traitCalcText)
 externalLinks.appendChild(traitCalc);
 
+var betaBtn = document.createElement("BUTTON");
+betaBtn.setAttribute("id", "beta-btn");
+betaBtn.setAttribute("class", "button");
+betaBtn.setAttribute("onClick", "location.href='beta/index.html'");
+var betaBtnText = document.createTextNode("Shadowlands Beta");
+betaBtn.appendChild(betaBtnText)
+externalLinks.appendChild(betaBtn);
+
 document.body.appendChild(externalLinks);
 
 var hr = document.createElement("hr");

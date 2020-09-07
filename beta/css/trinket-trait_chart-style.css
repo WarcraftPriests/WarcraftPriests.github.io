@@ -1,0 +1,173 @@
+/* Main Div */
+.main {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  padding-bottom: 5px;
+  padding-right: 5px;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.span {
+  margin: 10px;
+  display: block;
+}
+
+.vertical-spacer {
+  margin: 20px;
+  padding-bottom: 20px;
+  display: grid;
+}
+
+.divider {
+  width: 10px;
+  height: auto;
+  display: inline-block;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 80px;
+  min-height: 10px;
+  z-index: 1;
+  cursor: pointer;
+  font-size: 0px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content p {
+  position: relative;
+  color: black;
+  border: 1px solid black;
+  font-size: 16px;
+  padding: 3px;
+  margin: 0px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content p:hover {
+  background-color: #ddd
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: inline-block;
+}
+
+.chart-div {
+  display: none;
+  width: 100%;
+}
+
+.chart-div-show {
+  display: inline-block;
+}
+
+/* Header */
+.header {
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+/* Footer */
+.footer {
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+.wcp {
+  background-image: url("https://warcraftpriests.com/");
+  border-radius: 20%;
+  width: 50px;
+  height: 40px;
+  padding: 10px;
+  float: bottom;
+  margin-bottom: -15px;
+  background: #212226;
+}
+
+.fa-instagram {
+  background-image: url("https://warcraftpriests.com/");
+}
+
+.fab {
+  padding: 10px;
+  font-size: 40px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 20%;
+}
+
+.fab:hover {
+  opacity: 0.7;
+}
+
+.fa-github {
+  background: #24292e;
+  color: white;
+}
+
+.fa-discord {
+  background: #7289DA;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-youtube {
+  background: #f45750;
+  color: white;
+}
+
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.fa-twitch {
+  background: #6441a5;
+  color: white;
+}
+
+.fa-patreon {
+  background: #e44727;
+  color: white;
+}
