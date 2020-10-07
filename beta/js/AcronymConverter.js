@@ -31,7 +31,7 @@ var Talents = {
 
   // Row 50
   am: "Ancient Madness",
-  hv: "Hungering Void   ",
+  hv: "Hungering Void",
   stm: "Surrender To Madness",
 };
 
