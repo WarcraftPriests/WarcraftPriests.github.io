@@ -131,7 +131,6 @@ WCP_Chart.prototype.updateStackedBarChart = function (
 ) {
   let fullTalents = talentChoice.split("-");
   let firstTalent = GetTalentName(fullTalents[0]);
-  let secondTalent = GetTalentName(fullTalents[1]);
   fullTalents = firstTalent;
 
   let fullSimType = simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1);
@@ -360,8 +359,7 @@ WCP_Chart.prototype.updateSingleBarChart = function (
 ) {
   let fullTalents = talentChoice.split("-");
   let firstTalent = GetTalentName(fullTalents[0]);
-  let secondTalent = GetTalentName(fullTalents[1]);
-  fullTalents = firstTalent + " - " + secondTalent;
+  fullTalents = firstTalent;
 
   let fullSimType = simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1);
   var covenantPath = "";
