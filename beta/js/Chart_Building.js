@@ -135,13 +135,22 @@ WCP_Chart.prototype.updateStackedBarChart = function (
 
   let fullSimType = simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1);
   var covenantPath = "";
+  let chartName = "";
   if (covenantType === "" || covenantType == null) {
     covenantPath = "";
+    chartName = firstTalent + " - " + fullSimType + " - " + fightStyle;
   } else {
     covenantPath = "_" + covenantType;
+    chartName =
+      firstTalent +
+      " - " +
+      covenantType +
+      " - " +
+      fullSimType +
+      " - " +
+      fightStyle;
   }
 
-  let chartName = firstTalent + " - " + fullSimType + " - " + fightStyle;
   jQuery
     .getJSON(
       baseurl +
@@ -363,13 +372,22 @@ WCP_Chart.prototype.updateSingleBarChart = function (
 
   let fullSimType = simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1);
   var covenantPath = "";
+  let chartName = "";
   if (covenantType === "" || covenantType == null) {
     covenantPath = "";
+    chartName =
+      fullTalents +
+      " - " +
+      covenantType +
+      " - " +
+      fullSimType +
+      " - " +
+      fightStyle;
   } else {
     covenantPath = "_" + covenantType;
+    chartName = fullTalents + " - " + fullSimType + " - " + fightStyle;
   }
 
-  let chartName = fullTalents + " - " + fullSimType + " - " + fightStyle;
   jQuery
     .getJSON(
       baseurl +
