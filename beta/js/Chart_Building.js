@@ -151,17 +151,16 @@ WCP_Chart.prototype.updateStackedBarChart = function (
       fightStyle;
   }
 
+  let url = "";
+  if (simsBtn == "talents") {
+    url = baseurl + "/" + simsBtn + "/results/Results_" + fightStyle + ".json";
+  } else {
+    url = baseurl + "/" + simsBtn + "/results/Results_" + fightStyle + "_"+ talentChoice + covenantPath + ".json";
+  }
+
   jQuery
     .getJSON(
-      baseurl +
-        "/" +
-        simsBtn +
-        "/results/Results_" +
-        fightStyle +
-        "_" +
-        talentChoice +
-        covenantPath +
-        ".json",
+      url,
       function (data) {
         toUpdateData = "Last Updated: ";
         toUpdateData += data["last_updated"];
@@ -388,17 +387,16 @@ WCP_Chart.prototype.updateSingleBarChart = function (
     chartName = fullTalents + " - " + fullSimType + " - " + fightStyle;
   }
 
+  let url = "";
+  if (simsBtn == "talents") {
+    url = baseurl + "/" + simsBtn + "/results/Results_" + fightStyle + ".json";
+  } else {
+    url = baseurl + "/" + simsBtn + "/results/Results_" + fightStyle + "_"+ talentChoice + covenantPath + ".json";
+  }
+
   jQuery
     .getJSON(
-      baseurl +
-        "/" +
-        simsBtn +
-        "/results/Results_" +
-        fightStyle +
-        "_" +
-        talentChoice +
-        covenantPath +
-        ".json",
+      url,
       function (data) {
         toUpdateData = "Last Updated: ";
         toUpdateData += data["last_updated"];
@@ -774,7 +772,8 @@ function read_config(cfgfile) {
       for (b in sims[s]) {
         if (b == "builds") {
           let values = Object.values(sims[s]);
-          if (values[0] == true) {
+          if (values[0] == true
+                || s == "talents") {
             let builds = true;
             simType.push(s);
           }
@@ -858,7 +857,7 @@ function checkButtonClick() {
   if (itemBtn == "trinkets") {
     //wcp_charts.updateTrinketChart(talentsBtn + itemBtn + fightBtn);
     wcp_charts.updateStackedBarChart("trinkets", fightBtn, talentsBtn);
-    conduitButtons.classList.remove("show");
+    conduitButtons.classList.add("show");
     soulbindButtons.classList.remove("show");
     legendaryButtons.classList.remove("show");
     enchantButtons.classList.remove("show");
