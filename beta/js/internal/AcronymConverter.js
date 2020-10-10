@@ -43,7 +43,7 @@ var Talents = {
 
 var FightStyles = {
   Composite: "Composite",
-  //Single: "Single Target",
+  Single: "Single Target",
   Dungeons: "Dungeons",
 };
 
