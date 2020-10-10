@@ -5,13 +5,32 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
   var result = [];
   for (dpsName of data[jsonSortedDataKeys]) {
     var id = data[jsonIds][dpsName]; 
+    
     if (id == null) {
-      id = "";
+      /*
+       * Current fix ( the sims don't return a id here at the moment)
+       */
+      if(dpsName.includes("Shadowflame_Prism")) {
+        id = data[jsonIds]["Shadowflame_Prism"];
+      } else if (dpsName.includes("Twins_of_the_Sun_Priestess")) {
+        id = "336897";
+      } else {
+        id = "";
+      }
     }
-    var url = "";
 
+    var url = "";
     switch(simsBtn) {
       case conduits:
+        url = wowheadUrl + wowheadSpellPath;
+        break;
+      case racials:
+        url = wowheadUrl + wowheadSpellPath;
+        break;
+      case enchants:
+        url = wowheadUrl + wowheadSpellPath;
+        break;
+      case legendaries:
         url = wowheadUrl + wowheadSpellPath;
         break;
       default:
@@ -28,7 +47,6 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
  * Build a single line of the wowhead tooltip
  */
 function buildChartLine(dpsName, itemId, url) {
-  console.log(itemId);
   result = "";
   result += '<div style="display:inline-block; margin-bottom:-3px">';
   result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href=#';

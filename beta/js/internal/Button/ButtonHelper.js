@@ -76,7 +76,6 @@ function handleOnClick(clickedButton, btn) {
   } else if(btn == consumables) {
     currConsumablesBtn = clickedButton;
   } else if(btn == covenant) {
-    console.log("basd");
     currCovenantBtn = clickedButton;
   } else if(btn == fightStyle) {
     currFightStyleBtn = clickedButton
@@ -137,7 +136,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       wcp_charts.updateStackedBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
       break;
     case legendaries:
-      wcp_charts.updateStackedBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
       break;
     case soulbinds:
       wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);

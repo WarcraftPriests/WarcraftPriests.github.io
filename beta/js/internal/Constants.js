@@ -81,6 +81,7 @@ const legendaries = "legendaries";
 const fightStyle = "fightStyle";
 const covenant = "covenant";
 const conduits = "conduits";
+const racials = "racials";
 const ancientMadness = "am";
 const venthyr = "venthyr";
 const ring = "ring";
