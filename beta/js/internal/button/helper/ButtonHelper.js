@@ -23,7 +23,7 @@ function createButtonBasic(div, name, event, buttonText, currBtn) {
   button.addEventListener(click, event);
   
   var icon = document.createElement('img');
-  icon.src = "images/icons/" + name + ".png";
+  icon.src = "images/icons/" + name + ".jpg";
   icon.style = "position: relative; top: 2px; width: 16px; height: 16px;";
   var br = document.createTextNode("  ");
   button.appendChild(icon);
