@@ -21,7 +21,7 @@ function compareParameters(oldParm, newParms) {
 }
 
 function buildParameterUrl(talentQueryParm, talentQueryValue, simsQueryParm, simsQueryValue, covenantsQueryParm, covenantsQueryValue, fightStyleQueryParm, fightStyleQueryValue) {
-    var result = "?";
+    var result = "beta/index.html?";
     var talentQuery = talentQueryParm + "=" + talentQueryValue;
     var simsQuery = simsQueryParm + "=" + simsQueryValue;
     var covenantsQuery = covenantsQueryParm + "=" + covenantsQueryValue;
