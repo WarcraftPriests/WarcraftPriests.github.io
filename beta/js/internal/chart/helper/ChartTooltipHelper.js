@@ -7,16 +7,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
     var id = data[jsonIds][dpsName]; 
     
     if (id == null) {
-      /*
-       * Current fix ( the sims don't return a id here at the moment)
-       */
-      if(dpsName.includes("Shadowflame_Prism")) {
-        id = data[jsonIds]["Shadowflame_Prism"];
-      } else if (dpsName.includes("Twins_of_the_Sun_Priestess")) {
-        id = "336897";
-      } else {
-        id = "";
-      }
+      id = "";
     }
   
     var url = "";
