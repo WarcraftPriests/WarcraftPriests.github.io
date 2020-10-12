@@ -87,6 +87,30 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
 };
 
 /*
+ * Filles the chart with data and uses the single bar chart
+ */
+WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, talentChoice, covenantType ) {
+  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
+      function (data) {
+        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
+        while (this.chart.series.length > 0) {
+          this.chart.series[0].remove(false);
+        }
+
+        this.chart.update(getMultipleBarChartDefinition( buildWowheadTooltipsMultipleBar( data, simsBtn), 
+                                                         determineChartName( covenantType, 
+                                                                             getTalentName(talentChoice.split(dash)[0]), 
+                                                                             simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                                                             fightStyle), 
+                                                         data));
+        buildChartDataMultipleBar(data, this.chartId, this.chart, fightStyle)
+      }.bind(this)
+    ).fail(function(xhr, status) {
+      handleJsonFailure(xhr, status)
+    });
+};
+
+/*
  * Opens a chart
  * -> not sure if needed
  */

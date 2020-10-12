@@ -19,6 +19,9 @@ function updateSize(chart, chartId, size) {
  * Determine the chart name for the current chart, for the used parameters
  */
 function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
+  if(fullSimType == "CovenantsChoice") {
+    return coventantsChoiceChartName;
+  }
   if (covenantType === empty || covenantType == null) {
     return firstTalent 
               + space + dash + space
@@ -41,16 +44,19 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
  */
 function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantType) {
   /*
-   * Special case!
+   * Special cases!
    */
   if(simsBtn == talents){
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
+    return baseurl + slash + simsBtn + simResultPath + getFightStyleName(fightStyle) + jsonExtension;
+  }
+  if(simsBtn == covenantsChoice) {
+    return baseurl + slash + "covenant-choice" + simResultPath + "Aggregate" + jsonExtension;
   }
   if(covenantType == "" 
       || covenantType == null) {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
+    return baseurl + slash + simsBtn + simResultPath + getFightStyleName(fightStyle) + underscore + talentChoice + jsonExtension;
   } else {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
+    return baseurl + slash + simsBtn + simResultPath + getFightStyleName(fightStyle) + underscore + talentChoice + underscore + covenantType + jsonExtension;
   }
 }
 

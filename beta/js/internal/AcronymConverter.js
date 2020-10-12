@@ -42,15 +42,16 @@ var Talents = {
 };
 
 var FightStyles = {
-  Composite: "Composite",
-  Single: "Single Target",
-  Dungeons: "Dungeons",
+  composite: "Composite",
+  single: "Single Target",
+  dungeons: "Dungeons",
 };
 
 var Sims = {
   conduits: "Conduits",
   consumables: "Consumables",
   covenants: "Covenants",
+  covenantsChoice: "Covenants Choice",
   enchants: "Enchants",
   //gear: "Gear",
   legendaries: "Legendaries",
@@ -73,6 +74,13 @@ var Conduits = {
   night_fae: "Night Fae",
   venthyr: "Venthyr",
 };
+
+var Conduits2 = [
+  "venthyr",
+  "necrolord",
+  "night_fae",
+  "kyrian",
+];
 
 var getConsumablesName = function (key) {
   return Consumables[key];

@@ -33,7 +33,15 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
   
   return result;
 }
-  
+
+function buildWowheadTooltipsMultipleBar(data, simsBtn) {
+  var result = [];
+  for(currFight in data[jsonData]) {
+    result.push(buildChartLine(getFightStyleName(currFight), "", ""));
+  }
+
+  return result;
+}
 /*
  * Build a single line of the wowhead tooltip
  */
@@ -111,6 +119,23 @@ function formatterPercentage(points, x, data) {
   return result;
 }
 
+function formatterMultipleBar(points, x, data) {
+  var result = '<div class="chartHover">'
+                    + '<div class="chartHoverLine">' 
+                    + x
+                    + "</div>";
+  
+                    for (var i = points.length - 1; i >= 0; i--) {
+                      result += getTooltip( points[i].y, 
+                                            0, 
+                                            points[i].series);
+                    }
+                  
+                    result += "</div>";
+  
+  return result;
+}
+
 function getTooltip(percentage, dpsIncrease, series) {
   result = "";
   if (percentage != 0) {
@@ -118,12 +143,14 @@ function getTooltip(percentage, dpsIncrease, series) {
               + series.color
               + ";" 
               + '">' 
-              + series.name 
-              + "</span>:&nbsp;&nbsp;" 
-              + "+ "
+              + series.name
+              + "</span>:&nbsp;&nbsp;";
+    if(dpsIncrease != 0) {
+      result += "+ "
               + Intl.NumberFormat().format(dpsIncrease) 
               + space + DPS.toLowerCase()
               + space + dash + space;
+    }
     result += percentage.toFixed(2);
     if (percentage > 0) {
       result += '% (Increase)';

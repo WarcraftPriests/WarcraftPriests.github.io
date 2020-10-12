@@ -13,7 +13,9 @@ function handleOnClick(clickedButton, btn) {
     } else if(btn == covenant) {
       currCovenantBtn = clickedButton;
     } else if(btn == fightStyle) {
-      currFightStyleBtn = clickedButton
+      currFightStyleBtn = clickedButton;
+    } else if(btn == covenantChoice) {
+      currCovenantChoiceBtn = clickedButton;
     }
   
     styleButtons();
@@ -30,21 +32,29 @@ function handleOnClick(clickedButton, btn) {
     
     switch(currSimsBtn) {
       case enchants:
+        addShow(fightStyleDiv);
         addShow(enchantDiv);
         currCovenantBtn = defaultCovenant;
         currConsumablesBtn = defaultConsumable;
         break;
       case consumables:
+        addShow(fightStyleDiv);
         //addShow(consumablesDiv);  
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         break;
       case covenants:
+        addShow(fightStyleDiv);
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
         break;
+      case covenantsChoice:
+        removeShow(fightStyleDiv);
+        removeShow(covenantDiv);
+        break;
       default:
+        addShow(fightStyleDiv);
         addShow(covenantDiv);  
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -59,6 +69,10 @@ function handleOnClick(clickedButton, btn) {
  */
 function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {
     switch(currSimsBtn) {
+      case covenantsChoice:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+        wcp_charts.updateMultipleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        break;
       case conduits:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
         wcp_charts.updatePercentageChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);

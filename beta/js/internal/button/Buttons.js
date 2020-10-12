@@ -4,6 +4,7 @@ var currCovenantBtn = defaultCovenant;
 var currEnchantsBtn = defaultEnchant;
 var currConsumablesBtn = defaultConsumable;
 var currFightStyleBtn = defaultFightStyle;
+var currCovenantChoiceBtn = defaultCovenantChoice;
 
 function initialize() {
   var query = getQueryParameter();

@@ -30,7 +30,8 @@ function styleButtons() {
             || btn.id == currCovenantBtn
             || btn.id == currEnchantsBtn 
             || btn.id == currConsumablesBtn
-            || btn.id == currFightStyleBtn ) {
+            || btn.id == currFightStyleBtn
+            || btn.id == currCovenantChoiceBtn ) {
         btn.style.borderColor = buttonBorderColor;
         btn.style.backgroundColor = buttonBackgroundColor;
       } else {

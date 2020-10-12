@@ -102,3 +102,42 @@ function buildDataForPercentageChart(data, chartId, chart) {
   }
   updateSize(chart, chartId, data[jsonSortedDataKeys].length);
 }
+
+/*
+ * Use the data from the json request and sort them for the stacked bar
+ * setup
+ */
+function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
+  while (chart.series.length > 0) {
+    chart.series[0].remove(false);
+  }
+  
+  var minResults = [];
+  var maxResults = [];
+
+  for(i = 0; i <= Conduits2.length -1; i++) {
+    minResults = [];
+    maxResults = [];
+    for(currFight in data[jsonData]) {
+      minResults.push(data[jsonData][currFight][Conduits2[i]]["min"]);
+      maxResults.push(data[jsonData][currFight][Conduits2[i]]["max"]);
+    }
+
+    chart.addSeries({
+      data: maxResults,
+      name: getConduitsName(Conduits2[i]) + " max",
+      stack: Conduits2[i],
+      showInLegend: true,
+      }, false);
+
+    chart.addSeries({
+      data: minResults,
+      name: getConduitsName(Conduits2[i]) + " min",
+      stack: Conduits2[i],
+      showInLegend: true,
+    }, false);
+  }
+
+  chart.redraw();
+  updateSize(chart, chartId, Conduits2.length);
+}
