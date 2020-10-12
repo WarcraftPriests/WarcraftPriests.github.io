@@ -5,6 +5,33 @@ var currEnchantsBtn = defaultEnchant;
 var currConsumablesBtn = defaultConsumable;
 var currFightStyleBtn = defaultFightStyle;
 
+function initialize() {
+  var query = getQueryParameter();
+  if(query !== null) {
+    if(query.has('talents')) {
+      if(query.get('talents') != null
+          || query.get('talents') != "")
+      currTalentBtn = query.get('talents');
+    }
+    if(query.has('sims')) {
+    if( query.get('sims') != null
+      || query.get('sims') != "")
+      currSimsBtn = query.get('sims');
+    }
+    if(query.has('covenants')) {
+      if(query.get('covenants') != null
+        || query.get('covenants') != "")
+      currCovenantBtn = query.get('covenants');
+    }
+    if(query.has('fightStyle')) {
+      if(query.get('fightStyle') != null
+        || query.get('fightStyle') != "")
+      currFightStyleBtn = query.get('fightStyle'); 
+    }
+  }
+  createButtons();
+}
+
 /*
  * Initial setup of all buttons for the site
  */

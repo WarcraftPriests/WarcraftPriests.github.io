@@ -124,4 +124,3 @@ const defaultCovenant = venthyr;
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
-
