@@ -81,6 +81,7 @@ const legendaries = "legendaries";
 const fightStyle = "fightStyle";
 const covenant = "covenant";
 const conduits = "conduits";
+const racials = "racials";
 const ancientMadness = "am";
 const venthyr = "venthyr";
 const ring = "ring";
@@ -92,6 +93,7 @@ const sims = "sims";
  */
 const fightStyleDiv = "fightStyle-div";
 const covenantDiv = "covenant-div";
+const covenantChoiceDiv = "covenantChoice-div";
 const consumablesDiv = "consumables-div";
 const enchantDiv = "enchants-div";
 const talentDiv = "talent-div"
@@ -106,6 +108,7 @@ const show = "show";
 const enchants = "enchants";
 const consumables = "consumables";
 const covenants = "covenants";
+const covenantsChoice = "covenantsChoice";
 
 const pointer = "pointer";
 const attributeSpacer = "', '";
@@ -120,7 +123,8 @@ const inlineBlock = "inline-block";
 const defaultTalent = ancientMadness
 const defaultSims = trinkets;
 const defaultCovenant = venthyr;
+const defaultCovenantChoice = "aggregateCovenant";
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
-
+const coventantsChoiceChartName = "Covenant Choice - Aggregate"
