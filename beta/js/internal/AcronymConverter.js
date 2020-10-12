@@ -42,7 +42,13 @@ var Talents = {
 };
 
 var FightStyles = {
-  composite: "Composite",
+  Composite: "Composite",
+  Single: "Single Target",
+  Dungeons: "Dungeons",
+};
+
+var FightStyleExternal = {
+  composite: "Raid",
   single: "Single Target",
   dungeons: "Dungeons",
 };
@@ -108,6 +114,10 @@ var getTalentShortName = function (key) {
 
 var getFightStyleName = function (key) {
   return FightStyles[key];
+};
+
+var getFightStyleExtName = function (key) {
+  return FightStyleExternal[key];
 };
 
 var getFightStyleShortName = function (key) {
