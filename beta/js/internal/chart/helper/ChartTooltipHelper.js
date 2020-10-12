@@ -37,7 +37,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
 function buildWowheadTooltipsMultipleBar(data, simsBtn) {
   var result = [];
   for(currFight in data[jsonData]) {
-    result.push(buildChartLine(getFightStyleName(currFight), "", ""));
+    result.push(buildChartLine(getFightStyleExtName(currFight), "", ""));
   }
 
   return result;

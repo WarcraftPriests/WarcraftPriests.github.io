@@ -47,16 +47,16 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
    * Special cases!
    */
   if(simsBtn == talents){
-    return baseurl + slash + simsBtn + simResultPath + getFightStyleName(fightStyle) + jsonExtension;
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
   }
   if(simsBtn == covenantsChoice) {
     return baseurl + slash + "covenant-choice" + simResultPath + "Aggregate" + jsonExtension;
   }
   if(covenantType == "" 
       || covenantType == null) {
-    return baseurl + slash + simsBtn + simResultPath + getFightStyleName(fightStyle) + underscore + talentChoice + jsonExtension;
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
   } else {
-    return baseurl + slash + simsBtn + simResultPath + getFightStyleName(fightStyle) + underscore + talentChoice + underscore + covenantType + jsonExtension;
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
   }
 }
 
