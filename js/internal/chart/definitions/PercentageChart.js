@@ -1,4 +1,4 @@
-function getChartDefinitioPercentage(wowheadTooltips, chartName, data) {
+function getChartDefinitioPercentage(wowheadTooltips, chartName, data, legendTitle) {
   return percentageChartDefinition = {
     xAxis: {
       categories: wowheadTooltips,
@@ -9,6 +9,12 @@ function getChartDefinitioPercentage(wowheadTooltips, chartName, data) {
       allowDecimals: true,
       tickPositioner: function() {
         return yStepsForPercentageChart(data);
+      },
+    },
+    legend: {
+      title: {
+        text: legendTitle,
+        style: {"textAlign": 'center'},
       },
     },
     plotOptions: {
