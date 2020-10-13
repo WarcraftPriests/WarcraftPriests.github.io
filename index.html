@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="utf-8">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">	
 	<link rel="stylesheet" href="css/main-chart.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/brands.css" integrity="sha384-1KLgFVb/gHrlDGLFPgMbeedi6tQBLcWvyNUN+YKXbD7ZFbjX6BLpMDf0PJ32XJfX" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
@@ -15,14 +16,6 @@
 		<a href="https://warcraftpriests.com/" target="_blank"><img id="img-banner" src="https://i.imgur.com/M12BeGV.png" alt="WCP Banner"></a>
 	</div>
 	<div id="pad" style="padding-bottom: 30px;"></div>
-	<!-- PTR Switch
-	<p class="labels">PTR Switch</p>
-	<label class="switch">
-		<input type="checkbox">
-		<span class="slider round"></span>
-	</label>
-	<div id="pad" style="padding-bottom: 30px;"></div>
-	-->
 	<script>
 		var whTooltips = {
 			colorLinks: true,
@@ -33,361 +26,26 @@
 	<script src="https://wow.zamimg.com/widgets/power.js"></script>
 	<div id="disclaimer">
 		<section>
-			Azerite trait sims are done in a vaccum, and this list does not display combinations of traits, which alter your choices significantly. For this reason, just because something is higher on this chart does not mean it is the better choice. You should sim your available choices to determine what is best for your gear on <a href="https://www.raidbots.com/simbot/topgear">Raidbots</a>. To get a brief idea of what is better, check out the <a href="https://github.com/WarcraftPriests/bfa-shadow-priest/blob/master/azerite-traits/README.md#azerite-trait-results">GitHub Repo for Azerite traits</a> that shows combination tests.
-		</section>
+			This is very preliminary info on shadow for the upcoming Shadowlands Expansion. This is not meant to be a concrete view on how shadow will perform in the next expansion, but rather a place where you can view the in progress data for shadow.</section>
 		<br>
 		<section>
 			<b id="updateData"></b>
 		</section>
 	</div>
-	<div id="talent-div" class=tabcontent>
-		<button id="SCBtn" class="button" onClick="talentClick('SC')">Shadow Crash</button>
-		<button id="ASBtn" class="button" onCLick="talentClick('AS')">Auspicious Spirits</button>
-	</div>
-	<div id="sims-div" class=tabcontent>
-		<button id="TrinketsBtn" class="button" onClick="itemClick('Trinkets')">Trinkets</button>
-		<button id="TraitsBtn" class="button" onClick="itemClick('Traits')">Traits</button>
-		<button id="`sBtn" class="button" onClick="itemClick('Essences')">Essences</button>
-		<button id="CorruptionBtn" class="button" onClick="itemClick('Corruption')">Corruption</button>
-		<button id="TalentsBtn" class="button" onClick="itemClick('Talents')">Talents</button>
-		<button id="RacialsBtn" class="button" onClick="itemClick('Racials')">Racials</button>
-		<button id="EnchantsBtn" class="button" onClick="itemClick('Enchants')">Enchants</button>
-		<button id="ConsumablesBtn" class="button" onClick="itemClick('Consumables')">Consumables</button>
-		<!--
-		<button id="StatsBtn" class="button" onClick="itemClick('Stats')">Stats</button> -->
-	</div>
-	<div id="traits-div" class="dropdown-content">
-		<button id="Primary" class="button" onClick="itemClick('Traits-P')">Primary</button>
-		<button id="Secondary" class="button" onClick="itemClick('Traits-S')">Secondary</button>
-	</div>
-	<div id="essence-div" class="dropdown-content">
-		<button id="Major" class="button" onClick="itemClick('Essence-Major')">Major</button>
-		<button id="Minor" class="button" onClick="itemClick('Essence-Minor')">Minor</button>
-	</div>
-	<div id="corruption-div" class="dropdown-content">
-		<button id="DPSValues" class="button" onClick="itemClick('Corruption')">DPS Values</button>
-		<button id="DPSPerPoint" class="button" onClick="itemClick('Corruption-DPS')">DPS Per Corruption Point</button>
-	</div>
-	<div id="enchant-div" class="dropdown-content">
-		<button id="Weapons" class="button" onClick="itemClick('Enchant-Weapon')">Weapon</button>
-		<button id="Rings" class="button" onClick="itemClick('Enchant-Ring')">Ring</button>
-	</div>
-	<div id="consumable-div" class="dropdown-content">
-		<button id="Potion" class="button" onClick="itemClick('Consumable-Potion')">Potion/Flask</button>
-		<button id="Food" class="button" onClick="itemClick('Consumable-Food')">Food</button>
-	</div>
-	<div id="Fight-Style-div" class=tabcontent>
-		<button id="CBtn" class="button" onClick="fightClick('C')">Composite</button>
-		<button id="STBtn" class="button" onClick="fightClick('ST')">Single Target</button>
-		<button id="DBtn" class="button" onClick="fightClick('D')">Dungeon</button>
-	</div>
+	<div id="talent-div" class=tabcontent> </div>
+	<div id="sims-div" class=tabcontent> </div>
+	<div id="covenant-div" class="dropdown-content"> </div>
+	<div id="covenantChoice-div" class="dropdown-content"> </div>
+	<div id="enchants-div" class="dropdown-content"> </div>
+	<div id="consumables-div" class="dropdown-content"> </div>
+	<div id="blank-div" class="dropdown-content"> </div>
+	<div id="fightStyle-div" class=dropdown-content> </div>
 	<div id="empty"></div>
 	<div id="container"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script type="text/javascript" src="js/Chart_Building.js"></script>
-	<script>
-		var wcp_charts = new WCP_Chart('Chart-Display-div', {
-			charts: {
-				//Trinkets
-				'SCTrinketsC': {
-					type: 'trinket',
-					src: 'trinkets_SC_C',
-					title: 'Trinkets - Shadow Crash - Composite'
-				},
-				'SCTrinketsST': {
-					type: 'trinket',
-					src: 'trinkets_SC_ST',
-					title: 'Trinkets - Shadow Crash - Single Target'
-				},
-				'SCTrinketsD': {
-					type: 'trinket',
-					src: 'trinkets_SC_D',
-					title: 'Trinkets - Shadow Crash - Dungeon'
-				},
-				'ASTrinketsC': {
-					type: 'trinket',
-					src: 'trinkets_AS_C',
-					title: 'Trinkets - Auspicious Sprits - Composite'
-				},
-				'ASTrinketsST': {
-					type: 'trinket',
-					src: 'trinkets_AS_ST',
-					title: 'Trinkets - Auspicious Sprits - Single Target'
-				},
-				'ASTrinketsD': {
-					type: 'trinket',
-					src: 'trinkets_AS_D',
-					title: 'Trinkets - Auspicious Sprits - Dungeon'
-				},
-				//Traits
-				'SCTraitsC': {
-					type: 'trait',
-					src: 'traits_SC_C',
-					title: 'Azerite Traits - Shadow Crash - Composite'
-				},
-				'SCTraitsST': {
-					type: 'trait',
-					src: 'traits_SC_ST',
-					title: 'Azerite Traits - Shadow Crash - Single Target'
-				},
-				'SCTraitsD': {
-					type: 'trait',
-					src: 'traits_SC_D',
-					title: 'Azerite Traits - Shadow Crash - Dungeon'
-				},
-				'ASTraitsC': {
-					type: 'trait',
-					src: 'traits_AS_C',
-					title: 'Azerite Traits - Auspicious Sprits - Composite'
-				},
-				'ASTraitsST': {
-					type: 'trait',
-					src: 'traits_AS_ST',
-					title: 'Azerite Traits - Auspicious Sprits - Single Target'
-				},
-				'ASTraitsD': {
-					type: 'trait',
-					src: 'traits_AS_D',
-					title: 'Azerite Traits - Auspicious Sprits - Dungeon'
-				},
-				//Trait Combos
-				'SCTraitsCCombo': {
-					type: 'trait',
-					src: 'traits_SC_C_Combo',
-					title: 'Azerite Traits - Shadow Crash - Composite - Combos'
-				},
-				'SCTraitsSTCombo': {
-					type: 'trait',
-					src: 'traits_SC_ST_Combo',
-					title: 'Azerite Traits - Shadow Crash - Single Target - Combos'
-				},
-				'SCTraitsDCombo': {
-					type: 'trait',
-					src: 'traits_SC_D_Combo',
-					title: 'Azerite Traits - Shadow Crash - Dungeon - Combos'
-				},
-				'ASTraitsCCombo': {
-					type: 'trait',
-					src: 'traits_AS_C_Combo',
-					title: 'Azerite Traits - Auspicious Sprits - Composite - Combos'
-				},
-				'ASTraitsSTCombo': {
-					type: 'trait',
-					src: 'traits_AS_ST_Combo',
-					title: 'Azerite Traits - Auspicious Sprits - Single Target - Combos'
-				},
-				'ASTraitsDCombo': {
-					type: 'trait',
-					src: 'traits_AS_D_Combo',
-					title: 'Azerite Traits - Auspicious Sprits - Dungeon - Combos'
-				},
-				//Essences
-				'SCEssencesC': {
-					type: 'essence',
-					src: 'essences_SC_C',
-					title: 'Azerite essences - Shadow Crash - Composite'
-				},
-				'SCEssencesST': {
-					type: 'essence',
-					src: 'essences_SC_ST',
-					title: 'Azerite essences - Shadow Crash - Single Target'
-				},
-				'SCEssencesD': {
-					type: 'essence',
-					src: 'essences_SC_D',
-					title: 'Azerite essences - Shadow Crash - Dungeon'
-				},
-				'ASEssencesC': {
-					type: 'essence',
-					src: 'essences_AS_C',
-					title: 'Azerite essences - Auspicious Sprits - Composite'
-				},
-				'ASEssencesST': {
-					type: 'essence',
-					src: 'essences_AS_ST',
-					title: 'Azerite essences - Auspicious Sprits - Single Target'
-				},
-				'ASEssencesD': {
-					type: 'essence',
-					src: 'essences_AS_D',
-					title: 'Azerite essences - Auspicious Sprits - Dungeon'
-				},
-				//Corruption
-				'SCCorruptionC': {
-					type: 'corruption',
-					src: 'corruption_SC_C',
-					title: 'Corruption - Shadow Crash - Composite'
-				},
-				'SCCorruptionST': {
-					type: 'corruption',
-					src: 'corruption_SC_ST',
-					title: 'Corruption - Shadow Crash - Single Target'
-				},
-				'SCCorruptionD': {
-					type: 'corruption',
-					src: 'corruption_SC_D',
-					title: 'Corruption - Shadow Crash - Dungeon'
-				},
-				'ASCorruptionC': {
-					type: 'corruption',
-					src: 'corruption_AS_C',
-					title: 'Corruption - Auspicious Sprits - Composite'
-				},
-				'ASCorruptionST': {
-					type: 'corruption',
-					src: 'corruption_AS_ST',
-					title: 'Corruption - Auspicious Sprits - Single Target'
-				},
-				'ASCorruptionD': {
-					type: 'corruption',
-					src: 'corruption_AS_D',
-					title: 'Corruption - Auspicious Sprits - Dungeon'
-				},
-				//Corruption Point DPS
-				'SCCorruption-DPSC': {
-					type: 'corruption',
-					src: 'corruption_point_SC_C',
-					title: 'Corruption - Shadow Crash - Composite'
-				},
-				'SCCorruption-DPSST': {
-					type: 'corruption',
-					src: 'corruption_point_SC_ST',
-					title: 'Corruption - Shadow Crash - Single Target'
-				},
-				'SCCorruption-DPSD': {
-					type: 'corruption',
-					src: 'corruption_point_SC_D',
-					title: 'Corruption - Shadow Crash - Dungeon'
-				},
-				'ASCorruption-DPSC': {
-					type: 'corruption',
-					src: 'corruption_point_AS_C',
-					title: 'Corruption - Auspicious Sprits - Composite'
-				},
-				'ASCorruption-DPSST': {
-					type: 'corruption',
-					src: 'corruption_point_AS_ST',
-					title: 'Corruption - Auspicious Sprits - Single Target'
-				},
-				'ASCorruption-DPSD': {
-					type: 'corruption',
-					src: 'corruption_point_AS_D',
-					title: 'Corruption - Auspicious Sprits - Dungeon'
-				},
-				//Talents
-				'TalentsC' : {
-					type: 'talents',
-					src: 'talents_C',
-					title: 'Battle for Azeroth Talents - Composite'
-				},
-				'TalentsST' : {
-					type: 'talents',
-					src: 'talents_ST',
-					title: 'Battle for Azeroth Talents - Signle Target'
-				},
-				'TalentsD' : {
-					type: 'talents',
-					src: 'talents_D',
-					title: 'Battle for Azeroth Talents - Dungeon'
-				},
-				'ASRacialsC' : {
-					type: 'racials',
-					src: 'racials_AS_C',
-					title: 'Battle for Azeroth Racials - Composite'
-				},
-				'ASRacialsST' : {
-					type: 'racials',
-					src: 'racials_AS_ST',
-					title: 'Battle for Azeroth Racials - Single Target'
-				},
-				'ASRacialsD' : {
-					type: 'racials',
-					src: 'racials_AS_D',
-					title: 'Battle for Azeroth Racials - Dungeon'
-				},
-				'SCRacialsC' : {
-					type: 'racials',
-					src: 'racials_SC_C',
-					title: 'Battle for Azeroth Racials - Composite'
-				},
-				'SCRacialsST' : {
-					type: 'racials',
-					src: 'racials_SC_ST',
-					title: 'Battle for Azeroth Racials - Single Target'
-				},
-				'SCRacialsD' : {
-					type: 'racials',
-					src: 'racials_SC_D',
-					title: 'Battle for Azeroth Racials - Dungeon'
-				},
-				'ASEnchantsC' : {
-					type: 'enchants',
-					src: 'enchants_AS_C',
-					title: 'Battle for Azeroth Enchants - Composite'
-				},
-				'ASEnchantsST' : {
-					type: 'enchants',
-					src: 'enchants_AS_ST',
-					title: 'Battle for Azeroth Enchants - Single Target'
-				},
-				'ASEnchantsD' : {
-					type: 'enchants',
-					src: 'enchants_AS_D',
-					title: 'Battle for Azeroth Enchants - Dungeon'
-				},
-				'SCEnchantsC' : {
-					type: 'enchants',
-					src: 'enchants_SC_C',
-					title: 'Battle for Azeroth Enchants - Composite'
-				},
-				'SCEnchantsST' : {
-					type: 'enchants',
-					src: 'enchants_SC_ST',
-					title: 'Battle for Azeroth Enchants - Single Target'
-				},
-				'SCEnchantsD' : {
-					type: 'enchants',
-					src: 'enchants_SC_D',
-					title: 'Battle for Azeroth Enchants - Dungeon'
-				},
-				'ASConsumablesC' : {
-					type: 'consumables',
-					src: 'consumables_AS_C',
-					title: 'Battle for Azeroth Consumables - Composite'
-				},
-				'ASConsumablesST' : {
-					type: 'consumables',
-					src: 'consumables_AS_ST',
-					title: 'Battle for Azeroth Consumables - Single Target'
-				},
-				'ASConsumablesD' : {
-					type: 'consumables',
-					src: 'consumables_AS_D',
-					title: 'Battle for Azeroth Consumables - Dungeon'
-				},
-				'SCConsumablesC' : {
-					type: 'consumables',
-					src: 'consumables_SC_C',
-					title: 'Battle for Azeroth Consumables - Composite'
-				},
-				'SCConsumablesST' : {
-					type: 'consumables',
-					src: 'consumables_SC_ST',
-					title: 'Battle for Azeroth Consumables - Single Target'
-				},
-				'SCConsumablesD' : {
-					type: 'consumables',
-					src: 'consumables_SC_D',
-					title: 'Battle for Azeroth Consumables - Dungeon'
-				},
-			}
-		});
-		wcp_charts.init();
-		wcp_charts.changeChart();
-	</script>
 	<div class="pad"><i> - All sim data is subject to a certain error percentage and should be taken with a grain of salt.</i></div>
-
+	<div class="wrapper">
+		<div id="Chart-Display-div" class="chartContent"></div>
+	</div>
 	<div class="footer">
 		<a href="https://warcraftpriests.com/"><img class="wcp" src="https://i.imgur.com/Db8QurA.png" alt="WarcraftPriests website"></a>
 		<a href="https://www.youtube.com/WarcraftPriests/" class="fab fa-youtube"></a>
@@ -398,6 +56,28 @@
 		<a href="https://github.com/WarcraftPriests" class="fab fa-github"></a>
 		<a href="https://www.discord.gg/warcraftpriests" class="fab fa-discord"></a>
 	</div>
-</body>
 
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="js/yaml/yaml.min.js"></script>
+	<script src="js/internal/Constants.js"></script>
+	<script src="js/internal/AcronymConverter.js"></script>
+	<script src="js/internal/button/Buttons.js"></script>
+	<script src="js/internal/button/helper/ButtonEventHelper.js"></script>
+	<script src="js/internal/button/helper/ButtonHelper.js"></script>
+	<script src="js/internal/button/helper/ButtonStyleHelper.js"></script>
+	<script src="js/internal/chart/Chart.js"></script>
+	<script src="js/internal/chart/helper/ChartHelper.js"></script>
+	<script src="js/internal/chart/helper/ChartDataHelper.js"></script>
+	<script src="js/internal/chart/helper/ChartTooltipHelper.js"></script>
+	<script src="js/internal/chart/helper/ChartStepHelper.js"></script>
+	<script src="js/internal/chart/definitions/DefaultChart.js"></script>
+	<script src="js/internal/chart/definitions/SingleLineChart.js"></script>
+	<script src="js/internal/chart/definitions/StackedChart.js"></script>
+	<script src="js/internal/chart/definitions/PercentageChart.js"></script>
+	<script src="js/internal/chart/definitions/MultipleBarChart.js"></script>
+	<script src="js/internal/Parameterized.js"></script>
+	<script src="js/Main.js"></script>
+</body>
 </html>

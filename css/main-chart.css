@@ -41,7 +41,6 @@
   background-color: #3498DB;
   color: white;
   padding: 16px;
-  font-size: 16px;
   border: none;
   cursor: pointer;
 }
@@ -113,7 +112,6 @@
   display: block;
   justify-content: center;
   text-align: center;
-  font-size: 16px;
 }
 
 .chart-div {
@@ -202,11 +200,29 @@ input:checked+.slider:before {
   text-align: center;
 }
 
+.wrapper {
+  text-align: center;
+}
+
 /* Divs */
 .tabcontent {
   text-align: center;
   padding-bottom: 5px;
   padding-right: 5px;
+  
+}
+
+/* Divs */
+.chartContent {
+  text-align: center;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: inline-block;
+  
 }
 
 .traitButtons {
@@ -217,11 +233,12 @@ input:checked+.slider:before {
 .button {
   background-color: #343a40;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 15px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   display:inline-block;
   justify-content: center;
+  border-radius: 8px;
 }
 
 /* Footer */
@@ -293,6 +310,30 @@ input:checked+.slider:before {
 .fa-patreon {
   background: #e44727;
   color: white;
+}
+
+.chartHover {
+  margin-top: -4px;
+  margin-bottom: -6px;
+  margin-left: -11px;
+  margin-right: -7px;
+  padding-left: 3px;
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-right: 3px;
+  background-color: #343a40;
+}
+
+.chartHoverLine {
+  margin-left: 9px;
+  margin-right: 9px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.chartHoverSpan {
+  margin-left: 9px;
+  padding-left: 4px;
 }
 
 section {
