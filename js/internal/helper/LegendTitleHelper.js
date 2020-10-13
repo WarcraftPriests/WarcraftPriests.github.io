@@ -14,4 +14,4 @@ var LegendTitles = {
 
 var getLegendTitle = function (key) {
     return LegendTitles[key];
-  };
+};
