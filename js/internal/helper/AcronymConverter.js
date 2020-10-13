@@ -54,14 +54,18 @@ var FightStyleExternal = {
 };
 
 var Sims = {
+  conduit_combos: "Conduit Combos",
   conduits: "Conduits",
   consumables: "Consumables",
-  covenants: "Covenants",
   covenantsChoice: "Covenants Choice",
+  covenants: "Covenants",
   enchants: "Enchants",
   //gear: "Gear",
+  //apl: "APL",
   legendaries: "Legendaries",
   racials: "Racials",
+  soulbind_traits: "Soulbind Traits",
+  soulbinds_launch: "Soulbind Launch",
   soulbinds: "Soulbinds",
   stats: "Stats",
   talents: "Talents",
