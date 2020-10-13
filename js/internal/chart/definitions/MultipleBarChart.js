@@ -36,9 +36,11 @@ function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendT
             }
           },
           stacking: stackingNormal,
+          grouping: true,
+          groupPadding: 0.1,
           enableMouseTracking: true,
-          pointPadding: 1.5,
-          pointWidth: 15,
+          pointPadding: 0,
+          pointWidth: 10,
           spacing: 100,
           events: {
             legendItemClick: function () { return false; }
