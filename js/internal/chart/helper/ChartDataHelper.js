@@ -119,8 +119,8 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
     minResults = [];
     maxResults = [];
     for(currFight in data[jsonData]) {
-      minResults.push(data[jsonData][currFight][Conduits2[i]]["min"]);
-      maxResults.push(data[jsonData][currFight][Conduits2[i]]["max"]);
+      minResults.push(((data[jsonData][currFight][Conduits2[i]]["min"]) * 100));
+      maxResults.push(((data[jsonData][currFight][Conduits2[i]]["max"]) * 100) - ((data[jsonData][currFight][Conduits2[i]]["min"])) * 100);
     }
 
     chart.addSeries({
@@ -130,7 +130,7 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
       stack: Conduits2[i],
       showInLegend: true,
       }, false);
-
+    
     chart.addSeries({
       color: getCovenantChoiceColor(Conduits2[i] + "_min"),
       data: minResults,
