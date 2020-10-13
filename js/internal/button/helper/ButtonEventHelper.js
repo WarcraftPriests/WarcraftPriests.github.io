@@ -34,17 +34,20 @@ function handleOnClick(clickedButton, btn) {
       case enchants:
         addShow(fightStyleDiv);
         addShow(enchantDiv);
+        addShow(talentDiv);
         currCovenantBtn = defaultCovenant;
         currConsumablesBtn = defaultConsumable;
         break;
       case consumables:
         addShow(fightStyleDiv);
+        addShow(talentDiv);
         //addShow(consumablesDiv);  
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         break;
       case covenants:
         addShow(fightStyleDiv);
+        addShow(talentDiv);
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -52,10 +55,20 @@ function handleOnClick(clickedButton, btn) {
       case covenantsChoice:
         removeShow(fightStyleDiv);
         removeShow(covenantDiv);
+        addShow(talentDiv);
+        break;
+      case apl:
+        removeShow(covenantDiv);
+        removeShow(talentDiv);
+        break;
+      case soulbindTraits:
+        addShow(fightStyleDiv);  
+        removeShow(covenantDiv);
         break;
       default:
         addShow(fightStyleDiv);
         addShow(covenantDiv);  
+        addShow(talentDiv);
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
     }
@@ -88,6 +101,22 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       case trinkets:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  
         wcp_charts.updateStackedBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        break;
+      case conduitCombos:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+        wcp_charts.updateSingleBarChart("conduit-combos", currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        break;
+      case soulbindTraits:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+        wcp_charts.updateSingleBarChart("soulbind-traits", currFightStyleBtn, currTalentBtn, "");
+        break;
+      case soulbindsLaunch:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+        wcp_charts.updateSingleBarChart("soulbinds-launch", currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        break;
+      case apl:
+        manipulateUrl("talents", "", "sims", currSimsBtn, "covenants", "", "fightStyle", "");
+        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, "", "");
         break;
       default:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);

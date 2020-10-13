@@ -21,6 +21,8 @@ function updateSize(chart, chartId, size) {
 function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
   if(fullSimType == "CovenantsChoice") {
     return coventantsChoiceChartName;
+  } else if(fullSimType == apl) {
+    return apl.toUpperCase() + fightStyle;
   }
   if (covenantType === empty || covenantType == null) {
     return firstTalent 
@@ -48,9 +50,10 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
    */
   if(simsBtn == talents){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
-  }
-  if(simsBtn == covenantsChoice) {
+  } else if(simsBtn == covenantsChoice) {
     return baseurl + slash + "covenant-choice" + simResultPath + "Aggregate" + jsonExtension;
+  } else if(simsBtn == apl) {
+    return baseurl + slash + apl + simResultPath + fightStyle + jsonExtension;
   }
   if(covenantType == "" 
       || covenantType == null) {
