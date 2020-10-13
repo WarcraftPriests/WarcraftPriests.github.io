@@ -9,6 +9,27 @@ var covenantChoiceColor = {
     venthyr_max: "#33ffff",
 }
 
+var covenantColor = {
+    kyrian: "#0000cc",
+    night_fae: "#a52a2a",
+    necrolord: "#e5d334",
+    venthyr: "#008b8b",
+}
+
 var getCovenantChoiceColor = function (key) {
     return covenantChoiceColor[key];
 };
+
+var getCovenantColor = function (key) {
+   if(key.toLowerCase().includes(kyrian)) {
+       return covenantColor[kyrian];
+   } else if(key.toLowerCase().includes(nightFae)) {
+       return covenantColor[nightFae];
+   } else if(key.toLowerCase().includes(necrolord)) {
+       return covenantColor[necrolord];
+   } else if(key.toLowerCase().includes(venthyr)) {
+       return covenantColor[venthyr];
+   } else {
+       return "#496DC9";
+   }
+}
