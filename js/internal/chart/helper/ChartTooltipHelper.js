@@ -24,7 +24,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       case legendaries:
         url = wowheadUrl + wowheadSpellPath;
         break;
-      case soulbindTraits:
+      case "soulbind-traits":
         url = wowheadUrl + wowheadSpellPath;
         break;
       default:
