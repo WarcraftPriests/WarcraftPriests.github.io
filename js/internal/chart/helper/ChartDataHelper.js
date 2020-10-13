@@ -16,9 +16,9 @@ function buildChartDataSingleBar(data, chartId, chart) {
     if(dps >= 0) {
       var percentage = (dps / baselineDPS) * 100 - 100;
       if(percentage < 0) {
-        result.push(0);
+        result.push({y: 0, color: getCovenantColor(sortedData)});
       } else {
-        result.push(percentage);
+        result.push({y: percentage, color: getCovenantColor(sortedData)});
       }
     }
   }
@@ -29,7 +29,7 @@ function buildChartDataSingleBar(data, chartId, chart) {
   },false);
   updateSize(chart, chartId, result.length);
 }
-  
+
 /*
  * Use the data from the json request and sort them for the single bar
  * setup
@@ -124,6 +124,7 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
     }
 
     chart.addSeries({
+      color: getCovenantChoiceColor(Conduits2[i] + "_max"),
       data: maxResults,
       name: getConduitsName(Conduits2[i]) + " max",
       stack: Conduits2[i],
@@ -131,6 +132,7 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
       }, false);
 
     chart.addSeries({
+      color: getCovenantChoiceColor(Conduits2[i] + "_min"),
       data: minResults,
       name: getConduitsName(Conduits2[i]) + " min",
       stack: Conduits2[i],

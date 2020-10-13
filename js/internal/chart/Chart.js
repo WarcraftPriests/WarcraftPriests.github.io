@@ -30,7 +30,8 @@ WCP_Chart.prototype.updateStackedBarChart = function ( simsBtn, fightStyle, tale
                                                                         getTalentName(talentChoice.split(dash)[0]), 
                                                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                         fightStyle), 
-                                                    data));
+                                                    data,
+                                                    getLegendTitle(simsBtn)));
         buildDataForStackedChart(data, this.chartId, this.chart);
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -54,7 +55,8 @@ WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, tale
                                                                           getTalentName(talentChoice.split(dash)[0]), 
                                                                           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                           fightStyle), 
-                                                       data));
+                                                       data,
+                                                       getLegendTitle(simsBtn)));
         buildDataForPercentageChart(data, this.chartId, this.chart);
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -78,7 +80,8 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
                                                                       getTalentName(talentChoice.split(dash)[0]), 
                                                                       simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                       fightStyle), 
-                                                  data));
+                                                  data,
+                                                  getLegendTitle(simsBtn)));
         buildChartDataSingleBar(data, this.chartId, this.chart)
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -102,7 +105,8 @@ WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, tal
                                                                              getTalentName(talentChoice.split(dash)[0]), 
                                                                              simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                              fightStyle), 
-                                                         data));
+                                                         data,
+                                                         getLegendTitle(simsBtn)));
         buildChartDataMultipleBar(data, this.chartId, this.chart, fightStyle)
       }.bind(this)
     ).fail(function(xhr, status) {

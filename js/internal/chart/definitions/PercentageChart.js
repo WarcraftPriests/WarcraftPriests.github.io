@@ -1,5 +1,5 @@
-function getStackedChartDefinition(wowheadTooltips, chartName, data) {
-  return stackedCharDefinition = {
+function getChartDefinitioPercentage(wowheadTooltips, chartName, data, legendTitle) {
+  return percentageChartDefinition = {
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
@@ -8,16 +8,17 @@ function getStackedChartDefinition(wowheadTooltips, chartName, data) {
       min: '0',
       allowDecimals: true,
       tickPositioner: function() {
-        return yStepsForStackedBarChart(data);
+        return yStepsForPercentageChart(data);
+      },
+    },
+    legend: {
+      title: {
+        text: legendTitle,
+        style: {"textAlign": 'center'},
       },
     },
     plotOptions: {
       series: {
-        states: {
-          hover: {
-            enabled: false
-          }
-        },
         stacking: stackingNormal,
         dataLabels: {
           align: alignRight,
@@ -50,7 +51,7 @@ function getStackedChartDefinition(wowheadTooltips, chartName, data) {
       pointFormat: tooltipPointFormat,
       padding: 5,
       formatter: function () {
-        return formatterStacked(this.points, this.x, data);
+        return formatterPercentage(this.points, this.x, data);
       },
     },
   };   

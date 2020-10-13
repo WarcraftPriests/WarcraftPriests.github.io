@@ -1,4 +1,4 @@
-function getMultipleBarChartDefinition(wowheadTooltips, chartName, data) {
+function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendTitle) {
     return stackedCharDefinition = {
       xAxis: {
         categories: wowheadTooltips,
@@ -10,6 +10,12 @@ function getMultipleBarChartDefinition(wowheadTooltips, chartName, data) {
         stackLabels: {
           enabled: false,
         }
+      },
+      legend: {
+        title: {
+          text: legendTitle,
+          style: {"textAlign": 'center'},
+        },
       },
       plotOptions: {
         series: {

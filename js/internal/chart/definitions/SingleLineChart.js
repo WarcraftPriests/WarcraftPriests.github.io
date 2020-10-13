@@ -1,4 +1,4 @@
-function getSingleBarDefinition(wowheadTooltips, chartName, data) {
+function getSingleBarDefinition(wowheadTooltips, chartName, data, legendTitle) {
   return singleLineBarDefinition = {
     xAxis: {
       categories: wowheadTooltips,
@@ -16,7 +16,8 @@ function getSingleBarDefinition(wowheadTooltips, chartName, data) {
     },
     legend: {
       title: {
-        text: legendTitleTextDps,
+        text: legendTitle,
+        style: {"textAlign": 'center'},
       },
     },
     tooltip: {
