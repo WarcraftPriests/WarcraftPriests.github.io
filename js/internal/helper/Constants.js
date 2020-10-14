@@ -94,6 +94,7 @@ const apl = "apl";
 const soulbindTraits = "soulbind_traits";
 const soulbindsLaunch = "soulbinds_launch";
 const conduitCombos = "conduit_combos";
+
 /*
  * Button related definitions
  */
