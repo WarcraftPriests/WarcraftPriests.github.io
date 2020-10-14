@@ -1,4 +1,4 @@
-function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendTitle) {
+function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendTitle, yAxisTitle) {
     return stackedCharDefinition = {
       xAxis: {
         categories: wowheadTooltips,
@@ -9,7 +9,11 @@ function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendT
         allowDecimals: true,
         stackLabels: {
           enabled: false,
-        }
+        },
+        title: {
+          text: yAxisTitle,
+          color: defaultFontColor,
+        },
       },
       legend: {
         title: {

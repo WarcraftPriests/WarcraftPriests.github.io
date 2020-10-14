@@ -1,4 +1,4 @@
-function getStackedChartDefinition(wowheadTooltips, chartName, data, legendTitle) {
+function getStackedChartDefinition(wowheadTooltips, chartName, data, legendTitle, yAxisTitle) {
   return stackedCharDefinition = {
     xAxis: {
       categories: wowheadTooltips,
@@ -9,6 +9,10 @@ function getStackedChartDefinition(wowheadTooltips, chartName, data, legendTitle
       allowDecimals: true,
       tickPositioner: function() {
         return yStepsForStackedBarChart(data);
+      },
+      title: {
+        text: yAxisTitle,
+        color: defaultFontColor,
       },
     },
     legend: {
