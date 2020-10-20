@@ -48,6 +48,10 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
   /*
    * Special cases!
    */
+  if(talentChoice.includes("_")) {
+    talentChoice = talentChoice.replace("_", "-");
+  }
+
   if(simsBtn == talents){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
   } else if(simsBtn == covenantsChoice) {

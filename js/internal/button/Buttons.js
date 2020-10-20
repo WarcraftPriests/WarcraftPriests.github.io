@@ -70,7 +70,7 @@ function createConsumableButtons(buttonArray) {
  * Creates consumables buttons
  */
 function createTalentButtons(buttonArray) {
-  createButtonBasicList(talentDiv, buttonArray, checkButtonClick, getTalentName, talents)
+  createButtonBasicList(talentDiv, buttonArray, checkButtonClick, getTalentSimsName, talents)
 }
 
 /*

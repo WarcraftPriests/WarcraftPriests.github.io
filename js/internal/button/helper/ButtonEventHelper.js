@@ -26,6 +26,9 @@ function handleOnClick(clickedButton, btn) {
    * neccessary
    */
   function checkButtonClick() {
+    addShow(fightStyleDiv);
+    addShow(simsDiv);
+    addShow(talentDiv);
     removeShow(covenantDiv);
     removeShow(enchantDiv);
     removeShow(consumablesDiv);
@@ -35,19 +38,22 @@ function handleOnClick(clickedButton, btn) {
         addShow(fightStyleDiv);
         addShow(enchantDiv);
         addShow(talentDiv);
+        removeButtonShow("hv");
         currCovenantBtn = defaultCovenant;
         currConsumablesBtn = defaultConsumable;
         break;
       case consumables:
         addShow(fightStyleDiv);
         addShow(talentDiv);
-        //addShow(consumablesDiv);  
+        removeButtonShow("hv");
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         break;
       case covenants:
         addShow(fightStyleDiv);
         addShow(talentDiv);
+        removeButtonShow("hv_as");
+        removeButtonShow("hv_pl");
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -55,20 +61,68 @@ function handleOnClick(clickedButton, btn) {
       case covenantsChoice:
         removeShow(fightStyleDiv);
         removeShow(covenantDiv);
+        removeButtonShow("hv_as");
+        removeButtonShow("hv_pl");
         addShow(talentDiv);
         break;
       case apl:
         removeShow(covenantDiv);
         removeShow(talentDiv);
+        removeButtonShow("hv");
         break;
       case soulbindTraits:
         addShow(fightStyleDiv);  
         removeShow(covenantDiv);
+        removeButtonShow("hv");
+        break;
+      case soulbindsLaunch:
+        addShow(covenantDiv);
+        removeShow(enchantDiv);
+        removeShow(consumablesDiv);
+        removeButtonShow("hv_as");
+        removeButtonShow("hv_pl");
+        currEnchantsBtn = defaultEnchant;
+        currConsumablesBtn = defaultConsumable;
+        break;
+      case talents:
+        addShow(fightStyleDiv);
+        addShow(simsDiv);
+        removeButtonShow("hv");
+        removeShow(covenantDiv);
+        removeShow(enchantDiv);
+        removeShow(consumablesDiv);
+        removeShow(talentDiv);
+        currTalentBtn = defaultTalent;
+        currCovenantBtn = defaultCovenant;
+        currEnchantsBtn = defaultEnchant;
+        currConsumablesBtn = defaultConsumable;
+        break;
+      case trinkets:
+        addShow(covenantDiv);
+        removeShow(enchantDiv);
+        removeShow(consumablesDiv);
+        removeButtonShow("hv_as");
+        removeButtonShow("hv_pl");
+        currEnchantsBtn = defaultEnchant;
+        currConsumablesBtn = defaultConsumable;
+        break;
+      case racials:
+        removeShow(covenantDiv);
+        removeShow(enchantDiv);
+        removeShow(consumablesDiv);
+        removeButtonShow("hv_as");
+        removeButtonShow("hv_pl");
+        currCovenantBtn = defaultCovenant;
+        currEnchantsBtn = defaultEnchant;
+        currConsumablesBtn = defaultConsumable;
         break;
       default:
         addShow(fightStyleDiv);
         addShow(covenantDiv);  
         addShow(talentDiv);
+        removeButtonShow("hv");
+        addButtonShow("hv_as");
+        addButtonShow("hv_pl");
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
     }
