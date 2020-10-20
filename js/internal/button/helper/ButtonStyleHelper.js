@@ -10,6 +10,16 @@ function generateHorizontalSpacer(div) {
     div.appendChild(horizontalSpacer);
   }
   
+  function addButtonShow(buttonName) {
+    document.getElementById(buttonName).style.display = '';
+    document.getElementById(buttonName).nextSibling.style.display = 'inline-block';
+  }
+
+  function removeButtonShow(buttonName) {
+    document.getElementById(buttonName).style.display = 'none';
+    document.getElementById(buttonName).nextSibling.style.display = 'none';
+  }
+
   function addShow(div) {
     document.getElementById(div).classList.add(show);
   }

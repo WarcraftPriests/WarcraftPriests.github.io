@@ -1,6 +1,8 @@
 var SimTalents = {
   am: "Ancient Madness",
   hv: "Hungering void",
+  hv_as: "Hungering void - Auspicious Spirits",
+  hv_pl: "Hungering void - Psychic Link",
   stm: "Surrender To Madness",
 };
 
@@ -91,6 +93,14 @@ var Conduits2 = [
   "night_fae",
   "kyrian",
 ];
+
+var getTalentSimsName = function (key) {
+  if(key.includes("-")) {
+    key = key.replace("-", "_");
+  }
+  return SimTalents[key];
+}
+
 
 var getConsumablesName = function (key) {
   return Consumables[key];

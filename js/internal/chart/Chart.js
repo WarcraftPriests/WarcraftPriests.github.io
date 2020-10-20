@@ -27,7 +27,7 @@ WCP_Chart.prototype.updateStackedBarChart = function ( simsBtn, fightStyle, tale
         }
         this.chart.update(getStackedChartDefinition(buildWowheadTooltips( data, false, simsBtn), 
                                                     determineChartName( covenantType, 
-                                                                        getTalentName(talentChoice.split(dash)[0]), 
+                                                                        getTalentSimsName(talentChoice), 
                                                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                         fightStyle), 
                                                     data,
@@ -53,7 +53,7 @@ WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, tale
 
         this.chart.update(getChartDefinitioPercentage( buildWowheadTooltips(data, false, simsBtn), 
                                                        determineChartName(covenantType, 
-                                                                          getTalentName(talentChoice.split(dash)[0]), 
+                                                                          getTalentSimsName(talentChoice), 
                                                                           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                           fightStyle), 
                                                        data,
@@ -79,7 +79,7 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
 
         this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn), 
                                                   determineChartName( covenantType, 
-                                                                      getTalentName(talentChoice.split(dash)[0]), 
+                                                                      getTalentSimsName(talentChoice), 
                                                                       simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                       fightStyle), 
                                                   data,
@@ -105,7 +105,7 @@ WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, tal
 
         this.chart.update(getMultipleBarChartDefinition( buildWowheadTooltipsMultipleBar( data, simsBtn), 
                                                          determineChartName( covenantType, 
-                                                                             getTalentName(talentChoice.split(dash)[0]), 
+                                                                             getTalentSimsName(talentChoice), 
                                                                              simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                                                              fightStyle), 
                                                          data,
