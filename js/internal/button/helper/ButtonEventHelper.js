@@ -81,6 +81,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
         removeButtonShow("hv_pl");
+        currTalentBtn = defaultTalent;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
         break;
@@ -103,6 +104,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
         removeButtonShow("hv_pl");
+        currTalentBtn = defaultTalent;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
         break;
@@ -112,6 +114,18 @@ function handleOnClick(clickedButton, btn) {
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
         removeButtonShow("hv_pl");
+        currTalentBtn = defaultTalent;
+        currCovenantBtn = defaultCovenant;
+        currEnchantsBtn = defaultEnchant;
+        currConsumablesBtn = defaultConsumable;
+        break;
+      case weights:
+        removeShow(covenantDiv);
+        removeShow(enchantDiv);
+        removeShow(consumablesDiv);
+        removeButtonShow("hv_as");
+        removeButtonShow("hv_pl");
+        currTalentBtn = defaultTalent;
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -171,6 +185,10 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       case apl:
         manipulateUrl("talents", "", "sims", currSimsBtn, "covenants", "", "fightStyle", "");
         wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, "", "");
+        break;
+      case weights:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
+        parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn);
         break;
       default:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
