@@ -63,7 +63,6 @@ var Sims = {
   covenants: "Covenants",
   enchants: "Enchants",
   //gear: "Gear",
-  //apl: "APL",
   legendaries: "Legendaries",
   racials: "Racials",
   soulbind_traits: "Soulbind Traits",
@@ -72,7 +71,7 @@ var Sims = {
   stats: "Stats",
   talents: "Talents",
   trinkets: "Trinkets",
-  //weights: "Weights",
+  weights: "Weights",
 };
 
 var Consumables = {

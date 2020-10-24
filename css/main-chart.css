@@ -336,6 +336,25 @@ input:checked+.slider:before {
   padding-left: 4px;
 }
 
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  background-color: #343A40;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #343A40;
+  text-align: center;
+  padding: 8px;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #52585e;
+}
+
+
 section {
     color: white;
     width: 75%;

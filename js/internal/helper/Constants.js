@@ -44,6 +44,7 @@ const DPS = "DPS";
 const px = "px";
 const empty = "";
 const jsonExtension = ".json";
+const csvExtension = ".csv"
 const simResultPath = "/results/Results_";
 const slash = "/";
 const underscore = "_";
@@ -116,6 +117,7 @@ const enchants = "enchants";
 const consumables = "consumables";
 const covenants = "covenants";
 const covenantsChoice = "covenantsChoice";
+const weights = "weights";
 
 const pointer = "pointer";
 const attributeSpacer = "', '";
