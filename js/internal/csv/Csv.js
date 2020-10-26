@@ -6,7 +6,7 @@ var Headings = {
     haste: "Haste",
     crit: "Critical Strike",
     mastery: "Mastery",
-    vers: "Versatile",
+    vers: "Versatility",
     dpsW: "DPS Weight",
 };
 
