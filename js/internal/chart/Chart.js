@@ -51,7 +51,7 @@ WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, tale
           this.chart.series[0].remove(false);
         }
 
-        this.chart.update(getChartDefinitioPercentage( buildWowheadTooltips(data, false, simsBtn), 
+        this.chart.update(getChartDefinitionPercentage( buildWowheadTooltips(data, false, simsBtn), 
                                                        determineChartName(covenantType, 
                                                                           getTalentSimsName(talentChoice), 
                                                                           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 

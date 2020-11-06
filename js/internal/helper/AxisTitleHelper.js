@@ -9,14 +9,17 @@ var yAxisTitles = {
     soulbinds: "Increase in %",
     stats: "Increase in %",
     talents: "Increase in %",
-    trinkets: "Increase in DPS"
+    trinkets: "Increase in DPS",
+    legendary_items: "Increase in %",
+    soulbind_traits: "Increase in %",
+    soulbinds_launch: "Increase in %",
+    conduit_combos: "Increase in %",
 }
 
 var getYAxisTitle = function (key) {
-    if(key == 'conduit-combos'
-        || key == 'soulbind-traits'
-        || key == 'soulbinds-launch') {
-        return "Increase in %"
-    }
-    return yAxisTitles[key];
+    return yAxisTitles[handleSpecialKeys(key)];
 };
+
+var handleSpecialKeys = function (key) {
+    return key.replace("-", "_");
+}

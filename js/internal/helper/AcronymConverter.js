@@ -64,6 +64,7 @@ var Sims = {
   enchants: "Enchants",
   //gear: "Gear",
   legendaries: "Legendaries",
+  //legendary_items: "Legendary items",
   racials: "Racials",
   soulbind_traits: "Soulbind Traits",
   soulbinds_launch: "Soulbind Launch",
