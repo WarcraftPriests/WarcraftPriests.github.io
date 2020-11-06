@@ -2,7 +2,7 @@
  * Use the data from the json request and sort them for the single bar
  * setup
  */
-function buildChartDataSingleBar(data, chartId, chart) {
+function buildChartDataSingleBar(data, chartId, chart, showInLegend) {
   while (chart.series.length > 0) {
     chart.series[0].remove(false);
   }
@@ -22,10 +22,11 @@ function buildChartDataSingleBar(data, chartId, chart) {
       }
     }
   }
+
   chart.addSeries({
     data: result,
     name: DPS,
-    showInLegend: true,
+    showInLegend: showInLegend,
   },false);
   updateSize(chart, chartId, result.length);
 }

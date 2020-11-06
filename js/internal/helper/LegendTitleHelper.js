@@ -1,5 +1,6 @@
 var LegendTitles = {
     conduits: "Conduits Rank",
+    conduit_combos: "Increase in %",
     consumables: "Increase in %",
     covenants: "Increase in %",
     covenantsChoice: "Increase in %",
@@ -7,6 +8,8 @@ var LegendTitles = {
     legendaries: "Increase in %",
     racials: "Increase in %",
     soulbinds: "Increase in %",
+    soulbind_traits: "Increase in %",
+    soulbinds_launch: "Increase in %",
     stats: "Increase in %",
     talents: "Increase in %",
     trinkets: "Item level",
