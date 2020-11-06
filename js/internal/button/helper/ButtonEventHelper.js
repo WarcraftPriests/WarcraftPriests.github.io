@@ -50,24 +50,29 @@ function handleOnClick(clickedButton, btn) {
         currEnchantsBtn = defaultEnchant;
         break;
       case covenants:
-        addShow(fightStyleDiv);
+        addShow(fightStyleDiv);  
         addShow(talentDiv);
-        removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv");
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
         break;
       case covenantsChoice:
+        addShow(talentDiv);
         removeShow(fightStyleDiv);
         removeShow(covenantDiv);
         removeButtonShow("hv_as");
         removeButtonShow("hv_pl");
-        addShow(talentDiv);
         break;
       case apl:
         removeShow(covenantDiv);
         removeShow(talentDiv);
+        removeButtonShow("hv");
+        break;
+      case legendaryItems:
+        addShow(fightStyleDiv);  
+        addShow(talentDiv);
+        addShow(covenantDiv);
         removeButtonShow("hv");
         break;
       case soulbindTraits:
@@ -161,6 +166,10 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       case legendaries:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
         wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        break;
+      case legendaryItems:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+        wcp_charts.updatePercentageChart("legendary-items", currFightStyleBtn, currTalentBtn, currCovenantBtn);
         break;
       case soulbinds:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  

@@ -17,7 +17,7 @@ function yStepsForPercentageChart(data) {
 
   let lastValue = 0;
   result.push(lastValue)
-  for(i = 0; i <= 7; i++) {
+  for(i = 0; i <= 8; i++) {
     lastValue = lastValue + Number((Number(highestDPS / (data[jsonSimulatedSteps].length + 1))).toFixed(2) * (data[jsonSimulatedSteps].length / 7));
     result.push(Number(lastValue.toFixed(2)));
   }
