@@ -177,7 +177,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
         break;
       case trinkets:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  
-        wcp_charts.updateStackedBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        wcp_charts.updatePercentageChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
         break;
       case conduitCombos:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
