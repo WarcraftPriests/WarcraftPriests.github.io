@@ -16,20 +16,52 @@ var covenantColor = {
     venthyr: "#CC0000",
 }
 
+var racialColor = {
+    Goblin: "#F2545B",
+    Gnome: "#4F86C6",
+    Dark_Iron_Dwarf: "#4F86C6",
+    Night_Elf_Haste: "#4F86C6",
+    Draenei: "#4F86C6",
+    Human: "#4F86C6",
+    Troll: "#F2545B",
+    Blood_Elf: "#F2545B",
+    Void_Elf: "#4F86C6",
+    Panda_Feast: "#F3F7F0",
+    Nightborne: "#F2545B",
+    Lightforged_Draenei: "#4F86C6",
+    Night_Elf_Crit: "#4F86C6",
+    Kul_Tiran: "#4F86C6",
+    Zandalari_Troll_Paku: "#F2545B",
+    Zandalari_Troll_Bwonsamdi: "#F2545B",
+    Mechagnome: "#4F86C6",
+    Undead: "#F2545B",
+    Worgen: "#4F86C6",
+    Maghar_Orc: "#F2545B",
+    Zandalari_Troll_Kimbul: "#F2545B",
+    Panda_Haste: "#F3F7F0",
+    Dwarf: "#4F86C6",
+    Tauren: "#F2545B",
+    Panda_Mastery: "#F3F7F0",
+    Panda_Crit: "#F3F7F0",
+    Panda_Vers: "#F3F7F0",
+    Vulpera: "#F2545B",
+    Panda_Smothered_Shank: "#F3F7F0",
+}
+
 var getCovenantChoiceColor = function (key) {
     return covenantChoiceColor[key];
 };
 
-var getCovenantColor = function (key) {
-   if(key.toLowerCase().includes(kyrian)) {
-       return covenantColor[kyrian];
-   } else if(key.toLowerCase().includes(nightFae)) {
-       return covenantColor[nightFae];
-   } else if(key.toLowerCase().includes(necrolord)) {
-       return covenantColor[necrolord];
-   } else if(key.toLowerCase().includes(venthyr)) {
-       return covenantColor[venthyr];
-   } else {
-       return "#496DC9";
+var getColor = function (key) {
+   var color = covenantColor[key];
+   
+   if(color == null || color == undefined || color == "") {
+       color = racialColor[key];
    }
+
+   if(color == null || color == undefined || color == "") {
+       color = "#496DC9";
+   }
+   
+   return color;
 }

@@ -16,9 +16,9 @@ function buildChartDataSingleBar(data, chartId, chart) {
     if(dps >= 0) {
       var percentage = (dps / baselineDPS) * 100 - 100;
       if(percentage < 0) {
-        result.push({y: 0, color: getCovenantColor(sortedData)});
+        result.push({y: 0, color: getColor(sortedData)});
       } else {
-        result.push({y: percentage, color: getCovenantColor(sortedData)});
+        result.push({y: percentage, color: getColor(sortedData)});
       }
     }
   }
