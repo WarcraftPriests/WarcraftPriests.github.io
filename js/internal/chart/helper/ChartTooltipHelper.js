@@ -127,9 +127,17 @@ function formatterMultipleBar(points, x, data) {
                     + '<div class="chartHoverLine">' 
                     + x
                     + "</div>";
-  
+                    var minValue = 0;
+                    var value = 0;
                     for (var i = points.length - 1; i >= 0; i--) {
-                      result += getTooltip( points[i].y, 
+                      if(points[i].series.name.includes("min")) {
+                        minValue = points[i].y;
+                        value = minValue;
+                      } else if (points[i].series.name.includes("max")) {
+                        value = minValue + points[i].y;
+                        minValue = 0;
+                      }
+                      result += getTooltip( value, 
                                             0, 
                                             points[i].series);
                     }

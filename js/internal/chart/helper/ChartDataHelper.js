@@ -112,16 +112,19 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
   while (chart.series.length > 0) {
     chart.series[0].remove(false);
   }
-  
+
   var minResults = [];
   var maxResults = [];
 
   for(i = 0; i <= Conduits2.length -1; i++) {
     minResults = [];
     maxResults = [];
+
     for(currFight in data[jsonData]) {
-      minResults.push(((data[jsonData][currFight][Conduits2[i]]["min"]) * 100));
-      maxResults.push(((data[jsonData][currFight][Conduits2[i]]["max"]) * 100) - ((data[jsonData][currFight][Conduits2[i]]["min"])) * 100);
+      var minValue = ((data[jsonData][currFight][Conduits2[i]]["min"]) * 100);
+      var maxValue = ((data[jsonData][currFight][Conduits2[i]]["max"]) * 100) - ((data[jsonData][currFight][Conduits2[i]]["min"])) * 100;
+      minResults.push(minValue);
+      maxResults.push(maxValue);
     }
 
     chart.addSeries({
@@ -140,7 +143,6 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
       showInLegend: true,
     }, false);
   }
-
   chart.redraw();
   updateSize(chart, chartId, Conduits2.length);
 }
