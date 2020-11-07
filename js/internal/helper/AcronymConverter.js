@@ -2,7 +2,8 @@ var SimTalents = {
   am: "Ancient Madness",
   hv: "Hungering void",
   hv_as: "Hungering Void - Auspicious Spirits",
-  hv_pl: "Hungering Void - Psychic Link",
+  //hv_pl: "Hungering Void - Psychic Link",
+  hv_sc: "Hungering Void - Shadow Crash",
   stm: "Surrender To Madness",
 };
 

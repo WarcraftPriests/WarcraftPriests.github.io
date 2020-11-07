@@ -62,7 +62,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(fightStyleDiv);
         removeShow(covenantDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         break;
       case apl:
         removeShow(covenantDiv);
@@ -85,7 +85,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -108,7 +108,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -118,7 +118,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
@@ -129,7 +129,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
@@ -141,7 +141,7 @@ function handleOnClick(clickedButton, btn) {
         addShow(talentDiv);
         removeButtonShow("hv");
         addButtonShow("hv_as");
-        addButtonShow("hv_pl");
+        addButtonShow("hv_sc");
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
     }
