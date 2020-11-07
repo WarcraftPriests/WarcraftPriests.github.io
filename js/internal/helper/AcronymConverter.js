@@ -2,7 +2,8 @@ var SimTalents = {
   am: "Ancient Madness",
   hv: "Hungering void",
   hv_as: "Hungering Void - Auspicious Spirits",
-  hv_pl: "Hungering Void - Psychic Link",
+  //hv_pl: "Hungering Void - Psychic Link",
+  hv_sc: "Hungering Void - Shadow Crash",
   stm: "Surrender To Madness",
 };
 
@@ -93,6 +94,20 @@ var Conduits2 = [
   "night_fae",
   "kyrian",
 ];
+
+var StatsName = {
+  H: "Haste",
+  C: "Crit",
+  V: "Versatility",
+  M: "Mastery",
+}
+
+var StatAlignment = {
+  Haste: undefined,
+  Crit: "top",
+  Versatility: "top",
+  Mastery: "top",
+}
 
 var getTalentSimsName = function (key) {
   if(key.includes("-")) {

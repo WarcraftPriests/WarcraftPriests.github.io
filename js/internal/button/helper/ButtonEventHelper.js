@@ -62,7 +62,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(fightStyleDiv);
         removeShow(covenantDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         break;
       case apl:
         removeShow(covenantDiv);
@@ -85,7 +85,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -108,7 +108,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
@@ -118,7 +118,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
@@ -129,7 +129,7 @@ function handleOnClick(clickedButton, btn) {
         removeShow(enchantDiv);
         removeShow(consumablesDiv);
         removeButtonShow("hv_as");
-        removeButtonShow("hv_pl");
+        removeButtonShow("hv_sc");
         currTalentBtn = defaultTalent;
         currCovenantBtn = defaultCovenant;
         currEnchantsBtn = defaultEnchant;
@@ -141,7 +141,7 @@ function handleOnClick(clickedButton, btn) {
         addShow(talentDiv);
         removeButtonShow("hv");
         addButtonShow("hv_as");
-        addButtonShow("hv_pl");
+        addButtonShow("hv_sc");
         currEnchantsBtn = defaultEnchant;
         currConsumablesBtn = defaultConsumable;
     }
@@ -165,7 +165,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
         break;
       case legendaries:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
         break;
       case legendaryItems:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
@@ -173,7 +173,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
         break;
       case soulbinds:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  
-        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
         break;
       case trinkets:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  
@@ -181,26 +181,34 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
         break;
       case conduitCombos:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-        wcp_charts.updateSingleBarChart("conduit-combos", currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        wcp_charts.updateSingleBarChart("conduit-combos", currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
         break;
       case soulbindTraits:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-        wcp_charts.updateSingleBarChart("soulbind-traits", currFightStyleBtn, currTalentBtn, "");
+        wcp_charts.updateSingleBarChart("soulbind-traits", currFightStyleBtn, currTalentBtn, "", true);
         break;
       case soulbindsLaunch:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-        wcp_charts.updateSingleBarChart("soulbinds-launch", currFightStyleBtn, currTalentBtn, currCovenantBtn);
+        wcp_charts.updateSingleBarChart("soulbinds-launch", currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
         break;
       case apl:
         manipulateUrl("talents", "", "sims", currSimsBtn, "covenants", "", "fightStyle", "");
-        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, "", "");
+        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, "", "", true);
         break;
       case weights:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
         parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn);
         break;
+      case racials:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
+        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false);
+        break
+      case stats:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
+        statChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "");
+        break;
       default:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
-        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "");
+        wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", true);
     }
   }

@@ -92,6 +92,7 @@ const ring = "ring";
 const food = "food";
 const sims = "sims";
 const apl = "apl";
+const stats = "stats";
 const soulbindTraits = "soulbind_traits";
 const soulbindsLaunch = "soulbinds_launch";
 const conduitCombos = "conduit_combos";
