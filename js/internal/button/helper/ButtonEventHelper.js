@@ -203,6 +203,10 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
         wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false);
         break
+      case stats:
+        manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
+        statChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "");
+        break;
       default:
         manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
         wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", true);

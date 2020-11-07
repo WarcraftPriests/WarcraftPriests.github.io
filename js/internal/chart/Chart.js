@@ -118,6 +118,21 @@ WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, tal
     });
 };
 
+function statChart( simsBtn, fightStyle, talentChoice, covenantType) {
+  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
+      function (data) {
+        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
+        buildChartDataDot(data, 
+                          determineChartName( covenantType, 
+                                              getTalentSimsName(talentChoice), 
+                                              simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                              fightStyle));
+      }.bind(this)
+    ).fail(function(xhr, status) {
+      handleJsonFailure(xhr, status)
+    });
+}
+
 /*
  * Opens a chart
  * -> not sure if needed

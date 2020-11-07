@@ -65,3 +65,42 @@ var getColor = function (key) {
    
    return color;
 }
+
+function create_color(dps, min_dps, max_dps) {
+    
+    // colour of lowest DPS
+    let color_min = [0, 255, 255];
+    // additional colour step between min and max
+    let color_mid = [255, 255, 0];
+    // colour of  max dps
+    let color_max = [255, 0, 0];
+  
+    // calculate the position of the mid colour in this relation to ensure a smooth colour transition (colour distance...if something like this exists) between the three
+    let diff_mid_max = 0;
+    let diff_min_mid = 0;
+    for (let i = 0; i < 3; i++) {
+      diff_mid_max += Math.abs(color_max[i] - color_mid[i]);
+      diff_min_mid += Math.abs(color_mid[i] - color_min[i]);
+    }
+    // ratio from min to max to describe the position of the id colour
+    let mid_ratio = diff_min_mid / (diff_min_mid + diff_mid_max);
+    // mid dps resulting from the ratio
+    let mid_dps = min_dps + (max_dps - min_dps) * mid_ratio;
+  
+    // calculate colour based on relative dps
+    if (dps >= mid_dps) {
+      let percent_of_max = (dps - mid_dps) / (max_dps - mid_dps);
+      return [
+        Math.floor(color_max[0] * percent_of_max + color_mid[0] * (1 - percent_of_max)),
+        Math.floor(color_max[1] * percent_of_max + color_mid[1] * (1 - percent_of_max)),
+        Math.floor(color_max[2] * percent_of_max + color_mid[2] * (1 - percent_of_max))
+      ];
+    } else {
+      let percent_of_mid = (dps - min_dps) / (mid_dps - min_dps);
+      return [
+        Math.floor(color_mid[0] * percent_of_mid + color_min[0] * (1 - percent_of_mid)),
+        Math.floor(color_mid[1] * percent_of_mid + color_min[1] * (1 - percent_of_mid)),
+        Math.floor(color_mid[2] * percent_of_mid + color_min[2] * (1 - percent_of_mid))
+      ];
+    }
+  }

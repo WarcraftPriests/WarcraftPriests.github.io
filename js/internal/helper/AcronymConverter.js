@@ -95,6 +95,20 @@ var Conduits2 = [
   "kyrian",
 ];
 
+var StatsName = {
+  H: "Haste",
+  C: "Crit",
+  V: "Versatility",
+  M: "Mastery",
+}
+
+var StatAlignment = {
+  Haste: undefined,
+  Crit: "top",
+  Versatility: "top",
+  Mastery: "top",
+}
+
 var getTalentSimsName = function (key) {
   if(key.includes("-")) {
     key = key.replace("-", "_");

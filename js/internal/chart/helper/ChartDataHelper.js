@@ -144,3 +144,129 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
   chart.redraw();
   updateSize(chart, chartId, Conduits2.length);
 }
+
+function buildChartDataDot(githubData, title) {
+  var chartForStats = new Highcharts.Chart(defaultDotDefinition);
+  (function (H) {
+      function dragStart(eStart) {
+          eStart = chartForStats.pointer.normalize(eStart);
+
+          var posX = eStart.chartX,
+          posY = eStart.chartY,
+          alpha = chartForStats.options.chart.options3d.alpha,
+          beta = chartForStats.options.chart.options3d.beta,
+          sensitivity = 5; // lower is more sensitive
+
+          function drag(e) {
+              e = chartForStats.pointer.normalize(e);
+
+              chartForStats.update({
+                  chart: {
+                      options3d: {
+                          alpha: alpha + (e.chartY - posY) / sensitivity,
+                       beta: beta + (posX - e.chartX) / sensitivity
+                      }
+                  }
+              }, undefined, undefined, false);
+          }
+          chartForStats.unbindDragMouse = H.addEvent(document, 'mousemove', drag);
+          chartForStats.unbindDragTouch = H.addEvent(document, 'touchmove', drag);
+          H.addEvent(document, 'mouseup', chartForStats.unbindDragMouse);
+          H.addEvent(document, 'touchend', chartForStats.unbindDragTouch);
+      }
+      H.addEvent(chartForStats.container, 'mousedown', dragStart);
+      H.addEvent(chartForStats.container, 'touchstart', dragStart);
+  }(Highcharts));
+
+  let light_color = "#eeeeee"
+  let maxDPSPrefix = githubData[jsonSortedDataKeys][0];
+  let minDPSPrefix = githubData[jsonSortedDataKeys][githubData[jsonSortedDataKeys].length -1];
+  let maximalDps = githubData[jsonData][maxDPSPrefix][jsonDPS];
+  let minimalDps = githubData[jsonData][minDPSPrefix][jsonDPS];
+  
+  let series = {
+    name: Intl.NumberFormat().format(maximalDps) + " DPS",
+    color: "#FF0000", // make sure this matches the value of color_max in create_color(...)
+    data: []
+  };
+
+  for (sortedData of githubData[jsonSortedDataKeys]) {
+    let entry = githubData[jsonData][sortedData][jsonDPS];
+    let color_set = create_color(
+      entry,
+      minimalDps,
+      maximalDps
+    );
+    let line_width = 1;
+    let line_color = "#232227";
+
+    let radius = 2 + 3 * (entry - minimalDps) / (maximalDps - minimalDps);
+    if (maximalDps === entry) {
+      line_width = 3;
+      radius = 8;
+      line_color = light_color;
+    }
+
+    let dataLabel = undefined;
+    if(sortedData.includes("10")) {
+      dataLabel = {
+        enabled: true,
+        allowOverlap: true,
+      };
+      if(sortedData.split("_")[0].includes("10")){
+        dataLabel.format = "Mastery";
+        dataLabel.verticalAlign = "top";
+      } else if(sortedData.split("_")[1].includes("10")) {
+        dataLabel.format = "Versatility";
+        dataLabel.verticalAlign = "top";
+      } else if(sortedData.split("_")[2].includes("10")) {
+        dataLabel.format = "Haste";
+      } else if(sortedData.split("_")[3].includes("10")) {
+        dataLabel.format = "Crit";
+        dataLabel.verticalAlign = "top";
+      }
+    }
+
+    statMastery = ((parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, ''))) * 100) + 100;
+    statVers = ((parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))) * 100) + 100;
+    statHaste = ((parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, ''))) * 100) + 100;
+    statCrit = ((parseInt(sortedData.split("_")[3].replace(/[^.\d]/g, ''))) * 100) + 100;
+    sumStatValues = statMastery + statVers + statHaste + statCrit;
+
+    series.data.push({
+      x: Math.sqrt(3) / 2 * (parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, '')) + 1 / 3 * parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))),
+      y: Math.sqrt(2 / 3) * parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, '')),
+      z: parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, '')) + 0.5 * parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, '')) + 0.5 * parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, '')),
+      name: sortedData,
+      color: "rgb(" + color_set[0] + "," + color_set[1] + "," + color_set[2] + ")",
+
+      dps: entry,
+      dpsMax: maximalDps,
+      dpsMin: minimalDps,
+      dpsBase: githubData[jsonData][jsonBase][jsonDPS],
+      statMastery: statMastery,
+      statVers: statVers,
+      statHaste: statHaste,
+      statCrit: statCrit,
+      statMasteryPercent: Math.round(( 100 / sumStatValues ) * (((parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, ''))) * 100) + 100)),
+      statVersPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))) * 100) + 100)),
+      statHastePercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, ''))) * 100) + 100)),
+      statCritPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[3].replace(/[^.\d]/g, ''))) * 100) + 100)),
+      marker: {
+        radius: radius,
+        lineColor: line_color,
+        lineWidth: line_width
+      },
+     dataLabels: dataLabel,
+    });
+  }
+
+  
+  while (chartForStats.series[0]) {
+    chartForStats.series[0].remove(false);
+  }
+
+  chartForStats.addSeries(series, false);
+  chartForStats.addSeries({ name: Intl.NumberFormat().format(minimalDps) + " DPS", color: "#00FFFF" }, false);
+  chartForStats.redraw();
+}
