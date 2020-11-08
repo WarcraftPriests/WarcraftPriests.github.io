@@ -2,9 +2,32 @@ var SimTalents = {
   am: "Ancient Madness",
   hv: "Hungering void",
   hv_as: "Hungering Void - Auspicious Spirits",
-  //hv_pl: "Hungering Void - Psychic Link",
   hv_sc: "Hungering Void - Shadow Crash",
   stm: "Surrender To Madness",
+};
+
+var Sims = {
+  conduit_combos: "Conduit Combos",
+  conduits: "Conduits",
+  consumables: "Consumables",
+  covenant_choice: "Covenants Choice",
+  covenants: "Covenants",
+  enchants: "Enchants",
+  legendaries: "Legendaries",
+  legendary_items: "Legendary items",
+  racials: "Racials",
+  soulbind_traits: "Soulbind Traits",
+  soulbinds_launch: "Soulbind Launch",
+  soulbinds: "Soulbinds",
+  stats: "Stats",
+  talents: "Talents",
+  trinkets: "Trinkets",
+  weights: "Weights",
+};
+
+var Consumables = {
+  potion: "Potion",
+  food: "Food",
 };
 
 var Talents = {
@@ -56,31 +79,6 @@ var FightStyleExternal = {
   dungeons: "Dungeons",
 };
 
-var Sims = {
-  conduit_combos: "Conduit Combos",
-  conduits: "Conduits",
-  consumables: "Consumables",
-  covenantsChoice: "Covenants Choice",
-  covenants: "Covenants",
-  enchants: "Enchants",
-  //gear: "Gear",
-  legendaries: "Legendaries",
-  //legendary_items: "Legendary items",
-  racials: "Racials",
-  soulbind_traits: "Soulbind Traits",
-  soulbinds_launch: "Soulbind Launch",
-  soulbinds: "Soulbinds",
-  stats: "Stats",
-  talents: "Talents",
-  trinkets: "Trinkets",
-  weights: "Weights",
-};
-
-var Consumables = {
-  potion: "Potion",
-  food: "Food",
-};
-
 var Conduits = {
   kyrian: "Kyrian",
   necrolord: "Necrolord",
@@ -95,80 +93,36 @@ var Conduits2 = [
   "kyrian",
 ];
 
-var StatsName = {
-  H: "Haste",
-  C: "Crit",
-  V: "Versatility",
-  M: "Mastery",
-}
-
-var StatAlignment = {
-  Haste: undefined,
-  Crit: "top",
-  Versatility: "top",
-  Mastery: "top",
-}
-
 var getTalentSimsName = function (key) {
-  if(key.includes("-")) {
-    key = key.replace("-", "_");
-  }
   return SimTalents[key];
 }
 
-
-var getConsumablesName = function (key) {
-  return Consumables[key];
-};
-
-var getConsumablesShortName = function (key) {
-  return getShortName(key, Consumables)
-};
-
 var getConduitsName = function (key) {
   return Conduits[key];
-};
-
-var getConduitsShortName = function (key) {
-  return getShortName(key, Conduits)
 };
 
 var getTalentName = function (key) {
   return Talents[key];
 };
 
-var getTalentShortName = function (key) {
-  return getShortName(key, Talents)
-};
-
 var getFightStyleName = function (key) {
   return FightStyles[key];
 };
 
-var getFightStyleExtName = function (key) {
-  return FightStyleExternal[key];
-};
-
-var getFightStyleShortName = function (key) {
-  return getShortName(key, FightStyles);
+var getTalentSimsName = function (key) {
+  return SimTalents[key];
 };
 
 var getSimsName = function (key) {
   return Sims[key];
 };
 
-var getSimsShortName = function (key) {
-  return getShortName(key, Sims);
+var getConsumablesName = function (key) {
+  return Consumables[key];
 };
 
-var getShortName = function (key, list) {
-  let values = Object.values(list);
-  let keys = Object.entries(list);
-  for (i = 0; i < values.length; i++) {
-    if (values[i] == key) {
-      return keys[i][0];
-    }
-  }
+var getFightStyleExtName = function (key) {
+  return FightStyleExternal[key];
 };
 
 var getKeys = function(list) {

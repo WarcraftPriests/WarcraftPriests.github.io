@@ -21,5 +21,5 @@ var getLegendTitle = function (key) {
 };
 
 var handleSpecialKeys = function (key) {
-    return key.replace("-", "_");
+    return key.replace(dash, underscore);
 }

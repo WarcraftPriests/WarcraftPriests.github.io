@@ -112,7 +112,6 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
   while (chart.series.length > 0) {
     chart.series[0].remove(false);
   }
-
   var minResults = [];
   var maxResults = [];
 
@@ -188,7 +187,7 @@ function buildChartDataDot(githubData, title) {
   
   let series = {
     name: Intl.NumberFormat().format(maximalDps) + " DPS",
-    color: "#FF0000", // make sure this matches the value of color_max in create_color(...)
+    color: "#FF0000",
     data: []
   };
 
@@ -215,7 +214,8 @@ function buildChartDataDot(githubData, title) {
         enabled: true,
         allowOverlap: true,
       };
-      if(sortedData.split("_")[0].includes("10")){
+      
+      if(sortedData.split(underscore)[0].includes("10")){
         dataLabel.format = "Mastery";
         dataLabel.verticalAlign = "top";
       } else if(sortedData.split("_")[1].includes("10")) {
@@ -229,11 +229,11 @@ function buildChartDataDot(githubData, title) {
       }
     }
 
-    statMastery = ((parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, ''))) * 100) + 100;
-    statVers = ((parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))) * 100) + 100;
-    statHaste = ((parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, ''))) * 100) + 100;
-    statCrit = ((parseInt(sortedData.split("_")[3].replace(/[^.\d]/g, ''))) * 100) + 100;
-    sumStatValues = statMastery + statVers + statHaste + statCrit;
+    statMastery = ((parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length;
+    statVers = ((parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length;
+    statHaste = ((parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length;
+    statCrit = ((parseInt(sortedData.split("_")[3].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length;
+    sumStatValues = configData["stats"]["total"];
 
     series.data.push({
       x: Math.sqrt(3) / 2 * (parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, '')) + 1 / 3 * parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))),
@@ -250,10 +250,10 @@ function buildChartDataDot(githubData, title) {
       statVers: statVers,
       statHaste: statHaste,
       statCrit: statCrit,
-      statMasteryPercent: Math.round(( 100 / sumStatValues ) * (((parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, ''))) * 100) + 100)),
-      statVersPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))) * 100) + 100)),
-      statHastePercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, ''))) * 100) + 100)),
-      statCritPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[3].replace(/[^.\d]/g, ''))) * 100) + 100)),
+      statMasteryPercent: Math.round(( 100 / sumStatValues ) * (((parseInt(sortedData.split("_")[0].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length)),
+      statVersPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[1].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length)),
+      statHastePercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[2].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length)),
+      statCritPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split("_")[3].replace(/[^.\d]/g, ''))) * configData["stats"]["steps"] ) + configData["stats"]["base"] / configData["stats"]["include"].length)),
       marker: {
         radius: radius,
         lineColor: line_color,

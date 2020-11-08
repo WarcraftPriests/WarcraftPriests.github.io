@@ -19,7 +19,7 @@ function updateSize(chart, chartId, size) {
  * Determine the chart name for the current chart, for the used parameters
  */
 function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
-  if(fullSimType == "CovenantsChoice") {
+  if(fullSimType == covenantsChoice) {
     return coventantsChoiceChartName;
   } else if(fullSimType == apl) {
     return apl.toUpperCase() + fightStyle;
@@ -48,8 +48,8 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
   /*
    * Special cases!
    */
-  if(talentChoice.includes("_")) {
-    talentChoice = talentChoice.replace("_", "-");
+  if(talentChoice.includes(underscore)) {
+    talentChoice = talentChoice.replace(underscore, dash);
   }
 
   if(simsBtn == talents){
@@ -73,6 +73,6 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
  * So no data could be fetched
  */
 function handleJsonFailure(xhr, status) {
-  console.log("The JSON chart failed to load, please let DJ know via discord Djriff#0001");
+  console.log("The JSON chart failed to load, please let DJ/espo know via discord Djriff#0001/espo#6663");
   console.log(status);
 }
