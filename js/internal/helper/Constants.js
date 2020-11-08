@@ -11,6 +11,7 @@ const gridLineColor = "#616c77";
 const buttonBorderColor = "#DDA0DD";
 const buttonBackgroundColor = "#330066";
 const buttonBorderColorDefault = "white";
+const fontSize = "1.1rem";
 
 /*
  * Chart definitions

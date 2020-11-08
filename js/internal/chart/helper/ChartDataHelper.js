@@ -147,7 +147,7 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
 }
 
 function buildChartDataDot(githubData, title) {
-  var chartForStats = new Highcharts.Chart(defaultDotDefinition);
+  var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(title));
   (function (H) {
       function dragStart(eStart) {
           eStart = chartForStats.pointer.normalize(eStart);
@@ -179,6 +179,7 @@ function buildChartDataDot(githubData, title) {
       H.addEvent(chartForStats.container, 'touchstart', dragStart);
   }(Highcharts));
 
+  
   let light_color = "#eeeeee"
   let maxDPSPrefix = githubData[jsonSortedDataKeys][0];
   let minDPSPrefix = githubData[jsonSortedDataKeys][githubData[jsonSortedDataKeys].length -1];

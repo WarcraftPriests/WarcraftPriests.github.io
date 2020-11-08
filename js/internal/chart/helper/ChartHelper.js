@@ -19,21 +19,23 @@ function updateSize(chart, chartId, size) {
  * Determine the chart name for the current chart, for the used parameters
  */
 function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
+  var simType = "";
+  simType = fullSimType.replace("-", " ");
+  simType = simType.replace("_", " ");
+
   if(fullSimType == covenantsChoice) {
     return coventantsChoiceChartName;
-  } else if(fullSimType == apl) {
-    return apl.toUpperCase() + fightStyle;
-  }
+  } 
   if (covenantType === empty || covenantType == null) {
     return firstTalent 
               + space + dash + space
-              + fullSimType 
+              + simType
               + space + dash + space
               + fightStyle;
   } else {
     return firstTalent 
               + space + dash + space
-              + fullSimType 
+              + simType 
               + space + dash + space 
               + getConduitsName(covenantType)
               + space + dash + space 
