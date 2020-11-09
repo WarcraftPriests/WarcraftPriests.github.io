@@ -32,7 +32,7 @@ WCP_Chart.prototype.updateStackedBarChart = function ( simsBtn, fightStyle, tale
                                                                         fightStyle), 
                                                     data,
                                                     getLegendTitle(simsBtn),
-                                                    getYAxisTitle(simsBtn)));
+                                                    dpsIncrease));
         buildDataForStackedChart(data, this.chartId, this.chart);
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -58,7 +58,7 @@ WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, tale
                                                                           fightStyle), 
                                                        data,
                                                        getLegendTitle(simsBtn),
-                                                       getYAxisTitle(simsBtn)));
+                                                       dpsIncrease));
         buildDataForPercentageChart(data, this.chartId, this.chart);
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -84,7 +84,7 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
                                                                       fightStyle), 
                                                   data,
                                                   getLegendTitle(simsBtn),
-                                                  getYAxisTitle(simsBtn)));
+                                                  dpsIncrease));
         buildChartDataSingleBar(data, this.chartId, this.chart, showInLegend)
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -110,7 +110,7 @@ WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, tal
                                                                              fightStyle), 
                                                          data,
                                                          getLegendTitle(simsBtn),
-                                                         getYAxisTitle(simsBtn)));
+                                                         dpsIncrease));
         buildChartDataMultipleBar(data, this.chartId, this.chart, fightStyle)
       }.bind(this)
     ).fail(function(xhr, status) {

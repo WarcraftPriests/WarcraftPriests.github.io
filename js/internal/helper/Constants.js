@@ -11,6 +11,7 @@ const gridLineColor = "#616c77";
 const buttonBorderColor = "#DDA0DD";
 const buttonBackgroundColor = "#330066";
 const buttonBorderColorDefault = "white";
+const fontSize = "1.1rem";
 
 /*
  * Chart definitions
@@ -31,6 +32,7 @@ const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
 const increase = "% (Increase)";
 const decrease = "% (Decrease)";
+const dpsIncrease = "Increase in %";
 /*
  * Other definitions
  */
@@ -92,6 +94,7 @@ const ring = "ring";
 const food = "food";
 const sims = "sims";
 const apl = "apl";
+const gear = "gear";
 const stats = "stats";
 const soulbindTraits = "soulbind_traits";
 const soulbindsLaunch = "soulbinds_launch";
@@ -118,7 +121,7 @@ const show = "show";
 const enchants = "enchants";
 const consumables = "consumables";
 const covenants = "covenants";
-const covenantsChoice = "covenantsChoice";
+const covenantsChoice = "covenant_choice";
 const weights = "weights";
 
 const pointer = "pointer";
@@ -139,3 +142,7 @@ const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
 const coventantsChoiceChartName = "Covenant Choice - Aggregate"
+
+const builds = "builds";
+const files = "files";
+const none = "none";

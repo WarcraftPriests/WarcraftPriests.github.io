@@ -4,6 +4,18 @@
 function createButtonBasicList(divName, buttonArray, event, getLabelMethod, currBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
+    if(b != apl && b != gear) {
+      b = b.replace(dash, underscore);
+      var buttonText = document.createTextNode(getLabelMethod(b));
+      createButtonBasic(div, b, event, buttonText, currBtn);
+    }
+  }
+  styleButtons();
+}
+
+function createButtonBasicListSelf(divName, buttonArray, event, getLabelMethod, currBtn) {
+  let div = document.getElementById(divName);
+  for (b in buttonArray) {
     var buttonText = document.createTextNode(getLabelMethod(buttonArray[b]));
     createButtonBasic(div, buttonArray[b], event, buttonText, currBtn);
   }
