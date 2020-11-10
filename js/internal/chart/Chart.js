@@ -77,7 +77,7 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
           this.chart.series[0].remove(false);
         }
         
-        this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn), 
+        this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn, showInLegend), 
                                                   determineChartName( covenantType, 
                                                                       getTalentSimsName(talentChoice), 
                                                                       simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 

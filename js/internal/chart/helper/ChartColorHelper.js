@@ -56,6 +56,18 @@ var getColor = function (key) {
    var color = covenantColor[key];
    
    if(color == null || color == undefined || color == "") {
+      if(key.includes("Necrolord")) {
+        color = covenantColor["necrolord"];
+      } else if(key.includes("Night_Fae")) {
+        color = covenantColor["night_fae"];
+      } else if(key.includes("Venthyr")) {
+        color = covenantColor["venthyr"];
+      } else if(key.includes("Kyrian")) {
+        color = covenantColor["kyrian"];
+      }
+   }
+
+   if(color == null || color == undefined || color == "") {
        color = racialColor[key];
    }
 
