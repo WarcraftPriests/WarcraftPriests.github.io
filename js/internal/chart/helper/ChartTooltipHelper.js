@@ -9,28 +9,13 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
     if (id == null) {
       id = "";
     }
-  
-    var url = "";
-    switch(simsBtn) {
-      case conduits:
-        url = wowheadUrl + wowheadSpellPath;
-        break;
-      case racials:
-        url = wowheadUrl + wowheadSpellPath;
-        break;
-      case enchants:
-        url = wowheadUrl + wowheadSpellPath;
-        break;
-      case legendaries:
-        url = wowheadUrl + wowheadSpellPath;
-        break;
-      case "soulbind-traits":
-        url = wowheadUrl + wowheadSpellPath;
-        break;
-      default:
-        url = wowheadUrl + wowheadItemPath;
+
+    if(configData[sims][simsBtn.replaceAll("_", "-")]["lookupType"] == "spell"){
+      url = wowheadUrl + wowheadSpellPath;
+    } else {
+      url = wowheadUrl + wowheadItemPath;
     }
-      
+    
     result.push(buildChartLine(dpsName, id, url));
   }
   
