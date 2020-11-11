@@ -52,8 +52,12 @@ var getCovenantChoiceColor = function (key) {
     return covenantChoiceColor[key];
 };
 
-var getColor = function (key) {
+var getColor = function (key, key2) {
    var color = covenantColor[key];
+   
+   if(color == null || color == undefined || color == ""){
+     color = covenantColor[key2];
+   }
    
    if(color == null || color == undefined || color == "") {
       if(key.includes("Necrolord")) {

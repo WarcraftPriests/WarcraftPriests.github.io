@@ -7,6 +7,8 @@ function buildChartDataSingleBar(data, chartId, chart, showInLegend) {
     chart.series[0].remove(false);
   }
   let result = [];
+  var currName = data.name.split("-").pop();
+  currName = currName.replace(/\s/g, '');
   for (sortedData of data[jsonSortedDataKeys]) {
     let dps = data[jsonData][sortedData][jsonDPS];
     let baselineDPS = data[jsonData][jsonBase][jsonDPS];
@@ -16,9 +18,9 @@ function buildChartDataSingleBar(data, chartId, chart, showInLegend) {
     if(dps >= 0) {
       var percentage = (dps / baselineDPS) * 100 - 100;
       if(percentage < 0) {
-        result.push({y: 0, color: getColor(sortedData)});
+        result.push({y: 0, color: getColor(sortedData, currName)});
       } else {
-        result.push({y: percentage, color: getColor(sortedData)});
+        result.push({y: percentage, color: getColor(sortedData, currName)});
       }
     }
   }
