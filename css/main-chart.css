@@ -217,14 +217,12 @@ input:checked+.slider:before {
   text-align: center;
   padding-bottom: 5px;
   padding-right: 5px;
-  width: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
-  display: inline-block;
-  
+  margin: 0 auto;
+  width: 70%;
 }
-
 .traitButtons {
   display: block;
 }
