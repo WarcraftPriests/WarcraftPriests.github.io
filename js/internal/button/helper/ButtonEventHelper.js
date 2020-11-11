@@ -37,7 +37,7 @@ function handleOnClick(clickedButton, btn) {
       if(currSimsBtn == covenantsChoice) {
         removeShow(talentDiv);
       } else if(currTalent == currSimsBtn 
-                  || currTalent == currSimsBtn.replaceAll("_", "-")){
+                  || currSimsBtn != null && currTalent == currSimsBtn.replaceAll("_", "-")){
         if(configData[sims][currTalent][builds]){
           addButtonShow("hv_as");
           addButtonShow("hv_sc");
