@@ -23,8 +23,8 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn) {
     function processData(allText, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn) {
         var record_num = 9;  // or however many elements there are in each row
         var allTextLines = allText.split(/\r\n|\n/);
-        var result = "<h3 style='color:#ffffff'>" + determineChartName("", getTalentSimsName(currTalentBtn), getSimsName(currSimsBtn), currFightStyleBtn) + "</h3>";
-        result += "</br>";
+        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", getTalentSimsName(currTalentBtn), getSimsName(currSimsBtn), currFightStyleBtn) + "</h3>";
+        var result = "</br>";
         result += "<table>";
 
         for(var i = 0; i < allTextLines.length -1; i++){
@@ -48,6 +48,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn) {
         }
 
         result +="</table>";
+        result +="</br>";
         result +="</br>";
         result +="</br>";
         
