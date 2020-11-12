@@ -25,11 +25,13 @@ WCP_Chart.prototype.updateStackedBarChart = function ( simsBtn, fightStyle, tale
         while (this.chart.series.length > 0) {
           this.chart.series[0].remove(false);
         }
-        this.chart.update(getStackedChartDefinition(buildWowheadTooltips( data, false, simsBtn), 
-                                                    determineChartName( covenantType, 
-                                                                        getTalentSimsName(talentChoice), 
-                                                                        simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                                                        fightStyle), 
+        var header = determineChartName( covenantType, 
+                                         getTalentSimsName(talentChoice), 
+                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                         fightStyle);
+        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
+        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+        this.chart.update(getStackedChartDefinition(buildWowheadTooltips( data, false, simsBtn),
                                                     data,
                                                     getLegendTitle(simsBtn),
                                                     dpsIncrease));
@@ -50,15 +52,16 @@ WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, tale
         while (this.chart.series.length > 0) {
           this.chart.series[0].remove(false);
         }
-
+        var header = determineChartName( covenantType, 
+                                         getTalentSimsName(talentChoice), 
+                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                         fightStyle);
+        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
+        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
         this.chart.update(getChartDefinitionPercentage( buildWowheadTooltips(data, false, simsBtn), 
-                                                       determineChartName(covenantType, 
-                                                                          getTalentSimsName(talentChoice), 
-                                                                          simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                                                          fightStyle), 
-                                                       data,
-                                                       getLegendTitle(simsBtn),
-                                                       dpsIncrease));
+                                                        data,
+                                                        getLegendTitle(simsBtn),
+                                                        dpsIncrease));
         buildDataForPercentageChart(data, this.chartId, this.chart);
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -76,12 +79,13 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
         while (this.chart.series.length > 0) {
           this.chart.series[0].remove(false);
         }
-        
-        this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn, showInLegend), 
-                                                  determineChartName( covenantType, 
-                                                                      getTalentSimsName(talentChoice), 
-                                                                      simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                                                      fightStyle), 
+        var header = determineChartName( covenantType, 
+                                         getTalentSimsName(talentChoice), 
+                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                         fightStyle);
+        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
+        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+        this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn, showInLegend),
                                                   data,
                                                   getLegendTitle(simsBtn),
                                                   dpsIncrease));
@@ -102,12 +106,13 @@ WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, tal
         while (this.chart.series.length > 0) {
           this.chart.series[0].remove(false);
         }
-
+        var header = determineChartName( covenantType, 
+          getTalentSimsName(talentChoice), 
+          simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+          fightStyle);
+        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
         this.chart.update(getMultipleBarChartDefinition( buildWowheadTooltipsMultipleBar( data, simsBtn), 
-                                                         determineChartName( covenantType, 
-                                                                             getTalentSimsName(talentChoice), 
-                                                                             simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                                                             fightStyle), 
                                                          data,
                                                          getLegendTitle(simsBtn),
                                                          dpsIncrease));
@@ -121,12 +126,14 @@ WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, tal
 function statChart( simsBtn, fightStyle, talentChoice, covenantType) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
       function (data) {
+        var header = determineChartName( covenantType, 
+                                         getTalentSimsName(talentChoice), 
+                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                         fightStyle);
+        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
         document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        buildChartDataDot(data, 
-                          determineChartName( covenantType, 
-                                              getTalentSimsName(talentChoice), 
-                                              simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                              fightStyle));
+        document.getElementById("description").innerHTML = determineChartDescription(simsBtn);
+        buildChartDataDot(data);
       }.bind(this)
     ).fail(function(xhr, status) {
       handleJsonFailure(xhr, status)

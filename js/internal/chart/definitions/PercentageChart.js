@@ -1,4 +1,4 @@
-function getChartDefinitionPercentage(wowheadTooltips, chartName, data, legendTitle, yAxisTitle) {
+function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle) {
   return percentageChartDefinition = {
     xAxis: {
       categories: wowheadTooltips,
@@ -39,11 +39,7 @@ function getChartDefinitionPercentage(wowheadTooltips, chartName, data, legendTi
       },
     },
     title: {
-      style: {
-        color: defaultFontColor,
-        fontWeight: fontWeightBold,
-      },
-      text: chartName,
+      text: '',
     },
     tooltip: {
       shared: true,

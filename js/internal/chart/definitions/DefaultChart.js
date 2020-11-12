@@ -5,11 +5,7 @@ var defaultChartDefinition = {
     backgroundColor: defaultBackgroundColor,
   },
   title: {
-    style: {
-      color: defaultFontColor,
-      fontWeight: fontWeightBold,
-    },
-    text: defaultHeader,
+    title: '',
   },
   plotOptions: {
     series: {
