@@ -95,7 +95,10 @@ function buildDataForPercentageChart(data, chartId, chart) {
         } else {
           currResult.push(percentage);
         }
+      } else {
+        currResult.push(0);
       }
+      
     }
     chart.addSeries({
       data: currResult,

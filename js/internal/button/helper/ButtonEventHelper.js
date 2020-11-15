@@ -44,7 +44,7 @@ function handleOnClick(clickedButton, btn) {
         } else {
           removeShow(talentDiv);
         }
-        if(configData[sims][currTalent][covenant][files]){
+        if(configData[sims][currTalent][covenant]["lookup"]){
           addShow(covenantDiv);
         } else {
           removeShow(covenantDiv);
