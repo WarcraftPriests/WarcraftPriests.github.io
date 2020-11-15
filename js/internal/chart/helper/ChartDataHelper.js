@@ -148,8 +148,8 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
   updateSize(chart, chartId, Conduits2.length);
 }
 
-function buildChartDataDot(githubData, title) {
-  var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(title));
+function buildChartDataDot(githubData) {
+  var chartForStats = new Highcharts.Chart(getDefaultDotDefinition());
   (function (H) {
       function dragStart(eStart) {
           eStart = chartForStats.pointer.normalize(eStart);

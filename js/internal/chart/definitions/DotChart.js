@@ -1,5 +1,5 @@
 
-function getDefaultDotDefinition(chartName) {
+function getDefaultDotDefinition() {
   return defaultDotDefinition = {
     chart: {
       renderTo: 'Chart-Display-div',
@@ -48,7 +48,7 @@ function getDefaultDotDefinition(chartName) {
   },
   series: [],
     title: {
-      text: chartName, //"Title placeholder",
+      text: '', //"Title placeholder",
       style: {
         color: defaultFontColor,
         fontWeight: fontWeightBold,

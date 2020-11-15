@@ -223,6 +223,18 @@ input:checked+.slider:before {
   margin: 0 auto;
   width: 70%;
 }
+
+.descriptionContent {
+  width: 70%;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
 .traitButtons {
   display: block;
 }

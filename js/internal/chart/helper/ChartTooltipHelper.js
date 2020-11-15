@@ -36,12 +36,8 @@ function buildWowheadTooltipsMultipleBar(data, simsBtn) {
 function buildChartLine(dpsName, itemId, url) {
   result = "";
   result += '<div style="display:inline-block; margin-bottom:-3px">';
-  result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href=#';
+  result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
   result += ' onclick="return false"';
-  result += ' rel="' + url;
-  result += itemId;
-  result += "/";
-  result += dpsName.trim().replace(/ /g, "_");
   result += '" target="blank"';
   result += ' class="chart_link"';
   result += ">";

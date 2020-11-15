@@ -1,4 +1,4 @@
-function getSingleBarDefinition(wowheadTooltips, chartName, data, legendTitle, yAxisTitle, showLegend) {
+function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend) {
   return singleLineBarDefinition = {
     xAxis: {
       categories: wowheadTooltips,
@@ -14,11 +14,7 @@ function getSingleBarDefinition(wowheadTooltips, chartName, data, legendTitle, y
       },
     },
     title: {
-      style: {
-        color: defaultFontColor,
-        fontWeight: fontWeightBold,
-      },
-      text: chartName,
+      text: '',
     },
     legend: {
       title: {

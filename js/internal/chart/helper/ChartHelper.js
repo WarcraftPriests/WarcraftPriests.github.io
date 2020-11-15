@@ -43,6 +43,12 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
   }
 }
 
+function determineChartDescription(fullSimType) {
+  fullSimType = fullSimType.replace("_", "-");
+  var descr = configData["sims"][fullSimType]["description"];
+  return descr;
+}
+
 /*
  * Determines the url for the github repo to get the needed sim results
  */

@@ -1,4 +1,4 @@
-function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendTitle, yAxisTitle) {
+function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxisTitle) {
     return stackedCharDefinition = {
       xAxis: {
         categories: wowheadTooltips,
@@ -53,11 +53,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, chartName, data, legendT
         },
       },
       title: {
-        style: {
-          color: defaultFontColor,
-          fontWeight: fontWeightBold,
-        },
-        text: chartName,
+        text: '',
       },
       tooltip: {
         shared: true,

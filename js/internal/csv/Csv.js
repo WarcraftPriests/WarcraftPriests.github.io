@@ -24,6 +24,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn) {
         var record_num = 9;  // or however many elements there are in each row
         var allTextLines = allText.split(/\r\n|\n/);
         document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", getTalentSimsName(currTalentBtn), getSimsName(currSimsBtn), currFightStyleBtn) + "</h3>";
+        document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
         var result = "</br>";
         result += "<table>";
 
