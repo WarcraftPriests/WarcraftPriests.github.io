@@ -86,12 +86,80 @@ var Conduits = {
   venthyr: "Venthyr",
 };
 
+var TalentIds = {
+  FOTM: "193195",
+  DAM: "321291",
+  UD: "341273",
+  BNS: "64129",
+  SL: "199855",
+  IN: "288733",
+  TOF: "109142",
+  MIS: "238558",
+  SN: "341385",
+  LW: "263716",
+  MBO: "205369",
+  PH: "64044",
+  AS: "155271",
+  PS: "199484",
+  SC: "205385",
+  DM: "341374",
+  MB: "123040",
+  VT: "263165",
+  AM: "341240",
+  HV: "345218",
+  STM: "193223",
+}
+
+var ConduitsIds = {
+  HA: "338319",
+  DE: "338342",
+  MD: "338332",
+  RS: "338338",
+  SP: "338315",
+  FF: "338305",
+  FT: "337979",
+  CA: "337966",
+  SS: "336239",
+  TS: "331586",
+  EP: "331580",
+  DT: "331584",
+  WP: "319983",
+  BFW: "319973",
+  GI: "322721",
+  NTP: "320660",
+  NTB: "320659",
+  FOB: "319191",
+  SB: "319210",
+  WHT: "325066",
+  FS: "325069",
+  LGOTP: "328257",
+  CM: "328266",
+  PC: "329778",
+  BCTA: "333950",
+  HOG: "333935",
+  PPS: "323090",
+  LBE: "342181",
+  GC: "323919",
+  HAMG: "326572",
+  VS: "323074",
+  DD: "331584",
+  RP: "336243",
+}
+
 var Conduits2 = [
   "venthyr",
   "necrolord",
   "night_fae",
   "kyrian",
 ];
+
+var getConduitIds = function (key) {
+  return ConduitsIds[key];
+}
+
+var getTalentIds = function (key) {
+  return TalentIds[key];
+}
 
 var getTalentSimsName = function (key) {
   return SimTalents[key];

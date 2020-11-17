@@ -16,7 +16,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       url = wowheadUrl + wowheadItemPath;
     }
     
-    result.push(buildChartLine(dpsName, id, url));
+    result.push(buildChartLine(dpsName, id, url, simsBtn));
   }
   
   return result;
@@ -33,21 +33,140 @@ function buildWowheadTooltipsMultipleBar(data, simsBtn) {
 /*
  * Build a single line of the wowhead tooltip
  */
-function buildChartLine(dpsName, itemId, url) {
+function buildChartLine(dpsName, itemId, url, simsBtn) {
   result = "";
   result += '<div style="display:inline-block; margin-bottom:-3px">';
-  result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
-  result += ' onclick="return false"';
-  result += '" target="blank"';
-  result += ' class="chart_link"';
-  result += ">";
-  result += dpsName.trim();
-  result += "</a>";
-  result += "</div>";
-  
+  if( simsBtn == null
+    || simsBtn == undefined
+    || simsBtn == trinkets 
+    || simsBtn == consumables
+    || simsBtn == conduits
+    || simsBtn == covenants
+    || simsBtn == enchants
+    || simsBtn == legendaries
+    || simsBtn.replace("-", "_") == legendaryItems
+    || simsBtn == racials
+    || simsBtn.replace("-", "_") == soulbindTraits) {
+      result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replace("-", "_") == conduitCombos) {
+    result = buildChartLineForConduitCombos(dpsName, result);
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replace("-", "_") == soulbinds) {
+    result = buildChartLineForSoulbinds(dpsName, result);
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replace("-", "_") == soulbindsLaunch) {
+    result = buildChartLineForSoulbindsLaunch(dpsName, result);
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn == talents) {
+    result = buildChartLineForTrinkets(dpsName, result);
+  } else {
+    result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
+  }
   return result;
 }
 
+function buildChartLineForTrinkets(dpsName, currentResult) {
+  var currResult = "";
+  var names = dpsName.split("_");
+  for(name of names) {
+    currResult = buildChartLineWithWowheadLine(name, getTalentIds(name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
+  }
+
+  return currResult;
+}
+
+function buildChartLineForSoulbinds(dpsName, currentResult) {
+  var currResult = "";
+  var names = []
+  var currNames = dpsName.split("-");
+  for(name of currNames) {
+    if(name.includes("_")) {
+      var currNames2 = name.split("_");
+      for(currName of currNames2){
+        names.push(currName);
+      }
+    } else {
+      names.push(name);
+    }
+  }
+  currResult = buildChartLineForBasic(names, currResult);
+  return currentResult + currResult;
+}
+
+function buildChartLineForSoulbindsLaunch(dpsName, currentResult) {
+  var result = currentResult;
+  var names = [];
+  var currNames = dpsName.split("-");
+  for(name of currNames) {
+    if(name.includes("_")) {
+      var currNames2 = name.split("_");
+      for(currName of currNames2) {
+        names.push(currName);
+      }
+    } else {
+      names.push(name);
+    }
+  }  
+  result = buildChartLineForBasic(names, result);
+  return result;
+}
+
+function buildChartLineForConduitCombos(dpsName, currentResult) {
+  var result = currentResult;
+  var names = dpsName.split("_");
+  result = buildChartLineForBasic(names, result);
+  return result;
+}
+
+function buildChartLineForBasic(names, currentResult) {
+  var currResult = currentResult; 
+  var counter = 0;
+  var currName = "";
+  var nextName = "";
+  var skipNext = false;
+  var nextId = "";
+  for(name of names) {
+    counter++;
+    if(!(/^\d+$/.test(name))){
+      if(skipNext) {
+        skipNext = false;
+        continue;
+      } else if (counter < names.length) {
+        currName = name;
+        nextName = names[counter];
+        nextId = getConduitIds(nextName.toUpperCase());
+      }
+      var id = getConduitIds(name.toUpperCase());
+      if(nextId == null || nextId == undefined) {
+        currName = name + "(" + nextName + ")";
+        skipNext = true;
+      } else if( id == null || id == undefined && counter == 1) {
+        currName = name + " / ";
+      } else {
+        currName = name;
+      }
+      currResult = buildChartLineWithWowheadLine(currName, getConduitIds(name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
+      
+      nextName = "";
+      nextId = "";
+    } 
+  }
+  return currResult;
+}
+
+function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
+  var result = currentResult;
+  result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
+  result += ' onclick="return false"';
+  result += '" target="blank"';
+  result += ">";
+  result += dpsName;
+  result += "</a>";
+
+  return result;
+}
+
+function getDisplayedName(dpsName, simsBtn) {
+
+  return dpsName;
+}
 /*
  * Formatter for the tooltips of the chart
  */
@@ -56,7 +175,6 @@ function formatterDefault(points, x, data) {
                     + '<div class="chartHoverLine">' 
                     + x 
                     + "</div>";
-    
   for (var i = points.length - 1; i >= 0; i--) {
     result += getTooltip( points[i].y, 
                           ((data[jsonData][jsonBase][DPS] / 100) * points[i].y), 
@@ -150,6 +268,5 @@ function getTooltip(percentage, dpsIncrease, series) {
       result += '% (decrease)';
     }
   }
-
   return result;
 }

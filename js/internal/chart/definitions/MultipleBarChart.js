@@ -3,6 +3,9 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
       xAxis: {
         categories: wowheadTooltips,
         useHTML: true,
+        labels: {
+          x: -40,
+        },
       },
       yAxis: {
         min: '0',

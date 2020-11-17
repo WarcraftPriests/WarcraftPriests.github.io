@@ -3,6 +3,9 @@ function getStackedChartDefinition(wowheadTooltips, data, legendTitle, yAxisTitl
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
+      labels: {
+        x: -40,
+      },
     },
     yAxis: {
       min: '0',

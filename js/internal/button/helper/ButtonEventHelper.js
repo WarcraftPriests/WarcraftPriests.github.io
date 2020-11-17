@@ -67,7 +67,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       break;
     case covenants:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false, -40);
       break;
     case conduits:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
@@ -75,7 +75,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       break;
     case legendaries:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, true, -40);
       break;
     case legendaryItems:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
@@ -83,7 +83,7 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       break;
     case soulbinds:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  
-      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, true, -60);
       break;
     case trinkets:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);  
@@ -91,19 +91,19 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       break;
     case conduitCombos:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart("conduit-combos", currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
+      wcp_charts.updateSingleBarChart("conduit-combos", currFightStyleBtn, currTalentBtn, currCovenantBtn, true, -40);
       break;
     case soulbindTraits:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart("soulbind-traits", currFightStyleBtn, currTalentBtn, "", true);
+      wcp_charts.updateSingleBarChart("soulbind-traits", currFightStyleBtn, currTalentBtn, "", true, -40);
       break;
     case soulbindsLaunch:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart("soulbinds-launch", currFightStyleBtn, currTalentBtn, currCovenantBtn, true);
+      wcp_charts.updateSingleBarChart("soulbinds-launch", currFightStyleBtn, currTalentBtn, currCovenantBtn, true, -60);
       break;
     case apl:
       manipulateUrl("talents", "", "sims", currSimsBtn, "covenants", "", "fightStyle", "");
-      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, "", "", true);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, "", "", true, -40);
       break;
     case weights:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
@@ -111,14 +111,18 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       break;
     case racials:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false, -40);
       break
     case stats:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
       statChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "");
       break;
+    case talents:
+      manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", true, -80);
+      break;
     default:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
-      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", true);
+      wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", true, -40);
   }
 }
