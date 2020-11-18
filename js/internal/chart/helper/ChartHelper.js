@@ -23,7 +23,7 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
   simType = fullSimType.replace("-", " ");
   simType = simType.replace("_", " ");
 
-  if(fullSimType == covenantsChoice) {
+  if(fullSimType.toLowerCase() == covenantsChoice) {
     return coventantsChoiceChartName;
   } 
   if (covenantType === empty || covenantType == null) {

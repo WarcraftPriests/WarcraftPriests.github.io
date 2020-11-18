@@ -72,7 +72,7 @@ WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, tale
 /*
  * Filles the chart with data and uses the single bar chart
  */
-WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talentChoice, covenantType, showInLegend ) {
+WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talentChoice, covenantType, showInLegend, xPadding ) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
       function (data) {
         document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
@@ -88,7 +88,9 @@ WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talen
         this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn, showInLegend),
                                                   data,
                                                   getLegendTitle(simsBtn),
-                                                  dpsIncrease));
+                                                  dpsIncrease,
+                                                  showInLegend,
+                                                  xPadding));
         buildChartDataSingleBar(data, this.chartId, this.chart, showInLegend)
       }.bind(this)
     ).fail(function(xhr, status) {

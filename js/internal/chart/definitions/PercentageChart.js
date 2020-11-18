@@ -3,6 +3,9 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
+      labels: {
+        x: -40,
+      },
     },
     yAxis: {
       min: '0',

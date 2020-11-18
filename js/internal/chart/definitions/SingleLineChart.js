@@ -1,10 +1,10 @@
-function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend) {
+function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend, xPadding) {
   return singleLineBarDefinition = {
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
       labels: {
-        x: -40,
+        x: xPadding,
       },
     },
     yAxis: {
@@ -29,6 +29,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       headerFormat: tooltipHeaderFormat,
       style: {
         color: defaultFontColor,
+        textAlign: 'center',
       },
       pointFormat: tooltipPointFormat,
       padding: 5,
