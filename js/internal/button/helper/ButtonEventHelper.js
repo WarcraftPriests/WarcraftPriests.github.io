@@ -36,6 +36,7 @@ function handleOnClick(clickedButton, btn) {
     for(currTalent in configData[sims]) {
       if(currSimsBtn == covenantsChoice) {
         removeShow(talentDiv);
+        removeShow(fightStyleDiv);
       } else if(currTalent == currSimsBtn 
                   || currSimsBtn != null && currTalent == currSimsBtn.replace("_", "-")){
         if(configData[sims][currTalent][builds]){
