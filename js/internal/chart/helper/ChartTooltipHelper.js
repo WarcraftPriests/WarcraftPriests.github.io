@@ -178,7 +178,8 @@ function formatterDefault(points, x, data) {
   for (var i = points.length - 1; i >= 0; i--) {
     result += getTooltip( points[i].y, 
                           ((data[jsonData][jsonBase][DPS] / 100) * points[i].y), 
-                          points[i].series );
+                          points[i].series,
+                          data);
   }
   result += "</div>";
   return result;
@@ -196,7 +197,8 @@ function formatterStacked(points, x, data) {
   for (var i = points.length - 1; i >= 0; i--) {
     result += getTooltip( ((data[jsonData][jsonBase][DPS] + points[i].y) / data[jsonData][jsonBase][DPS] * 100 - 100),
                           points[i].y,
-                          points[i].series);
+                          points[i].series,
+                          data);
   }
   result += "</div>";
   return result;
@@ -214,7 +216,8 @@ function formatterPercentage(points, x, data) {
   for (var i = points.length - 1; i >= 0; i--) {
     result += getTooltip( points[i].y, 
                           (( data[jsonData][jsonBase][DPS] / 100 ) * points[i].y), 
-                          points[i].series);
+                          points[i].series,
+                          data);
   }
 
   result += "</div>";
@@ -238,7 +241,8 @@ function formatterMultipleBar(points, x, data) {
                       }
                       result += getTooltip( value, 
                                             0, 
-                                            points[i].series);
+                                            points[i].series,
+                                            data);
                     }
                   
                     result += "</div>";
@@ -246,7 +250,7 @@ function formatterMultipleBar(points, x, data) {
   return result;
 }
 
-function getTooltip(percentage, dpsIncrease, series) {
+function getTooltip(percentage, dpsIncrease, series, data) {
   result = "";
   if (percentage != 0) {
     result = '<div><span class="chartHoverSpan" style="border-left: 9px solid ' 
@@ -254,6 +258,7 @@ function getTooltip(percentage, dpsIncrease, series) {
               + ";" 
               + '">' 
               + series.name
+              + " ( " + data[jsonData][jsonBase][DPS] + " base )"
               + "</span>:&nbsp;&nbsp;";
     if(dpsIncrease != 0) {
       result += "+ "
