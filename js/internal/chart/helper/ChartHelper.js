@@ -64,6 +64,12 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
   } else if(simsBtn == covenantsChoice) {
     return baseurl + slash + "covenant-choice" + simResultPath + "Aggregate" + jsonExtension;
+  } else if(simsBtn == "covenants_launch") {
+    return baseurl + slash + "covenants-launch" + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
+  } else if(simsBtn == "covenants_prog") {
+    return baseurl + slash + "covenants-prog" + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
+  } else if(simsBtn == "soulbinds_prog") {
+    return baseurl + slash + "soulbinds-prog" + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
   } else if(simsBtn == apl) {
     return baseurl + slash + apl + simResultPath + fightStyle + jsonExtension;
   }
