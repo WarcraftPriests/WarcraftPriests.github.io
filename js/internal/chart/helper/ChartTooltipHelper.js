@@ -58,6 +58,8 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == talents) {
     result = buildChartLineForTrinkets(dpsName, result);
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn == "soulbinds_prog") {
+    result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   }
