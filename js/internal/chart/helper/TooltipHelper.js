@@ -27,7 +27,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
 function buildWowheadTooltipsMultipleBar(data, simsBtn) {
   var result = [];
   for(currFight in data[jsonData]) {
-    result.push(buildChartLine(getFightStyleExtName(currFight), "", ""));
+    result.push(buildChartLine(getValue(FightStyleExternal, currFight), "", ""));
   }
 
   return result;
@@ -70,7 +70,7 @@ function buildChartLineForTrinkets(dpsName, currentResult) {
   var currResult = "";
   var names = dpsName.split("_");
   for(name of names) {
-    currResult = buildChartLineWithWowheadLine(name, getTalentIds(name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
+    currResult = buildChartLineWithWowheadLine(name, getValue(TalentIds, name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
   }
 
   return currResult;
@@ -135,9 +135,9 @@ function buildChartLineForBasic(names, currentResult) {
       } else if (counter < names.length) {
         currName = name;
         nextName = names[counter];
-        nextId = getConduitIds(nextName.toUpperCase());
+        nextId = getValue(ConduitsIds, nextName.toUpperCase());
       }
-      var id = getConduitIds(name.toUpperCase());
+      var id = getValue(ConduitsIds, name.toUpperCase());
       if(nextId == null || nextId == undefined) {
         currName = name + "(" + nextName + ")";
         skipNext = true;
@@ -146,7 +146,7 @@ function buildChartLineForBasic(names, currentResult) {
       } else {
         currName = name;
       }
-      currResult = buildChartLineWithWowheadLine(currName, getConduitIds(name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
+      currResult = buildChartLineWithWowheadLine(currName, getValue(ConduitsIds, name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
       
       nextName = "";
       nextId = "";
@@ -167,10 +167,6 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   return result;
 }
 
-function getDisplayedName(dpsName, simsBtn) {
-
-  return dpsName;
-}
 /*
  * Formatter for the tooltips of the chart
  */

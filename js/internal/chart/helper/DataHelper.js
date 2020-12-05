@@ -2,9 +2,17 @@
  * Use the data from the json request and sort them for the single bar
  * setup
  */
-function buildChartDataSingleBar(data, chartId, chart, showInLegend) {
-  while (chart.series.length > 0) {
-    chart.series[0].remove(false);
+function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId) {
+  var chartForSingle = new Highcharts.Chart( getSingleBarDefinition( 
+                                                buildWowheadTooltips( data, true, simsBtn, showInLegend),
+                                                data,
+                                                getValue(LegendTitles, simsBtn),
+                                                dpsIncrease,
+                                                showInLegend,
+                                                xPadding,
+                                                chartId))
+  while (chartForSingle.series.length > 0) {
+    chartForSingle.series[0].remove(false);
   }
   let result = [];
   var currName = data.name.split("-").pop();
@@ -25,60 +33,30 @@ function buildChartDataSingleBar(data, chartId, chart, showInLegend) {
     }
   }
 
-  chart.addSeries({
+  chartForSingle.addSeries({
     data: result,
     name: DPS,
     showInLegend: showInLegend,
   },false);
-  updateSize(chart, chartId, result.length);
+  updateSize(chartForSingle, chartId, result.length);
 }
 
-/*
- * Use the data from the json request and sort them for the single bar
- * setup
- */
-function buildDataForStackedChart(data, chartId, chart) {
-  while (chart.series.length > 0) {
-    chart.series[0].remove(false);
-  }
-  let baselineDPS = data[jsonData][jsonBase][jsonDPS];
-  var tempResult = [];
-  var store = new Map();
-
-  for(trinket of data[jsonSortedDataKeys]) {
-    tempResult = [];
-    for(i = data[jsonSimulatedSteps].length - 1; i >= 0; i--) {
-      var testDps = data[jsonData][trinket][data[jsonSimulatedSteps][i]];
-      tempResult.push(testDps -baselineDPS);
-    }
-    store.set(trinket, tempResult);
-  }
-  
-  var result = [];
-  for(i = 0; i <= data[jsonSimulatedSteps].length - 1; i++) {
-    result = [];
-    currStep = data[jsonSimulatedSteps][i];
-    for(trinket of data[jsonSortedDataKeys]) {
-      trinketDpsData = store.get(trinket);
-      result.push(trinketDpsData[(data[jsonSimulatedSteps].length - 1)- i]);
-    }
-    chart.addSeries({
-      data: result,
-      name: currStep,
-      showInLegend: true
-    }, false);
-  }
-  updateSize(chart, chartId, data[jsonSortedDataKeys].length);
-}
-  
 /*
  * Use the data from the json request and sort them for the stacked bar
  * setup
  */
-function buildDataForPercentageChart(data, chartId, chart) {
-  while (chart.series.length > 0) {
-    chart.series[0].remove(false);
+function buildDataForPercentageChart(data, simsBtn, chartId) {
+  var chartForPercentage = new Highcharts.Chart( getChartDefinitionPercentage( 
+                                                      buildWowheadTooltips(data, false, simsBtn), 
+                                                      data,
+                                                      getValue(LegendTitles, simsBtn),
+                                                      dpsIncrease,
+                                                      chartId));
+
+  while (chartForPercentage.series.length > 0) {
+    chartForPercentage.series[0].remove(false);
   }
+
   for (currStep of data[jsonSimulatedSteps]) {
     let currResult = [];  
     
@@ -100,22 +78,28 @@ function buildDataForPercentageChart(data, chartId, chart) {
       }
       
     }
-    chart.addSeries({
+    chartForPercentage.addSeries({
       data: currResult,
       name: currStep,
       showInLegend: true,
     }, false);
   }
-  updateSize(chart, chartId, data[jsonSortedDataKeys].length);
+  updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length);
 }
 
 /*
  * Use the data from the json request and sort them for the stacked bar
  * setup
  */
-function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
-  while (chart.series.length > 0) {
-    chart.series[0].remove(false);
+function buildChartDataMultipleBar(data, simsBtn, chartId) {
+  var chartForMultipleBar = new Highcharts.Chart(getMultipleBarChartDefinition(
+                                                      buildWowheadTooltipsMultipleBar( data, simsBtn), 
+                                                      data,
+                                                      getValue(LegendTitles, simsBtn),
+                                                      dpsIncrease,
+                                                      chartId));
+  while (chartForMultipleBar.series.length > 0) {
+    chartForMultipleBar.series[0].remove(false);
   }
   var minResults = [];
   var maxResults = [];
@@ -131,7 +115,7 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
       maxResults.push(maxValue);
     }
 
-    chart.addSeries({
+    chartForMultipleBar.addSeries({
       color: getCovenantChoiceColor(Conduits2[i] + "_max"),
       data: maxResults,
       name: getConduitsName(Conduits2[i]) + " max",
@@ -139,7 +123,7 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
       showInLegend: true,
       }, false);
     
-    chart.addSeries({
+      chartForMultipleBar.addSeries({
       color: getCovenantChoiceColor(Conduits2[i] + "_min"),
       data: minResults,
       name: getConduitsName(Conduits2[i]) + " min",
@@ -147,12 +131,12 @@ function buildChartDataMultipleBar(data, chartId, chart, fightStyle) {
       showInLegend: true,
     }, false);
   }
-  chart.redraw();
-  updateSize(chart, chartId, Conduits2.length);
+  chartForMultipleBar.redraw();
+  updateSize(chartForMultipleBar, chartId, Conduits2.length);
 }
 
-function buildChartDataDot(githubData) {
-  var chartForStats = new Highcharts.Chart(getDefaultDotDefinition());
+function buildChartDataDot(githubData, chartId) {
+  var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(chartId));
   (function (H) {
       function dragStart(eStart) {
           eStart = chartForStats.pointer.normalize(eStart);
