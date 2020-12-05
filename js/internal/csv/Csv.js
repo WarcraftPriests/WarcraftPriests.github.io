@@ -10,7 +10,7 @@ var Headings = {
     dpsW: "DPS Weight",
 };
 
-function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId) {
+function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
     $(document).ready(function() {
         $.ajax({
             type: "GET",
@@ -23,8 +23,10 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId) {
     function processData(allText, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn) {
         var record_num = 9;  // or however many elements there are in each row
         var allTextLines = allText.split(/\r\n|\n/);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", getValue(SimTalents, currTalentBtn), getValue(Sims, currSimsBtn), currFightStyleBtn) + "</h3>";
-        document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
+        if(metaData) {
+            document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", getValue(SimTalents, currTalentBtn), getValue(Sims, currSimsBtn), currFightStyleBtn) + "</h3>";
+            document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
+        }
         var result = "</br>";
         result += "<table>";
 
