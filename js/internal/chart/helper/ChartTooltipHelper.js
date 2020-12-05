@@ -60,10 +60,37 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     result = buildChartLineForTrinkets(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "soulbinds_prog") {
     result = buildChartLineForSoulbindsLaunch(dpsName, result);
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket-combos") {
+    result = buildChartLineForTrinketCombos(dpsName, result);
   } else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   }
   return result;
+}
+
+function buildChartLineForTrinketCombos(dpsName, currentResult) {
+  var currResult = "";
+  var counter = 0;
+  var names = dpsName.split("-");
+  for(name of names) {
+    var splittedName = name.split("_");
+    var slicedName = name.slice(0, name.lastIndexOf("_"));
+    var trinketId = getTrinketIds(slicedName);
+    var ilvl = splittedName[splittedName.length -1];
+    var currName = slicedName.split("_");
+    var finalName = "";
+    for(tempName of currName) {
+      finalName = finalName + tempName.charAt(0);
+    }
+    finalName = finalName + " (" + ilvl + ")";
+    currResult = buildChartLineWithWowheadLine(finalName, trinketId, wowheadUrl + wowheadItemPath, currResult);
+    if(counter == 0) {
+      currResult = currResult + '  ';
+      counter++;
+    }
+  }
+
+  return currResult;
 }
 
 function buildChartLineForTrinkets(dpsName, currentResult) {

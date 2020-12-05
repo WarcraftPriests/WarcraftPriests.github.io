@@ -25,6 +25,7 @@ var Sims = {
   stats: "Stats",
   talents: "Talents",
   trinkets: "Trinkets",
+  trinket_combos: "Trinket Combos",
   weights: "Weights",
 };
 
@@ -150,12 +151,31 @@ var ConduitsIds = {
   FR: "326514",
 }
 
+var TrinketIds = {
+  Cabalists_Hymnal_Allies_4: "184028",
+  Cabalists_Hymnal_Allies_3: "184028",
+  Cabalists_Hymnal_Allies_2: "184028",
+  Cabalists_Hymnal_Allies_1: "184028",
+  Cabalists_Hymnal_Allies_0: "184028",
+  Inscrutable_Quantum_Device: "179350",
+  Empyreal_Ordnance: "179350",
+  Dreadfire_Vessel: "184030",
+  Glyph_of_Assimilation: "184021",
+  Soul_Igniter: "184019",
+  Macabre_Sheet_Music: "184024",
+  Soulletting_Ruby: "178809",
+}
+
 var Conduits2 = [
   "venthyr",
   "necrolord",
   "night_fae",
   "kyrian",
 ];
+
+var getTrinketIds = function (key) {
+  return TrinketIds[key];
+}
 
 var getConduitIds = function (key) {
   return ConduitsIds[key];
