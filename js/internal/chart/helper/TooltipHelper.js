@@ -24,14 +24,6 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
   return result;
 }
 
-function buildWowheadTooltipsMultipleBar(data, simsBtn) {
-  var result = [];
-  for(currFight in data[jsonData]) {
-    result.push(buildChartLine(getValue(FightStyleExternal, currFight), "", ""));
-  }
-
-  return result;
-}
 /*
  * Build a single line of the wowhead tooltip
  */
@@ -63,6 +55,15 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
   } else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   }
+  return result;
+}
+
+function buildWowheadTooltipsMultipleBar(data, simsBtn) {
+  var result = [];
+  for(currFight in data[jsonData]) {
+    result.push(buildChartLine(getValue(FightStyleExternal, currFight), "", ""));
+  }
+
   return result;
 }
 
@@ -164,114 +165,5 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   result += dpsName;
   result += "</a>";
 
-  return result;
-}
-
-/*
- * Formatter for the tooltips of the chart
- */
-function formatterDefault(points, x, data) {
-  var result = '<div class="chartHover">'
-                    + '<div class="chartHoverLine">' 
-                    + x 
-                    + "</div>";
-  for (var i = points.length - 1; i >= 0; i--) {
-    result += getTooltip( points[i].y, 
-                          ((data[jsonData][jsonBase][DPS] / 100) * points[i].y), 
-                          points[i].series,
-                          data);
-  }
-  result += "</div>";
-  return result;
-}
-  
-/*
- * Formatter for the tooltips of the chart
- */
-function formatterStacked(points, x, data) {
-  var result = '<div class="chartHover">'
-                    + '<div class="chartHoverLine">' 
-                    + x
-                    + "</div>";
-  
-  for (var i = points.length - 1; i >= 0; i--) {
-    result += getTooltip( ((data[jsonData][jsonBase][DPS] + points[i].y) / data[jsonData][jsonBase][DPS] * 100 - 100),
-                          points[i].y,
-                          points[i].series,
-                          data);
-  }
-  result += "</div>";
-  return result;
-}
-
-/*
- * Formatter for the tooltips of the chart
- */
-function formatterPercentage(points, x, data) {
-  var result = '<div class="chartHover">'
-                    + '<div class="chartHoverLine">' 
-                    + x
-                    + "</div>";
-  
-  for (var i = points.length - 1; i >= 0; i--) {
-    result += getTooltip( points[i].y, 
-                          (( data[jsonData][jsonBase][DPS] / 100 ) * points[i].y), 
-                          points[i].series,
-                          data);
-  }
-
-  result += "</div>";
-  return result;
-}
-
-function formatterMultipleBar(points, x, data) {
-  var result = '<div class="chartHover">'
-                    + '<div class="chartHoverLine">' 
-                    + x
-                    + "</div>";
-                    var minValue = 0;
-                    var value = 0;
-                    for (var i = points.length - 1; i >= 0; i--) {
-                      if(points[i].series.name.includes("min")) {
-                        minValue = points[i].y;
-                        value = minValue;
-                      } else if (points[i].series.name.includes("max")) {
-                        value = minValue + points[i].y;
-                        minValue = 0;
-                      }
-                      result += getTooltip( value, 
-                                            0, 
-                                            points[i].series,
-                                            data);
-                    }
-                  
-                    result += "</div>";
-  
-  return result;
-}
-
-function getTooltip(percentage, dpsIncrease, series, data) {
-  result = "";
-  if (percentage != 0) {
-    result = '<div><span class="chartHoverSpan" style="border-left: 9px solid ' 
-              + series.color
-              + ";" 
-              + '">' 
-              + series.name
-              + " ( " + data[jsonData][jsonBase][DPS] + " base )"
-              + "</span>:&nbsp;&nbsp;";
-    if(dpsIncrease != 0) {
-      result += "+ "
-              + Intl.NumberFormat().format(dpsIncrease) 
-              + space + DPS.toLowerCase()
-              + space + dash + space;
-    }
-    result += percentage.toFixed(2);
-    if (percentage > 0) {
-      result += '% (Increase)';
-    } else {
-      result += '% (decrease)';
-    }
-  }
   return result;
 }

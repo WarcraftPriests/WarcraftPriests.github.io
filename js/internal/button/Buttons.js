@@ -6,6 +6,9 @@ var currConsumablesBtn = defaultConsumable;
 var currFightStyleBtn = defaultFightStyle;
 var currCovenantChoiceBtn = defaultCovenantChoice;
 
+/*
+ * Initialize all buttons by url params
+ */
 function initializeButtons() {
   var query = getQueryParameter();
   if(query !== null) {
@@ -95,6 +98,10 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
   styleButtons();
 }
 
+/*
+ * Abstraction layer for creating buttons out of an Array
+ * special case for consumables, fightStyle and covenants
+ */
 function createButtonBasicListSelf(divName, buttonArray, event, labelArray, currBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
@@ -116,27 +123,39 @@ function generateHorizontalSpacer(div) {
   div.appendChild(horizontalSpacer);
 }
 
+/*
+ * add a button to the index.hmtl
+ */
 function addButtonShow(buttonName) {
   document.getElementById(buttonName).style.display = '';
   document.getElementById(buttonName).nextSibling.style.display = inlineBlock;
 }
 
+/*
+ * remove button from index.html
+ */
 function removeButtonShow(buttonName) {
   document.getElementById(buttonName).style.display = none;
   document.getElementById(buttonName).nextSibling.style.display = none;
 }
 
+/*
+ * adds a specific button row to index.html
+ */
 function addShow(div) {
   document.getElementById(div).classList.add(show);
 }
 
+/*
+ * removes a specific button row from index.html
+ */
 function removeShow(div) {
   document.getElementById(div.toString()).classList.remove(show);
 }
 
-  /*
-* Handles the colors of the current selected button
-*/
+/*
+ * Handles the colors of the current selected button
+ */
 function styleButtons() {
   var btnGroup = document.getElementsByClassName(buttonName);
   for (var i = 0; i < btnGroup.length; i++) {

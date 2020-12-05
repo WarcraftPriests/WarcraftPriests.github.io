@@ -54,11 +54,9 @@ var getCovenantChoiceColor = function (key) {
 
 var getColor = function (key, key2) {
    var color = covenantColor[key];
-   
    if(color == null || color == undefined || color == ""){
      color = covenantColor[key2];
    }
-   
    if(color == null || color == undefined || color == "") {
       if(key.includes("Necrolord")) {
         color = covenantColor["necrolord"];
@@ -70,44 +68,40 @@ var getColor = function (key, key2) {
         color = covenantColor["kyrian"];
       }
    }
-
    if(color == null || color == undefined || color == "") {
        color = racialColor[key];
    }
-
    if(color == null || color == undefined || color == "") {
        color = "#496DC9";
-   }
-   
+   }   
    return color;
 }
 
 function create_color(dps, min_dps, max_dps) {
-    
-    let color_min = [0, 255, 255];
-    let color_mid = [255, 255, 0];
-    let color_max = [255, 0, 0];
-    let diff_mid_max = 0;
-    let diff_min_mid = 0;
-    for (let i = 0; i < 3; i++) {
-      diff_mid_max += Math.abs(color_max[i] - color_mid[i]);
-      diff_min_mid += Math.abs(color_mid[i] - color_min[i]);
-    }
-    let mid_ratio = diff_min_mid / (diff_min_mid + diff_mid_max);
-    let mid_dps = min_dps + (max_dps - min_dps) * mid_ratio;
-    if (dps >= mid_dps) {
-      let percent_of_max = (dps - mid_dps) / (max_dps - mid_dps);
-      return [
-        Math.floor(color_max[0] * percent_of_max + color_mid[0] * (1 - percent_of_max)),
-        Math.floor(color_max[1] * percent_of_max + color_mid[1] * (1 - percent_of_max)),
-        Math.floor(color_max[2] * percent_of_max + color_mid[2] * (1 - percent_of_max))
-      ];
-    } else {
-      let percent_of_mid = (dps - min_dps) / (mid_dps - min_dps);
-      return [
-        Math.floor(color_mid[0] * percent_of_mid + color_min[0] * (1 - percent_of_mid)),
-        Math.floor(color_mid[1] * percent_of_mid + color_min[1] * (1 - percent_of_mid)),
-        Math.floor(color_mid[2] * percent_of_mid + color_min[2] * (1 - percent_of_mid))
-      ];
-    }
+  let color_min = [0, 255, 255];
+  let color_mid = [255, 255, 0];
+  let color_max = [255, 0, 0];
+  let diff_mid_max = 0;
+  let diff_min_mid = 0;
+  for (let i = 0; i < 3; i++) {
+    diff_mid_max += Math.abs(color_max[i] - color_mid[i]);
+    diff_min_mid += Math.abs(color_mid[i] - color_min[i]);
   }
+  let mid_ratio = diff_min_mid / (diff_min_mid + diff_mid_max);
+  let mid_dps = min_dps + (max_dps - min_dps) * mid_ratio;
+  if (dps >= mid_dps) {
+    let percent_of_max = (dps - mid_dps) / (max_dps - mid_dps);
+    return [
+      Math.floor(color_max[0] * percent_of_max + color_mid[0] * (1 - percent_of_max)),
+      Math.floor(color_max[1] * percent_of_max + color_mid[1] * (1 - percent_of_max)),
+      Math.floor(color_max[2] * percent_of_max + color_mid[2] * (1 - percent_of_max))
+    ];
+  } else {
+    let percent_of_mid = (dps - min_dps) / (mid_dps - min_dps);
+    return [
+      Math.floor(color_mid[0] * percent_of_mid + color_min[0] * (1 - percent_of_mid)),
+      Math.floor(color_mid[1] * percent_of_mid + color_min[1] * (1 - percent_of_mid)),
+      Math.floor(color_mid[2] * percent_of_mid + color_min[2] * (1 - percent_of_mid))
+    ];
+  }
+}

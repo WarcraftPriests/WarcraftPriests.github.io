@@ -1,6 +1,3 @@
-
-
-
 /*
  * Decides what kind of chart should be used 
  * and when a chart update should happen
@@ -19,6 +16,9 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
   }
 }
 
+/*
+ * Collects all data need for a chart an then create it
+ */
 function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
       function (data) {
@@ -36,6 +36,9 @@ function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId) 
     });
 }
 
+/*
+ * Choose which chart to show
+ */
 function buildData(data, simsBtn, chartId) {
   var chart = getValue(ChartType, simsBtn);
   if(chart == "multiple") {
@@ -94,6 +97,9 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
   }
 }
 
+/*
+ * Determines the description of the chart from the config.yml
+ */
 function determineChartDescription(fullSimType) {
   fullSimType = fullSimType.replace("_", "-");
   var descr = configData["sims"][fullSimType]["description"];

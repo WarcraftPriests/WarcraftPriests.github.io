@@ -1,6 +1,5 @@
 /*
- * Use the data from the json request and sort them for the single bar
- * setup
+ * Prepare data for single bar chart
  */
 function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId) {
   var chartForSingle = new Highcharts.Chart( getSingleBarDefinition( 
@@ -42,8 +41,7 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId)
 }
 
 /*
- * Use the data from the json request and sort them for the stacked bar
- * setup
+ * Prepare data for percentage bar chart
  */
 function buildDataForPercentageChart(data, simsBtn, chartId) {
   var chartForPercentage = new Highcharts.Chart( getChartDefinitionPercentage( 
@@ -88,8 +86,7 @@ function buildDataForPercentageChart(data, simsBtn, chartId) {
 }
 
 /*
- * Use the data from the json request and sort them for the stacked bar
- * setup
+ * Prepare data for multiple bar chart
  */
 function buildChartDataMultipleBar(data, simsBtn, chartId) {
   var chartForMultipleBar = new Highcharts.Chart(getMultipleBarChartDefinition(
@@ -135,6 +132,9 @@ function buildChartDataMultipleBar(data, simsBtn, chartId) {
   updateSize(chartForMultipleBar, chartId, Conduits2.length);
 }
 
+/*
+ * Prepare data for dot chart
+ */
 function buildChartDataDot(githubData, chartId) {
   var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(chartId));
   (function (H) {
