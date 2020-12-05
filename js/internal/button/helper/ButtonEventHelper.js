@@ -126,6 +126,10 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
       wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, false, -60);
       break;
+    case trinketCombos:
+      manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+      wcp_charts.updateSingleBarChart("trinket-combos", currFightStyleBtn, currTalentBtn, currCovenantBtn, false, -40);
+      break;
     default:
       manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
       wcp_charts.updateSingleBarChart(currSimsBtn, currFightStyleBtn, currTalentBtn, "", false, -40);
