@@ -101,35 +101,35 @@ function buildChartDataMultipleBar(data, simsBtn, chartId) {
   var minResults = [];
   var maxResults = [];
 
-  for(i = 0; i <= Conduits2.length -1; i++) {
+  for(i = 0; i <= AggregateConduits.length -1; i++) {
     minResults = [];
     maxResults = [];
 
     for(currFight in data[jsonData]) {
-      var minValue = ((data[jsonData][currFight][Conduits2[i]]["min"]) * 100);
-      var maxValue = ((data[jsonData][currFight][Conduits2[i]]["max"]) * 100) - ((data[jsonData][currFight][Conduits2[i]]["min"])) * 100;
+      var minValue = ((data[jsonData][currFight][AggregateConduits[i]]["min"]) * 100);
+      var maxValue = ((data[jsonData][currFight][AggregateConduits[i]]["max"]) * 100) - ((data[jsonData][currFight][AggregateConduits[i]]["min"])) * 100;
       minResults.push(minValue);
       maxResults.push(maxValue);
     }
 
     chartForMultipleBar.addSeries({
-      color: getCovenantChoiceColor(Conduits2[i] + "_max"),
+      color: getCovenantChoiceColor(AggregateConduits[i] + "_max"),
       data: maxResults,
-      name: getConduitsName(Conduits2[i]) + " max",
-      stack: Conduits2[i],
+      name: getValue(Conduits, AggregateConduits[i]) + " max",
+      stack: AggregateConduits[i],
       showInLegend: true,
       }, false);
     
       chartForMultipleBar.addSeries({
-      color: getCovenantChoiceColor(Conduits2[i] + "_min"),
+      color: getCovenantChoiceColor(AggregateConduits[i] + "_min"),
       data: minResults,
-      name: getConduitsName(Conduits2[i]) + " min",
-      stack: Conduits2[i],
+      name: getValue(Conduits, AggregateConduits[i]) + " min",
+      stack: AggregateConduits[i],
       showInLegend: true,
     }, false);
   }
   chartForMultipleBar.redraw();
-  updateSize(chartForMultipleBar, chartId, Conduits2.length);
+  updateSize(chartForMultipleBar, chartId, AggregateConduits.length);
 }
 
 /*

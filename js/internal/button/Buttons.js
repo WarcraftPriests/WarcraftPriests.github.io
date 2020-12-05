@@ -255,5 +255,16 @@ function checkButtonClick() {
     }
     
   }
-  updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div');
+  updateUrl(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn)
+  updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
+}
+
+function updateUrl(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {
+  if(configData["sims"][currSimsBtn.replace("_", "-")]["covenant"]["lookup"]) {
+    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
+  } else if(currSimsBtn == "covenant_choice") {
+    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", "");
+  } else {
+    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
+  }
 }

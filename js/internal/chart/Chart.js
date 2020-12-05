@@ -2,33 +2,30 @@
  * Decides what kind of chart should be used 
  * and when a chart update should happen
  */
-function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId) {
-  if(configData["sims"][currSimsBtn.replace("_", "-")]["covenant"]["lookup"]) {
-    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-  } else {
-    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
-  }
-  
+function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData) {
   if(currSimsBtn == "weights") {
-    parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId);
+    parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
-    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId);
+    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId, metaData);
   }
 }
 
 /*
  * Collects all data need for a chart an then create it
  */
-function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId) {
+function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, metaData) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
       function (data) {
-        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        var header = determineChartName( covenantType, 
-                                         getValue(SimTalents, talentChoice), 
-                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                         fightStyle);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+        if(metaData) {
+          document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
+          var header = determineChartName( covenantType, 
+                                           getValue(SimTalents, talentChoice), 
+                                           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                           fightStyle);
+          document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
+          document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+        }
+        
         buildData(data, simsBtn, chartId);
       }.bind(this)
     ).fail(function(xhr, status) {
@@ -123,7 +120,9 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
 
   if(simsBtn == talents){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
-  } else if(configData["sims"][currSimsBtn.replace("_", "-")]["covenant"]["lookup"]) {
+  } else if(simsBtn == "covenant-choice") {
+    return baseurl + slash + simsBtn + simResultPath + "Aggregate" + jsonExtension;
+  } else if(configData["sims"][simsBtn]["covenant"]["lookup"]) {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
   } else {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
