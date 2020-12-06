@@ -100,6 +100,7 @@ const soulbindTraits = "soulbind_traits";
 const soulbindsLaunch = "soulbinds_launch";
 const conduitCombos = "conduit_combos";
 const legendaryItems = "legendary_items";
+const trinketCombos = "trinket_combos";
 
 /*
  * Button related definitions
