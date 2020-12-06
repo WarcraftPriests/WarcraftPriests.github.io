@@ -155,7 +155,7 @@ function getDefaultDotDefinition(chartId) {
  * - Covenants Choice
  * - ...
  */
-function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, chartId) {
+function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
   return stackedCharDefinition = {
     chart: {
       renderTo: chartId,
@@ -168,6 +168,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
+      max: maxEntries,
       labels: {
         x: -40,
         useHTML: true,
@@ -320,7 +321,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
  * - Trinkets
  * - ....
  */
-function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId) {
+function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
   return percentageChartDefinition = {
     chart: {
       renderTo: chartId,
@@ -361,6 +362,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
+      max: maxEntries,
       labels: {
         useHTML: true,
         x: -40,
@@ -493,7 +495,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
  * - Trinket Combos
  * - ....
  */
-function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend, xPadding, chartId) {
+function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend, xPadding, chartId, maxEntries) {
   return singleLineBarDefinition = {
     chart: {
       renderTo: chartId,
@@ -546,6 +548,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       },
       categories: wowheadTooltips,
       useHTML: true,
+      max: maxEntries,
     },
   
     yAxis: {

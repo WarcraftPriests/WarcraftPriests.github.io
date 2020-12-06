@@ -9,7 +9,8 @@ jQuery.get({url: baseUrl + "/config.yml", dataType: "text"})
                 var covenants = dom.getAttribute("data-covenants");
                 var fightStyle = dom.getAttribute("data-fightStyle");
                 var chartId = dom.getAttribute("id");
-                updateChart(talent, sims, covenants, "", "", fightStyle, chartId, false);
+                var maxEntries = dom.getAttribute("data-maxentries")
+                updateChart(talent, sims, covenants, "", "", fightStyle, chartId, false, parseInt(maxEntries));
             }
         }
 );

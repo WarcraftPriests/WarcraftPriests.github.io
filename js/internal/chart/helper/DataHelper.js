@@ -1,7 +1,7 @@
 /*
  * Prepare data for single bar chart
  */
-function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId) {
+function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId, maxEntries) {
   var chartForSingle = new Highcharts.Chart( getSingleBarDefinition( 
                                                 buildWowheadTooltips( data, true, simsBtn, showInLegend),
                                                 data,
@@ -9,7 +9,8 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId)
                                                 dpsIncrease,
                                                 showInLegend,
                                                 xPadding,
-                                                chartId))
+                                                chartId, 
+                                                maxEntries))
   while (chartForSingle.series.length > 0) {
     chartForSingle.series[0].remove(false);
   }
@@ -37,19 +38,20 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId)
     name: DPS,
     showInLegend: showInLegend,
   },false);
-  updateSize(chartForSingle, chartId, result.length);
+  updateSize(chartForSingle, chartId, result.length, maxEntries);
 }
 
 /*
  * Prepare data for percentage bar chart
  */
-function buildDataForPercentageChart(data, simsBtn, chartId) {
+function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
   var chartForPercentage = new Highcharts.Chart( getChartDefinitionPercentage( 
                                                       buildWowheadTooltips(data, false, simsBtn), 
                                                       data,
                                                       getValue(LegendTitles, simsBtn),
                                                       dpsIncrease,
-                                                      chartId));
+                                                      chartId,
+                                                      maxEntries));
 
   while (chartForPercentage.series.length > 0) {
     chartForPercentage.series[0].remove(false);
@@ -82,19 +84,20 @@ function buildDataForPercentageChart(data, simsBtn, chartId) {
       showInLegend: true,
     }, false);
   }
-  updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length);
+  updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
 }
 
 /*
  * Prepare data for multiple bar chart
  */
-function buildChartDataMultipleBar(data, simsBtn, chartId) {
+function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
   var chartForMultipleBar = new Highcharts.Chart(getMultipleBarChartDefinition(
                                                       buildWowheadTooltipsMultipleBar( data, simsBtn), 
                                                       data,
                                                       getValue(LegendTitles, simsBtn),
                                                       dpsIncrease,
-                                                      chartId));
+                                                      chartId,
+                                                      maxEntries));
   while (chartForMultipleBar.series.length > 0) {
     chartForMultipleBar.series[0].remove(false);
   }
@@ -129,7 +132,7 @@ function buildChartDataMultipleBar(data, simsBtn, chartId) {
     }, false);
   }
   chartForMultipleBar.redraw();
-  updateSize(chartForMultipleBar, chartId, AggregateConduits.length);
+  updateSize(chartForMultipleBar, chartId, AggregateConduits.length, maxEntries);
 }
 
 /*

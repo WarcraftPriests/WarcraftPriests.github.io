@@ -2,18 +2,22 @@
  * Decides what kind of chart should be used 
  * and when a chart update should happen
  */
-function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData) {
+function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
+  if(maxEntries != null || maxEntries != undefined) {
+    maxEntries = maxEntries - 1;
+  }
+  
   if(currSimsBtn == "weights") {
     parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
-    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId, metaData);
+    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId, metaData, maxEntries);
   }
 }
 
 /*
  * Collects all data need for a chart an then create it
  */
-function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, metaData) {
+function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, metaData, maxEntries) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
       function (data) {
         if(metaData) {
@@ -26,7 +30,7 @@ function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, 
           document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
         }
         
-        buildData(data, simsBtn, chartId);
+        buildData(data, simsBtn, chartId, maxEntries);
       }.bind(this)
     ).fail(function(xhr, status) {
       handleJsonFailure(xhr, status)
@@ -36,34 +40,43 @@ function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, 
 /*
  * Choose which chart to show
  */
-function buildData(data, simsBtn, chartId) {
+function buildData(data, simsBtn, chartId, maxEntries) {
   var chart = getValue(ChartType, simsBtn);
   if(chart == "multiple") {
-    buildChartDataMultipleBar(data, simsBtn, chartId)
+    buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries)
   } else if(chart == "percentage") {
-    buildDataForPercentageChart(data, simsBtn, chartId);
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries);
   } else if(chart == "dot") {
     buildChartDataDot(data, chartId);
   } else {
-    buildChartDataSingleBar(data, false, getValue(ChartPadding, simsBtn), simsBtn, chartId)
+    buildChartDataSingleBar(data, false, getValue(ChartPadding, simsBtn), simsBtn, chartId, maxEntries)
   }
 }
 
 /*
  * Updates the size of the div for the chart for the real data
  */
-function updateSize(chart, chartId, size) {
-  document.getElementById(chartId).style.height = 200 + size * 30 + px; // Size the chart by our data.
-    chart.setSize( 
-      document.getElementById(chartId).style.width,
-      document.getElementById(chartId).style.height
-    );
-    chart.redraw();
-    try {
-      $WowheadPower.refreshLinks();
-    } catch (error) {
-      console.log(error);
-    }
+function updateSize(chart, chartId, size, maxEntries) {
+  var realSize = 0;
+
+  if(maxEntries != null || maxEntries != undefined) {
+    realSize = maxEntries;
+  } else {
+    realSize = size;
+  }
+
+  document.getElementById(chartId).style.height = 200 + realSize * 30 + px; // Size the chart by our data.
+  chart.setSize( 
+    document.getElementById(chartId).style.width,
+    document.getElementById(chartId).style.height
+  );
+
+  chart.redraw();
+  try {
+    $WowheadPower.refreshLinks();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 /*
