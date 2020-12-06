@@ -1,141 +1,36 @@
 /*
- * Defines the chart for the site
+ * Decides what kind of chart should be used 
+ * and when a chart update should happen
  */
-var WCP_Chart = function WCP_Chart(id, options) {
-  this.chartId = id;
-  this.options = options;
-  this.chartOptions = defaultChartDefinition;
-};
+function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
+  if(maxEntries != null || maxEntries != undefined) {
+    maxEntries = maxEntries - 1;
+  }
+  
+  if(currSimsBtn == "weights") {
+    parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
+  } else {
+    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId, metaData, maxEntries);
+  }
+}
 
 /*
- * Does a initial setup of the chart with
- * the trinket sims from github
+ * Collects all data need for a chart an then create it
  */
-WCP_Chart.prototype.init = function () {
-  this.chart = Highcharts.chart(this.chartId, this.chartOptions);
-};
-
-/*
- * Filles the chart with data and uses the stacked bar chart
- */
-WCP_Chart.prototype.updateStackedBarChart = function ( simsBtn, fightStyle, talentChoice, covenantType ) {
+function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, metaData, maxEntries) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
       function (data) {
-        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        while (this.chart.series.length > 0) {
-          this.chart.series[0].remove(false);
+        if(metaData) {
+          document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
+          var header = determineChartName( covenantType, 
+                                           getValue(SimTalents, talentChoice), 
+                                           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+                                           fightStyle);
+          document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
+          document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
         }
-        var header = determineChartName( covenantType, 
-                                         getTalentSimsName(talentChoice), 
-                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                         fightStyle);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
-        this.chart.update(getStackedChartDefinition(buildWowheadTooltips( data, false, simsBtn),
-                                                    data,
-                                                    getLegendTitle(simsBtn),
-                                                    dpsIncrease));
-        buildDataForStackedChart(data, this.chartId, this.chart);
-      }.bind(this)
-    ).fail(function(xhr, status) {
-      handleJsonFailure(xhr, status)
-    });
-};
-
-/*
- * Filles the chart with data and uses the stacked bar chart
- */
-WCP_Chart.prototype.updatePercentageChart = function ( simsBtn, fightStyle, talentChoice, covenantType ) {
-  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
-      function (data) {
-        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        while (this.chart.series.length > 0) {
-          this.chart.series[0].remove(false);
-        }
-        var header = determineChartName( covenantType, 
-                                         getTalentSimsName(talentChoice), 
-                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                         fightStyle);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
-        this.chart.update(getChartDefinitionPercentage( buildWowheadTooltips(data, false, simsBtn), 
-                                                        data,
-                                                        getLegendTitle(simsBtn),
-                                                        dpsIncrease));
-        buildDataForPercentageChart(data, this.chartId, this.chart);
-      }.bind(this)
-    ).fail(function(xhr, status) {
-      handleJsonFailure(xhr, status)
-    });
-};
-
-/*
- * Filles the chart with data and uses the single bar chart
- */
-WCP_Chart.prototype.updateSingleBarChart = function ( simsBtn, fightStyle, talentChoice, covenantType, showInLegend, xPadding ) {
-  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
-      function (data) {
-        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        while (this.chart.series.length > 0) {
-          this.chart.series[0].remove(false);
-        }
-        var header = determineChartName( covenantType, 
-                                         getTalentSimsName(talentChoice), 
-                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                         fightStyle);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
-        this.chart.update(getSingleBarDefinition( buildWowheadTooltips( data, true, simsBtn, showInLegend),
-                                                  data,
-                                                  getLegendTitle(simsBtn),
-                                                  dpsIncrease,
-                                                  showInLegend,
-                                                  xPadding));
-        buildChartDataSingleBar(data, this.chartId, this.chart, showInLegend)
-      }.bind(this)
-    ).fail(function(xhr, status) {
-      handleJsonFailure(xhr, status)
-    });
-};
-
-/*
- * Filles the chart with data and uses the single bar chart
- */
-WCP_Chart.prototype.updateMultipleBarChart = function ( simsBtn, fightStyle, talentChoice, covenantType ) {
-  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
-      function (data) {
-        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        while (this.chart.series.length > 0) {
-          this.chart.series[0].remove(false);
-        }
-        var header = determineChartName( covenantType, 
-          getTalentSimsName(talentChoice), 
-          simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-          fightStyle);
-        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-        this.chart.update(getMultipleBarChartDefinition( buildWowheadTooltipsMultipleBar( data, simsBtn), 
-                                                         data,
-                                                         getLegendTitle(simsBtn),
-                                                         dpsIncrease));
-        buildChartDataMultipleBar(data, this.chartId, this.chart, fightStyle)
-      }.bind(this)
-    ).fail(function(xhr, status) {
-      handleJsonFailure(xhr, status)
-    });
-};
-
-function statChart( simsBtn, fightStyle, talentChoice, covenantType) {
-  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
-      function (data) {
-        var header = determineChartName( covenantType, 
-                                         getTalentSimsName(talentChoice), 
-                                         simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                         fightStyle);
-        document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-        document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-        document.getElementById("description").innerHTML = determineChartDescription(simsBtn);
-        buildChartDataDot(data);
+        
+        buildData(data, simsBtn, chartId, maxEntries);
       }.bind(this)
     ).fail(function(xhr, status) {
       handleJsonFailure(xhr, status)
@@ -143,9 +38,116 @@ function statChart( simsBtn, fightStyle, talentChoice, covenantType) {
 }
 
 /*
- * Opens a chart
- * -> not sure if needed
+ * Choose which chart to show
  */
-function openChart() {
-  this.x = document.getElementById;
+function buildData(data, simsBtn, chartId, maxEntries) {
+  var chart = getValue(ChartType, simsBtn);
+  if(chart == "multiple") {
+    buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries)
+  } else if(chart == "percentage") {
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries);
+  } else if(chart == "dot") {
+    buildChartDataDot(data, chartId);
+  } else {
+    buildChartDataSingleBar(data, false, getValue(ChartPadding, simsBtn), simsBtn, chartId, maxEntries)
+  }
+}
+
+/*
+ * Updates the size of the div for the chart for the real data
+ */
+function updateSize(chart, chartId, size, maxEntries) {
+  var realSize = 0;
+
+  if(maxEntries != null || maxEntries != undefined) {
+    realSize = maxEntries;
+  } else {
+    realSize = size;
+  }
+
+  document.getElementById(chartId).style.height = 200 + realSize * 30 + px; // Size the chart by our data.
+  chart.setSize( 
+    document.getElementById(chartId).style.width,
+    document.getElementById(chartId).style.height
+  );
+
+  chart.redraw();
+  try {
+    $WowheadPower.refreshLinks();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+/*
+ * Determine the chart name for the current chart, for the used parameters
+ */
+function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
+  var simType = "";
+  simType = fullSimType.replace("-", " ");
+  simType = simType.replace("_", " ");
+
+  if(fullSimType.toLowerCase() == covenantsChoice) {
+    return coventantsChoiceChartName;
+  } 
+  if (covenantType === empty || covenantType == null) {
+    return firstTalent 
+              + space + dash + space
+              + simType
+              + space + dash + space
+              + fightStyle;
+  } else {
+    return firstTalent 
+              + space + dash + space
+              + simType 
+              + space + dash + space 
+              + getValue(Conduits, covenantType)
+              + space + dash + space 
+              + fightStyle;
+  }
+}
+
+/*
+ * Determines the description of the chart from the config.yml
+ */
+function determineChartDescription(fullSimType) {
+  fullSimType = fullSimType.replace("_", "-");
+  var descr = configData["sims"][fullSimType]["description"];
+  return descr;
+}
+
+/*
+ * Determines the url for the github repo to get the needed sim results
+ */
+function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantType) {
+  /*
+   * Special cases!
+   */
+  if(talentChoice.includes(underscore)) {
+    talentChoice = talentChoice.replace(underscore, dash);
+  }
+
+  if(simsBtn.includes(underscore)) {
+    simsBtn = simsBtn.replace(underscore, dash);
+  }
+
+  if(simsBtn == talents){
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
+  } else if(simsBtn == "covenant-choice") {
+    return baseurl + slash + simsBtn + simResultPath + "Aggregate" + jsonExtension;
+  } else if(configData["sims"][simsBtn]["covenant"]["lookup"]) {
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
+  } else {
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
+  }
+}
+
+/*
+ * Handles the failure of an json call to github, most a wrong combination of
+ * talent, simType, convenant and fightStyle.
+ * So no data could be fetched
+ */
+function handleJsonFailure(xhr, status) {
+  console.log("The JSON chart failed to load, please let DJ/espo know via discord Djriff#0001/espo#6663");
+  console.log(status);
 }
