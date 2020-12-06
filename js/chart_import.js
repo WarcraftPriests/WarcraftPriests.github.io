@@ -26,6 +26,7 @@ var Sims = {
   talents: "Talents",
   trinkets: "Trinkets",
   weights: "Weights",
+  trinket_combos: "Trinket Combos",
 };
   
 var Consumables = {
@@ -191,6 +192,7 @@ var ChartPadding = {
   covenants_launch: -40,
   covenants_prog: -40,
   enchants: -40,
+  trinket_combos: -40,
 };
 
 var AggregateConduits = [
@@ -223,6 +225,21 @@ var LookupType = {
   trinket_combos: "none",
   trinkets: "none",
   weights: "none"
+}
+
+var TrinketIds = {
+  Cabalists_Hymnal_Allies_4: "184028",
+  Cabalists_Hymnal_Allies_3: "184028",
+  Cabalists_Hymnal_Allies_2: "184028",
+  Cabalists_Hymnal_Allies_1: "184028",
+  Cabalists_Hymnal_Allies_0: "184028",
+  Inscrutable_Quantum_Device: "179350",
+  Empyreal_Ordnance: "179350",
+  Dreadfire_Vessel: "184030",
+  Glyph_of_Assimilation: "184021",
+  Soul_Igniter: "184019",
+  Macabre_Sheet_Music: "184024",
+  Soulletting_Ruby: "178809",
 }
 
 var getValue = function(list, key) {
@@ -968,10 +985,37 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     result = buildChartLineForTrinkets(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "soulbinds_prog") {
     result = buildChartLineForSoulbindsLaunch(dpsName, result);
-  } else {
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket_combos") {
+    result = buildChartLineForTrinketCombos(dpsName, result);
+  }else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   }
   return result;
+}
+
+function buildChartLineForTrinketCombos(dpsName, currentResult) {
+  var currResult = "";
+  var counter = 0;
+  var names = dpsName.split("-");
+  for(name of names) {
+    var splittedName = name.split("_");
+    var slicedName = name.slice(0, name.lastIndexOf("_"));
+    var trinketId = getValue(TrinketIds, slicedName);
+    var ilvl = splittedName[splittedName.length -1];
+    var currName = slicedName.split("_");
+    var finalName = "";
+    for(tempName of currName) {
+      finalName = finalName + tempName.charAt(0);
+    }
+    finalName = finalName + " (" + ilvl + ")";
+    currResult = buildChartLineWithWowheadLine(finalName, trinketId, wowheadUrl + wowheadItemPath, currResult);
+    if(counter == 0) {
+      currResult = currResult + '  ';
+      counter++;
+    }
+  }
+
+  return currResult;
 }
 
 function buildWowheadTooltipsMultipleBar(data, simsBtn) {
@@ -1386,10 +1430,14 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
             value = minValue + this.points[i].y;
             minValue = 0;
           }
+
+          
           result += getTooltip( value, 
                                 0, 
                                 this.points[i].series,
-                                data);
+                                data,
+                                false);
+          
         }
                   
         result += "</div>";
@@ -1556,7 +1604,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
           result += getTooltip( this.points[i].y, 
                                 (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
                                 this.points[i].series,
-                                data);
+                                data,
+                                true);
         }
 
         result += "</div>";
@@ -1709,7 +1758,8 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
           result += getTooltip( this.points[i].y, 
                                 ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
                                 this.points[i].series,
-                                data);
+                                data,
+                                true);
         }
         result += "</div>";
         return result;
@@ -1718,16 +1768,20 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
   };   
 }
 
-function getTooltip(percentage, dpsIncrease, series, data) {
+function getTooltip(percentage, dpsIncrease, series, data, showBase) {
   result = "";
   if (percentage != 0) {
     result = '<div><span class="chartHoverSpan" style="border-left: 9px solid ' 
               + series.color
               + ";" 
               + '">' 
-              + series.name
-              + " ( " + data[jsonData][jsonBase][DPS] + " base )"
-              + "</span>:&nbsp;&nbsp;";
+              + series.name;
+
+    if(showBase) {
+      result += " ( " + data[jsonData][jsonBase][DPS] + " base )";
+    }
+    result += "</span>:&nbsp;&nbsp;";
+
     if(dpsIncrease != 0) {
       result += "+ "
               + Intl.NumberFormat().format(dpsIncrease) 
@@ -1741,6 +1795,7 @@ function getTooltip(percentage, dpsIncrease, series, data) {
       result += '% (decrease)';
     }
   }
+
   return result;
 }
 var Headings = {
