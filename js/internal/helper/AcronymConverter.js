@@ -158,7 +158,7 @@ var TrinketIds = {
   Cabalists_Hymnal_Allies_1: "184028",
   Cabalists_Hymnal_Allies_0: "184028",
   Inscrutable_Quantum_Device: "179350",
-  Empyreal_Ordnance: "179350",
+  Empyreal_Ordnance: "180117",
   Dreadfire_Vessel: "184030",
   Glyph_of_Assimilation: "184021",
   Soul_Igniter: "184019",
