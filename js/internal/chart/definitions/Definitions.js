@@ -301,10 +301,14 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
             value = minValue + this.points[i].y;
             minValue = 0;
           }
+
+          
           result += getTooltip( value, 
                                 0, 
                                 this.points[i].series,
-                                data);
+                                data,
+                                false);
+          
         }
                   
         result += "</div>";
@@ -471,7 +475,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
           result += getTooltip( this.points[i].y, 
                                 (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
                                 this.points[i].series,
-                                data);
+                                data,
+                                true);
         }
 
         result += "</div>";
@@ -624,7 +629,8 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
           result += getTooltip( this.points[i].y, 
                                 ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
                                 this.points[i].series,
-                                data);
+                                data,
+                                true);
         }
         result += "</div>";
         return result;
@@ -633,16 +639,20 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
   };   
 }
 
-function getTooltip(percentage, dpsIncrease, series, data) {
+function getTooltip(percentage, dpsIncrease, series, data, showBase) {
   result = "";
   if (percentage != 0) {
     result = '<div><span class="chartHoverSpan" style="border-left: 9px solid ' 
               + series.color
               + ";" 
               + '">' 
-              + series.name
-              + " ( " + data[jsonData][jsonBase][DPS] + " base )"
-              + "</span>:&nbsp;&nbsp;";
+              + series.name;
+
+    if(showBase) {
+      result += " ( " + data[jsonData][jsonBase][DPS] + " base )";
+    }
+    result += "</span>:&nbsp;&nbsp;";
+
     if(dpsIncrease != 0) {
       result += "+ "
               + Intl.NumberFormat().format(dpsIncrease) 
@@ -656,5 +666,6 @@ function getTooltip(percentage, dpsIncrease, series, data) {
       result += '% (decrease)';
     }
   }
+
   return result;
 }
