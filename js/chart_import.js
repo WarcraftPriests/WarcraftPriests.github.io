@@ -234,7 +234,7 @@ var TrinketIds = {
   Cabalists_Hymnal_Allies_1: "184028",
   Cabalists_Hymnal_Allies_0: "184028",
   Inscrutable_Quantum_Device: "179350",
-  Empyreal_Ordnance: "179350",
+  Empyreal_Ordnance: "180117",
   Dreadfire_Vessel: "184030",
   Glyph_of_Assimilation: "184021",
   Soul_Igniter: "184019",
@@ -450,8 +450,10 @@ function buildData(data, simsBtn, chartId, maxEntries) {
   var chart = getValue(ChartType, simsBtn);
   if(chart == "multiple") {
     buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries)
-  } else if(chart == "percentage") {
-    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries);
+  } else if(chart == "percentage" && simsBtn == "trinkets") {
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries, false);
+  } else if(chart == "percentage" && simsBtn != "trinkets") {
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries, true);
   } else if(chart == "dot") {
     buildChartDataDot(data, chartId);
   } else {
@@ -987,7 +989,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket_combos") {
     result = buildChartLineForTrinketCombos(dpsName, result);
-  }else {
+  } else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   }
   return result;
@@ -1454,7 +1456,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
  * - Trinkets
  * - ....
  */
-function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
+function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries, shwoBaseDps) {
   return percentageChartDefinition = {
     chart: {
       renderTo: chartId,
@@ -1605,7 +1607,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
                                 (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
                                 this.points[i].series,
                                 data,
-                                true);
+                                shwoBaseDps);
         }
 
         result += "</div>";
