@@ -44,8 +44,10 @@ function buildData(data, simsBtn, chartId, maxEntries) {
   var chart = getValue(ChartType, simsBtn);
   if(chart == "multiple") {
     buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries)
-  } else if(chart == "percentage") {
-    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries);
+  } else if(chart == "percentage" && simsBtn == "trinkets") {
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries, false);
+  } else if(chart == "percentage" && simsBtn != "trinkets") {
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries, true);
   } else if(chart == "dot") {
     buildChartDataDot(data, chartId);
   } else {

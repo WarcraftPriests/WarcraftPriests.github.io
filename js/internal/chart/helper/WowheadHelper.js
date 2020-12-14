@@ -54,7 +54,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket_combos") {
     result = buildChartLineForTrinketCombos(dpsName, result);
-  }else {
+  } else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   }
   return result;
