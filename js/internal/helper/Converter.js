@@ -5,7 +5,7 @@ var SimTalents = {
   hv_sc: "Hungering Void - Shadow Crash",
   stm: "Surrender To Madness",
 };
-
+  
 var Sims = {
   conduit_combos: "Conduit Combos",
   conduits: "Conduits",
@@ -26,71 +26,71 @@ var Sims = {
   talents: "Talents",
   talent_builds: "Talent Builds",
   trinkets: "Trinkets",
-  trinket_combos: "Trinket Combos",
   weights: "Weights",
+  trinket_combos: "Trinket Combos",
 };
-
+  
 var Consumables = {
   potion: "Potion",
   food: "Food",
 };
-
+  
 var Talents = {
   // Row 15
   fotm: "Fortress of the Mind",
   dam: "Death and Madness",
   ud: "Unfurling Darkness",
-
+  
   // Row 25
   bns: "Body and Soul",
   sl: "San'layn",
   in: "Intangibility",
-
+  
   // Row 30
   tof: "Twist of Fate",
   mis: "Misery",
   sn: "Searing Nightmare",
-
+  
   // Row 35
   lw: "Last Word",
   mbo: "Mind Bomb",
   ph: "Phsychic Horror",
-
+  
   // Row 40
   as: "Auspicious Spirits",
   pl: "Psychic Link",
   sc: "Shadow Crash",
-
+  
   // Row 45
   dm: "Damnation",
   mb: "Mindbender",
   vt: "Void Torrent",
-
+  
   // Row 50
   am: "Ancient Madness",
   hv: "Hungering Void",
   stm: "Surrender To Madness",
 };
-
+  
 var FightStyles = {
   Composite: "Composite",
   Single: "Single Target",
   Dungeons: "Dungeons",
 };
-
+  
 var FightStyleExternal = {
   composite: "Raid",
   single: "Single Target",
   dungeons: "Dungeons",
 };
-
+  
 var Conduits = {
   kyrian: "Kyrian",
   necrolord: "Necrolord",
   night_fae: "Night Fae",
   venthyr: "Venthyr",
 };
-
+  
 var TalentIds = {
   FOTM: "193195",
   DAM: "321291",
@@ -113,8 +113,8 @@ var TalentIds = {
   AM: "341240",
   HV: "345218",
   STM: "193223",
-}
-
+};
+  
 var ConduitsIds = {
   HA: "338319",
   DE: "338342",
@@ -150,6 +150,82 @@ var ConduitsIds = {
   DD: "331584",
   RP: "336243",
   FR: "326514",
+};
+
+var LegendTitles = {
+  conduits: "Conduits Rank",
+  conduit_combos: "Increase in %",
+  consumables: "Increase in %",
+  covenants: "Increase in %",
+  covenantsChoice: "Increase in %",
+  enchants: "Increase in %",
+  legendaries: "Increase in %",
+  racials: "Increase in %",
+  soulbinds: "Increase in %",
+  soulbind_traits: "Increase in %",
+  soulbinds_launch: "Increase in %",
+  stats: "Increase in %",
+  talents: "Increase in %",
+  trinkets: "Item level",
+  legendary_items: "Item level",
+};
+
+var ChartType = {
+  covenant_choice: "multiple",
+  conduits: "percentage",
+  legendary_items: "percentage",
+  trinkets: "percentage",
+  stats: "dot",
+};
+
+var ChartPadding = {
+  talents: -80,
+  covenants: -40,
+  legendaries: -40,
+  soulbinds: -60,
+  conduit_combos: -40,
+  soulbind_traits: -40,
+  soulbinds_launch: -60,
+  racials: -40,
+  soulbinds_prog: -60,
+  consumables: -40,
+  covenant_choice: -40,
+  covenants_launch: -40,
+  covenants_prog: -40,
+  enchants: -40,
+  trinket_combos: -40,
+};
+
+var AggregateConduits = [
+  "venthyr",
+  "necrolord",
+  "night_fae",
+  "kyrian",
+];
+
+var LookupType = {
+  apl: "none",
+  conduit_combos: "none",
+  conduits: "spell",
+  consumables: "spell",
+  covenant_choice: "none",
+  covenants: "spell",
+  covenants_launch: "spell",
+  coventants_prog: "spell",
+  enchants: "spell",
+  gear: "item",
+  legendaries: "spell",
+  legendary_items: "spell",
+  racials: "spell",
+  soulbind_traits: "spell",
+  soulbinds: "none",
+  soulbinds_launch: "none",
+  soulbinds_prog: "none",
+  stats: "none",
+  talents: "none",
+  trinket_combos: "none",
+  trinkets: "none",
+  weights: "none"
 }
 
 var TrinketIds = {
@@ -159,7 +235,7 @@ var TrinketIds = {
   Cabalists_Hymnal_Allies_1: "184028",
   Cabalists_Hymnal_Allies_0: "184028",
   Inscrutable_Quantum_Device: "179350",
-  Empyreal_Ordnance: "179350",
+  Empyreal_Ordnance: "180117",
   Dreadfire_Vessel: "184030",
   Glyph_of_Assimilation: "184021",
   Soul_Igniter: "184019",
@@ -167,55 +243,8 @@ var TrinketIds = {
   Soulletting_Ruby: "178809",
 }
 
-var Conduits2 = [
-  "venthyr",
-  "necrolord",
-  "night_fae",
-  "kyrian",
-];
-
-var getTrinketIds = function (key) {
-  return TrinketIds[key];
-}
-
-var getConduitIds = function (key) {
-  return ConduitsIds[key];
-}
-
-var getTalentIds = function (key) {
-  return TalentIds[key];
-}
-
-var getTalentSimsName = function (key) {
-  return SimTalents[key];
-}
-
-var getConduitsName = function (key) {
-  return Conduits[key];
-};
-
-var getTalentName = function (key) {
-  return Talents[key];
-};
-
-var getFightStyleName = function (key) {
-  return FightStyles[key];
-};
-
-var getTalentSimsName = function (key) {
-  return SimTalents[key];
-};
-
-var getSimsName = function (key) {
-  return Sims[key];
-};
-
-var getConsumablesName = function (key) {
-  return Consumables[key];
-};
-
-var getFightStyleExtName = function (key) {
-  return FightStyleExternal[key];
+var getValue = function(list, key) {
+    return list[key.replace("-", "_")];
 };
 
 var getKeys = function(list) {
@@ -225,6 +254,6 @@ var getKeys = function(list) {
   for (i = 0; i < values.length; i++) {
     result.push(keys[i][0]);
   }
-
+  
   return result;
 };
