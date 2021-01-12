@@ -24,6 +24,7 @@ var Sims = {
   soulbinds: "Soulbinds",
   stats: "Stats",
   talents: "Talents",
+  talent_builds: "Talent Builds",
   trinkets: "Trinkets",
   weights: "Weights",
   trinket_combos: "Trinket Combos",
@@ -243,7 +244,7 @@ var TrinketIds = {
 }
 
 var getValue = function(list, key) {
-    return list[key.replace("-", "_")];
+    return list[key.toString().replace("-", "_")];
 };
 
 var getKeys = function(list) {
