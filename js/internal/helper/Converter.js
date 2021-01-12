@@ -166,6 +166,7 @@ var LegendTitles = {
   soulbinds_launch: "Increase in %",
   stats: "Increase in %",
   talents: "Increase in %",
+  talent_builds: "Increase in %",
   trinkets: "Item level",
   legendary_items: "Item level",
 };
@@ -180,6 +181,7 @@ var ChartType = {
 
 var ChartPadding = {
   talents: -80,
+  talent_builds: -80,
   covenants: -40,
   legendaries: -40,
   soulbinds: -60,
@@ -223,6 +225,7 @@ var LookupType = {
   soulbinds_prog: "none",
   stats: "none",
   talents: "none",
+  talent_builds: "none",
   trinket_combos: "none",
   trinkets: "none",
   weights: "none"
