@@ -42,7 +42,7 @@ function initializeButtons() {
 function createButtons() {
   createTalentButtons(configData[builds]);
   createSimsButtons(configData[sims]);
-  createCovenantButtons(configData[covenants]);
+  createCovenantButtons(configData[covenants]["list"]);
   createConsumableButtons(getKeys(Consumables));
   createFightStyleButtons(getKeys(FightStyles));
   checkButtonClick();
@@ -104,10 +104,6 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
  */
 function createButtonBasicListSelf(divName, buttonArray, event, labelArray, currBtn) {
   let div = document.getElementById(divName);
-  // TODO: I have no idea how or why this broke
-  if (buttonArray["list"]) {
-    buttonArray = buttonArray["list"]
-  }
   for (b in buttonArray) {
     var buttonText = document.createTextNode(getValue(labelArray, buttonArray[b]));
     createButtonBasic(div, buttonArray[b], event, buttonText, currBtn);
