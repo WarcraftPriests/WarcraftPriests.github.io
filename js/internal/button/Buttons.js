@@ -104,6 +104,10 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
  */
 function createButtonBasicListSelf(divName, buttonArray, event, labelArray, currBtn) {
   let div = document.getElementById(divName);
+  // TODO: I have no idea how or why this broke
+  if (buttonArray["list"]) {
+    buttonArray = buttonArray["list"]
+  }
   for (b in buttonArray) {
     var buttonText = document.createTextNode(getValue(labelArray, buttonArray[b]));
     createButtonBasic(div, buttonArray[b], event, buttonText, currBtn);
@@ -225,7 +229,7 @@ function handleOnClick(clickedButton, btn) {
 
 /*
  * Handles the calls of a button click and updates the chart if
- * neccessary
+ * necessary
  */
 function checkButtonClick() {
   addShow(fightStyleDiv);
