@@ -4,3 +4,9 @@ jQuery.get({url: baseUrl + "/config.yml", dataType: "text"})
             initializeButtons();
         }
 );
+
+(function(){
+    const params = getQueryParameter();
+    const selectedSim = params.get('sims');
+    document.title = `${Sims[selectedSim]} | ${document.title}`;
+}());
