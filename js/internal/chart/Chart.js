@@ -96,6 +96,12 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
               + simType
               + space + dash + space
               + fightStyle;
+  } else if(fullSimType.toLowerCase() == "talent_builds") {
+    return simType
+              + space + dash + space
+              + getValue(Conduits, covenantType)
+              + space + dash + space
+              + fightStyle;
   } else {
     return firstTalent 
               + space + dash + space
@@ -133,6 +139,8 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
 
   if(simsBtn == talents){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
+  } else if(simsBtn == "talent-builds") {
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + covenantType + jsonExtension;
   } else if(simsBtn == "covenant-choice") {
     return baseurl + slash + simsBtn + simResultPath + "Aggregate" + jsonExtension;
   } else if(configData["sims"][simsBtn]["covenant"]["lookup"]) {
