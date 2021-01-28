@@ -112,18 +112,6 @@ function createButtonBasicListSelf(divName, buttonArray, event, labelArray, curr
 }
 
 /*
- * Generates the horizontal spacer between the buttons
- */
-function generateHorizontalSpacer(div) {
-  var horizontalSpacer = document.createElement(span);
-  horizontalSpacer.setAttribute(classLabel, divider);
-  horizontalSpacer.style.width = fivePixel;
-  horizontalSpacer.style.height = auto;
-  horizontalSpacer.style.display = inlineBlock;
-  div.appendChild(horizontalSpacer);
-}
-
-/*
  * add a button to the index.hmtl
  */
 function addButtonShow(buttonName) {
@@ -167,13 +155,8 @@ function styleButtons() {
           || btn.id == currConsumablesBtn
           || btn.id == currFightStyleBtn
           || btn.id == currCovenantChoiceBtn ) {
-      btn.style.borderColor = buttonBorderColor;
-      btn.style.backgroundColor = buttonBackgroundColor;
-    } else {
-      btn.style.borderColor = buttonBorderColorDefault;
-      btn.style.backgroundColor = defaultBackgroundColor;
+      btn.classList.add("selected");
     }
-    btn.style.cursor = pointer;
   }
 }
 
@@ -197,7 +180,6 @@ function createButtonBasic(div, name, event, buttonText, currBtn) {
   button.appendChild(br);
   button.appendChild(buttonText);
   div.appendChild(button);
-  generateHorizontalSpacer(div);
 }
 
 /*
