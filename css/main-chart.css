@@ -265,6 +265,22 @@ input:checked+.slider:before {
   display: block;
 }
 
+/* The sim selection div */
+
+#sims-div {
+  max-width: 950px;
+  align-content: center;
+  margin: auto;
+  margin-bottom: 5px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding-bottom: 0px;
+}
+
+#sims-div .button {
+  border: none;
+  border-radius: 0px;
+}
 
 /* Buttons */
 
@@ -276,7 +292,27 @@ input:checked+.slider:before {
   font-size: 14px;
   display: inline-block;
   justify-content: center;
-  border-radius: 8px;
+  border: none;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  cursor: pointer;
+}
+
+.button:first-child {
+  border-radius: 8px 0px 0px 8px;
+  border-left: 1px solid;
+}
+
+.button:last-child {
+  border-radius: 0px 8px 8px 0px;
+  border-right: 1px solid;
+}
+
+.button.selected {
+  background-color: #330066;
+  margin-left: 0px;
+  /* !important used to override #sims-div .button clearing border. */
+  border: 1px solid #dda0dd !important;
 }
 
 
