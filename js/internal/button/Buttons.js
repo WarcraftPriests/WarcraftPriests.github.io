@@ -80,7 +80,12 @@ function createTalentButtons(buttonArray) {
  * Creates sim buttons
  */
 function createSimsButtons(buttonArray) {
-  createButtonBasicList(simsDiv, buttonArray, checkButtonClick, Sims, sims);
+  const wrapper = document.createElement('div');
+  wrapper.id = "sims-btn-wrapper";
+  wrapper.style = `grid-template-columns: ${'auto '.repeat(maxSimButtonsPerRow)}`;
+  document.getElementById(simsDiv).appendChild(wrapper);
+
+  createButtonBasicList(wrapper.id, buttonArray, checkButtonClick, Sims, sims);
 }
 
 /*
@@ -142,19 +147,27 @@ function removeShow(div) {
 }
 
 /*
+ * Whether or not the button with the given ID is selected in one of the button
+ * groups.
+ */
+function isButtonSelected(buttonId) {
+  return buttonId === currTalentBtn
+    || buttonId === currSimsBtn
+    || buttonId === currCovenantBtn
+    || buttonId === currEnchantsBtn
+    || buttonId === currConsumablesBtn
+    || buttonId === currFightStyleBtn
+    || buttonId === currCovenantChoiceBtn;
+}
+
+/*
  * Handles the colors of the current selected button
  */
 function styleButtons() {
   var btnGroup = document.getElementsByClassName(buttonName);
   for (var i = 0; i < btnGroup.length; i++) {
     let btn = document.getElementById(btnGroup[i].id);
-    if (btn.id == currTalentBtn 
-          || btn.id == currSimsBtn 
-          || btn.id == currCovenantBtn
-          || btn.id == currEnchantsBtn 
-          || btn.id == currConsumablesBtn
-          || btn.id == currFightStyleBtn
-          || btn.id == currCovenantChoiceBtn ) {
+    if (isButtonSelected(btn.id)) {
       btn.classList.add("selected");
     }
   }

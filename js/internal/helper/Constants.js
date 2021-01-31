@@ -121,6 +121,7 @@ const consumables = "consumables";
 const covenants = "covenants";
 const covenantsChoice = "covenant_choice";
 const weights = "weights";
+const maxSimButtonsPerRow = 7;
 
 const pointer = "pointer";
 const attributeSpacer = "', '";
