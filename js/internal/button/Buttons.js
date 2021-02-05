@@ -85,7 +85,22 @@ function createSimsButtons(buttonArray) {
   wrapper.style = `grid-template-columns: ${'auto '.repeat(maxSimButtonsPerRow)}`;
   document.getElementById(simsDiv).appendChild(wrapper);
 
-  createButtonBasicList(wrapper.id, buttonArray, checkButtonClick, Sims, sims);
+  createSimsButtonList(wrapper.id, buttonArray, checkButtonClick, Sims, sims);
+}
+
+/*
+ * Function for creating the buttons specific to the sims div.
+ */
+function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
+  let div = document.getElementById(divName);
+  for (b in buttonArray) {
+    if(b != apl && b != gear) {
+      b = b.replace(dash, underscore);
+      var buttonText = document.createTextNode(getValue(labelArray, b));
+      constructSimsButton(div, b, event, buttonText, curBtn);
+    }
+  }
+  styleButtons();
 }
 
 /*
@@ -171,6 +186,33 @@ function styleButtons() {
       btn.classList.add("selected");
     }
   }
+}
+
+/*
+ * Creates a button specifically with the customizations necessary to correctly
+ * render the sim-related buttons.
+ */
+function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
+  let button = document.createElement(buttonName.toUpperCase());
+  button.setAttribute(buttonId, name);
+  button.setAttribute(buttonClass, buttonName);
+  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
+  button.addEventListener(click, event);
+
+  const imageWrapper = document.createElement('div');
+  imageWrapper.style = "height: 100%; width: 20px;";
+  var icon = document.createElement('img');
+  icon.src = "images/icons/" + name + ".jpg";
+  icon.classList = "sims-btn-icon";
+  imageWrapper.appendChild(icon);
+  button.appendChild(imageWrapper);
+
+  const textWrapper = document.createElement('div');
+  textWrapper.style = "padding-left: 8px; text-align: left; flex: 1;"
+  textWrapper.appendChild(buttonText);
+  button.appendChild(textWrapper);
+
+  buttonWrapper.appendChild(button);
 }
 
 /*

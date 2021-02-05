@@ -268,7 +268,7 @@ input:checked+.slider:before {
 /* The sim selection div */
 
 #sims-div {
-  max-width: 950px;
+  max-width: 890px;
   margin: auto;
   border-radius: 8px;
   overflow: hidden;
@@ -287,6 +287,9 @@ input:checked+.slider:before {
 #sims-btn-wrapper .button {
   border: none;
   border-radius: 0px;
+  padding: 10px;
+  display:flex;
+  align-items: center;
 }
 
 #sims-btn-wrapper .button:first-child {
@@ -305,6 +308,12 @@ input:checked+.slider:before {
   border-bottom-right-radius: 8px;
 }
 
+.sims-btn-icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 25%;
+}
 
 /* Buttons */
 
