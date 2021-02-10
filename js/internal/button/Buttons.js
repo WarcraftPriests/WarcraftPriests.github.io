@@ -80,7 +80,27 @@ function createTalentButtons(buttonArray) {
  * Creates sim buttons
  */
 function createSimsButtons(buttonArray) {
-  createButtonBasicList(simsDiv, buttonArray, checkButtonClick, Sims, sims);
+  const wrapper = document.createElement('div');
+  wrapper.id = "sims-btn-wrapper";
+  wrapper.style = `grid-template-columns: ${'auto '.repeat(maxSimButtonsPerRow)}`;
+  document.getElementById(simsDiv).appendChild(wrapper);
+
+  createSimsButtonList(wrapper.id, buttonArray, checkButtonClick, Sims, sims);
+}
+
+/*
+ * Function for creating the buttons specific to the sims div.
+ */
+function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
+  let div = document.getElementById(divName);
+  for (b in buttonArray) {
+    if(b != apl && b != gear) {
+      b = b.replace(dash, underscore);
+      var buttonText = document.createTextNode(getValue(labelArray, b));
+      constructSimsButton(div, b, event, buttonText, curBtn);
+    }
+  }
+  styleButtons();
 }
 
 /*
@@ -142,22 +162,57 @@ function removeShow(div) {
 }
 
 /*
+ * Whether or not the button with the given ID is selected in one of the button
+ * groups.
+ */
+function isButtonSelected(buttonId) {
+  return buttonId === currTalentBtn
+    || buttonId === currSimsBtn
+    || buttonId === currCovenantBtn
+    || buttonId === currEnchantsBtn
+    || buttonId === currConsumablesBtn
+    || buttonId === currFightStyleBtn
+    || buttonId === currCovenantChoiceBtn;
+}
+
+/*
  * Handles the colors of the current selected button
  */
 function styleButtons() {
   var btnGroup = document.getElementsByClassName(buttonName);
   for (var i = 0; i < btnGroup.length; i++) {
     let btn = document.getElementById(btnGroup[i].id);
-    if (btn.id == currTalentBtn 
-          || btn.id == currSimsBtn 
-          || btn.id == currCovenantBtn
-          || btn.id == currEnchantsBtn 
-          || btn.id == currConsumablesBtn
-          || btn.id == currFightStyleBtn
-          || btn.id == currCovenantChoiceBtn ) {
+    if (isButtonSelected(btn.id)) {
       btn.classList.add("selected");
     }
   }
+}
+
+/*
+ * Creates a button specifically with the customizations necessary to correctly
+ * render the sim-related buttons.
+ */
+function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
+  let button = document.createElement(buttonName.toUpperCase());
+  button.setAttribute(buttonId, name);
+  button.setAttribute(buttonClass, buttonName);
+  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
+  button.addEventListener(click, event);
+
+  const imageWrapper = document.createElement('div');
+  imageWrapper.style = "height: 100%; width: 20px;";
+  var icon = document.createElement('img');
+  icon.src = "images/icons/" + name + ".jpg";
+  icon.classList = "sims-btn-icon";
+  imageWrapper.appendChild(icon);
+  button.appendChild(imageWrapper);
+
+  const textWrapper = document.createElement('div');
+  textWrapper.style = "padding-left: 8px; text-align: left; flex: 1;"
+  textWrapper.appendChild(buttonText);
+  button.appendChild(textWrapper);
+
+  buttonWrapper.appendChild(button);
 }
 
 /*
