@@ -325,7 +325,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
  * - Trinkets
  * - ....
  */
-function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
+function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries, shwoBaseDps) {
   return percentageChartDefinition = {
     chart: {
       renderTo: chartId,
@@ -476,7 +476,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
                                 (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
                                 this.points[i].series,
                                 data,
-                                true);
+                                shwoBaseDps);
         }
 
         result += "</div>";
