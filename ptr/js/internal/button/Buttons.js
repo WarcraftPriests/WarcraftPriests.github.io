@@ -145,8 +145,10 @@ function addButtonShow(buttonName) {
  * remove button from index.html
  */
 function removeButtonShow(buttonName) {
-  document.getElementById(buttonName).style.display = none;
-  document.getElementById(buttonName).nextSibling.style.display = none;
+  if(buttonName != null) {
+    document.getElementById(buttonName).style.display = none;
+    document.getElementById(buttonName).nextSibling.style.display = none;
+  }
 }
 
 /*
