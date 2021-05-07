@@ -135,8 +135,10 @@ function createButtonBasicListSelf(divName, buttonArray, event, labelArray, curr
  * add a button to the index.hmtl
  */
 function addButtonShow(buttonName) {
-  document.getElementById(buttonName).style.display = '';
-  document.getElementById(buttonName).nextSibling.style.display = inlineBlock;
+  if(buttonName != null) {
+    document.getElementById(buttonName).style.display = '';
+    document.getElementById(buttonName).nextSibling.style.display = inlineBlock;
+  }
 }
 
 /*
