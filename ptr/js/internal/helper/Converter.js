@@ -1,9 +1,6 @@
 var SimTalents = {
   am: "Ancient Madness",
-  hv: "Hungering void",
-  hv_as: "Hungering Void - Auspicious Spirits",
-  hv_sc: "Hungering Void - Shadow Crash",
-  stm: "Surrender To Madness",
+  hv: "Hungering Void",
 };
   
 var Sims = {
@@ -139,7 +136,7 @@ var ConduitsIds = {
   FS: "325069",
   LGOTP: "328257",
   CM: "328266",
-  PC: "329778",
+  PoC: "329778",
   BCTA: "333950",
   HOG: "333935",
   PPS: "323090",
@@ -150,6 +147,22 @@ var ConduitsIds = {
   DD: "331584",
   RP: "336243",
   FR: "326514",
+  PF: "351750",
+  FaFl: "352373",
+  BP: "352417",
+  ME: "350936",
+  CE: "350899",
+  KO: "352110",
+  PC: "356390",
+  BH: "352503",
+  DrD: "352786",
+  WHS: "352805",
+  BT: "351146",
+  NR: "351149",
+  LtP: "351491",
+  SoS: "352186",
+  EAA: "352188",
+  AAF: "357902",
 };
 
 var LegendTitles = {
@@ -238,12 +251,17 @@ var TrinketIds = {
   Cabalists_Hymnal_Allies_1: "184028",
   Cabalists_Hymnal_Allies_0: "184028",
   Inscrutable_Quantum_Device: "179350",
-  Empyreal_Ordnance: "180117",
+  Empyreal_Ordnance: "179350",
   Dreadfire_Vessel: "184030",
   Glyph_of_Assimilation: "184021",
   Soul_Igniter: "184019",
   Macabre_Sheet_Music: "184024",
   Soulletting_Ruby: "178809",
+  Forbidden_Necromantic_Tome: "186421",
+  Tome_of_Monstrous_Constructions: "186422",
+  Titanic_Ocular_Gland: "186423",
+  Shadowed_Orb_of_Torment: "186428",
+  Ebonsoul_Vise: "186431",
 }
 
 var getValue = function(list, key) {
