@@ -279,8 +279,8 @@ function checkButtonClick() {
     } else if(currTalent == currSimsBtn 
                 || currSimsBtn != null && currTalent == currSimsBtn.replace("_", "-")){
       if(configData[sims][currTalent][builds]){
-        addButtonShow("hv_as");
-        addButtonShow("hv_sc");
+        // addButtonShow("hv_as");
+        // addButtonShow("hv_sc");
       } else {
         removeShow(talentDiv);
       }
