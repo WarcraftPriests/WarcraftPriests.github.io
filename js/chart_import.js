@@ -258,6 +258,7 @@ var TrinketIds = {
   Titanic_Ocular_Gland: "186423",
   Shadowed_Orb_of_Torment: "186428",
   Ebonsoul_Vise: "186431",
+  Tome_of_Insight: "186156",
 }
 
 var getValue = function(list, key) {
