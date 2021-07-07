@@ -262,6 +262,9 @@ var TrinketIds = {
   Shadowed_Orb_of_Torment: "186428",
   Ebonsoul_Vise: "186431",
   Tome_of_Insight: "186156",
+  Unbound_Changeling_Mastery: "178708",
+  Unbound_Changeling_Haste: "178708",
+  Unbound_Changeling_All: "178708",
 }
 
 var getValue = function(list, key) {
