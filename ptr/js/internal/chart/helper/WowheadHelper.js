@@ -10,7 +10,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       id = "";
     }
 
-    if(simsBtn == consumables) {
+    if(simsBtn == consumables || simsBtn == shards) {
       url = wowheadUrl + wowheadItemPath;
     } else if(configData[sims][simsBtn.replace("_", "-")]["lookupType"] == "spell"){
       url = wowheadUrl + wowheadSpellPath;
@@ -34,6 +34,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == undefined
     || simsBtn == trinkets 
     || simsBtn == consumables
+    || simsBtn == shards
     || simsBtn == conduits
     || simsBtn == covenants
     || simsBtn == enchants

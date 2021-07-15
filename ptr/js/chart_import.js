@@ -15,6 +15,7 @@ var Sims = {
   legendaries: "Legendaries",
   legendary_items: "Legendary items",
   racials: "Racials",
+  shards_of_domination: "Shards of Domination",
   soulbind_traits: "Soulbind Traits",
   soulbinds_launch: "Soulbind Launch",
   soulbinds_prog: "Soulbind prog",
@@ -173,6 +174,7 @@ var LegendTitles = {
   enchants: "Increase in %",
   legendaries: "Increase in %",
   racials: "Increase in %",
+  shards_of_domination: "Increase in %",
   soulbinds: "Increase in %",
   soulbind_traits: "Increase in %",
   soulbinds_launch: "Increase in %",
@@ -200,6 +202,7 @@ var ChartPadding = {
   soulbinds_launch: -60,
   racials: -40,
   soulbinds_prog: -60,
+  shards_of_domination: -40,
   consumables: -40,
   covenant_choice: -40,
   covenants_launch: -40,
@@ -229,6 +232,7 @@ var LookupType = {
   legendaries: "spell",
   legendary_items: "spell",
   racials: "spell",
+  shards_of_domination: "spell",
   soulbind_traits: "spell",
   soulbinds: "none",
   soulbinds_launch: "none",
@@ -388,6 +392,7 @@ const fightStyleDiv = "fightStyle-div";
 const covenantDiv = "covenant-div";
 const covenantChoiceDiv = "covenantChoice-div";
 const consumablesDiv = "consumables-div";
+const shardsDiv = "shards-div"
 const enchantDiv = "enchants-div";
 const talentDiv = "talent-div"
 const simsDiv = "sims-div";
@@ -398,6 +403,7 @@ const onClick = "onClick";
 const click = "click";
 const handleOnClickText = "handleOnClick('";
 const show = "show";
+const shards = "shards_of_domination";
 const enchants = "enchants";
 const consumables = "consumables";
 const covenants = "covenants";
@@ -965,7 +971,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       id = "";
     }
 
-    if(simsBtn == consumables) {
+    if(simsBtn == consumables || simsBtn == shards) {
       url = wowheadUrl + wowheadItemPath;
     } else if(configData[sims][simsBtn.replace("_", "-")]["lookupType"] == "spell"){
       url = wowheadUrl + wowheadSpellPath;
@@ -989,6 +995,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == undefined
     || simsBtn == trinkets 
     || simsBtn == consumables
+    || simsBtn == shards
     || simsBtn == conduits
     || simsBtn == covenants
     || simsBtn == enchants
