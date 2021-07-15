@@ -15,7 +15,7 @@ var Sims = {
   legendaries: "Legendaries",
   legendary_items: "Legendary items",
   racials: "Racials",
-  shards: "Shards of Domination",
+  shards_of_domination: "Shards of Domination",
   soulbind_traits: "Soulbind Traits",
   soulbinds_launch: "Soulbind Launch",
   soulbinds_prog: "Soulbind prog",
