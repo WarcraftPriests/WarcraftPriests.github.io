@@ -67,10 +67,10 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
             result = key;
         }
 
-        return result.replace("_", " ");
+        return result.replaceAll("_", " ");
     }
 }
 
 function determineCsvUrl(simsBtn, baseurl, fightStyle, talentChoice) {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice.replace("_", "-") + csvExtension;
+    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice.replaceAll("_", "-") + csvExtension;
 }

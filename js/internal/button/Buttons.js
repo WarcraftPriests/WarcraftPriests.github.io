@@ -277,7 +277,7 @@ function checkButtonClick() {
       removeShow(talentDiv);
       removeShow(fightStyleDiv);
     } else if(currTalent == currSimsBtn 
-                || currSimsBtn != null && currTalent == currSimsBtn.replace("_", "-")){
+                || currSimsBtn != null && currTalent == currSimsBtn.replaceAll("_", "-")){
       if(configData[sims][currTalent][builds]){
         // addButtonShow("hv_as");
         // addButtonShow("hv_sc");
@@ -297,7 +297,7 @@ function checkButtonClick() {
 }
 
 function updateUrl(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {
-  if(configData["sims"][currSimsBtn.replace("_", "-")]["covenant"]["lookup"]) {
+  if(configData["sims"][currSimsBtn.replaceAll("_", "-")]["covenant"]["lookup"]) {
     manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
   } else if(currSimsBtn == "covenant_choice") {
     manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", "");
