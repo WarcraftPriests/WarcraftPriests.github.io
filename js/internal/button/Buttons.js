@@ -95,7 +95,7 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
     if(b != apl && b != gear) {
-      b = b.replace(dash, underscore);
+      b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       constructSimsButton(div, b, event, buttonText, curBtn);
     }
@@ -110,7 +110,7 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
   let div = document.getElementById(divName);
   for (b in buttonArray) {
     if(b != apl && b != gear) {
-      b = b.replace(dash, underscore);
+      b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       createButtonBasic(div, b, event, buttonText, currBtn);
     }
