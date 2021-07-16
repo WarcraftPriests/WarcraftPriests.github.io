@@ -102,6 +102,12 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
               + getValue(Conduits, covenantType)
               + space + dash + space
               + fightStyle;
+  } else if(fullSimType.toLowerCase() == "shards_of-domination") {
+    return firstTalent
+              + space + dash + space
+              + simType
+              + space + dash + space
+              + fightStyle;
   } else {
     return firstTalent 
               + space + dash + space
