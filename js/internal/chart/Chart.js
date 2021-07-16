@@ -84,8 +84,8 @@ function updateSize(chart, chartId, size, maxEntries) {
  */
 function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
   var simType = "";
-  simType = fullSimType.replace("-", " ");
-  simType = simType.replace("_", " ");
+  simType = fullSimType.replaceAll("-", " ");
+  simType = simType.replaceAll("_", " ");
 
   if(fullSimType.toLowerCase() == covenantsChoice) {
     return coventantsChoiceChartName;
@@ -123,7 +123,7 @@ function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) 
  * Determines the description of the chart from the config.yml
  */
 function determineChartDescription(fullSimType) {
-  fullSimType = fullSimType.replace("_", "-");
+  fullSimType = fullSimType.replaceAll("_", "-");
   var descr = configData["sims"][fullSimType]["description"];
   return descr;
 }
@@ -136,11 +136,11 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
    * Special cases!
    */
   if(talentChoice.includes(underscore)) {
-    talentChoice = talentChoice.replace(underscore, dash);
+    talentChoice = talentChoice.replaceAll(underscore, dash);
   }
 
   if(simsBtn.includes(underscore)) {
-    simsBtn = simsBtn.replace(underscore, dash);
+    simsBtn = simsBtn.replaceAll(underscore, dash);
   }
 
   if(simsBtn == talents){

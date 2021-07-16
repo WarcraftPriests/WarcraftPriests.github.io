@@ -272,7 +272,7 @@ var TrinketIds = {
 }
 
 var getValue = function(list, key) {
-    return list[key.toString().replace("-", "_")];
+    return list[key.toString().replaceAll("-", "_")];
 };
 
 var getKeys = function(list) {

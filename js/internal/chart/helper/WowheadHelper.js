@@ -10,9 +10,11 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       id = "";
     }
 
-    if(simsBtn == consumables || simsBtn == shards) {
+    if(simsBtn == consumables) {
       url = wowheadUrl + wowheadItemPath;
-    } else if(configData[sims][simsBtn.replace("_", "-")]["lookupType"] == "spell"){
+    } else if( simsBtn == shards ) {
+      url = wowheadUrl + wowheadSpellPath;
+    } else if(configData[sims][simsBtn.replaceAll("_", "-")]["lookupType"] == "spell"){
       url = wowheadUrl + wowheadSpellPath;
     } else {
       url = wowheadUrl + wowheadItemPath;
@@ -39,15 +41,15 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == covenants
     || simsBtn == enchants
     || simsBtn == legendaries
-    || simsBtn.replace("-", "_") == legendaryItems
+    || simsBtn.replaceAll("-", "_") == legendaryItems
     || simsBtn == racials
-    || simsBtn.replace("-", "_") == soulbindTraits) {
+    || simsBtn.replaceAll("-", "_") == soulbindTraits) {
       result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replace("-", "_") == conduitCombos) {
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == conduitCombos) {
     result = buildChartLineForConduitCombos(dpsName, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replace("-", "_") == soulbinds) {
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == soulbinds) {
     result = buildChartLineForSoulbinds(dpsName, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replace("-", "_") == soulbindsLaunch) {
+  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == soulbindsLaunch) {
     result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == talents) {
     result = buildChartLineForTrinkets(dpsName, result);
