@@ -230,6 +230,7 @@ var LookupType = {
   enchants: "spell",
   gear: "item",
   legendaries: "spell",
+  legendary_combos: "none",
   legendary_items: "spell",
   racials: "spell",
   shards_of_domination: "spell",
@@ -383,6 +384,7 @@ const stats = "stats";
 const soulbindTraits = "soulbind_traits";
 const soulbindsLaunch = "soulbinds_launch";
 const conduitCombos = "conduit_combos";
+const legendaryCombos = "legendary_combos";
 const legendaryItems = "legendary_items";
 
 /*

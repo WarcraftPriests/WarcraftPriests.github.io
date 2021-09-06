@@ -233,6 +233,7 @@ var LookupType = {
   enchants: "spell",
   gear: "item",
   legendaries: "spell",
+  legendary_combos: "none",
   legendary_items: "spell",
   racials: "spell",
   soulbind_traits: "spell",
