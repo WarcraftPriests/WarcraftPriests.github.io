@@ -94,7 +94,8 @@ function createSimsButtons(buttonArray) {
 function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
-    if(b != apl && b != gear && b != "legendary-combos") {
+    // Load button if it is a non sim type button or the chart is enabled
+    if(!configData["sims"][b] || configData["sims"][b]["chart"]) {
       b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       constructSimsButton(div, b, event, buttonText, curBtn);
@@ -109,7 +110,8 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
 function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
-    if(b != apl && b != gear && b != "legendary-combos") {
+    // Load button if it is a non sim type button or the chart is enabled
+    if(!configData["sims"][b] || configData["sims"][b]["chart"]) {
       b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       createButtonBasic(div, b, event, buttonText, currBtn);
