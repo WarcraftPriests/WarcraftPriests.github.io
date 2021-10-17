@@ -267,6 +267,7 @@ var TrinketIds = {
   Unbound_Changeling_Mastery: "178708",
   Unbound_Changeling_Haste: "178708",
   Unbound_Changeling_All: "178708",
+  Moonlit_Prism: "137541",
 }
 
 var getValue = function(list, key) {
