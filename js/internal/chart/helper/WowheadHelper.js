@@ -42,6 +42,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == enchants
     || simsBtn == legendaries
     || simsBtn.replaceAll("-", "_") == legendaryItems
+    || simsBtn.replaceAll("-", "_") == legendaryCombos
     || simsBtn == racials
     || simsBtn.replaceAll("-", "_") == soulbindTraits) {
       result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);

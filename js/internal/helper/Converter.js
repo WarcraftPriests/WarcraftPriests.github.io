@@ -14,6 +14,7 @@ var Sims = {
   enchants: "Enchants",
   legendaries: "Legendaries",
   legendary_items: "Legendary items",
+  legendary_combos: "Legendary Combos",
   racials: "Racials",
   shards_of_domination: "Shards of Domination",
   soulbind_traits: "Soulbind Traits",
@@ -183,12 +184,14 @@ var LegendTitles = {
   talent_builds: "Increase in %",
   trinkets: "Item level",
   legendary_items: "Item level",
+  legendary_combos: "Increase in %",
 };
 
 var ChartType = {
   covenant_choice: "multiple",
   conduits: "percentage",
   legendary_items: "percentage",
+  legendary_combos: "percentage",
   trinkets: "percentage",
   stats: "dot",
 };
