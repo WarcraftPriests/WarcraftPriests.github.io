@@ -83,6 +83,7 @@ const covenant = "covenant";
 const conduits = "conduits";
 const racials = "racials";
 const ancientMadness = "am";
+const hungeringVoid = "hv";
 const venthyr = "venthyr";
 const kyrian = "kyrian";
 const nightFae = "night_fae";
@@ -136,7 +137,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = ancientMadness
+const defaultTalent = hungeringVoid;
 const defaultSims = trinkets;
 const defaultCovenant = venthyr;
 const defaultCovenantChoice = "aggregateCovenant";
