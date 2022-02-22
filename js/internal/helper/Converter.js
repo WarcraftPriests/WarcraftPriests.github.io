@@ -275,6 +275,12 @@ var TrinketIds = {
   Unbound_Changeling_Haste: "178708",
   Unbound_Changeling_All: "178708",
   Moonlit_Prism: "137541",
+  Resonant_Reservoir: "188272",
+  Elegy_of_the_Eternals: "188270",
+  The_First_Sigil: "188271",
+  Architects_Ingenuity_Core: "188268",
+  Grim_Eclipse: "188254",
+  Scars_of_Fraternal_Strife: "188253",
 }
 
 var getValue = function(list, key) {
