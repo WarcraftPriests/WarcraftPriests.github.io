@@ -27,6 +27,7 @@ var Sims = {
   trinkets: "Trinkets",
   weights: "Weights",
   trinket_combos: "Trinket Combos",
+  tiersets: "Tiersets",
 };
   
 var Consumables = {
@@ -214,7 +215,8 @@ var ChartPadding = {
   covenants_prog: -40,
   enchants: -40,
   trinket_combos: -40,
-  legendary_combos: -10
+  legendary_combos: -10,
+  tiersets: -40,
 };
 
 var AggregateConduits = [
