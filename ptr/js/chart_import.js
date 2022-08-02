@@ -277,6 +277,10 @@ var TrinketIds = {
   Architects_Ingenuity_Core: "188268",
   Grim_Eclipse: "188254",
   Scars_of_Fraternal_Strife: "188253",
+  Tovras_Lightning_Repository: "110001",
+  Fleshrenders_Meathook: "110002",
+  Soleahs_Secret_Technique_Haste: "190958",
+  Soleahs_Secret_Technique_Mastery: "190958",
 }
 
 var getValue = function(list, key) {
