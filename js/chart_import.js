@@ -353,7 +353,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/sl-shadow-priest/master/";
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/master/";
 const wowheadUrl = "https://www.wowhead.com/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
