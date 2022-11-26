@@ -75,40 +75,24 @@ const jsonSimulatedSteps = "simulated_steps";
  */
 const trinkets = "trinkets";
 const talents = "talents";
-const soulbinds = "soulbinds";
 const composite = "Composite";
-const legendaries = "legendaries";
 const fightStyle = "fightStyle";
-const covenant = "covenant";
-const conduits = "conduits";
 const racials = "racials";
 const ancientMadness = "am";
 const hungeringVoid = "hv";
-const venthyr = "venthyr";
-const kyrian = "kyrian";
-const nightFae = "night_fae";
-const necrolord = "necrolord";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
 const apl = "apl";
 const gear = "gear";
 const stats = "stats";
-const soulbindTraits = "soulbind_traits";
-const soulbindsLaunch = "soulbinds_launch";
-const conduitCombos = "conduit_combos";
-const legendaryCombos = "legendary_combos";
-const legendaryItems = "legendary_items";
 const trinketCombos = "trinket_combos";
 
 /*
  * Button related definitions
  */
 const fightStyleDiv = "fightStyle-div";
-const covenantDiv = "covenant-div";
-const covenantChoiceDiv = "covenantChoice-div";
 const consumablesDiv = "consumables-div";
-const shardsDiv = "shards-div";
 const enchantDiv = "enchants-div";
 const talentDiv = "talent-div"
 const simsDiv = "sims-div";
@@ -121,9 +105,6 @@ const handleOnClickText = "handleOnClick('";
 const show = "show";
 const enchants = "enchants";
 const consumables = "consumables";
-const shards = "shards_of_domination";
-const covenants = "covenants";
-const covenantsChoice = "covenant_choice";
 const weights = "weights";
 const maxSimButtonsPerRow = 7;
 
@@ -139,12 +120,9 @@ const inlineBlock = "inline-block";
 
 const defaultTalent = hungeringVoid
 const defaultSims = trinkets;
-const defaultCovenant = venthyr;
-const defaultCovenantChoice = "aggregateCovenant";
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
-const coventantsChoiceChartName = "Covenant Choice - Aggregate"
 
 const builds = "builds";
 const files = "files";

@@ -2,7 +2,7 @@
  * Decides what kind of chart should be used 
  * and when a chart update should happen
  */
-function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
+function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
   if(maxEntries != null || maxEntries != undefined) {
     maxEntries = maxEntries - 1;
   }
@@ -10,20 +10,19 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
   if(currSimsBtn == "weights") {
     parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
-    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId, metaData, maxEntries);
+    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData, maxEntries);
   }
 }
 
 /*
  * Collects all data need for a chart an then create it
  */
-function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, metaData, maxEntries) {
-  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
+function createChart( simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries) {
+  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice),
       function (data) {
         if(metaData) {
           document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-          var header = determineChartName( covenantType, 
-                                           getValue(SimTalents, talentChoice), 
+          var header = determineChartName( getValue(SimTalents, talentChoice), 
                                            simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                            fightStyle);
           document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
@@ -82,7 +81,7 @@ function updateSize(chart, chartId, size, maxEntries) {
 /*
  * Determine the chart name for the current chart, for the used parameters
  */
-function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
+function determineChartName(firstTalent, fullSimType, fightStyle) {
   var simType = "";
   simType = fullSimType.replaceAll("-", " ");
   simType = simType.replaceAll("_", " ");

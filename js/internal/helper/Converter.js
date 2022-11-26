@@ -131,21 +131,9 @@ var ConduitsIds = {
   FR: "326514",
   PF: "351750",
   FAFL: "352373",
-  BP: "352417",
-  ME: "350936",
-  CE: "350899",
-  KO: "352110",
-  PC: "356390",
-  BH: "352503",
-  DRD: "352786",
-  WHS: "352805",
-  BT: "351146",
-  NR: "351149",
-  LTP: "351491",
-  SoS: "352186",
-  EAA: "352188",
-  AAF: "357902",
+  BP: "352417"
 };
+
 var LegendTitles = {
   enchants: "Increase in %",
   racials: "Increase in %",
@@ -187,7 +175,7 @@ var LookupType = {
 
 var TrinketIds = {
   Cabalists_Hymnal_Allies_4: "184028",
-  Cabalists_Hymnal_Allies_3: "184028",
+  Cabalists_Hymnal_Allies_3: "18402
   Cabalists_Hymnal_Allies_2: "184028",
   Cabalists_Hymnal_Allies_1: "184028",
   Cabalists_Hymnal_Allies_0: "184028",
