@@ -23,7 +23,7 @@ const alignMiddle = "middle";
 const stackingNormal = "normal";
 const legendTitleTextSteps = "Steps";
 const chartType = "bar";
-const defaultHeader = "Ancient Madness - Trinkets - Venthyr - Composite";
+const defaultHeader = "Yshaarj da - Trinkets - Composite";
 const whiteText = "white";
 const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
@@ -51,7 +51,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/sl-shadow-priest/master/";
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/master/";
 const wowheadUrl = "https://www.wowhead.com/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
@@ -78,8 +78,9 @@ const talents = "talents";
 const composite = "Composite";
 const fightStyle = "fightStyle";
 const racials = "racials";
-const ancientMadness = "am";
-const hungeringVoid = "hv";
+const yshaarj_da = "yshaarj_da";
+const yshaarj_yogg_vf = "yshaarj_yogg_vf";
+const cthun_yogg_vf = "cthun_yogg_vf";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
@@ -118,7 +119,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = hungeringVoid
+const defaultTalent = yshaarj_da
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;

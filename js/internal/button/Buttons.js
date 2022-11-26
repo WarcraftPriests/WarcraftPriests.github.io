@@ -1,10 +1,8 @@
 var currTalentBtn = defaultTalent;
 var currSimsBtn = defaultSims;
-var currCovenantBtn = defaultCovenant;
 var currEnchantsBtn = defaultEnchant;
 var currConsumablesBtn = defaultConsumable;
 var currFightStyleBtn = defaultFightStyle;
-var currCovenantChoiceBtn = defaultCovenantChoice;
 
 /*
  * Initialize all buttons by url params
@@ -22,11 +20,6 @@ function initializeButtons() {
       || query.get(sims) != "")
       currSimsBtn = query.get(sims);
     }
-    if(query.has(covenants)) {
-      if(query.get(covenants) != null
-        || query.get(covenants) != "")
-      currCovenantBtn = query.get(covenants);
-    }
     if(query.has(fightStyle)) {
       if(query.get(fightStyle) != null
         || query.get(fightStyle) != "")
@@ -42,7 +35,6 @@ function initializeButtons() {
 function createButtons() {
   createTalentButtons(configData[builds]);
   createSimsButtons(configData[sims]);
-  createCovenantButtons(configData[covenants]["list"]);
   createConsumableButtons(getKeys(Consumables));
   createFightStyleButtons(getKeys(FightStyles));
   checkButtonClick();
@@ -53,13 +45,6 @@ function createButtons() {
  */
 function createFightStyleButtons(buttonArray) {
   createButtonBasicListSelf(fightStyleDiv, buttonArray, checkButtonClick, FightStyles, fightStyle)
-}
-
-/*
- * Creates covenants buttons
- */
-function createCovenantButtons(buttonArray) {
-  createButtonBasicListSelf(covenantDiv, buttonArray, checkButtonClick, Conduits, covenant)
 }
 
 /*
@@ -170,11 +155,9 @@ function removeShow(div) {
 function isButtonSelected(buttonId) {
   return buttonId === currTalentBtn
     || buttonId === currSimsBtn
-    || buttonId === currCovenantBtn
     || buttonId === currEnchantsBtn
     || buttonId === currConsumablesBtn
     || buttonId === currFightStyleBtn
-    || buttonId === currCovenantChoiceBtn;
 }
 
 /*
@@ -251,13 +234,9 @@ function handleOnClick(clickedButton, btn) {
     currSimsBtn = clickedButton;
   } else if(btn == consumables) {
     currConsumablesBtn = clickedButton;
-  } else if(btn == covenant) {
-    currCovenantBtn = clickedButton;
   } else if(btn == fightStyle) {
     currFightStyleBtn = clickedButton;
-  } else if(btn == covenantChoice) {
-    currCovenantChoiceBtn = clickedButton;
-  }
+  } 
 
   styleButtons();
 }
@@ -270,15 +249,11 @@ function checkButtonClick() {
   addShow(fightStyleDiv);
   addShow(simsDiv);
   addShow(talentDiv);
-  removeShow(covenantDiv);
   removeShow(enchantDiv);
   removeShow(consumablesDiv);
   
   for(currTalent in configData[sims]) {
-    if(currSimsBtn == covenantsChoice) {
-      removeShow(talentDiv);
-      removeShow(fightStyleDiv);
-    } else if(currTalent == currSimsBtn 
+    if(currTalent == currSimsBtn 
                 || currSimsBtn != null && currTalent == currSimsBtn.replaceAll("_", "-")){
       if(configData[sims][currTalent][builds]){
         // addButtonShow("hv_as");
@@ -286,24 +261,13 @@ function checkButtonClick() {
       } else {
         removeShow(talentDiv);
       }
-      if(configData[sims][currTalent][covenant]["lookup"]){
-        addShow(covenantDiv);
-      } else {
-        removeShow(covenantDiv);
-      }
     }
     
   }
-  updateUrl(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn)
-  updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
+  updateUrl(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn)
+  updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
 }
 
-function updateUrl(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {
-  if(configData["sims"][currSimsBtn.replaceAll("_", "-")]["covenant"]["lookup"]) {
-    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", currCovenantBtn, "fightStyle", currFightStyleBtn);
-  } else if(currSimsBtn == "covenant_choice") {
-    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", "");
-  } else {
-    manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "covenants", "", "fightStyle", currFightStyleBtn);
-  }
+function updateUrl(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {
+  manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "fightStyle", currFightStyleBtn);
 }

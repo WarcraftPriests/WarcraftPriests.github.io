@@ -12,8 +12,6 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
 
     if(simsBtn == consumables) {
       url = wowheadUrl + wowheadItemPath;
-    } else if( simsBtn == shards ) {
-      url = wowheadUrl + wowheadSpellPath;
     } else if(configData[sims][simsBtn.replaceAll("_", "-")]["lookupType"] == "spell"){
       url = wowheadUrl + wowheadSpellPath;
     } else {
@@ -39,16 +37,8 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == enchants
     || simsBtn == racials) {
       result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == conduitCombos) {
-    result = buildChartLineForConduitCombos(dpsName, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == soulbinds) {
-    result = buildChartLineForSoulbinds(dpsName, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == soulbindsLaunch) {
-    result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == talents) {
     result = buildChartLineForTrinkets(dpsName, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn == "soulbinds_prog") {
-    result = buildChartLineForSoulbindsLaunch(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket_combos") {
     result = buildChartLineForTrinketCombos(dpsName, result);
   }else {
@@ -99,49 +89,6 @@ function buildChartLineForTrinkets(dpsName, currentResult) {
   }
 
   return currResult;
-}
-
-function buildChartLineForSoulbinds(dpsName, currentResult) {
-  var currResult = "";
-  var names = []
-  var currNames = dpsName.split("-");
-  for(name of currNames) {
-    if(name.includes("_")) {
-      var currNames2 = name.split("_");
-      for(currName of currNames2){
-        names.push(currName);
-      }
-    } else {
-      names.push(name);
-    }
-  }
-  currResult = buildChartLineForBasic(names, currResult);
-  return currentResult + currResult;
-}
-
-function buildChartLineForSoulbindsLaunch(dpsName, currentResult) {
-  var result = currentResult;
-  var names = [];
-  var currNames = dpsName.split("-");
-  for(name of currNames) {
-    if(name.includes("_")) {
-      var currNames2 = name.split("_");
-      for(currName of currNames2) {
-        names.push(currName);
-      }
-    } else {
-      names.push(name);
-    }
-  }  
-  result = buildChartLineForBasic(names, result);
-  return result;
-}
-
-function buildChartLineForConduitCombos(dpsName, currentResult) {
-  var result = currentResult;
-  var names = dpsName.split("_");
-  result = buildChartLineForBasic(names, result);
-  return result;
 }
 
 function buildChartLineForBasic(names, currentResult) {

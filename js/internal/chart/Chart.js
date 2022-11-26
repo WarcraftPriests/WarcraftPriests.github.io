@@ -86,33 +86,14 @@ function determineChartName(firstTalent, fullSimType, fightStyle) {
   simType = fullSimType.replaceAll("-", " ");
   simType = simType.replaceAll("_", " ");
 
-  if(fullSimType.toLowerCase() == covenantsChoice) {
-    return coventantsChoiceChartName;
-  } 
-  if (covenantType === empty || covenantType == null) {
-    return firstTalent 
-              + space + dash + space
-              + simType
-              + space + dash + space
-              + fightStyle;
-  } else if(fullSimType.toLowerCase() == "talent_builds") {
+  if(fullSimType.toLowerCase() == "talent_builds") {
     return simType
-              + space + dash + space
-              + getValue(Conduits, covenantType)
-              + space + dash + space
-              + fightStyle;
-  } else if(fullSimType.toLowerCase() == "shards_of_domination") {
-    return firstTalent
-              + space + dash + space
-              + simType
               + space + dash + space
               + fightStyle;
   } else {
     return firstTalent 
               + space + dash + space
               + simType 
-              + space + dash + space 
-              + getValue(Conduits, covenantType)
               + space + dash + space 
               + fightStyle;
   }
@@ -146,10 +127,6 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
   } else if(simsBtn == "talent-builds") {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + covenantType + jsonExtension;
-  } else if(simsBtn == "covenant-choice") {
-    return baseurl + slash + simsBtn + simResultPath + "Aggregate" + jsonExtension;
-  } else if(configData["sims"][simsBtn]["covenant"]["lookup"]) {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
   } else {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
   }
