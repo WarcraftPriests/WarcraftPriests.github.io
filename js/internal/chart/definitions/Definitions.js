@@ -272,6 +272,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
           legendItemClick: function () { return false; }
         },
         allowPointSelect: false,
+        turboThreshold: 10000,
       },
     },
     title: {
@@ -360,6 +361,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
           legendItemClick: function () { return false; }
         },
         allowPointSelect: false,
+        turboThreshold: 10000,
       },
     },
   
@@ -535,6 +537,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
           legendItemClick: function () { return false; }
         },
         allowPointSelect: false,
+        turboThreshold: 10000,
       },
     },
   

@@ -11,6 +11,12 @@ var Headings = {
 };
 
 function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
+    if(currFightStyleBtn.includes("twoset")) {
+        currFightStyleBtn = "2T";
+      } else if(currFightStyleBtn.includes("fourset")) {
+        currFightStyleBtn = "4T";
+      }
+    
     $(document).ready(function() {
         $.ajax({
             type: "GET",
