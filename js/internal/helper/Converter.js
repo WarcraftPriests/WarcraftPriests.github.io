@@ -85,6 +85,11 @@ var LookupType = {
   weights: "none"
 }
 
+//Todo fix coming when clean up label for talents
+var TalentIds = {
+  hv: "1234123",
+}
+
 var TrinketIds = {
   Cabalists_Hymnal_Allies_4: "184028",
 }
