@@ -35,8 +35,9 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
           result.push({y: percentage, color: getColor(sortedData, currName)});
         }
       }
+      counterLoop++;
     }
-    counterLoop++;
+    //counterLoop++;
   }
 
   chartForSingle.addSeries({

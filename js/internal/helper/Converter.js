@@ -77,10 +77,8 @@ var LegendTitles = {
 
 var ChartType = {
   trinkets: "percentage",
-  consumables: "percentage",
   //talents: "percentage",
   stats: "dot",
-  //alchemy: "percentage",
 };
 
 var ChartPadding = {
@@ -90,6 +88,9 @@ var ChartPadding = {
   enchants: -40,
   trinket_combos: -40,
   tiersets: -40,
+  consumables: -40,
+  alchemy: -40,
+  gems: -40,
 };
 
 var LookupType = {
