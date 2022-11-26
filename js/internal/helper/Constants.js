@@ -23,7 +23,7 @@ const alignMiddle = "middle";
 const stackingNormal = "normal";
 const legendTitleTextSteps = "Steps";
 const chartType = "bar";
-const defaultHeader = "Ancient Madness - Trinkets - Venthyr - Composite";
+const defaultHeader = "Yshaarj da - Trinkets - Composite";
 const whiteText = "white";
 const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
@@ -51,7 +51,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/sl-shadow-priest/master/";
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/master/";
 const wowheadUrl = "https://www.wowhead.com/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
@@ -75,40 +75,25 @@ const jsonSimulatedSteps = "simulated_steps";
  */
 const trinkets = "trinkets";
 const talents = "talents";
-const soulbinds = "soulbinds";
 const composite = "Composite";
-const legendaries = "legendaries";
 const fightStyle = "fightStyle";
-const covenant = "covenant";
-const conduits = "conduits";
 const racials = "racials";
-const ancientMadness = "am";
-const hungeringVoid = "hv";
-const venthyr = "venthyr";
-const kyrian = "kyrian";
-const nightFae = "night_fae";
-const necrolord = "necrolord";
+const yshaarj_da = "yshaarj_da";
+const yshaarj_yogg_vf = "yshaarj_yogg_vf";
+const cthun_yogg_vf = "cthun_yogg_vf";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
 const apl = "apl";
 const gear = "gear";
 const stats = "stats";
-const soulbindTraits = "soulbind_traits";
-const soulbindsLaunch = "soulbinds_launch";
-const conduitCombos = "conduit_combos";
-const legendaryCombos = "legendary_combos";
-const legendaryItems = "legendary_items";
 const trinketCombos = "trinket_combos";
 
 /*
  * Button related definitions
  */
 const fightStyleDiv = "fightStyle-div";
-const covenantDiv = "covenant-div";
-const covenantChoiceDiv = "covenantChoice-div";
 const consumablesDiv = "consumables-div";
-const shardsDiv = "shards-div";
 const enchantDiv = "enchants-div";
 const talentDiv = "talent-div"
 const simsDiv = "sims-div";
@@ -121,9 +106,6 @@ const handleOnClickText = "handleOnClick('";
 const show = "show";
 const enchants = "enchants";
 const consumables = "consumables";
-const shards = "shards_of_domination";
-const covenants = "covenants";
-const covenantsChoice = "covenant_choice";
 const weights = "weights";
 const maxSimButtonsPerRow = 7;
 
@@ -137,14 +119,11 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = hungeringVoid
+const defaultTalent = yshaarj_da;
 const defaultSims = trinkets;
-const defaultCovenant = venthyr;
-const defaultCovenantChoice = "aggregateCovenant";
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
-const coventantsChoiceChartName = "Covenant Choice - Aggregate"
 
 const builds = "builds";
 const files = "files";

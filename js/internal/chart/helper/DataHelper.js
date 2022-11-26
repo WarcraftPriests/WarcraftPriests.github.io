@@ -15,21 +15,27 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
     chartForSingle.series[0].remove(false);
   }
   let result = [];
-  var currName = data.name.split("-").pop();
+  var currName = data.name.split(" - ").pop();
   currName = currName.replace(/\s/g, '');
+  var counterLoop = 0;
   for (sortedData of data[jsonSortedDataKeys]) {
-    let dps = data[jsonData][sortedData][jsonDPS];
-    let baselineDPS = data[jsonData][jsonBase][jsonDPS];
-    if (baselineDPS == null) 
-      baselineDPS = 0;
-    
-    if(dps >= 0) {
-      var percentage = (dps / baselineDPS) * 100 - 100;
-      if(percentage < 0) {
-        result.push({y: 0, color: getColor(sortedData, currName)});
-      } else {
-        result.push({y: percentage, color: getColor(sortedData, currName)});
+    if(counterLoop < 100) {
+      let dps = data[jsonData][sortedData][jsonDPS];
+      let baselineDPS = data[jsonData][jsonBase][jsonDPS];
+      if (baselineDPS == null) 
+        baselineDPS = 0;
+      
+      if(dps >= 0) {
+        var percentage = (dps / baselineDPS) * 100 - 100;
+        if(percentage < 0) {
+          result.push({y: 0, color: getColor(sortedData, currName)});
+        } else {
+          result.push({y: percentage, color: getColor(sortedData, currName)});
+        }
       }
+      counterLoop++;
+    } else {
+      break;
     }
   }
 
@@ -139,6 +145,11 @@ function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
  * Prepare data for dot chart
  */
 function buildChartDataDot(githubData, chartId) {
+  let critLabel = false;
+  let versLabel = false;
+  let hasteLabel = false;
+  let masteryLabel = false;
+
   var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(chartId));
   (function (H) {
       function dragStart(eStart) {
@@ -202,23 +213,43 @@ function buildChartDataDot(githubData, chartId) {
     }
 
     let dataLabel = undefined;
+ 
     if(sortedData.includes("10")) {
-      dataLabel = {
-        enabled: true,
-        allowOverlap: true,
-      };
-      
-      if(sortedData.split(underscore)[0].includes("10")){
+      if(sortedData.split(underscore)[0].includes("10")
+          && !masteryLabel){
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };
         dataLabel.format = "Mastery";
         dataLabel.verticalAlign = "top";
-      } else if(sortedData.split("_")[1].includes("10")) {
+        masteryLabel = true;
+      } else if(sortedData.split("_")[1].includes("10")
+          && !versLabel) {
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };  
         dataLabel.format = "Versatility";
         dataLabel.verticalAlign = "top";
-      } else if(sortedData.split("_")[2].includes("10")) {
+        versLabel = true;
+      } else if(sortedData.split("_")[2].includes("10")
+          && !hasteLabel) {
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };
         dataLabel.format = "Haste";
-      } else if(sortedData.split("_")[3].includes("10")) {
+        hasteLabel = true;
+      } else if(sortedData.split("_")[3].includes("10")
+          && !critLabel) {
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };
         dataLabel.format = "Crit";
         dataLabel.verticalAlign = "top";
+        critLabel = true;
       }
     }
 

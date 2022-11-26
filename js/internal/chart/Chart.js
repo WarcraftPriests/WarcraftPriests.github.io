@@ -2,7 +2,7 @@
  * Decides what kind of chart should be used 
  * and when a chart update should happen
  */
-function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
+function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
   if(maxEntries != null || maxEntries != undefined) {
     maxEntries = maxEntries - 1;
   }
@@ -10,20 +10,19 @@ function updateChart(currTalentBtn, currSimsBtn, currCovenantBtn, currConsumable
   if(currSimsBtn == "weights") {
     parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
-    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, currCovenantBtn, chartId, metaData, maxEntries);
+    createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData, maxEntries);
   }
 }
 
 /*
  * Collects all data need for a chart an then create it
  */
-function createChart( simsBtn, fightStyle, talentChoice, covenantType, chartId, metaData, maxEntries) {
-  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice, covenantType),
+function createChart( simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries) {
+  jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice),
       function (data) {
         if(metaData) {
           document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-          var header = determineChartName( covenantType, 
-                                           getValue(SimTalents, talentChoice), 
+          var header = determineChartName( getValue(SimTalents, talentChoice), 
                                            simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                            fightStyle);
           document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
@@ -82,38 +81,19 @@ function updateSize(chart, chartId, size, maxEntries) {
 /*
  * Determine the chart name for the current chart, for the used parameters
  */
-function determineChartName(covenantType, firstTalent, fullSimType, fightStyle) {
+function determineChartName(firstTalent, fullSimType, fightStyle) {
   var simType = "";
   simType = fullSimType.replaceAll("-", " ");
   simType = simType.replaceAll("_", " ");
 
-  if(fullSimType.toLowerCase() == covenantsChoice) {
-    return coventantsChoiceChartName;
-  } 
-  if (covenantType === empty || covenantType == null) {
-    return firstTalent 
-              + space + dash + space
-              + simType
-              + space + dash + space
-              + fightStyle;
-  } else if(fullSimType.toLowerCase() == "talent_builds") {
+  if(fullSimType.toLowerCase() == "talent_builds") {
     return simType
-              + space + dash + space
-              + getValue(Conduits, covenantType)
-              + space + dash + space
-              + fightStyle;
-  } else if(fullSimType.toLowerCase() == "shards_of_domination") {
-    return firstTalent
-              + space + dash + space
-              + simType
               + space + dash + space
               + fightStyle;
   } else {
     return firstTalent 
               + space + dash + space
               + simType 
-              + space + dash + space 
-              + getValue(Conduits, covenantType)
               + space + dash + space 
               + fightStyle;
   }
@@ -131,7 +111,7 @@ function determineChartDescription(fullSimType) {
 /*
  * Determines the url for the github repo to get the needed sim results
  */
-function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantType) {
+function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   /*
    * Special cases!
    */
@@ -143,14 +123,14 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantTy
     simsBtn = simsBtn.replaceAll(underscore, dash);
   }
 
+  if(fightStyle.includes("twotarget")) {
+    fightStyle = "2T";
+  } else if(fightStyle.includes("fourtarget")) {
+    fightStyle = "4T";
+  }
+
   if(simsBtn == talents){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
-  } else if(simsBtn == "talent-builds") {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + covenantType + jsonExtension;
-  } else if(simsBtn == "covenant-choice") {
-    return baseurl + slash + simsBtn + simResultPath + "Aggregate" + jsonExtension;
-  } else if(configData["sims"][simsBtn]["covenant"]["lookup"]) {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + underscore + covenantType + jsonExtension;
   } else {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
   }

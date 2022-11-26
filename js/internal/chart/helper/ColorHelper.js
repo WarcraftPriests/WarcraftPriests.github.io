@@ -1,21 +1,3 @@
-var covenantChoiceColor = {
-    kyrian_min: "#0033CC",
-    kyrian_max: "#0099FF",
-    night_fae_min: "#9933CC",
-    night_fae_max: "#9966CC",
-    necrolord_min: "#009933",
-    necrolord_max: "#00CC66",
-    venthyr_min: "#CC0000",
-    venthyr_max: "#FF3300",
-}
-
-var covenantColor = {
-    kyrian: "#0033CC",
-    night_fae: "#9933CC",
-    necrolord: "#009933",
-    venthyr: "#CC0000",
-}
-
 var racialColor = {
     Goblin: "#F2545B",
     Gnome: "#4F86C6",
@@ -48,33 +30,9 @@ var racialColor = {
     Panda_Smothered_Shank: "#F3F7F0",
 }
 
-var getCovenantChoiceColor = function (key) {
-    return covenantChoiceColor[key];
-};
 
 var getColor = function (key, key2) {
-   var color = covenantColor[key];
-   if(color == null || color == undefined || color == ""){
-     color = covenantColor[key2];
-   }
-   if(color == null || color == undefined || color == "") {
-      if(key.includes("Necrolord")) {
-        color = covenantColor["necrolord"];
-      } else if(key.includes("Night_Fae")) {
-        color = covenantColor["night_fae"];
-      } else if(key.includes("Venthyr")) {
-        color = covenantColor["venthyr"];
-      } else if(key.includes("Kyrian")) {
-        color = covenantColor["kyrian"];
-      }
-   }
-   if(color == null || color == undefined || color == "") {
-       color = racialColor[key];
-   }
-   if(color == null || color == undefined || color == "") {
-       color = "#496DC9";
-   }   
-   return color;
+   return "#496DC9";
 }
 
 function create_color(dps, min_dps, max_dps) {

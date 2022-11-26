@@ -1,4 +1,3 @@
-
 /*
  * Dot chart definition used for:
  * - Stats
@@ -43,10 +42,12 @@ function getDefaultDotDefinition(chartId) {
             textOutline: ""
           }
         },
-        events: {
-          legendItemClick: function () {
-            return false;
+        
+      events: {
+        legendItemClick: function () {
+          return false;
         }
+        
       },
     },
   },
@@ -272,6 +273,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
           legendItemClick: function () { return false; }
         },
         allowPointSelect: false,
+        turboThreshold: 10000,
       },
     },
     title: {
@@ -418,7 +420,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
         }
         let lastValue = 0;
         result.push(lastValue)
-        for(i = 0; i <= 8; i++) {
+        for(i = 0; i <= 9; i++) {
           lastValue = lastValue + Number((Number(highestDPS / (data[jsonSimulatedSteps].length + 1))).toFixed(2) * (data[jsonSimulatedSteps].length / 7));
           result.push(Number(lastValue.toFixed(2)));
         }
@@ -512,6 +514,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       text: '',
     },
   
+    
     plotOptions: {
       series: {
         states: {
@@ -531,6 +534,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
         enableMouseTracking: true,
         pointWidth: 15,
         spacing: 20,
+        
         events: {
           legendItemClick: function () { return false; }
         },
@@ -621,6 +625,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       pointFormat: tooltipPointFormat,
       padding: 5,
       formatter: function () {
+        
         var result = '<div class="chartHover">'
               + '<div class="chartHoverLine">' 
               + this.x 

@@ -20,11 +20,10 @@ function compareParameters(oldParm, newParms) {
     return false;
 }
 
-function buildParameterUrl(talentQueryParm, talentQueryValue, simsQueryParm, simsQueryValue, covenantsQueryParm, covenantsQueryValue, fightStyleQueryParm, fightStyleQueryValue) {
+function buildParameterUrl(talentQueryParm, talentQueryValue, simsQueryParm, simsQueryValue, fightStyleQueryParm, fightStyleQueryValue) {
     var result = "?";
     var talentQuery = talentQueryParm + "=" + talentQueryValue;
     var simsQuery = simsQueryParm + "=" + simsQueryValue;
-    var covenantsQuery = covenantsQueryParm + "=" + covenantsQueryValue;
     var fightStyleQuery = fightStyleQueryParm + "=" + fightStyleQueryValue;
 
     if(talentQueryValue != null && talentQueryValue.length > 0) {
@@ -32,9 +31,6 @@ function buildParameterUrl(talentQueryParm, talentQueryValue, simsQueryParm, sim
     }
     if(simsQueryValue != null && simsQueryValue.length > 0) {
         result += "&" + simsQuery;
-    }
-    if(covenantsQueryValue != null && covenantsQueryValue.length > 0) {
-        result += "&" + covenantsQuery;
     }
     if(fightStyleQueryValue != null && fightStyleQueryValue.length > 0) {
         result += "&" + fightStyleQuery;
