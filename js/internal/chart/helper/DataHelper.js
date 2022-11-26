@@ -17,20 +17,26 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
   let result = [];
   var currName = data.name.split(" - ").pop();
   currName = currName.replace(/\s/g, '');
+  var counterLoop = 0;
   for (sortedData of data[jsonSortedDataKeys]) {
-    let dps = data[jsonData][sortedData][jsonDPS];
-    let baselineDPS = data[jsonData][jsonBase][jsonDPS];
-    if (baselineDPS == null) 
-      baselineDPS = 0;
-    
-    if(dps >= 0) {
-      var percentage = (dps / baselineDPS) * 100 - 100;
-      if(percentage < 0) {
-        result.push({y: 0, color: getColor(sortedData, currName)});
-      } else {
-        result.push({y: percentage, color: getColor(sortedData, currName)});
+    if(counterLoop < 100) {
+      let dps = data[jsonData][sortedData][jsonDPS];
+      let baselineDPS = data[jsonData][jsonBase][jsonDPS];
+      if (baselineDPS == null) 
+        baselineDPS = 0;
+      
+      if(dps >= 0) {
+        var percentage = (dps / baselineDPS) * 100 - 100;
+        if(percentage < 0) {
+          result.push({y: 0, color: getColor(sortedData, currName)});
+          //result.push(0);
+        } else {
+          result.push(percentage);
+          result.push({y: percentage, color: getColor(sortedData, currName)});
+        }
       }
     }
+    counterLoop++;
   }
 
   chartForSingle.addSeries({

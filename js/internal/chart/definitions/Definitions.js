@@ -171,7 +171,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
-      max: maxEntries,
+      //max: maxEntries,
       labels: {
         x: -40,
         useHTML: true,
@@ -364,14 +364,13 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
           legendItemClick: function () { return false; }
         },
         allowPointSelect: false,
-        turboThreshold: 10000,
       },
     },
   
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
-      max: maxEntries,
+      //max: maxEntries,
       labels: {
         useHTML: true,
         x: -40,
@@ -540,7 +539,6 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
           //legendItemClick: function () { return false; }
         //},
         allowPointSelect: false,
-        turboThreshold: 10000,
       },
     },
   
@@ -559,7 +557,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       },
       categories: wowheadTooltips,
       useHTML: true,
-      max: maxEntries,
+      //max: maxEntries,
     },
   
     yAxis: {
