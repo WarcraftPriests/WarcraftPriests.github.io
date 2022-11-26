@@ -15,7 +15,7 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
     chartForSingle.series[0].remove(false);
   }
   let result = [];
-  var currName = data.name.split("-").pop();
+  var currName = data.name.split(" - ").pop();
   currName = currName.replace(/\s/g, '');
   for (sortedData of data[jsonSortedDataKeys]) {
     let dps = data[jsonData][sortedData][jsonDPS];
