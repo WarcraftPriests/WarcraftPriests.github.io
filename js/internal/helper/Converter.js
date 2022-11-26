@@ -72,6 +72,7 @@ var LegendTitles = {
   legendary_items: "Item level",
   legendary_combos: "Increase in %",
   alchemy: "Increase in %",
+  consumables: "Increase in %",
 };
 
 var ChartType = {

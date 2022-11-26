@@ -31,7 +31,7 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
           result.push({y: 0, color: getColor(sortedData, currName)});
           //result.push(0);
         } else {
-          result.push(percentage);
+          //result.push(percentage);
           result.push({y: percentage, color: getColor(sortedData, currName)});
         }
       }

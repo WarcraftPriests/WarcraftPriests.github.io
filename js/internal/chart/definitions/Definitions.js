@@ -1,4 +1,3 @@
-
 /*
  * Dot chart definition used for:
  * - Stats
@@ -512,10 +511,11 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       backgroundColor: defaultBackgroundColor,
     },
       
-    //title: {
-    //  text: '',
-    //},
+    title: {
+      text: '',
+    },
   
+    
     plotOptions: {
       series: {
         states: {
@@ -535,9 +535,11 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
         enableMouseTracking: true,
         pointWidth: 15,
         spacing: 20,
-        //events: {
-          //legendItemClick: function () { return false; }
-        //},
+        /*
+        events: {
+          legendItemClick: function () { return false; }
+        },
+        */
         allowPointSelect: false,
       },
     },
@@ -550,9 +552,9 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
           color: defaultFontColor,
           fontWeight: fontWeightBold,
           fontSize: 14,
-          //events: {
-            //legendItemClick: function () { return false; }
-          //},
+          events: {
+            legendItemClick: function () { return false; }
+          },
         },
       },
       categories: wowheadTooltips,
@@ -624,7 +626,6 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       },
       pointFormat: tooltipPointFormat,
       padding: 5,
-      /*
       formatter: function () {
         
         var result = '<div class="chartHover">'
@@ -641,7 +642,6 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
         result += "</div>";
         return result;
       },
-      */
     },
   };   
 }
