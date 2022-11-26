@@ -77,6 +77,7 @@ var LegendTitles = {
 
 var ChartType = {
   trinkets: "percentage",
+  consumables: "percentage",
   //talents: "percentage",
   stats: "dot",
   //alchemy: "percentage",
