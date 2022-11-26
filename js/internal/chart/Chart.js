@@ -130,7 +130,7 @@ function determineChartDescription(fullSimType) {
 /*
  * Determines the url for the github repo to get the needed sim results
  */
-function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, covenantType) {
+function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   /*
    * Special cases!
    */

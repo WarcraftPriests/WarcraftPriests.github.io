@@ -36,15 +36,8 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == undefined
     || simsBtn == trinkets 
     || simsBtn == consumables
-    || simsBtn == shards
-    || simsBtn == conduits
-    || simsBtn == covenants
     || simsBtn == enchants
-    || simsBtn == legendaries
-    || simsBtn.replaceAll("-", "_") == legendaryItems
-    || simsBtn.replaceAll("-", "_") == legendaryCombos
-    || simsBtn == racials
-    || simsBtn.replaceAll("-", "_") == soulbindTraits) {
+    || simsBtn == racials) {
       result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn.replaceAll("-", "_") == conduitCombos) {
     result = buildChartLineForConduitCombos(dpsName, result);
