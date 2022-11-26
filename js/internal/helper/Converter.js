@@ -4,23 +4,9 @@ var SimTalents = {
 };
   
 var Sims = {
-  conduit_combos: "Conduit Combos",
-  conduits: "Conduits",
   consumables: "Consumables",
-  covenant_choice: "Covenants Choice",
-  covenants_launch: "Covenants launch",
-  covenants_prog: "Covenants prog",
-  covenants: "Covenants",
   enchants: "Enchants",
-  legendaries: "Legendaries",
-  legendary_items: "Legendary items",
-  legendary_combos: "Legendary Combos",
   racials: "Racials",
-  shards_of_domination: "Shards of Domination",
-  soulbind_traits: "Soulbind Traits",
-  soulbinds_launch: "Soulbind Launch",
-  soulbinds_prog: "Soulbind prog",
-  soulbinds: "Soulbinds",
   stats: "Stats",
   talents: "Talents",
   talent_builds: "Talent Builds",
@@ -82,13 +68,6 @@ var FightStyleExternal = {
   composite: "Raid",
   single: "Single Target",
   dungeons: "Dungeons",
-};
-  
-var Conduits = {
-  kyrian: "Kyrian",
-  necrolord: "Necrolord",
-  night_fae: "Night Fae",
-  venthyr: "Venthyr",
 };
   
 var TalentIds = {
@@ -168,18 +147,8 @@ var ConduitsIds = {
   AAF: "357902",
 };
 var LegendTitles = {
-  conduits: "Conduits Rank",
-  conduit_combos: "Increase in %",
-  consumables: "Increase in %",
-  covenants: "Increase in %",
-  covenantsChoice: "Increase in %",
   enchants: "Increase in %",
-  legendaries: "Increase in %",
   racials: "Increase in %",
-  shards_of_domination: "Increase in %",
-  soulbinds: "Increase in %",
-  soulbind_traits: "Increase in %",
-  soulbinds_launch: "Increase in %",
   stats: "Increase in %",
   talents: "Increase in %",
   talent_builds: "Increase in %",
@@ -189,10 +158,6 @@ var LegendTitles = {
 };
 
 var ChartType = {
-  covenant_choice: "multiple",
-  conduits: "percentage",
-  legendary_items: "percentage",
-  //legendary_combos: "percentage",
   trinkets: "percentage",
   stats: "dot",
 };
@@ -200,52 +165,18 @@ var ChartType = {
 var ChartPadding = {
   talents: -80,
   talent_builds: -80,
-  covenants: -40,
-  legendaries: -40,
-  soulbinds: -60,
-  conduit_combos: -40,
-  soulbind_traits: -40,
-  soulbinds_launch: -60,
   racials: -40,
-  soulbinds_prog: -60,
-  shards_of_domination: -40,
-  consumables: -40,
-  covenant_choice: -40,
-  covenants_launch: -40,
-  covenants_prog: -40,
   enchants: -40,
   trinket_combos: -40,
-  legendary_combos: -10,
   tiersets: -40,
 };
 
-var AggregateConduits = [
-  "venthyr",
-  "necrolord",
-  "night_fae",
-  "kyrian",
-];
-
 var LookupType = {
   apl: "none",
-  conduit_combos: "none",
-  conduits: "spell",
   consumables: "spell",
-  shards_of_domination: "spell",
-  covenant_choice: "none",
-  covenants: "spell",
-  covenants_launch: "spell",
-  coventants_prog: "spell",
   enchants: "spell",
   gear: "item",
-  legendaries: "spell",
-  legendary_combos: "none",
-  legendary_items: "spell",
   racials: "spell",
-  soulbind_traits: "spell",
-  soulbinds: "none",
-  soulbinds_launch: "none",
-  soulbinds_prog: "none",
   stats: "none",
   talents: "none",
   talent_builds: "none",

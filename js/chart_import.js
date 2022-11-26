@@ -7,10 +7,6 @@ var Sims = {
   conduit_combos: "Conduit Combos",
   conduits: "Conduits",
   consumables: "Consumables",
-  covenant_choice: "Covenants Choice",
-  covenants_launch: "Covenants launch",
-  covenants_prog: "Covenants prog",
-  covenants: "Covenants",
   enchants: "Enchants",
   legendaries: "Legendaries",
   legendary_items: "Legendary items",
@@ -226,10 +222,6 @@ var LookupType = {
   conduit_combos: "none",
   conduits: "spell",
   consumables: "spell",
-  covenant_choice: "none",
-  covenants: "spell",
-  covenants_launch: "spell",
-  coventants_prog: "spell",
   enchants: "spell",
   gear: "item",
   legendaries: "spell",
@@ -381,7 +373,6 @@ const soulbinds = "soulbinds";
 const composite = "Composite";
 const legendaries = "legendaries";
 const fightStyle = "fightStyle";
-const covenant = "covenant";
 const conduits = "conduits";
 const racials = "racials";
 const ancientMadness = "am";
@@ -406,8 +397,6 @@ const legendaryItems = "legendary_items";
  * Button related definitions
  */
 const fightStyleDiv = "fightStyle-div";
-const covenantDiv = "covenant-div";
-const covenantChoiceDiv = "covenantChoice-div";
 const consumablesDiv = "consumables-div";
 const enchantDiv = "enchants-div";
 const talentDiv = "talent-div";
@@ -423,8 +412,6 @@ const show = "show";
 const shards = "shards_of_domination";
 const enchants = "enchants";
 const consumables = "consumables";
-const covenants = "covenants";
-const covenantsChoice = "covenant_choice";
 const weights = "weights";
 
 const pointer = "pointer";
@@ -439,8 +426,6 @@ const inlineBlock = "inline-block";
 
 const defaultTalent = hungeringVoid;
 const defaultSims = trinkets;
-const defaultCovenant = venthyr;
-const defaultCovenantChoice = "aggregateCovenant";
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
