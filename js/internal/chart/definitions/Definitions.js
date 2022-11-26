@@ -71,7 +71,6 @@ function getDefaultDotDefinition(chartId) {
     tooltip: {
       headerFormat: '',
         pointFormatter: function () {
-          
           return '<table>\
             <thead>\
               <tr>\
@@ -170,7 +169,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
-      //max: maxEntries,
+      max: maxEntries,
       labels: {
         x: -40,
         useHTML: true,
@@ -369,7 +368,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
-      //max: maxEntries,
+      max: maxEntries,
       labels: {
         useHTML: true,
         x: -40,
@@ -421,7 +420,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
         }
         let lastValue = 0;
         result.push(lastValue)
-        for(i = 0; i <= 8; i++) {
+        for(i = 0; i <= 9; i++) {
           lastValue = lastValue + Number((Number(highestDPS / (data[jsonSimulatedSteps].length + 1))).toFixed(2) * (data[jsonSimulatedSteps].length / 7));
           result.push(Number(lastValue.toFixed(2)));
         }
@@ -535,11 +534,10 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
         enableMouseTracking: true,
         pointWidth: 15,
         spacing: 20,
-        /*
+        
         events: {
           legendItemClick: function () { return false; }
         },
-        */
         allowPointSelect: false,
       },
     },
@@ -559,7 +557,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       },
       categories: wowheadTooltips,
       useHTML: true,
-      //max: maxEntries,
+      max: maxEntries,
     },
   
     yAxis: {

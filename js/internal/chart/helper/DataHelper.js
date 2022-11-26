@@ -146,6 +146,11 @@ function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
  * Prepare data for dot chart
  */
 function buildChartDataDot(githubData, chartId) {
+  let critLabel = false;
+  let versLabel = false;
+  let hasteLabel = false;
+  let masteryLabel = false;
+
   var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(chartId));
   (function (H) {
       function dragStart(eStart) {
@@ -209,23 +214,43 @@ function buildChartDataDot(githubData, chartId) {
     }
 
     let dataLabel = undefined;
+ 
     if(sortedData.includes("10")) {
-      dataLabel = {
-        enabled: true,
-        allowOverlap: true,
-      };
-      
-      if(sortedData.split(underscore)[0].includes("10")){
+      if(sortedData.split(underscore)[0].includes("10")
+          && !masteryLabel){
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };
         dataLabel.format = "Mastery";
         dataLabel.verticalAlign = "top";
-      } else if(sortedData.split("_")[1].includes("10")) {
+        masteryLabel = true;
+      } else if(sortedData.split("_")[1].includes("10")
+          && !versLabel) {
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };  
         dataLabel.format = "Versatility";
         dataLabel.verticalAlign = "top";
-      } else if(sortedData.split("_")[2].includes("10")) {
+        versLabel = true;
+      } else if(sortedData.split("_")[2].includes("10")
+          && !hasteLabel) {
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };
         dataLabel.format = "Haste";
-      } else if(sortedData.split("_")[3].includes("10")) {
+        hasteLabel = true;
+      } else if(sortedData.split("_")[3].includes("10")
+          && !critLabel) {
+        dataLabel = {
+          enabled: true,
+          allowOverlap: true,
+        };
         dataLabel.format = "Crit";
         dataLabel.verticalAlign = "top";
+        critLabel = true;
       }
     }
 
