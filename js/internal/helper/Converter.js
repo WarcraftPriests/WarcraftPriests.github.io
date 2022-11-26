@@ -1,7 +1,7 @@
 var SimTalents = {
-  yshaarj_da: "yshaarj_da",
-  yshaarj_yogg_vf: "yshaarj_yogg_vf",
-  cthun_yogg_vf: "cthun_yogg_vf",
+  yshaarj_da: "Idol of Y'Shaarj / Dark Ascension",
+  yshaarj_yogg_vf: "Idol of Y'Shaarj/Idol Yogg-Suron/Void Erruption",
+  cthun_yogg_vf: "Idol of C'Thun/Idol Yogg-Suron/Void Erruption",
 };
   
 var Sims = {
