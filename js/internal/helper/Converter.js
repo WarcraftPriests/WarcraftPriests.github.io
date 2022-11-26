@@ -28,6 +28,8 @@ var FightStyles = {
   Composite: "Composite",
   Single: "Single Target",
   Dungeons: "Dungeons",
+  twoset: "2T",
+  fourset: "4T",
 };
   
 var FightStyleExternal = {
@@ -69,11 +71,13 @@ var LegendTitles = {
   trinkets: "Item level",
   legendary_items: "Item level",
   legendary_combos: "Increase in %",
+  alchemy: "Increase in %",
 };
 
 var ChartType = {
   trinkets: "percentage",
   stats: "dot",
+  //alchemy: "percentage",
 };
 
 var ChartPadding = {

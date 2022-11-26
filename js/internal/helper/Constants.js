@@ -119,7 +119,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = yshaarj_da
+const defaultTalent = yshaarj_da;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;

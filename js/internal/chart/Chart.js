@@ -5,6 +5,8 @@
 function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
   if(maxEntries != null || maxEntries != undefined) {
     maxEntries = maxEntries - 1;
+  } else {
+    maxEntries = 100;
   }
   
   if(currSimsBtn == "weights") {
@@ -121,6 +123,12 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
 
   if(simsBtn.includes(underscore)) {
     simsBtn = simsBtn.replaceAll(underscore, dash);
+  }
+
+  if(fightStyle.includes("twoset")) {
+    fightStyle = "2T";
+  } else if(fightStyle.includes("fourset")) {
+    fightStyle = "4T";
   }
 
   if(simsBtn == talents){
