@@ -11,9 +11,9 @@ var Headings = {
 };
 
 function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
-    if(currFightStyleBtn.includes("twoset")) {
+    if(currFightStyleBtn.includes("twotarget")) {
         currFightStyleBtn = "2T";
-      } else if(currFightStyleBtn.includes("fourset")) {
+      } else if(currFightStyleBtn.includes("fourtarget")) {
         currFightStyleBtn = "4T";
       }
     

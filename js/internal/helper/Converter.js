@@ -28,8 +28,8 @@ var FightStyles = {
   Composite: "Composite",
   Single: "Single Target",
   Dungeons: "Dungeons",
-  twoset: "Tierset (2 piece)",
-  fourset: "Tierset (4 piece)",
+  twotarget: "2 Target",
+  fourtarget: "4 Target",
 };
   
 var FightStyleExternal = {

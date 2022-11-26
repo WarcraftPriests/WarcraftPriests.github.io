@@ -123,9 +123,9 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
     simsBtn = simsBtn.replaceAll(underscore, dash);
   }
 
-  if(fightStyle.includes("twoset")) {
+  if(fightStyle.includes("twotarget")) {
     fightStyle = "2T";
-  } else if(fightStyle.includes("fourset")) {
+  } else if(fightStyle.includes("fourtarget")) {
     fightStyle = "4T";
   }
 
