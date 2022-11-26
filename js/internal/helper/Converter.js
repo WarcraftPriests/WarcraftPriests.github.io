@@ -37,30 +37,6 @@ var FightStyleExternal = {
   single: "Single Target",
   dungeons: "Dungeons",
 };
-  
-var TalentIds = {
-  FOTM: "193195",
-  DAM: "321291",
-  UD: "341273",
-  BNS: "64129",
-  SL: "199855",
-  IN: "288733",
-  TOF: "109142",
-  MIS: "238558",
-  SN: "341385",
-  LW: "263716",
-  MBO: "205369",
-  PH: "64044",
-  AS: "155271",
-  PS: "199484",
-  SC: "205385",
-  DM: "341374",
-  MB: "123040",
-  VT: "263165",
-  AM: "341240",
-  HV: "345218",
-  STM: "193223",
-};
 
 var LegendTitles = {
   enchants: "Increase in %",
