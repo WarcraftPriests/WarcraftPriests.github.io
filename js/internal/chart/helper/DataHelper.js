@@ -29,15 +29,14 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
         var percentage = (dps / baselineDPS) * 100 - 100;
         if(percentage < 0) {
           result.push({y: 0, color: getColor(sortedData, currName)});
-          //result.push(0);
         } else {
-          //result.push(percentage);
           result.push({y: percentage, color: getColor(sortedData, currName)});
         }
       }
       counterLoop++;
+    } else {
+      break;
     }
-    //counterLoop++;
   }
 
   chartForSingle.addSeries({
