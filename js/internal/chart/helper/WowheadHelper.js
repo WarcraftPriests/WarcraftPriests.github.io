@@ -136,7 +136,6 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   var result = currentResult;
   if(currSimsBtn == 'talents') {
     link = talentData['builds'][dpsName];
-    console.log(link)
     if (link) {
       result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> '+ dpsName + ' </a>';
     } else {
