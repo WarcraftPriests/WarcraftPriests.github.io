@@ -66,6 +66,17 @@
 	<div class="wrapper" id="wrapper">
 		<div id="header"></div>
 		<div id="description" class="descriptionContent"></div>
+		<div id="talent-build-id-div" class="talentBuildId">
+			<span>Talent id: %talentId%</span>
+		</div>
+		<div style="display: block; padding: 5px"></div>
+		<div id="talent-build-div" class="talentBuild"> 
+			<span>Show Talent Build</span>
+			
+		</div>
+		<div id="talent-build-content-div" class="talentBuildContent">
+			<iframe src="https://mimiron.raidbots.com/simbot/render/talents/%talentId%?level=70&amp;width=208&amp;mini=1" width="208" height="125"></iframe>
+		</div>
 		<div id="Chart-Display-div" class="chartContent"></div>
 	</div>
 	<div class="footer">
@@ -83,6 +94,7 @@
 	<script src="https://code.highcharts.com/8.2.2/highcharts.js"></script>
 	<script src="https://code.highcharts.com/8.2.2/highcharts-3d.js"></script>
 	<script src="js/yaml/yaml.min.js"></script> 
+	<script src="js/internal/helper/TalentBuild.js"></script>
 	<script src="js/internal/helper/Constants.js"></script>
 	<script src="js/internal/helper/Converter.js"></script>
 	<script src="js/internal/button/Buttons.js"></script>
