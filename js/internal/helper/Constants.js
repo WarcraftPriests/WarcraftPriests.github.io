@@ -90,6 +90,7 @@ const apl = "apl";
 const gear = "gear";
 const stats = "stats";
 const trinketCombos = "trinket_combos";
+const specialGear = "special_gear";
 
 /*
  * Button related definitions

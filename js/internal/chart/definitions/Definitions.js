@@ -490,13 +490,6 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
 
 /*
  * Single bar definition used for:
- * - Covenants
- * - Legendaries
- * - Soulbinds
- * - Conduit Combos
- * - Soulbind Traits
- * - Soulbinds Launch
- * - Soulbinds Prog
  * - Racials
  * - Talents
  * - Trinket Combos

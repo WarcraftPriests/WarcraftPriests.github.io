@@ -10,7 +10,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       id = "";
     }
 
-    if (simsBtn == consumables || simsBtn == alchemy || simsBtn == enchants || simsBtn == gems) {
+    if (simsBtn == consumables || simsBtn == alchemy || simsBtn == enchants || simsBtn == gems || simsBtn == specialGear) {
       url = wowheadUrl + wowheadItemPath;
     } else if(configData[sims][simsBtn.replaceAll("_", "-")]["lookupType"] == "spell"){
       url = wowheadUrl + wowheadSpellPath;
@@ -136,7 +136,12 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   var result = currentResult;
   if(currSimsBtn == 'talents') {
     link = talentData['builds'][dpsName];
-    result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="To copy the talent id click the current label"> '+ dpsName + ' </a>';
+    console.log(link)
+    if (link) {
+      result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> '+ dpsName + ' </a>';
+    } else {
+      result += dpsName;
+    }
   } else {
     result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
     result += ' onclick="alert("ahh")"';

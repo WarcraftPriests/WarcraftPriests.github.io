@@ -354,7 +354,7 @@ input:checked+.slider:before {
   width: 16px;
   height: 16px;
   position: relative;
-  top: 25%;
+  top: 16%;
 }
 
 /* Buttons */
@@ -526,6 +526,6 @@ section a {
 }
 
 .tooltipLink {
-  color: white;
+  color: gold;
   text-decoration: none;
 }

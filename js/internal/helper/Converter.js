@@ -16,7 +16,8 @@ var Sims = {
   trinket_combos: "Trinket Combos",
   tiersets: "Tiersets",
   alchemy: "Alchemy",
-  gems: "Gems"
+  gems: "Gems",
+  special_gear: "Special Gear",
 };
   
 var Consumables = {
@@ -69,6 +70,7 @@ var ChartPadding = {
   consumables: -40,
   alchemy: -40,
   gems: -40,
+  special_gear: -40,
 };
 
 var LookupType = {
@@ -78,6 +80,7 @@ var LookupType = {
   enchants: "item",
   gear: "item",
   racials: "spell",
+  special_gear: "spell",
   stats: "none",
   talents: "none",
   talent_builds: "none",
