@@ -256,16 +256,21 @@ function checkButtonClick() {
     if(currTalent == currSimsBtn 
                 || currSimsBtn != null && currTalent == currSimsBtn.replaceAll("_", "-")){
       if(configData[sims][currTalent][builds]){
-        // addButtonShow("hv_as");
-        // addButtonShow("hv_sc");
+        replaceTalentId(currTalentBtn, currFightStyleBtn);
       } else {
         removeShow(talentDiv);
+        removeShowSpecial(talentBuildIdDiv);
+        removeShowSpecial(talentBuildDiv);
       }
     }
     
   }
   updateUrl(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn)
   updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
+}
+
+function removeShowSpecial(div) {
+  document.getElementById(div.toString()).style.visibility = "hidden";
 }
 
 function updateUrl(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {

@@ -261,6 +261,48 @@ input:checked+.slider:before {
   padding-bottom: 30px;
 }
 
+.talentBuild {
+  background-color: #343a40;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  font-size: 14px;
+  display: inline-block;
+  justify-content: center;
+  cursor: pointer;
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: #50575f;
+  border: 1px solid #dda0dd !important;
+}
+
+.talentBuildContent {
+  width: 68%;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  display: none;
+}
+
+.talentBuildId {
+  background-color: #343a40;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  font-size: 14px;
+  display: inline-block;
+  justify-content: center;
+  cursor: pointer;
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: #50575f;
+  border: 1px solid #dda0dd !important;
+}
+
 .traitButtons {
   display: block;
 }
