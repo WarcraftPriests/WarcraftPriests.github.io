@@ -26,7 +26,7 @@ function replaceTalentId(currTalent, currFightStyle) {
 function copyURI(evt) {
     evt.preventDefault();
         navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
-      /* clipboard successfully set */
+        alert("Talent id copied to the clipboard");
     }, () => {
       /* clipboard write failed */
     });

@@ -136,7 +136,7 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   var result = currentResult;
   if(currSimsBtn == 'talents') {
     link = talentData['builds'][dpsName];
-    result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)"> '+ dpsName + ' </a>';
+    result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="To copy the talent id click the current label"> '+ dpsName + ' </a>';
   } else {
     result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
     result += ' onclick="alert("ahh")"';
