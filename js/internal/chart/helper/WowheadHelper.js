@@ -38,7 +38,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == racials) {
       result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == talents) {
-    result = buildChartLineForTrinkets(dpsName, result);
+    result = buildChartLineForTalents(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket_combos") {
     result = buildChartLineForTrinketCombos(dpsName, result);
   }else {
@@ -85,10 +85,15 @@ function buildChartLineForTrinkets(dpsName, currentResult) {
   var currResult = "";
   var names = dpsName.split("_");
   for(name of names) {
-    currResult = buildChartLineWithWowheadLine(name, getValue(TalentIds, name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
+    currResult = buildChartLineWithWowheadLine(name, getValue(TalentIds, name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult, dpsName);
   }
 
   return currResult;
+}
+
+function buildChartLineForTalents(dpsName, currentResult) {
+  currResult = ""
+  return buildChartLineWithWowheadLine(dpsName, getValue(TalentIds, dpsName.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
 }
 
 function buildChartLineForBasic(names, currentResult) {
@@ -129,12 +134,17 @@ function buildChartLineForBasic(names, currentResult) {
 
 function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   var result = currentResult;
-  result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
-  result += ' onclick="return false"';
-  result += '" target="blank"';
-  result += ">";
-  result += dpsName;
-  result += "</a>";
-
+  if(currSimsBtn == 'talents') {
+    link = talentData['builds'][dpsName];
+    result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)"> '+ dpsName + ' </a>';
+  } else {
+    result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
+    result += ' onclick="alert("ahh")"';
+    result += '" target="blank"';
+    result += ">";
+    result += dpsName;
+    result += "</a>";
+  }
+  
   return result;
 }

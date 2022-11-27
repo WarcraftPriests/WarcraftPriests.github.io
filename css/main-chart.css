@@ -524,3 +524,8 @@ section {
 section a {
   color: #a335ee;
 }
+
+.tooltipLink {
+  color: white;
+  text-decoration: none;
+}
