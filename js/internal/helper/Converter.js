@@ -1,7 +1,7 @@
 var SimTalents = {
   yshaarj_da: "Idol of Y'Shaarj / Dark Ascension",
-  yshaarj_yogg_vf: "Idol of Y'Shaarj/Idol Yogg-Suron/Void Erruption",
-  cthun_yogg_vf: "Idol of C'Thun/Idol Yogg-Suron/Void Erruption",
+  yshaarj_yogg_vf: "Idol of Y'Shaarj/Idol of Yogg-Saron/Void Eruption",
+  cthun_yogg_vf: "Idol of C'Thun/Idol of Yogg-Saron/Void Eruption",
 };
   
 var Sims = {
@@ -72,9 +72,10 @@ var ChartPadding = {
 };
 
 var LookupType = {
+  alchemy: "item",
   apl: "none",
-  consumables: "spell",
-  enchants: "spell",
+  consumables: "item",
+  enchants: "item",
   gear: "item",
   racials: "spell",
   stats: "none",
@@ -91,7 +92,22 @@ var TalentIds = {
 }
 
 var TrinketIds = {
-  Cabalists_Hymnal_Allies_4: "184028",
+  Infernal_Writ: "137485",
+  Eye_of_Skovald: "133641",
+  Horn_of_Valor: "133642",
+  Voidmenders_Shadowgem: "110007",
+  Ruby_Whelp_Shell: "193757",
+  Tome_of_Unstable_Power: "193628",
+  Umbrelskuls_Fractured_Heart: "193639",
+  Furious_Ragefeather: "193677",
+  Conjured_Chillglobe: "194300",
+  Iceblood_Deathsnare: "194304",
+  Whispering_Incarnate_Icon_0: "194301",
+  Whispering_Incarnate_Icon_1: "194301",
+  Whispering_Incarnate_Icon_2: "194301",
+  Broodkeepers_Promise: "194307",
+  Desperate_Invokers_Codex: "194310",
+  Spiteful_Storm: "194309",
 }
 
 var getValue = function(list, key) {

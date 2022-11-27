@@ -10,7 +10,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       id = "";
     }
 
-    if(simsBtn == consumables) {
+    if (simsBtn == consumables || simsBtn == alchemy || simsBtn == enchants || simsBtn == gems) {
       url = wowheadUrl + wowheadItemPath;
     } else if(configData[sims][simsBtn.replaceAll("_", "-")]["lookupType"] == "spell"){
       url = wowheadUrl + wowheadSpellPath;
