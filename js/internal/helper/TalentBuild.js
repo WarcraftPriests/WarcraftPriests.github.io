@@ -21,4 +21,13 @@ function replaceTalentId(currTalent, currFightStyle) {
 
     document.getElementById(talentBuildIdDiv).innerHTML = document.getElementById(talentBuildIdDiv).innerHTML.replaceAll('%talentId%',configData['builds'][currTalent.replaceAll('_', '-')][selectedFightStyle])
     document.getElementById(talentBuildContentDiv).innerHTML = document.getElementById(talentBuildContentDiv).innerHTML.replaceAll('%talentId%',configData['builds'][currTalent.replaceAll('_', '-')][selectedFightStyle])
-}   
+}
+
+function copyURI(evt) {
+    evt.preventDefault();
+        navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
+      /* clipboard successfully set */
+    }, () => {
+      /* clipboard write failed */
+    });
+}
