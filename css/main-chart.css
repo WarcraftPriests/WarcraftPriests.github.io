@@ -529,3 +529,7 @@ section a {
   color: gold;
   text-decoration: none;
 }
+
+text.highcharts-title {
+  display: none;
+}
