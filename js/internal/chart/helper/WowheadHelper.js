@@ -143,7 +143,8 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
     }
   } else {
     result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
-    result += ' target="_blank"';
+    result += ' onclick="alert("ahh")"';
+    result += '" target="_blank"';
     result += ">";
     result += dpsName;
     result += "</a>";
