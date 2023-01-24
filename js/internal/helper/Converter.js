@@ -2,6 +2,7 @@ var SimTalents = {
   yshaarj_da: "Idol of Y'Shaarj / Dark Ascension",
   yshaarj_yogg_vf: "Idol of Y'Shaarj/Idol of Yogg-Saron/Void Eruption",
   cthun_yogg_vf: "Idol of C'Thun/Idol of Yogg-Saron/Void Eruption",
+  nzoth_yogg_vf: "Idol of N'Zoth/Idol of Yogg-Saron/Void Eruption",
 };
   
 var Sims = {

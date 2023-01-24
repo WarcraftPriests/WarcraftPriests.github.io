@@ -83,6 +83,7 @@ const gems = "gems";
 const yshaarj_da = "yshaarj_da";
 const yshaarj_yogg_vf = "yshaarj_yogg_vf";
 const cthun_yogg_vf = "cthun_yogg_vf";
+const nzoth_yogg_vf = "nzoth_yogg_vf";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
