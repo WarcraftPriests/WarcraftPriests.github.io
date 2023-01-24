@@ -112,6 +112,7 @@ var TrinketIds = {
   Broodkeepers_Promise: "194307",
   Desperate_Invokers_Codex: "194310",
   Spiteful_Storm: "194309",
+  Windscar_Whetstone: "137486",
 }
 
 var getValue = function(list, key) {
