@@ -27,12 +27,18 @@ var racialColor = {
     Panda_Crit: "#F3F7F0",
     Panda_Vers: "#F3F7F0",
     Vulpera: "#F2545B",
-    Panda_Smothered_Shank: "#F3F7F0",
+    Panda_Fortune_Cookie: "#F3F7F0",
+    Orc: "#F2545B",
+    Highmountain_Tauren: "#F2545B",
 }
 
 
 var getColor = function (key, key2) {
-   return "#496DC9";
+  var color = racialColor[key];
+  if (color == null || color == undefined || color == "") {
+    color = "#496DC9";
+  }
+  return color;
 }
 
 function create_color(dps, min_dps, max_dps) {
