@@ -1,8 +1,6 @@
 var SimTalents = {
-  yshaarj_da: "Idol of Y'Shaarj / Dark Ascension",
-  yshaarj_yogg_vf: "Idol of Y'Shaarj/Idol of Yogg-Saron/Void Eruption",
-  cthun_yogg_vf: "Idol of C'Thun/Idol of Yogg-Saron/Void Eruption",
-  nzoth_yogg_vf: "Idol of N'Zoth/Idol of Yogg-Saron/Void Eruption",
+  yogg_cthun: "Idol of Yogg-Saron / Idol of C'Thun",
+  nzoth_cthun: "Idol of N'Zoth / Idol of C'Thun",
 };
   
 var Sims = {
@@ -10,6 +8,7 @@ var Sims = {
   enchants: "Enchants",
   racials: "Racials",
   stats: "Stats",
+  talents_top: "Talents",
   talents: "Talents",
   talent_builds: "Talent Builds",
   trinkets: "Trinkets",
@@ -44,6 +43,7 @@ var LegendTitles = {
   enchants: "Increase in %",
   racials: "Increase in %",
   stats: "Increase in %",
+  talents_top: "Increase in %",
   talents: "Increase in %",
   talent_builds: "Increase in %",
   trinkets: "Item level",
@@ -63,6 +63,7 @@ var ChartType = {
 
 var ChartPadding = {
   talents: -80,
+  talents_top: -80,
   talent_builds: -80,
   racials: -40,
   enchants: -40,
@@ -83,6 +84,7 @@ var LookupType = {
   racials: "spell",
   special_gear: "spell",
   stats: "none",
+  talents_top: "none",
   talents: "none",
   talent_builds: "none",
   trinket_combos: "none",
@@ -96,23 +98,27 @@ var TalentIds = {
 }
 
 var TrinketIds = {
-  Infernal_Writ: "137485",
-  Eye_of_Skovald: "133641",
-  Horn_of_Valor: "133642",
   Voidmenders_Shadowgem: "110007",
-  Ruby_Whelp_Shell: "193757",
-  Tome_of_Unstable_Power: "193628",
-  Umbrelskuls_Fractured_Heart: "193639",
   Furious_Ragefeather: "193677",
-  Conjured_Chillglobe: "194300",
-  Iceblood_Deathsnare: "194304",
   Whispering_Incarnate_Icon_0: "194301",
   Whispering_Incarnate_Icon_1: "194301",
   Whispering_Incarnate_Icon_2: "194301",
-  Broodkeepers_Promise: "194307",
-  Desperate_Invokers_Codex: "194310",
-  Spiteful_Storm: "194309",
-  Windscar_Whetstone: "137486",
+  Idol_of_Pure_Decay: "193660",
+  Irideus_Fragment: "193743",
+  Erupting_Spear_Fragment: "193769",
+  Spoils_of_Neltharus: "193773",
+  Time_Breaching_Talon: "193791",
+  Rotcrusted_Voodoo_Doll: "159624",
+  Screaming_Black_Dragonscale: "202612",
+  Vessel_of_Searing_Shadow: "202615",
+  Ominous_Chromatic_Essence_Obsidian: "203729",
+  Ominous_Chromatic_Essence_Ruby: "203729",
+  Ominous_Chromatic_Essence_Azure: "203729",
+  Ominous_Chromatic_Essence_Bronze: "203729",
+  Ominous_Chromatic_Essence_Emerald: "203729",
+  Igneous_Flowstone: "203996",
+  Neltharions_Call_to_Suffering: "204211",
+  Beacon_to_the_Beyond: "203963",
 }
 
 var getValue = function(list, key) {

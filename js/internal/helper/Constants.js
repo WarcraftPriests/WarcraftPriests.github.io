@@ -23,7 +23,7 @@ const alignMiddle = "middle";
 const stackingNormal = "normal";
 const legendTitleTextSteps = "Steps";
 const chartType = "bar";
-const defaultHeader = "Yshaarj da - Trinkets - Composite";
+const defaultHeader = "Yogg Cthun - Trinkets - Composite";
 const whiteText = "white";
 const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
@@ -51,8 +51,8 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/master/";
-const wowheadUrl = "https://www.wowhead.com/"
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/ptr/";
+const wowheadUrl = "https://www.wowhead.com/ptr/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
@@ -74,16 +74,15 @@ const jsonSimulatedSteps = "simulated_steps";
  * Simc related stuff definitions
  */
 const trinkets = "trinkets";
+const talentsTop = "talents-top";
 const talents = "talents";
 const composite = "Composite";
 const fightStyle = "fightStyle";
 const racials = "racials";
 const alchemy = "alchemy";
 const gems = "gems";
-const yshaarj_da = "yshaarj_da";
-const yshaarj_yogg_vf = "yshaarj_yogg_vf";
-const cthun_yogg_vf = "cthun_yogg_vf";
-const nzoth_yogg_vf = "nzoth_yogg_vf";
+const yogg_cthun = "yogg_cthun";
+const nzoth_cthun = "nzoth_cthun";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
@@ -126,7 +125,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = yshaarj_da;
+const defaultTalent = yogg_cthun;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
