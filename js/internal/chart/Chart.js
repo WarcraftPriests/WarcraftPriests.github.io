@@ -129,8 +129,6 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
     fightStyle = "4T";
   }
 
-  console.log(simsBtn)
-
   if(simsBtn == talents || simsBtn == talentsTop){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
   } else {
