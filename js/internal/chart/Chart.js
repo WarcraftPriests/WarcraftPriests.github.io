@@ -86,7 +86,7 @@ function determineChartName(firstTalent, fullSimType, fightStyle) {
   simType = fullSimType.replaceAll("-", " ");
   simType = simType.replaceAll("_", " ");
 
-  if(fullSimType.toLowerCase() == "talent_builds") {
+  if(fullSimType.toLowerCase() == "talents_top") {
     return simType
               + space + dash + space
               + fightStyle;
@@ -129,7 +129,7 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
     fightStyle = "4T";
   }
 
-  if(simsBtn == talents){
+  if(simsBtn == talents || simsBtn == talentsTop){
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
   } else {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice + jsonExtension;
@@ -142,6 +142,6 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
  * So no data could be fetched
  */
 function handleJsonFailure(xhr, status) {
-  console.log("The JSON chart failed to load, please let DJ/espo know via discord Djriff#0001/espo#6663");
+  console.log("The JSON chart failed to load, please let Publik/espo know via discord Publik#5576/espo#6663");
   console.log(status);
 }

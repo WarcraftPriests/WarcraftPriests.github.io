@@ -37,7 +37,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
     || simsBtn == enchants
     || simsBtn == racials) {
       result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
-  } else if(simsBtn != null && simsBtn != undefined && simsBtn == talents) {
+  } else if(simsBtn != null && simsBtn != undefined && (simsBtn == talents || simsBtn == talentsTop)) {
     result = buildChartLineForTalents(dpsName, result);
   } else if(simsBtn != null && simsBtn != undefined && simsBtn == "trinket_combos") {
     result = buildChartLineForTrinketCombos(dpsName, result);
@@ -134,7 +134,7 @@ function buildChartLineForBasic(names, currentResult) {
 
 function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   var result = currentResult;
-  if(currSimsBtn == 'talents') {
+  if(currSimsBtn == 'talents' || currSimsBtn == 'talents_top') {
     link = talentData['builds'][dpsName];
     if (link) {
       result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> '+ dpsName + ' </a>';
