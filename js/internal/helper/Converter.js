@@ -119,6 +119,7 @@ var TrinketIds = {
   Igneous_Flowstone: "203996",
   Neltharions_Call_to_Suffering: "204211",
   Beacon_to_the_Beyond: "203963",
+  Naraxas_Spiked_Tongue: "137349",
 }
 
 var getValue = function(list, key) {
