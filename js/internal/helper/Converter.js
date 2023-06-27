@@ -1,6 +1,7 @@
 var SimTalents = {
   yogg_cthun: "Idol of Yogg-Saron / Idol of C'Thun",
   nzoth_cthun: "Idol of N'Zoth / Idol of C'Thun",
+  yshaarj_cthun: "Idol of Y'Shaarj / Idol of C'Thun",
 };
   
 var Sims = {

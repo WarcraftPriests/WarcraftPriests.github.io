@@ -83,6 +83,7 @@ const alchemy = "alchemy";
 const gems = "gems";
 const yogg_cthun = "yogg_cthun";
 const nzoth_cthun = "nzoth_cthun";
+const yshaarj_cthun = "yshaarj_cthun"
 const ring = "ring";
 const food = "food";
 const sims = "sims";
