@@ -11,10 +11,12 @@ $(".talentBuild").click(function () {
 
 function replaceTalentId(currTalent, currFightStyle) {
     let selectedFightStyle = undefined;
-    if(currFightStyle == 'twotarget') {
+    if (currFightStyle == 'twotarget') {
         selectedFightStyle = '2t';
-    } else if(currFightStyle == 'fourtarget') {
+    } else if (currFightStyle == 'fourtarget') {
         selectedFightStyle = '4t';
+    } else if (currFightStyle == 'dungeons') {
+        selectedFightStyle = 'dungeons';
     } else {
         selectedFightStyle = currFightStyle.toLowerCase();
     }

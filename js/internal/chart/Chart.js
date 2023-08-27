@@ -123,10 +123,12 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
     simsBtn = simsBtn.replaceAll(underscore, dash);
   }
 
-  if(fightStyle.includes("twotarget")) {
+  if (fightStyle.includes("twotarget")) {
     fightStyle = "2T";
-  } else if(fightStyle.includes("fourtarget")) {
+  } else if (fightStyle.includes("fourtarget")) {
     fightStyle = "4T";
+  } else if (fightStyle.includes("Dungeons")) {
+    fightStyle = "Dungeons-Standard"
   }
 
   if(simsBtn == talents || simsBtn == talentsTop){
