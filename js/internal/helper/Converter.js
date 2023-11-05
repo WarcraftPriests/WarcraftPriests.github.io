@@ -1,7 +1,7 @@
 var SimTalents = {
-  yogg_cthun: "Idol of Yogg-Saron / Idol of C'Thun",
-  nzoth_cthun: "Idol of N'Zoth / Idol of C'Thun",
-  yshaarj_cthun: "Idol of Y'Shaarj / Idol of C'Thun",
+  da_yshaarj_cthun: "Dark Ascension + Idol of Y'Shaarj / Idol of C'Thun",
+  da_yshaarj_nzoth_cthun: "Dark Ascension + Idol of Y'Shaarj / Idol of N'Zoth / Idol of C'Thun",
+  vf_yshaarj: "Void Eruption + Idol of Y'Shaarj",
 };
   
 var Sims = {
@@ -31,7 +31,8 @@ var FightStyles = {
   Single: "Single Target",
   Dungeons: "Dungeons",
   twotarget: "2 Target",
-  fourtarget: "4 Target",
+  threetarget: "3 Target",
+  // fourtarget: "4 Target",
 };
   
 var FightStyleExternal = {
@@ -99,28 +100,23 @@ var TalentIds = {
 }
 
 var TrinketIds = {
-  Voidmenders_Shadowgem: "110007",
-  Furious_Ragefeather: "193677",
-  Whispering_Incarnate_Icon_0: "194301",
-  Whispering_Incarnate_Icon_1: "194301",
-  Whispering_Incarnate_Icon_2: "194301",
-  Idol_of_Pure_Decay: "193660",
-  Irideus_Fragment: "193743",
-  Erupting_Spear_Fragment: "193769",
-  Spoils_of_Neltharus: "193773",
-  Time_Breaching_Talon: "193791",
-  Rotcrusted_Voodoo_Doll: "159624",
-  Screaming_Black_Dragonscale: "202612",
-  Vessel_of_Searing_Shadow: "202615",
-  Ominous_Chromatic_Essence_Obsidian: "203729",
-  Ominous_Chromatic_Essence_Ruby: "203729",
-  Ominous_Chromatic_Essence_Azure: "203729",
-  Ominous_Chromatic_Essence_Bronze: "203729",
-  Ominous_Chromatic_Essence_Emerald: "203729",
-  Igneous_Flowstone: "203996",
-  Neltharions_Call_to_Suffering: "204211",
-  Beacon_to_the_Beyond: "203963",
-  Naraxas_Spiked_Tongue: "137349",
+  Energy_Siphon: "156021",
+  Living_Flame: "155947",
+  Vessel_of_Skittering_Shadows: "159610",
+  Caged_Horror: "136716",
+  Corrupted_Starlight: "137301",
+  Oakhearts_Gnarled_Root: "137306",
+  Coagulated_Genesaur_Blood: "110004",
+  Sea_Star: "133201",
+  Balefire_Branch: "159630",
+  Lady_Waycrests_Music_Box: "159631",
+  Mirror_of_Fractured_Tomorrows: "207581",
+  Time_Thiefs_Gambit: "207579",
+  Pips_Emerald_Friendship_Badge: "207168",
+  Nymues_Unraveling_Spindle: "208615",
+  Belorrelos_the_Suncaller: "207172",
+  Augury_of_the_Primal_Flame: "208614",
+  Ashes_of_the_Embersoul: "207167",
 }
 
 var getValue = function(list, key) {

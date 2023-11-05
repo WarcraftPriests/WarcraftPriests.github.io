@@ -13,6 +13,8 @@ function replaceTalentId(currTalent, currFightStyle) {
     let selectedFightStyle = undefined;
     if (currFightStyle == 'twotarget') {
         selectedFightStyle = '2t';
+    } else if (currFightStyle == 'threetarget') {
+        selectedFightStyle = '3t';
     } else if (currFightStyle == 'fourtarget') {
         selectedFightStyle = '4t';
     } else if (currFightStyle == 'dungeons') {

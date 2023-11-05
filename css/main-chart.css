@@ -533,3 +533,10 @@ section a {
 text.highcharts-title {
   display: none;
 }
+
+div#Chart-Display-div {
+  display: grid;
+  width: 80%;
+  gap: 10px;
+  justify-items: center;
+}

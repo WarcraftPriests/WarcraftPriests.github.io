@@ -13,6 +13,8 @@ var Headings = {
 function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
     if (currFightStyleBtn.includes("twotarget")) {
         currFightStyleBtn = "2T";
+    } else if (currFightStyleBtn.includes("threetarget")) {
+        currFightStyleBtn = "3T";
     } else if (currFightStyleBtn.includes("fourtarget")) {
         currFightStyleBtn = "4T";
     } else if (currFightStyleBtn.includes("Dungeons")) {
