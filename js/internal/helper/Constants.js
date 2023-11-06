@@ -23,7 +23,7 @@ const alignMiddle = "middle";
 const stackingNormal = "normal";
 const legendTitleTextSteps = "Steps";
 const chartType = "bar";
-const defaultHeader = "Yogg Cthun - Trinkets - Composite";
+const defaultHeader = "Dark Ascension Y'Shaarj Cthun - Trinkets - Composite";
 const whiteText = "white";
 const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
@@ -51,8 +51,8 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/main/";
-const wowheadUrl = "https://www.wowhead.com/"
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/ptr/";
+const wowheadUrl = "https://www.wowhead.com/ptr-2/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
@@ -92,6 +92,9 @@ const gear = "gear";
 const stats = "stats";
 const trinketCombos = "trinket_combos";
 const specialGear = "special_gear";
+const da_yshaarj_cthun = "da_yshaarj_cthun";
+const da_yshaarj_nzoth_cthun = "da_yshaarj_nzoth_cthun";
+const vf_yshaarj = "vf_yshaarj";
 
 /*
  * Button related definitions
@@ -126,7 +129,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = yogg_cthun;
+const defaultTalent = da_yshaarj_cthun;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
