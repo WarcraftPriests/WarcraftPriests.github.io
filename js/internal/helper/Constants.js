@@ -52,7 +52,7 @@ const underscore = "_";
  * Repo url definition
  */
 const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/main/";
-const wowheadUrl = "https://www.wowhead.com/ptr-2/"
+const wowheadUrl = "https://www.wowhead.com/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
