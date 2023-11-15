@@ -114,6 +114,7 @@ var TrinketIds = {
   Time_Thiefs_Gambit: "207579",
   Pips_Emerald_Friendship_Badge: "207168",
   Nymues_Unraveling_Spindle: "208615",
+  Nymues_Unraveling_Spindle_IMMOBILIZED: "208615",
   Belorrelos_the_Suncaller: "207172",
   Augury_of_the_Primal_Flame: "208614",
   Ashes_of_the_Embersoul: "207167",
