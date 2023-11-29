@@ -136,8 +136,11 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   var result = currentResult;
   if(currSimsBtn == 'talents' || currSimsBtn == 'talents_top') {
     link = talentData['builds'][dpsName];
+    generated_link = talentData['generated'][dpsName];
     if (link) {
       result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> '+ dpsName + ' </a>';
+    } else if (generated_link) {
+      result += '<a class="tooltipLink" href="' + generated_link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> '+ dpsName + ' </a>';
     } else {
       result += dpsName;
     }
