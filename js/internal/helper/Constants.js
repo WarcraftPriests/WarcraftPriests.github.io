@@ -93,8 +93,8 @@ const stats = "stats";
 const trinketCombos = "trinket_combos";
 const specialGear = "special_gear";
 const da_yshaarj_cthun = "da_yshaarj_cthun";
-const da_yshaarj_nzoth_cthun = "da_yshaarj_nzoth_cthun";
-const vf_yshaarj = "vf_yshaarj";
+const da_nzoth_cthun = "da_nzoth_cthun";
+const vf = "vf";
 
 /*
  * Button related definitions
