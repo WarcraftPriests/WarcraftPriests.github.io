@@ -23,7 +23,7 @@ const alignMiddle = "middle";
 const stackingNormal = "normal";
 const legendTitleTextSteps = "Steps";
 const chartType = "bar";
-const defaultHeader = "Dark Ascension Y'Shaarj Cthun - Trinkets - Composite";
+const defaultHeader = "Void Eruption Yogg-Saron Cthun - Trinkets - Composite";
 const whiteText = "white";
 const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
@@ -51,7 +51,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/main/";
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/ptr/";
 const wowheadUrl = "https://www.wowhead.com/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
@@ -81,9 +81,8 @@ const fightStyle = "fightStyle";
 const racials = "racials";
 const alchemy = "alchemy";
 const gems = "gems";
-const yogg_cthun = "yogg_cthun";
-const nzoth_cthun = "nzoth_cthun";
-const yshaarj_cthun = "yshaarj_cthun"
+const vf_yogg_cthun = "vf_yogg_cthun";
+const da_cthun = "da_cthun";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
@@ -92,9 +91,6 @@ const gear = "gear";
 const stats = "stats";
 const trinketCombos = "trinket_combos";
 const specialGear = "special_gear";
-const da_yshaarj_cthun = "da_yshaarj_cthun";
-const da_nzoth_cthun = "da_nzoth_cthun";
-const vf = "vf";
 
 /*
  * Button related definitions
@@ -129,7 +125,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = da_yshaarj_cthun;
+const defaultTalent = vf_yogg_cthun;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
