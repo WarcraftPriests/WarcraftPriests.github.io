@@ -1,6 +1,8 @@
 var SimTalents = {
-  vf_yogg_cthun: "Void Eruption + Idol of Yogg-Saron / Idol of C'Thun",
-  da_cthun: "Dark Ascension + Idol of C'Thun",
+  vf_yogg_cthun: "Void Eruption + Yogg / C'Thun",
+  da_cthun: "Dark Ascension + C'Thun",
+  vf_nzoth_yogg_cthun_dr: "Void Eruption + Triple Idol + DR",
+  vf_nzoth_yogg_cthun_me: "Void Eruption + Triple Idol + ME",
 };
   
 var Sims = {
@@ -113,7 +115,7 @@ var TrinketIds = {
   Idol_of_Pure_Decay: "193660",
   Erupting_Spear_Fragment: "193769",
   Time_Breaching_Talon: "193791",
-  Emerald_Coachs_WhistleL: "193718",
+  Emerald_Coachs_Whistle: "193718",
   Conjured_Chillglobe: "194300",
   Iceblood_Deathsnare: "194304",
   Whispering_Incarnate_Icon_0: "194301",

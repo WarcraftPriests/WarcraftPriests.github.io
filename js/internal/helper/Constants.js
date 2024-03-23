@@ -83,6 +83,8 @@ const alchemy = "alchemy";
 const gems = "gems";
 const vf_yogg_cthun = "vf_yogg_cthun";
 const da_cthun = "da_cthun";
+const vf_nzoth_yogg_cthun_dr = "vf_nzoth_yogg_cthun_dr";
+const vf_nzoth_yogg_cthun_me = "vf_nzoth_yogg_cthun_me";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
@@ -113,7 +115,7 @@ const show = "show";
 const enchants = "enchants";
 const consumables = "consumables";
 const weights = "weights";
-const maxSimButtonsPerRow = 7;
+const maxSimButtonsPerRow = 6;
 
 const pointer = "pointer";
 const attributeSpacer = "', '";
