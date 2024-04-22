@@ -18,7 +18,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
     } else if (currFightStyleBtn.includes("fourtarget")) {
         currFightStyleBtn = "4T";
     } else if (currFightStyleBtn.includes("Dungeons")) {
-        currFightStyleBtn = "Dungeons-Standard";
+        currFightStyleBtn = "Dungeons-Push";
     }
     
     $(document).ready(function() {
