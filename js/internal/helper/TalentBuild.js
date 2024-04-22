@@ -23,15 +23,16 @@ function replaceTalentId(currTalent, currFightStyle) {
         selectedFightStyle = currFightStyle.toLowerCase();
     }
 
-    document.getElementById(talentBuildIdDiv).innerHTML = document.getElementById(talentBuildIdDiv).innerHTML.replaceAll('%talentId%',configData['builds'][currTalent.replaceAll('_', '-')][selectedFightStyle])
-    document.getElementById(talentBuildContentDiv).innerHTML = document.getElementById(talentBuildContentDiv).innerHTML.replaceAll('%talentId%',configData['builds'][currTalent.replaceAll('_', '-')][selectedFightStyle])
+    /* `builds.talentID.talents.fightStyle` */
+    document.getElementById(talentBuildIdDiv).innerHTML = document.getElementById(talentBuildIdDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle])
+    document.getElementById(talentBuildContentDiv).innerHTML = document.getElementById(talentBuildContentDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle])
 }
 
 function copyURI(evt) {
     evt.preventDefault();
-        navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
+    navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
         alert("Talent id copied to the clipboard");
     }, () => {
-      /* clipboard write failed */
+        /* clipboard write failed */
     });
 }
