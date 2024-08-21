@@ -17,6 +17,8 @@ function replaceTalentId(currTalent, currFightStyle) {
         selectedFightStyle = '3t';
     } else if (currFightStyle == 'fourtarget') {
         selectedFightStyle = '4t';
+    } else if (currFightStyle == 'eighttarget') {
+        selectedFightStyle = '8t';
     } else if (currFightStyle == 'dungeons') {
         selectedFightStyle = 'dungeons';
     } else {
@@ -24,8 +26,8 @@ function replaceTalentId(currTalent, currFightStyle) {
     }
 
     /* `builds.talentID.talents.fightStyle` */
-    document.getElementById(talentBuildIdDiv).innerHTML = document.getElementById(talentBuildIdDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle])
-    document.getElementById(talentBuildContentDiv).innerHTML = document.getElementById(talentBuildContentDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle])
+    document.getElementById(talentBuildIdDiv).innerHTML = document.getElementById(talentBuildIdDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string'])
+    document.getElementById(talentBuildContentDiv).innerHTML = document.getElementById(talentBuildContentDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string'])
 }
 
 function copyURI(evt) {

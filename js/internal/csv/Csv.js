@@ -17,6 +17,8 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
         currFightStyleBtn = "3T";
     } else if (currFightStyleBtn.includes("fourtarget")) {
         currFightStyleBtn = "4T";
+    } else if (currFightStyleBtn.includes("eighttarget")) {
+        currFightStyleBtn = "8T";
     } else if (currFightStyleBtn.includes("Dungeons")) {
         currFightStyleBtn = "Dungeons-Push";
     }

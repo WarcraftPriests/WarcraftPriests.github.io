@@ -23,7 +23,7 @@ const alignMiddle = "middle";
 const stackingNormal = "normal";
 const legendTitleTextSteps = "Steps";
 const chartType = "bar";
-const defaultHeader = "Void Eruption Yogg-Saron Cthun - Trinkets - Composite";
+const defaultHeader = "Archon - Trinkets - Composite";
 const whiteText = "white";
 const legendLayoutVertical = "vertical";
 const legendTitleTextItemLevel = "Item Level";
@@ -51,7 +51,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/df-shadow-priest/main/";
+const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/master/";
 const wowheadUrl = "https://www.wowhead.com/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
@@ -81,10 +81,10 @@ const fightStyle = "fightStyle";
 const racials = "racials";
 const alchemy = "alchemy";
 const gems = "gems";
-const vf_yogg_cthun = "vf_yogg_cthun";
-const da_cthun = "da_cthun";
-const vf_nzoth_yogg_cthun_dr = "vf_nzoth_yogg_cthun_dr";
-const vf_nzoth_yogg_cthun_me = "vf_nzoth_yogg_cthun_me";
+const gemCombos = "gem_combos";
+const vw_cthun = "vw_cthun";
+const ar_vf_cthun_flay_me = "ar_vf_cthun_flay_me";
+const ar_vf_yogg_cthun_me = "ar_vf_yogg_cthun_me";
 const ring = "ring";
 const food = "food";
 const sims = "sims";
@@ -127,7 +127,7 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = vf_yogg_cthun;
+const defaultTalent = ar_vf_cthun_flay_me;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
