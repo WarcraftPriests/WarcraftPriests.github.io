@@ -8,7 +8,6 @@ var racialColor = {
     Troll: "#F2545B",
     Blood_Elf: "#F2545B",
     Void_Elf: "#4F86C6",
-    Panda_Feast: "#F3F7F0",
     Nightborne: "#F2545B",
     Lightforged_Draenei: "#4F86C6",
     Night_Elf_Crit: "#4F86C6",
@@ -20,16 +19,14 @@ var racialColor = {
     Worgen: "#4F86C6",
     Maghar_Orc: "#F2545B",
     Zandalari_Troll_Kimbul: "#F2545B",
-    Panda_Haste: "#F3F7F0",
     Dwarf: "#4F86C6",
     Tauren: "#F2545B",
-    Panda_Mastery: "#F3F7F0",
-    Panda_Crit: "#F3F7F0",
-    Panda_Vers: "#F3F7F0",
     Vulpera: "#F2545B",
-    Panda_Fortune_Cookie: "#F3F7F0",
+    Panda_Feast: "#F3F7F0",
     Orc: "#F2545B",
     Highmountain_Tauren: "#F2545B",
+    Earthen: "#F3F7F0",
+    Dracthyr: "#F3F7F0",
 }
 
 
