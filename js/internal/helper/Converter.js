@@ -119,6 +119,7 @@ var TrinketIds = {
   Treacherous_Transmitter: "221023",
   Quickwick_Candlestick: "225649",
   Forged_Gladiators_Badge_of_Ferocity: "218713",
+  Shadowbinding_Ritual_Knife: "215178",
 }
 
 var getValue = function(list, key) {
