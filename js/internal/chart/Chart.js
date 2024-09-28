@@ -132,7 +132,7 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   } else if (fightStyle.includes("eighttarget")) {
     fightStyle = "8T";
   } else if (fightStyle.includes("Dungeons")) {
-    fightStyle = "Dungeons-Slice"
+    fightStyle = "Dungeons-Route"
   }
 
   if(simsBtn == talents || simsBtn == talentsTop){
