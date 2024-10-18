@@ -122,6 +122,7 @@ var TrinketIds = {
   Shadowbinding_Ritual_Knife: "215178",
   Mad_Queens_Mandate: "212454",
   Candle_Confidant: "225648",
+  Burst_of_Knowledge: "231424",
 }
 
 var getValue = function(list, key) {
