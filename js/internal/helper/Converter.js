@@ -121,6 +121,7 @@ var TrinketIds = {
   Forged_Gladiators_Badge_of_Ferocity: "218713",
   Shadowbinding_Ritual_Knife: "215178",
   Mad_Queens_Mandate: "212454",
+  Candle_Confidant: "225648",
 }
 
 var getValue = function(list, key) {
