@@ -52,17 +52,10 @@ const underscore = "_";
  * Repo url definition
  */
 const repoTemplateUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/{version}/"
-const baseUrl = getUrlFromVersion(repoTemplateUrl, SimVersions)
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
 const textType = "text";
-
-function getUrlFromVersion(url){
-    // TODO: How to derive this somewhere else?
-    const version = getQueryParameter().get('version') || "master"
-    return url.replace("{version}", version)
-}
 
 /*
  * Json data schema definitions
@@ -139,7 +132,6 @@ const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
-// TODO: Pull this from somewhere else?
 const defaultVersion = "master"
 
 const builds = "builds";

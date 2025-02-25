@@ -1,3 +1,10 @@
+(function(){
+    const params = getQueryParameter();
+    const selectedVersion = params.get(version);
+    const simVersion = SimRepoVersions[selectedVersion] ? selectedVersion : defaultVersion
+    baseUrl = repoTemplateUrl.replace("{version}", simVersion)
+}());
+
 jQuery.get({url: baseUrl + "/internal/talents.yml", dataType: "text"})
         .done(function (data) {
             talentData = jsyaml.load(data);
