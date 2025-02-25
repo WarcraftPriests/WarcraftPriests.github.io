@@ -8,6 +8,7 @@ jQuery.get({url: baseUrl + "/internal/talents.yml", dataType: "text"})
 jQuery.get({url: baseUrl + "/config.yml", dataType: "text"})
         .done(function (data) {
             configData = jsyaml.load(data);
+            wowheadUrl = configData[charts].wowheadUrl
             initializeButtons();
         }
 );
