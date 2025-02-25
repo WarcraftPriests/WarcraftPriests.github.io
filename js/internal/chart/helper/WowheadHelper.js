@@ -2,7 +2,8 @@
  * Build wowhead tooltips
  */
 function buildWowheadTooltips(data, breakConidition, simsBtn) {
-  const wowheadUrl = configData[charts].wowheadUrl
+  // TODO: Better to define as global after loading?
+  const wowheadUrl = getWowheadUrl()
   var result = [];
 
   for (dpsName of data[jsonSortedDataKeys]) {
@@ -50,6 +51,7 @@ function buildChartLine(dpsName, itemId, url, simsBtn) {
 }
 
 function buildChartLineForTrinketCombos(dpsName, currentResult) {
+  const wowheadUrl = getWowheadUrl()
   var currResult = "";
   var counter = 0;
   var names = dpsName.split("-");
@@ -84,6 +86,7 @@ function buildWowheadTooltipsMultipleBar(data, simsBtn) {
 }
 
 function buildChartLineForTrinkets(dpsName, currentResult) {
+  const wowheadUrl = getWowheadUrl()
   var currResult = "";
   var names = dpsName.split("_");
   for(name of names) {
@@ -94,11 +97,13 @@ function buildChartLineForTrinkets(dpsName, currentResult) {
 }
 
 function buildChartLineForTalents(dpsName, currentResult) {
+  const wowheadUrl = getWowheadUrl()
   currResult = ""
   return buildChartLineWithWowheadLine(dpsName, getValue(TalentIds, dpsName.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult);
 }
 
 function buildChartLineForBasic(names, currentResult) {
+  const wowheadUrl = getWowheadUrl()
   var currResult = currentResult; 
   var counter = 0;
   var currName = "";
@@ -155,4 +160,8 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
   }
   
   return result;
+}
+
+function getWowheadUrl() {
+  return configData[charts].wowheadUrl
 }
