@@ -314,18 +314,15 @@ function checkButtonClick() {
     }
   }
 
-  const simVersion = currVersionBtn === defaultVersion ? "" : currVersionBtn
-  // Need to wipe out talents when swapping versions
-  // This results in double reload because it needs to default the build again once it fetches new config
-  // We could ignore the build qs if it's not in the current config 
+  const selectedVersion = currVersionBtn === defaultVersion ? "" : currVersionBtn
   const currentVersion = getQueryParameter().get(version) || ""
-  const talents = currentVersion != simVersion ? "" : currTalentBtn
+  const talents = currentVersion != selectedVersion ? "" : currTalentBtn
 
   manipulateUrl({
     talents,
     sims: currSimsBtn,
     fightStyle: currFightStyleBtn,
-    version: simVersion
+    version: selectedVersion
   });
   updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
 }
