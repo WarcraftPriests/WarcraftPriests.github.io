@@ -22,7 +22,8 @@ function createChart( simsBtn, fightStyle, talentChoice, chartId, metaData, maxE
       function (data) {
         if(metaData) {
           document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-          var header = determineChartName( getValue(SimTalents, talentChoice), 
+          var simTalent = getConfigValue(configData[builds], talentChoice)
+          var header = determineChartName(simTalent.name, 
                                            simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
                                            fightStyle);
           document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
