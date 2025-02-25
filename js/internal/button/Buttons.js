@@ -42,7 +42,7 @@ function initializeButtons() {
  * Initial setup of all buttons for the site
  */
 function createButtons() {
-  createVersionButtons(SimVersions)
+  createVersionButtons(SimRepoVersions)
   createTalentButtons(configData[builds]);
   createSimsButtons(configData[sims]);
   createConsumableButtons(getKeys(Consumables));
@@ -71,7 +71,7 @@ function createVersionButtons(buttonArray) {
   let div = document.getElementById(versionDiv);
   for (b in buttonArray) {
     var buttonText = document.createTextNode(buttonArray[b]);
-    createButtonBasicNoImage(div, b, checkButtonClick, buttonText, "version");
+    createButtonBasicNoImage(div, b, checkButtonClick, buttonText, version);
   }
   styleButtons();
 }
@@ -313,24 +313,24 @@ function checkButtonClick() {
     }
   }
 
-  const version = currVersionBtn === defaultVersion ? "" : currVersionBtn
+  const simVersion = currVersionBtn === defaultVersion ? "" : currVersionBtn
   // Need to wipe out talents when swapping versions
   // This results in double reload because it needs to default the build again once it fetches new config
   // We could ignore the build qs if it's not in the current config 
-  const currentVersion = new URLSearchParams(window.location.search).get("version") || ""
-  const talents = currentVersion != version ? "" : currTalentBtn
+  const currentVersion = getQueryParameter().get(version) || ""
+  const talents = currentVersion != simVersion ? "" : currTalentBtn
 
   manipulateUrl({
     talents,
     sims: currSimsBtn,
     fightStyle: currFightStyleBtn,
-    version
+    version: simVersion
   });
   updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
 }
 
 function hasMultipleVersions() {
-  return Object.keys(SimVersions).length > 1
+  return Object.keys(SimRepoVersions).length > 1
 }
 
 function removeShowSpecial(div) {

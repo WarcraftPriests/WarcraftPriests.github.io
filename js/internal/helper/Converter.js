@@ -1,5 +1,4 @@
-// Map from gh branch name to sim version. Default to master
-var SimVersions = {
+var SimRepoVersions = {
   master: "Live",
   ptr: "PTR",
 }
