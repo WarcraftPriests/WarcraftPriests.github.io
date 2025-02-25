@@ -55,10 +55,16 @@ function createConsumableButtons(buttonArray) {
 }
 
 /*
- * Creates consumables buttons
+ * Creates talent buttons
  */
 function createTalentButtons(buttonArray) {
-  createButtonBasicList(talentDiv, buttonArray, checkButtonClick, SimTalents, talents)
+  let div = document.getElementById(talentDiv);
+  for (b in buttonArray) {
+    var buttonText = document.createTextNode(buttonArray[b].name);
+    b = b.replaceAll(dash, underscore);
+    createButtonBasic(div, b, checkButtonClick, buttonText, talents);
+  }
+  styleButtons();
 }
 
 /*
