@@ -1,16 +1,17 @@
-// TODO: Can move to initializeButtons() ?
-var currSimsBtn = defaultSims;
-var currEnchantsBtn = defaultEnchant;
-var currConsumablesBtn = defaultConsumable;
-var currFightStyleBtn = defaultFightStyle;
-var currVersionBtn = defaultVersion;
+function setDefaultButtonValues() {
+  currSimsBtn = defaultSims;
+  currEnchantsBtn = defaultEnchant;
+  currConsumablesBtn = defaultConsumable;
+  currFightStyleBtn = defaultFightStyle;
+  currVersionBtn = defaultVersion;
+  currTalentBtn = Object.keys(configData[builds])[0].replaceAll("-", "_")
+}
 
 /*
  * Initialize all buttons by url params
  */
 function initializeButtons() {
-  // default to first entry in builds
-  currTalentBtn = Object.keys(configData[builds])[0].replaceAll("-", "_")
+  setDefaultButtonValues()
 
   var query = getQueryParameter();
   if(query !== null) {
