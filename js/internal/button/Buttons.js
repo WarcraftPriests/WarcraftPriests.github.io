@@ -308,13 +308,17 @@ function checkButtonClick() {
         removeShowSpecial(talentBuildDiv);
       }
     }
-    
   }
 
   const version = currVersionBtn === defaultVersion ? "" : currVersionBtn
+  // Need to wipe out talents when swapping versions
+  // This results in double reload because it needs to default the build again once it fetches new config
+  // We could ignore the build qs if it's not in the current config 
+  const currentVersion = new URLSearchParams(window.location.search).get("version") || ""
+  const talents = currentVersion != version ? "" : currTalentBtn
 
   manipulateUrl({
-    talents: currTalentBtn,
+    talents,
     sims: currSimsBtn,
     fightStyle: currFightStyleBtn,
     version
