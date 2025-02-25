@@ -1,7 +1,7 @@
 // Map from gh branch name to sim version. Default to master
 var SimVersions = {
-  default: "master",
-  ptr: "ptr"
+  master: "Live",
+  ptr: "PTR",
 }
   
 var Sims = {

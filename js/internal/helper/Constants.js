@@ -52,16 +52,16 @@ const underscore = "_";
  * Repo url definition
  */
 const repoTemplateUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/{version}/"
-// const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/master/";
 const baseUrl = getUrlFromVersion(repoTemplateUrl, SimVersions)
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
 const textType = "text";
 
-function getUrlFromVersion(url, lookup){
-    const version = getQueryParameter().get('version')
-    return url.replace("{version}", lookup[version] || lookup["default"])
+function getUrlFromVersion(url){
+    // TODO: How to derive this somewhere else?
+    const version = getQueryParameter().get('version') || "master"
+    return url.replace("{version}", version)
 }
 
 /*
@@ -79,6 +79,7 @@ const jsonSimulatedSteps = "simulated_steps";
 /*
  * Simc related stuff definitions
  */
+const version = "version"
 const trinkets = "trinkets";
 const talentsTop = "talents-top";
 const talents = "talents";
@@ -103,6 +104,7 @@ const specialGear = "special_gear";
 /*
  * Button related definitions
  */
+const versionDiv = "version-div"
 const fightStyleDiv = "fightStyle-div";
 const consumablesDiv = "consumables-div";
 const enchantDiv = "enchants-div";
@@ -137,6 +139,8 @@ const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
+// TODO: Pull this from somewhere else?
+const defaultVersion = "master"
 
 const builds = "builds";
 const charts = "charts"
