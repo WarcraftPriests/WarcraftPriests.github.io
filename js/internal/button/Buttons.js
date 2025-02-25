@@ -290,12 +290,15 @@ function handleOnClick(clickedButton, btn) {
  * necessary
  */
 function checkButtonClick() {
-  addShow(versionDiv)
   addShow(fightStyleDiv);
   addShow(simsDiv);
   addShow(talentDiv);
   removeShow(enchantDiv);
   removeShow(consumablesDiv);
+
+  if(hasMultipleVersions()) {
+    addShow(versionDiv)
+  }
   
   for(currTalent in configData[sims]) {
     if(currTalent == currSimsBtn 
@@ -324,6 +327,10 @@ function checkButtonClick() {
     version
   });
   updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
+}
+
+function hasMultipleVersions() {
+  return Object.keys(SimVersions).length > 1
 }
 
 function removeShowSpecial(div) {
