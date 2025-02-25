@@ -51,12 +51,18 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/master/";
-const wowheadUrl = "https://www.wowhead.com/ptr-2/"
+const repoTemplateUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/{version}/"
+// const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/master/";
+const baseUrl = getUrlFromVersion(repoTemplateUrl, SimVersions)
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
 const textType = "text";
+
+function getUrlFromVersion(url, lookup){
+    const version = getQueryParameter().get('version')
+    return url.replace("{version}", lookup[version] || lookup["default"])
+}
 
 /*
  * Json data schema definitions
@@ -127,12 +133,12 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = ar_vf_cthun_flay_me;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
 
 const builds = "builds";
+const charts = "charts"
 const files = "files";
 const none = "none";

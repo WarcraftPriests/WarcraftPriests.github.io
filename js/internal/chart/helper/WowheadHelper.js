@@ -2,7 +2,9 @@
  * Build wowhead tooltips
  */
 function buildWowheadTooltips(data, breakConidition, simsBtn) {
+  const wowheadUrl = configData[charts].wowheadUrl
   var result = [];
+
   for (dpsName of data[jsonSortedDataKeys]) {
     var id = data[jsonIds][dpsName]; 
     
