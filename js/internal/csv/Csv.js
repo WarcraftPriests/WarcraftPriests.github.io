@@ -36,7 +36,8 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
         var record_num = 9;  // or however many elements there are in each row
         var allTextLines = allText.split(/\r\n|\n/);
         if(metaData) {
-            document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", getValue(SimTalents, currTalentBtn), getValue(Sims, currSimsBtn), currFightStyleBtn) + "</h3>";
+            var simTalent = getConfigValue(configData[builds], currTalentBtn)
+            document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn) + "</h3>";
             document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
         }
         var result = "</br>";

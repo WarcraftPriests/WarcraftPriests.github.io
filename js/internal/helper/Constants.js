@@ -51,8 +51,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const baseUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/master/";
-const wowheadUrl = "https://www.wowhead.com/ptr-2/"
+const repoTemplateUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/{version}/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";
@@ -73,6 +72,7 @@ const jsonSimulatedSteps = "simulated_steps";
 /*
  * Simc related stuff definitions
  */
+const version = "version"
 const trinkets = "trinkets";
 const talentsTop = "talents-top";
 const talents = "talents";
@@ -97,6 +97,7 @@ const specialGear = "special_gear";
 /*
  * Button related definitions
  */
+const versionDiv = "version-div"
 const fightStyleDiv = "fightStyle-div";
 const consumablesDiv = "consumables-div";
 const enchantDiv = "enchants-div";
@@ -127,12 +128,13 @@ const fivePixel = "5px";
 const auto = "auto";
 const inlineBlock = "inline-block";
 
-const defaultTalent = ar_vf_cthun_flay_me;
 const defaultSims = trinkets;
 const defaultEnchant = ring;
 const defaultConsumable = food;
 const defaultFightStyle = composite;
+const defaultVersion = "master"
 
 const builds = "builds";
+const charts = "charts"
 const files = "files";
 const none = "none";

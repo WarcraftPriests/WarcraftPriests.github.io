@@ -3,6 +3,7 @@
  */
 function buildWowheadTooltips(data, breakConidition, simsBtn) {
   var result = [];
+
   for (dpsName of data[jsonSortedDataKeys]) {
     var id = data[jsonIds][dpsName]; 
     

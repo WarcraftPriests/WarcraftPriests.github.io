@@ -1,13 +1,18 @@
-var currTalentBtn = defaultTalent;
-var currSimsBtn = defaultSims;
-var currEnchantsBtn = defaultEnchant;
-var currConsumablesBtn = defaultConsumable;
-var currFightStyleBtn = defaultFightStyle;
+function setDefaultButtonValues() {
+  currSimsBtn = defaultSims;
+  currEnchantsBtn = defaultEnchant;
+  currConsumablesBtn = defaultConsumable;
+  currFightStyleBtn = defaultFightStyle;
+  currVersionBtn = defaultVersion;
+  currTalentBtn = Object.keys(configData[builds])[0].replaceAll("-", "_")
+}
 
 /*
  * Initialize all buttons by url params
  */
 function initializeButtons() {
+  setDefaultButtonValues()
+
   var query = getQueryParameter();
   if(query !== null) {
     if(query.has(talents)) {
@@ -25,6 +30,11 @@ function initializeButtons() {
         || query.get(fightStyle) != "")
       currFightStyleBtn = query.get(fightStyle); 
     }
+    if(query.has(version)) {
+      if(query.get(version) != null
+        || query.get(version) != "")
+        currVersionBtn = query.get(version); 
+    }
   }
   createButtons();
 }
@@ -33,6 +43,7 @@ function initializeButtons() {
  * Initial setup of all buttons for the site
  */
 function createButtons() {
+  createVersionButtons(SimRepoVersions)
   createTalentButtons(configData[builds]);
   createSimsButtons(configData[sims]);
   createConsumableButtons(getKeys(Consumables));
@@ -55,10 +66,28 @@ function createConsumableButtons(buttonArray) {
 }
 
 /*
- * Creates consumables buttons
+ * Creates version buttons
+ */
+function createVersionButtons(buttonArray) {
+  let div = document.getElementById(versionDiv);
+  for (b in buttonArray) {
+    var buttonText = document.createTextNode(buttonArray[b]);
+    createButtonBasicNoImage(div, b, checkButtonClick, buttonText, version);
+  }
+  styleButtons();
+}
+
+/*
+ * Creates talent buttons
  */
 function createTalentButtons(buttonArray) {
-  createButtonBasicList(talentDiv, buttonArray, checkButtonClick, SimTalents, talents)
+  let div = document.getElementById(talentDiv);
+  for (b in buttonArray) {
+    var buttonText = document.createTextNode(buttonArray[b].name);
+    b = b.replaceAll(dash, underscore);
+    createButtonBasic(div, b, checkButtonClick, buttonText, talents);
+  }
+  styleButtons();
 }
 
 /*
@@ -158,6 +187,7 @@ function isButtonSelected(buttonId) {
     || buttonId === currEnchantsBtn
     || buttonId === currConsumablesBtn
     || buttonId === currFightStyleBtn
+    || buttonId === currVersionBtn
 }
 
 /*
@@ -222,6 +252,19 @@ function createButtonBasic(div, name, event, buttonText, currBtn) {
   div.appendChild(button);
 }
 
+function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
+  let button = document.createElement(buttonName.toUpperCase());
+  button.setAttribute(buttonId, name);
+  button.setAttribute(buttonClass, buttonName);
+  button.setAttribute(onClick, handleOnClickText+ name + attributeSpacer + currBtn + attributeClose);
+  button.addEventListener(click, event);
+
+  var br = document.createTextNode("  ");
+  button.appendChild(br);
+  button.appendChild(buttonText);
+  div.appendChild(button);
+}
+
 /*
  * When a button is clicked the value of that button is
  * stored in a variable so checkButtonClick() can use
@@ -236,7 +279,9 @@ function handleOnClick(clickedButton, btn) {
     currConsumablesBtn = clickedButton;
   } else if(btn == fightStyle) {
     currFightStyleBtn = clickedButton;
-  } 
+  } else if(btn == version) {
+    currVersionBtn = clickedButton
+  }
 
   styleButtons();
 }
@@ -251,6 +296,10 @@ function checkButtonClick() {
   addShow(talentDiv);
   removeShow(enchantDiv);
   removeShow(consumablesDiv);
+
+  if(hasMultipleVersions()) {
+    addShow(versionDiv)
+  }
   
   for(currTalent in configData[sims]) {
     if(currTalent == currSimsBtn 
@@ -263,16 +312,25 @@ function checkButtonClick() {
         removeShowSpecial(talentBuildDiv);
       }
     }
-    
   }
-  updateUrl(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn)
+
+  const selectedVersion = currVersionBtn === defaultVersion ? "" : currVersionBtn
+  const currentVersion = getQueryParameter().get(version) || ""
+  const talents = currentVersion != selectedVersion ? "" : currTalentBtn
+
+  manipulateUrl({
+    talents,
+    sims: currSimsBtn,
+    fightStyle: currFightStyleBtn,
+    version: selectedVersion
+  });
   updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
+}
+
+function hasMultipleVersions() {
+  return Object.keys(SimRepoVersions).length > 1
 }
 
 function removeShowSpecial(div) {
   document.getElementById(div.toString()).style.visibility = "hidden";
-}
-
-function updateUrl(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn) {
-  manipulateUrl("talents", currTalentBtn, "sims", currSimsBtn, "fightStyle", currFightStyleBtn);
 }

@@ -1,8 +1,7 @@
-var SimTalents = {
-  vw_cthun: "Voidweaver",
-  ar_vf_cthun_flay_me: "Archon",
-  ar_vf_yogg_cthun_me: "Archon + Yogg-Saron",
-};
+var SimRepoVersions = {
+  master: "Live",
+  ptr: "PTR",
+}
   
 var Sims = {
   consumables: "Consumables",
@@ -128,6 +127,10 @@ var TrinketIds = {
 var getValue = function(list, key) {
     return list[key.toString().replaceAll("-", "_")];
 };
+
+var getConfigValue = function(list, key) {
+  return list[key.toString().replaceAll("_", "-")]
+}
 
 var getKeys = function(list) {
   let result = [];
