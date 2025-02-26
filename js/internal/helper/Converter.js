@@ -1,6 +1,6 @@
 var SimRepoVersions = {
   master: "Live",
-  ptr: "PTR",
+  // ptr: "PTR",
 }
   
 var Sims = {
@@ -102,26 +102,24 @@ var TalentIds = {
 }
 
 var TrinketIds = {
-  Energy_Siphon: "156021",
-  Living_Flame: "155947",
-  Ara_Kara_Sacbrood: "219314",
-  Empowering_Crystal_of_Anubikkaj: "219312",
-  Unbound_Changeling_All: "178708",
-  Unbound_Changeling_Haste: "178708",
-  Unbound_Changeling_Mastery: "178708",
-  Satchel_of_Misbegotten_Minions: "178772",
-  Hadals_Nautilus: "159622",
-  Gale_of_Shadows: "133304",
-  Aberrant_Spellforge: "212451",
   Spymasters_Web: "220202",
-  Ovinaxs_Mercurial_Egg: "220305",
-  Treacherous_Transmitter: "221023",
+  Signet_of_the_Priory: "219308",
+  Synergistic_Brewterializer: "219299",
+  Carved_Blazikon_Wax: "219305",
+  Gigazaps_Zap_Cap: "232545",
+  Soulletting_Ruby: "178809",
+  Ingenious_Mana_Battery: "169344",
+  Geargrinders_Spare_Keys: "230197",
+  Flarendos_Pilot_Light: "230191",
+  Reverb_Radio: "230194",
+  Mister_Lock_N_Stalk: "230193",
+  House_of_Cards: "230027",
+  Mugs_Moxie_Jug: "230192",
+  Eye_of_Kezan: "230198",
   Quickwick_Candlestick: "225649",
-  Forged_Gladiators_Badge_of_Ferocity: "218713",
   Shadowbinding_Ritual_Knife: "215178",
-  Mad_Queens_Mandate: "212454",
   Candle_Confidant: "225648",
-  Burst_of_Knowledge: "231424",
+  Entropic_Skardyn_Core: "219296",
 }
 
 var getValue = function(list, key) {
