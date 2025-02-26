@@ -120,6 +120,10 @@ var TrinketIds = {
   Shadowbinding_Ritual_Knife: "215178",
   Candle_Confidant: "225648",
   Entropic_Skardyn_Core: "219296",
+  Suspicious_Energy_Drink: "235363",
+  Funhouse_Lens: "234217",
+  Amorphous_Relic: "232891",
+  Prized_Gladiators_Badge_of_Ferocity: "229780",
 }
 
 var getValue = function(list, key) {
