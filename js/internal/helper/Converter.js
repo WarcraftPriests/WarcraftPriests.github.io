@@ -1,6 +1,6 @@
 var SimRepoVersions = {
   master: "Live",
-  // ptr: "PTR",
+  ptr: "PTR",
 }
   
 var Sims = {
@@ -124,6 +124,23 @@ var TrinketIds = {
   Funhouse_Lens: "234217",
   Amorphous_Relic: "232891",
   Prized_Gladiators_Badge_of_Ferocity: "229780",
+  Empowering_Crystal_of_Anubikkaj: "219312",
+  Mereldars_Toll: "219313",
+  AraKara_Sacbrood: "219314",
+  Bursting_Lightshard: "219310",
+  Lily_of_the_Eternal_Weave: "242494",
+  Azhiccaran_Parapodia: "242497",
+  Sunblood_Amethyst: "178826",
+  Miniscule_Mailemental_in_an_Envelope: "185846",
+  Soleahs_Secret_Technique_Haste: "190958",
+  Soleahs_Secret_Technique_Mastery: "190958",
+  Diamantine_Voidcore: "242392",
+  Astral_Antenna: "242395",
+  Unyielding_Netherprism: "242396",
+  Naazindhris_Mystic_Lash: "242398",
+  Screams_of_a_Forgotten_Sky: "242399",
+  Arazs_Ritual_Forge: "242402",
+  Perfidious_Projector: "242403",
 }
 
 var getValue = function(list, key) {
