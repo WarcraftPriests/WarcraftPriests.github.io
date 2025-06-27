@@ -138,3 +138,4 @@ const builds = "builds";
 const charts = "charts"
 const files = "files";
 const none = "none";
+const dungeonType = "dungeonType";

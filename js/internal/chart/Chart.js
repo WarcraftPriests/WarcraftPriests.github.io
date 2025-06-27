@@ -133,7 +133,8 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   } else if (fightStyle.includes("eighttarget")) {
     fightStyle = "8T";
   } else if (fightStyle.includes("Dungeons")) {
-    fightStyle = "Dungeons-Route"
+    var dungeonType = configData["dungeonType"]
+    fightStyle = "Dungeons-" + dungeonType[0].toUpperCase() + dungeonType.slice(1);
   }
 
   if(simsBtn == talents || simsBtn == talentsTop){
@@ -149,6 +150,6 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
  * So no data could be fetched
  */
 function handleJsonFailure(xhr, status) {
-  console.log("The JSON chart failed to load, please let Publik/espo know via discord Publik#5576/espo#6663");
+  console.log("The JSON chart failed to load, please let Publik know via discord Publik#5576");
   console.log(status);
 }
