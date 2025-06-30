@@ -17,18 +17,18 @@ function initializeButtons() {
   if(query !== null) {
     if(query.has(talents)) {
       if(query.get(talents) != null
-          || query.get(talents) != "")
-      currTalentBtn = query.get(talents);
+        || query.get(talents) != "")
+        currTalentBtn = query.get(talents);
     }
     if(query.has(sims)) {
-    if( query.get(sims) != null
-      || query.get(sims) != "")
-      currSimsBtn = query.get(sims);
+      if( query.get(sims) != null
+        || query.get(sims) != "")
+        currSimsBtn = query.get(sims);
     }
+
     if(query.has(fightStyle)) {
-      if(query.get(fightStyle) != null
-        || query.get(fightStyle) != "")
-      currFightStyleBtn = query.get(fightStyle); 
+      if(Object.hasOwn(getAvailableFightStyles(), query.get(fightStyle)))
+        currFightStyleBtn = query.get(fightStyle); 
     }
     if(query.has(version)) {
       if(query.get(version) != null
@@ -47,8 +47,18 @@ function createButtons() {
   createTalentButtons(configData[builds]);
   createSimsButtons(configData[sims]);
   createConsumableButtons(getKeys(Consumables));
-  createFightStyleButtons(getKeys(FightStyles));
+  createFightStyleButtons(getKeys(getAvailableFightStyles()));
   checkButtonClick();
+}
+
+function getAvailableFightStyles() {
+  // TODO: Make council fight style optinal?
+  let currentCouncilFightStyle = FightStyleCouncil[configData["councilTargets"]]
+  let councilFightStyles = Object.values(FightStyleCouncil)
+  return Object.entries(FightStyles).reduce(function(prev, [key, value]) {
+    if(councilFightStyles.includes(key) && key !== currentCouncilFightStyle) return prev
+    return { ...prev, [key]: value }
+  }, {})
 }
 
 /*
