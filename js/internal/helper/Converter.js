@@ -31,10 +31,15 @@ var FightStyles = {
   Single: "Single Target",
   Dungeons: "Dungeons",
   twotarget: "2 Target",
-  // threetarget: "3 Target",
+  threetarget: "3 Target",
   fourtarget: "4 Target",
   eighttarget: "8 Target",
 };
+
+var FightStyleCouncil = {
+  3: "threetarget",
+  4: "fourtarget"
+}
   
 var FightStyleExternal = {
   composite: "Raid",
