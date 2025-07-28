@@ -146,6 +146,7 @@ var TrinketIds = {
   Screams_of_a_Forgotten_Sky: "242399",
   Arazs_Ritual_Forge: "242402",
   Perfidious_Projector: "242403",
+  Astral_Gladiators_Badge_of_Ferocity: "230638",
 }
 
 var getValue = function(list, key) {
