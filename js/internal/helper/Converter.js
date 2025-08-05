@@ -1,6 +1,6 @@
 var SimRepoVersions = {
   master: "Live",
-  ptr: "PTR",
+  // ptr: "PTR",
 }
   
 var Sims = {
