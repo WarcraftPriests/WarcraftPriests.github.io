@@ -147,6 +147,7 @@ var TrinketIds = {
   Arazs_Ritual_Forge: "242402",
   Perfidious_Projector: "242403",
   Astral_Gladiators_Badge_of_Ferocity: "230638",
+  Incorporeal_Essence_Gorger_NonEthereal: "246945",
 }
 
 var getValue = function(list, key) {
