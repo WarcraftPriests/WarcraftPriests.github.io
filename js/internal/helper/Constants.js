@@ -51,7 +51,7 @@ const underscore = "_";
 /*
  * Repo url definition
  */
-const repoTemplateUrl = "https://raw.githubusercontent.com/WarcraftPriests/tww-shadow-priest/{version}/"
+const repoTemplateUrl = "https://raw.githubusercontent.com/WarcraftPriests/mid-shadow-priest/{version}/"
 const wowheadSpellPath = "spell="
 const wowheadItemPath = "item="
 const config = "config.yml";

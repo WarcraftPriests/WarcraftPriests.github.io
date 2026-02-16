@@ -1,5 +1,5 @@
 var SimRepoVersions = {
-  master: "Live",
+  master: "Beta",
   // ptr: "PTR",
 }
   
