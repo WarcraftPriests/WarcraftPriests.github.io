@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "highcharts": "^8.2.2"
+    "highcharts": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^10.0.2",
