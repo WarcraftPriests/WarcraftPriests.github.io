@@ -63,7 +63,7 @@ function buildChartLineForTrinketCombos(dpsName, currentResult, ids) {
       finalName = finalName + tempName.charAt(0);
     }
     finalName = finalName + ' (' + ilvl + ')';
-    currResult = buildChartLineWithWowheadLine(finalName, trinketId, wowheadUrl + wowheadItemPath, currResult);
+    currResult = buildChartLineWithWowheadLine(finalName, trinketId, wowheadUrl + wowheadItemPath, currResult, ilvl);
     if(counter == 0) {
       currResult = currResult + '  ';
       counter++;
@@ -133,7 +133,7 @@ function buildChartLineForBasic(names, currentResult) {
   return currResult;
 }
 
-function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
+function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult, ilvl = 289) {
   var result = currentResult;
   if(currSimsBtn == 'talents' || currSimsBtn == 'talents_top') {
     link = talentData['builds'][dpsName];
@@ -146,7 +146,11 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult) {
       result += dpsName;
     }
   } else {
-    result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
+    if (currSimsBtn == 'trinkets' || currSimsBtn == 'trinket_combos') {
+      result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '?ilvl=' + ilvl + '"';
+    } else {
+      result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
+    }
     result += ' target="_blank"';
     result += '>';
     result += dpsName;
