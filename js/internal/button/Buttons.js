@@ -14,24 +14,24 @@ function initializeButtons() {
   setDefaultButtonValues();
 
   var query = getQueryParameter();
-  if(query !== null) {
-    if(query.has(talents)) {
-      if(query.get(talents) != null
+  if (query !== null) {
+    if (query.has(talents)) {
+      if (query.get(talents) != null
         || query.get(talents) != '')
         currTalentBtn = query.get(talents);
     }
-    if(query.has(sims)) {
-      if( query.get(sims) != null
+    if (query.has(sims)) {
+      if (query.get(sims) != null
         || query.get(sims) != '')
         currSimsBtn = query.get(sims);
     }
 
-    if(query.has(fightStyle)) {
-      if(Object.hasOwn(getAvailableFightStyles(), query.get(fightStyle)))
+    if (query.has(fightStyle)) {
+      if (Object.hasOwn(getAvailableFightStyles(), query.get(fightStyle)))
         currFightStyleBtn = query.get(fightStyle); 
     }
-    if(query.has(version)) {
-      if(query.get(version) != null
+    if (query.has(version)) {
+      if (query.get(version) != null
         || query.get(version) != '')
         currVersionBtn = query.get(version); 
     }
@@ -56,7 +56,7 @@ function getAvailableFightStyles() {
   let currentCouncilFightStyle = FightStyleCouncil[configData['councilTargets']];
   let councilFightStyles = Object.values(FightStyleCouncil);
   return Object.entries(FightStyles).reduce(function(prev, [key, value]) {
-    if(councilFightStyles.includes(key) && key !== currentCouncilFightStyle) return prev;
+    if (councilFightStyles.includes(key) && key !== currentCouncilFightStyle) return prev;
     return { ...prev, [key]: value };
   }, {});
 }
@@ -119,7 +119,7 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if(!configData['sims'][b] || configData['sims'][b]['chart']) {
+    if (!configData['sims'][b] || configData['sims'][b]['chart']) {
       b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       constructSimsButton(div, b, event, buttonText, curBtn);
@@ -135,7 +135,7 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
   let div = document.getElementById(divName);
   for (b in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if(!configData['sims'][b] || configData['sims'][b]['chart']) {
+    if (!configData['sims'][b] || configData['sims'][b]['chart']) {
       b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       createButtonBasic(div, b, event, buttonText, currBtn);
@@ -249,7 +249,7 @@ function createButtonBasic(div, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  button.setAttribute(onClick, handleOnClickText+ name + attributeSpacer + currBtn + attributeClose);
+  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
   button.addEventListener(click, event);
   
   var icon = document.createElement('img');
@@ -266,7 +266,7 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  button.setAttribute(onClick, handleOnClickText+ name + attributeSpacer + currBtn + attributeClose);
+  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
   button.addEventListener(click, event);
 
   var br = document.createTextNode('  ');
@@ -281,15 +281,15 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
  * that information.
  */
 function handleOnClick(clickedButton, btn) {
-  if(btn == talents) {
+  if (btn == talents) {
     currTalentBtn = clickedButton;
-  } else if(btn == sims) {
+  } else if (btn == sims) {
     currSimsBtn = clickedButton;
-  } else if(btn == consumables) {
+  } else if (btn == consumables) {
     currConsumablesBtn = clickedButton;
-  } else if(btn == fightStyle) {
+  } else if (btn == fightStyle) {
     currFightStyleBtn = clickedButton;
-  } else if(btn == version) {
+  } else if (btn == version) {
     currVersionBtn = clickedButton;
   }
 
@@ -307,14 +307,14 @@ function checkButtonClick() {
   removeShow(enchantDiv);
   removeShow(consumablesDiv);
 
-  if(hasMultipleVersions()) {
+  if (hasMultipleVersions()) {
     addShow(versionDiv);
   }
   
-  for(currTalent in configData[sims]) {
-    if(currTalent == currSimsBtn 
-                || currSimsBtn != null && currTalent == currSimsBtn.replaceAll('_', '-')){
-      if(configData[sims][currTalent][builds]){
+  for (currTalent in configData[sims]) {
+    if (currTalent == currSimsBtn 
+                || currSimsBtn != null && currTalent == currSimsBtn.replaceAll('_', '-')) {
+      if (configData[sims][currTalent][builds]) {
         replaceTalentId(currTalentBtn, currFightStyleBtn);
       } else {
         removeShow(talentDiv);

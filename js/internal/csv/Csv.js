@@ -35,7 +35,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
   function processData(allText, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn) {
     var record_num = 9;  // or however many elements there are in each row
     var allTextLines = allText.split(/\r\n|\n/);
-    if(metaData) {
+    if (metaData) {
       var simTalent = getConfigValue(configData[builds], currTalentBtn);
       document.getElementById('header').innerHTML = '<h3 style=\'color:#ffffff\'>' + determineChartName('', simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn) + '</h3>';
       document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
@@ -43,32 +43,32 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
     var result = '</br>';
     result += '<table>';
 
-    for(var i = 0; i < allTextLines.length -1; i++){
+    for (var i = 0; i < allTextLines.length - 1; i++) {
       var lines = allTextLines[i].split(',');
       var entries = lines.splice(0, record_num);
       result += '<tr>';
-      for (var j=0; j<record_num; j++) {
+      for (var j = 0; j < record_num; j++) {
         var flag = '<td>';
         var flagClose = '</td>';
 
-        if(i == 0) {
+        if (i == 0) {
           flag = '<th>';
           flagClose = '</th>';
         }
 
-        if(entries[j] != null || entries[j] != undefined) {
+        if (entries[j] != null || entries[j] != undefined) {
           result += flag + getLabel(entries[j]) + flagClose;
         }
       }
       result += '</tr>';
     }
 
-    result +='</table>';
-    result +='</br>';
-    result +='</br>';
-    result +='</br>';
+    result += '</table>';
+    result += '</br>';
+    result += '</br>';
+    result += '</br>';
         
-    if(result != null || result != undefined || result != ''){
+    if (result != null || result != undefined || result != '') {
       document.getElementById(chartId).innerHTML = result;
     }
   }
@@ -76,7 +76,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
   function getLabel(key) {
     var result = '';
     result = Headings[key];
-    if(result == null || result == undefined || result == '' ) {
+    if (result == null || result == undefined || result == '') {
       result = key;
     }
 

@@ -2,8 +2,8 @@
  * Prepare data for single bar chart
  */
 function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId, maxEntries) {
-  var chartForSingle = new Highcharts.Chart( getSingleBarDefinition( 
-    buildWowheadTooltips( data, true, simsBtn, showInLegend),
+  var chartForSingle = new Highcharts.Chart(getSingleBarDefinition( 
+    buildWowheadTooltips(data, true, simsBtn, showInLegend),
     data,
     getValue(LegendTitles, simsBtn),
     dpsIncrease,
@@ -19,7 +19,7 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
   currName = currName.replace(/\s/g, '');
   var counterLoop = 0;
   for (sortedData of data[jsonSortedDataKeys]) {
-    if(counterLoop < 100) {
+    if (counterLoop < 100) {
       let dps = data[jsonData][sortedData][jsonDPS];
       let baselineDPS = data[jsonData][jsonBase][jsonDPS];
       if (baselineDPS == null)
@@ -42,7 +42,7 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
     data: result,
     name: DPS,
     showInLegend: showInLegend,
-  },false);
+  }, false);
   updateSize(chartForSingle, chartId, result.length, maxEntries);
 }
 
@@ -50,7 +50,7 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
  * Prepare data for percentage bar chart
  */
 function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
-  var chartForPercentage = new Highcharts.Chart( getChartDefinitionPercentage( 
+  var chartForPercentage = new Highcharts.Chart(getChartDefinitionPercentage( 
     buildWowheadTooltips(data, false, simsBtn), 
     data,
     getValue(LegendTitles, simsBtn),
@@ -71,9 +71,9 @@ function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
       if (baselineDPS == null) 
         baselineDPS = 0;
   
-      if(dps >= 0) {
+      if (dps >= 0) {
         var percentage = (dps / baselineDPS.DPS) * 100 - 100;
-        if(percentage < 0) {
+        if (percentage < 0) {
           currResult.push(0);
         } else {
           currResult.push(percentage);
@@ -97,7 +97,7 @@ function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
  */
 function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
   var chartForMultipleBar = new Highcharts.Chart(getMultipleBarChartDefinition(
-    buildWowheadTooltipsMultipleBar( data, simsBtn), 
+    buildWowheadTooltipsMultipleBar(data, simsBtn), 
     data,
     getValue(LegendTitles, simsBtn),
     dpsIncrease,
@@ -109,11 +109,11 @@ function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
   var minResults = [];
   var maxResults = [];
 
-  for(i = 0; i <= AggregateConduits.length -1; i++) {
+  for (i = 0; i <= AggregateConduits.length - 1; i++) {
     minResults = [];
     maxResults = [];
 
-    for(currFight in data[jsonData]) {
+    for (currFight in data[jsonData]) {
       var minValue = ((data[jsonData][currFight][AggregateConduits[i]]['min']) * 100);
       var maxValue = ((data[jsonData][currFight][AggregateConduits[i]]['max']) * 100) - ((data[jsonData][currFight][AggregateConduits[i]]['min'])) * 100;
       minResults.push(minValue);
@@ -184,7 +184,7 @@ function buildChartDataDot(githubData, chartId) {
   
   let light_color = '#eeeeee';
   let maxDPSPrefix = githubData[jsonSortedDataKeys][0];
-  let minDPSPrefix = githubData[jsonSortedDataKeys][githubData[jsonSortedDataKeys].length -1];
+  let minDPSPrefix = githubData[jsonSortedDataKeys][githubData[jsonSortedDataKeys].length - 1];
   let maximalDps = githubData[jsonData][maxDPSPrefix][jsonDPS];
   let minimalDps = githubData[jsonData][minDPSPrefix][jsonDPS];
   
@@ -213,9 +213,9 @@ function buildChartDataDot(githubData, chartId) {
 
     let dataLabel = undefined;
  
-    if(sortedData.includes('10')) {
-      if(sortedData.split(underscore)[0].includes('10')
-          && !masteryLabel){
+    if (sortedData.includes('10')) {
+      if (sortedData.split(underscore)[0].includes('10')
+          && !masteryLabel) {
         dataLabel = {
           enabled: true,
           allowOverlap: true,
@@ -223,7 +223,7 @@ function buildChartDataDot(githubData, chartId) {
         dataLabel.format = 'Mastery';
         dataLabel.verticalAlign = 'top';
         masteryLabel = true;
-      } else if(sortedData.split('_')[1].includes('10')
+      } else if (sortedData.split('_')[1].includes('10')
           && !versLabel) {
         dataLabel = {
           enabled: true,
@@ -232,7 +232,7 @@ function buildChartDataDot(githubData, chartId) {
         dataLabel.format = 'Versatility';
         dataLabel.verticalAlign = 'top';
         versLabel = true;
-      } else if(sortedData.split('_')[2].includes('10')
+      } else if (sortedData.split('_')[2].includes('10')
           && !hasteLabel) {
         dataLabel = {
           enabled: true,
@@ -240,7 +240,7 @@ function buildChartDataDot(githubData, chartId) {
         };
         dataLabel.format = 'Haste';
         hasteLabel = true;
-      } else if(sortedData.split('_')[3].includes('10')
+      } else if (sortedData.split('_')[3].includes('10')
           && !critLabel) {
         dataLabel = {
           enabled: true,
@@ -252,10 +252,10 @@ function buildChartDataDot(githubData, chartId) {
       }
     }
 
-    statMastery = ((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length;
-    statVers = ((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length;
-    statHaste = ((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length;
-    statCrit = ((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length;
+    statMastery = ((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
+    statVers = ((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
+    statHaste = ((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
+    statCrit = ((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
     sumStatValues = configData['stats']['total'];
 
     series.data.push({
@@ -273,10 +273,10 @@ function buildChartDataDot(githubData, chartId) {
       statVers: statVers,
       statHaste: statHaste,
       statCrit: statCrit,
-      statMasteryPercent: Math.round(( 100 / sumStatValues ) * (((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length)),
-      statVersPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length)),
-      statHastePercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length)),
-      statCritPercent: Math.round(( 100 /sumStatValues ) * (((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps'] ) + configData['stats']['base'] / configData['stats']['include'].length)),
+      statMasteryPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
+      statVersPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
+      statHastePercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
+      statCritPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
       marker: {
         radius: radius,
         lineColor: line_color,

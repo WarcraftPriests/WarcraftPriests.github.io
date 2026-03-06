@@ -8,7 +8,8 @@
     "copy-highcharts": "node scripts/copyHighcharts.js",
     "prepare": "npm run copy-highcharts",
     "test": "jest",
-    "lint": "eslint js/ test/"
+    "lint": "eslint js/ test/",
+    "lint:fix": "eslint js/ test/ --fix"
   },
   "keywords": [],
   "author": "",

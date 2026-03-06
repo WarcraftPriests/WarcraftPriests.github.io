@@ -83,26 +83,26 @@ function getDefaultDotDefinition(chartId) {
               <tr>\
                 <th >DPS</th>\
                 <td>' + Intl.NumberFormat().format(this.dps) + '</td>\
-                <td>' + Math.round(( 100 / this.dpsBase ) * ( this.dps - this.dpsBase) * 100 ) / 100 + '%</td>\
+                <td>' + Math.round((100 / this.dpsBase) * (this.dps - this.dpsBase) * 100) / 100 + '%</td>\
               </tr>\
               <tr>\
                 <th >Crit</th>\
-                <td>' + this.statCrit +'</td>\
+                <td>' + this.statCrit + '</td>\
                 <td>' + this.statCritPercent + '%</td>\
               </tr>\
               <tr>\
                 <th>Haste</th>\
-                <td>' + this.statHaste +'</td>\
+                <td>' + this.statHaste + '</td>\
                 <td>' + this.statHastePercent + '%</td>\
               </tr>\
               <tr>\
                 <th>Mastery</th>\
-                <td>' + this.statMastery +'</td>\
+                <td>' + this.statMastery + '</td>\
                 <td>' + this.statMasteryPercent + '%</td>\
               </tr>\
               <tr>\
                 <th>Versatility</th>\
-                <td>' + this.statVers +'</td>\
+                <td>' + this.statVers + '</td>\
                 <td>' + this.statVersPercent + '%</td>\
               </tr>\
             </tbody>\
@@ -296,7 +296,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
         var minValue = 0;
         var value = 0;
         for (var i = this.points.length - 1; i >= 0; i--) {
-          if(this.points[i].series.name.includes('min')) {
+          if (this.points[i].series.name.includes('min')) {
             minValue = this.points[i].y;
             value = minValue;
           } else if (this.points[i].series.name.includes('max')) {
@@ -305,7 +305,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
           }
 
           
-          result += getTooltip( value, 
+          result += getTooltip(value, 
             0, 
             this.points[i].series,
             data,
@@ -410,17 +410,17 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
         var result = [];
         var highestDPS = 0;
         let baselineDPS = data[jsonData][jsonBase];
-        for(currStep of data[jsonSimulatedSteps]) {
-          for(sortedData of data[jsonSortedDataKeys]) {
+        for (currStep of data[jsonSimulatedSteps]) {
+          for (sortedData of data[jsonSortedDataKeys]) {
             var percentage = ((data[jsonData][sortedData.trim()][currStep]) / baselineDPS.DPS) * 100 - 100;
-            if(percentage > highestDPS) {
+            if (percentage > highestDPS) {
               highestDPS = percentage;
             }
           }
         }
         let lastValue = 0;
         result.push(lastValue);
-        for(i = 0; i <= 9; i++) {
+        for (i = 0; i <= 9; i++) {
           lastValue = lastValue + Number((Number(highestDPS / (data[jsonSimulatedSteps].length + 1))).toFixed(2) * (data[jsonSimulatedSteps].length / 7));
           result.push(Number(lastValue.toFixed(2)));
         }
@@ -474,8 +474,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
                     + '</div>';
   
         for (var i = this.points.length - 1; i >= 0; i--) {
-          result += getTooltip( this.points[i].y, 
-            (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
+          result += getTooltip(this.points[i].y, 
+            ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
             this.points[i].series,
             data,
             true);
@@ -624,7 +624,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
               + this.x 
               + '</div>';
         for (var i = this.points.length - 1; i >= 0; i--) {
-          result += getTooltip( this.points[i].y, 
+          result += getTooltip(this.points[i].y, 
             ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
             this.points[i].series,
             data,
@@ -646,12 +646,12 @@ function getTooltip(percentage, dpsIncrease, series, data, showBase) {
               + '">' 
               + series.name;
 
-    if(showBase) {
+    if (showBase) {
       result += ' ( ' + data[jsonData][jsonBase][DPS] + ' base )';
     }
     result += '</span>:&nbsp;&nbsp;';
 
-    if(dpsIncrease != 0) {
+    if (dpsIncrease != 0) {
       result += '+ '
               + Intl.NumberFormat().format(dpsIncrease) 
               + space + DPS.toLowerCase()

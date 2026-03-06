@@ -1,4 +1,4 @@
-(function(){
+(function() {
   const params = getQueryParameter();
   const selectedVersion = params.get(version);
   const simVersion = SimRepoVersions[selectedVersion] ? selectedVersion : defaultVersion;
@@ -20,7 +20,7 @@ jQuery.get({url: baseUrl + '/config.yml', dataType: 'text'})
   }
   );
 
-(function(){
+(function() {
   const params = getQueryParameter();
   const selectedSim = params.get('sims');
   document.title = `${Sims[selectedSim]} | ${document.title}`;

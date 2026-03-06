@@ -9,14 +9,14 @@ function manipulateUrl(params) {
   }, {});
   var newParams = new URLSearchParams(nonEmptyParams);
 
-  if(newParams.size > 0
+  if (newParams.size > 0
         && !compareParameters(oldParm, newParams)) {
     window.location.search = newParams;
   }
 }
 
 function compareParameters(oldParm, newParms) {
-  if(oldParm.toString().localeCompare(newParms.toString()) == 0) {
+  if (oldParm.toString().localeCompare(newParms.toString()) == 0) {
     return true;
   }
   return false;
