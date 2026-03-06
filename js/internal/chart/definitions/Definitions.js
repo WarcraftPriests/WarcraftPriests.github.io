@@ -144,7 +144,7 @@ function getDefaultDotDefinition(chartId) {
       labels: {
         enabled: false,
       },
-      reversed: true,
+      reversed: false,
       gridLineWidth: 1,
       gridLineColor: mediumColor,
     },
@@ -169,6 +169,18 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
+      /*
+       * Highcharts 12 interprets `min`/`max` on a
+       * category axis as indexes.  Previous versions
+       * allowed strings and sometimes auto‑corrected when
+       * you passed a count rather than an index.  When we
+       * migrated from v8 the chart started growing past
+       * its container because the extremes were being
+       * calculated incorrectly.  Explicitly pin both
+       * ends as numbers and do _not_ decrement the value
+       * upstream (see updateChart in Chart.js).
+       */
+      min: 0,
       max: maxEntries,
       labels: {
         x: -40,
@@ -184,7 +196,8 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
       },
     },
     yAxis: {
-      min: '0',
+      /* use a real number here; strings are ignored in v12 */
+      min: 0,
       allowDecimals: true,
       gridLineColor: gridLineColor,
       crosshair: {
@@ -219,7 +232,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
       floating: false,
       itemMarginBottom: 3,
       itemMaginTop: 0,
-      reversed: true,
+      reversed: false,
       shadow: false,
       verticalAlign: alignMiddle,
       x: 0,
@@ -289,30 +302,28 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
       pointFormat: tooltipPointFormat,
       padding: 5,
       formatter: function () {
+        // for percentage charts with numeric levels we compute stacked
+        // data as incremental differences; the tooltip should show the
+        // cumulative percent increase relative to the base DPS rather
+        // than the small delta used for drawing.  we add a running total
+        // as we walk the points so each line gives the value you'd get
+        // by hovering the bar up to that segment.
         var result = '<div class="chartHover">'
               + '<div class="chartHoverLine">' 
               + this.x
               + '</div>';
-        var minValue = 0;
-        var value = 0;
-        for (var i = this.points.length - 1; i >= 0; i--) {
-          if (this.points[i].series.name.includes('min')) {
-            minValue = this.points[i].y;
-            value = minValue;
-          } else if (this.points[i].series.name.includes('max')) {
-            value = minValue + this.points[i].y;
-            minValue = 0;
+        var running = 0;
+        for (var i = 0; i < this.points.length; i++) {
+          if (this.points[i].y != 0) {
+            running += this.points[i].y;
+            result += getTooltip(running,
+              ((data[jsonData][jsonBase][DPS] / 100) * running),
+              this.points[i].series,
+              data,
+              true);
           }
-
-          
-          result += getTooltip(value, 
-            0, 
-            this.points[i].series,
-            data,
-            false);
-          
         }
-                  
+
         result += '</div>';
         return result;
       },
@@ -368,6 +379,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
     xAxis: {
       categories: wowheadTooltips,
       useHTML: true,
+      /* ensure numeric boundaries; Highcharts 12 treats min/max as indexes */
+      min: 0,
       max: maxEntries,
       labels: {
         useHTML: true,
@@ -397,6 +410,9 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
       },
       stackLabels: {
         enabled: true,
+        formatter: function() {
+          return this.total ? this.total.toFixed(2) + '%' : '';
+        },
         style: {
           fontWeight: fontWeightBold,
           color: defaultFontColor,
@@ -404,7 +420,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
         },
       },
       gridLineColor: gridLineColor,
-      min: '0',
+      /* numeric zero is required in v12, string values are ignored */
+      min: 0,
       allowDecimals: true,
       tickPositioner: function() {
         var result = [];
@@ -440,7 +457,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
       floating: false,
       itemMarginBottom: 3,
       itemMaginTop: 0,
-      reversed: true,
+      reversed: false, // show lowest levels first to match stacking order
       shadow: false,
       verticalAlign: alignMiddle,
       x: 0,
@@ -468,17 +485,24 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
       pointFormat: tooltipPointFormat,
       padding: 5,
       formatter: function () {
+        // for percentage charts with numeric levels we compute stacked
+        // incremental data; the tooltip should show the cumulative percent
+        // increase relative to the base DPS. iterate from bottom to top
+        // (lowest level first) for natural order.
         var result = '<div class="chartHover">'
                     + '<div class="chartHoverLine">' 
                     + this.x
                     + '</div>';
-  
-        for (var i = this.points.length - 1; i >= 0; i--) {
-          result += getTooltip(this.points[i].y, 
-            ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
-            this.points[i].series,
-            data,
-            true);
+        var running = 0;
+        for (var i = 0; i < this.points.length; i++) {
+          if (this.points[i].y != 0) {
+            running += this.points[i].y;
+            result += getTooltip(running,
+              ((data[jsonData][jsonBase][DPS] / 100) * running),
+              this.points[i].series,
+              data,
+              true);
+          }
         }
 
         result += '</div>';
@@ -550,6 +574,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       },
       categories: wowheadTooltips,
       useHTML: true,
+      min: 0,
       max: maxEntries,
     },
   
@@ -567,6 +592,9 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       },
       stackLabels: {
         enabled: true,
+        formatter: function() {
+          return this.total ? this.total.toFixed(2) + '%' : '';
+        },
         style: {
           fontWeight: fontWeightBold,
           color: defaultFontColor,
@@ -588,7 +616,7 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
       floating: false,
       itemMarginBottom: 3,
       itemMaginTop: 0,
-      reversed: true,
+      reversed: false,
       shadow: false,
       verticalAlign: alignMiddle,
       x: 0,

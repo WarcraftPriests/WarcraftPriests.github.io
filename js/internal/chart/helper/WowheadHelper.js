@@ -76,7 +76,13 @@ function buildChartLineForTrinketCombos(dpsName, currentResult, ids) {
 function buildWowheadTooltipsMultipleBar(data, simsBtn) {
   var result = [];
   for (currFight in data[jsonData]) {
-    result.push(buildChartLine(getValue(FightStyleExternal, currFight), '', '', simsBtn, data));
+    if (currFight === jsonBase) continue; // skip 'Base'
+    // if the key isn't a known fight style, just show the raw name
+    var label = getValue(FightStyleExternal, currFight);
+    if (label == null || label == undefined || label === '') {
+      label = currFight;
+    }
+    result.push(buildChartLine(label, '', '', simsBtn, data));
   }
 
   return result;

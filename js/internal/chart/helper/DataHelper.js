@@ -62,34 +62,86 @@ function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
     chartForPercentage.series[0].remove(false);
   }
 
-  for (currStep of data[jsonSimulatedSteps]) {
-    let currResult = [];  
+  // if the step names are purely numeric we'll treat them as item
+  // levels and stack the _incremental_ percent increases rather than
+  // plotting the absolute percent relative to baseline. this avoids
+  // negative bar heights caused by downward steps and mirrors the
+  // behavior users expect for trinket/legendary ilvl charts.
+  var steps = data[jsonSimulatedSteps] || [];
+  var numericSteps = steps.length > 0 && steps.every(s => /^\d+$/.test(s));
+  var baseline = data[jsonData][jsonBase] || {DPS:0};
+
+  if (numericSteps) {
+    // sort levels ascending for correct incremental calculation
+    var levels = steps.slice().sort(function(a, b) { return Number(a) - Number(b); });
+    var lastVals = {}; // track last DPS per item for incremental calculation
+    var seriesArray = []; // collect before reversing add order
     
     for (sortedData of data[jsonSortedDataKeys]) {
-      let dps = data[jsonData][sortedData.trim()][currStep];
-      let baselineDPS = data[jsonData][jsonBase];
-      if (baselineDPS == null) 
-        baselineDPS = 0;
-  
-      if (dps >= 0) {
-        var percentage = (dps / baselineDPS.DPS) * 100 - 100;
-        if (percentage < 0) {
-          currResult.push(0);
-        } else {
-          currResult.push(percentage);
-        }
-      } else {
-        currResult.push(0);
-      }
-      
+      lastVals[sortedData.trim()] = 0;
     }
-    chartForPercentage.addSeries({
-      data: currResult,
-      name: currStep,
-      showInLegend: true,
-    }, false);
+    
+    // calculate in ascending order so increments are positive
+    levels.forEach(function(lvl, idx) {
+      var currResult = [];
+      for (sortedData of data[jsonSortedDataKeys]) {
+        var itemKey = sortedData.trim();
+        var dpsVal = data[jsonData][itemKey][lvl] || 0;
+        var baseDps = data[jsonData][jsonBase] ? data[jsonData][jsonBase][jsonDPS] : 0;
+        var valuePercent;
+        if (dpsVal > 0) {
+          if (lastVals[itemKey] === 0) {
+            // first level for this item: absolute percent
+            valuePercent = baseDps ? ((dpsVal - baseDps) / baseDps) * 100 : 0;
+          } else {
+            // subsequent levels: incremental from last seen
+            var inc = dpsVal - lastVals[itemKey];
+            valuePercent = baseDps ? (inc / baseDps) * 100 : 0;
+          }
+          lastVals[itemKey] = dpsVal;
+        } else {
+          valuePercent = 0;
+        }
+        currResult.push(Math.max(0, valuePercent));
+      }
+      seriesArray.push({ data: currResult, name: lvl });
+    });
+    
+    // add in reverse order so lowest level appears leftmost on horizontal bar
+    seriesArray.reverse();
+    seriesArray.forEach(function(series) {
+      chartForPercentage.addSeries({
+        data: series.data,
+        name: series.name,
+        showInLegend: true,
+      }, false);
+    });
+
+    updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
+  } else {
+    // fallback to original behaviour for non-numeric steps
+    for (currStep of steps) {
+      let currResult = [];
+      for (sortedData of data[jsonSortedDataKeys]) {
+        let dps = data[jsonData][sortedData.trim()][currStep];
+        let baselineDPS = data[jsonData][jsonBase];
+        if (baselineDPS == null)
+          baselineDPS = 0;
+        if (dps >= 0) {
+          var percentage = (dps / baselineDPS.DPS) * 100 - 100;
+          currResult.push(percentage < 0 ? 0 : percentage);
+        } else {
+          currResult.push(0);
+        }
+      }
+      chartForPercentage.addSeries({
+        data: currResult,
+        name: currStep,
+        showInLegend: true,
+      }, false);
+    }
+    updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
   }
-  updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
 }
 
 /*
@@ -106,38 +158,102 @@ function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
   while (chartForMultipleBar.series.length > 0) {
     chartForMultipleBar.series[0].remove(false);
   }
-  var minResults = [];
-  var maxResults = [];
 
-  for (i = 0; i <= AggregateConduits.length - 1; i++) {
-    minResults = [];
-    maxResults = [];
+  // determine whether the payload is the old min/max conduit format or a
+  // simple mapping of numeric keys (item levels) to values.
+  var sample = data[jsonData];
+  var isMinMax = false;
+  for (var k in sample) {
+    if (sample[k] && typeof sample[k] === 'object' &&
+        ('min' in sample[k] || 'max' in sample[k])) {
+      // presence of either key ought to mean we're dealing with the
+      // legacy conduit structure (min/max pair per fight)
+      isMinMax = true;
+      break;
+    }
+  }
 
-    for (currFight in data[jsonData]) {
-      var minValue = ((data[jsonData][currFight][AggregateConduits[i]]['min']) * 100);
-      var maxValue = ((data[jsonData][currFight][AggregateConduits[i]]['max']) * 100) - ((data[jsonData][currFight][AggregateConduits[i]]['min'])) * 100;
-      minResults.push(minValue);
-      maxResults.push(maxValue);
+  if (isMinMax) {
+    // existing conduit handling
+    var minResults = [];
+    var maxResults = [];
+
+    for (i = 0; i <= AggregateConduits.length - 1; i++) {
+      minResults = [];
+      maxResults = [];
+
+      for (currFight in data[jsonData]) {
+        var minValue = ((data[jsonData][currFight][AggregateConduits[i]]['min']) * 100);
+        var maxValue = ((data[jsonData][currFight][AggregateConduits[i]]['max']) * 100) - ((data[jsonData][currFight][AggregateConduits[i]]['min'])) * 100;
+        minResults.push(minValue);
+        maxResults.push(maxValue);
+      }
+
+      chartForMultipleBar.addSeries({
+        color: getCovenantChoiceColor(AggregateConduits[i] + '_min'),
+        data: minResults,
+        name: getValue(Conduits, AggregateConduits[i]) + ' min',
+        stack: String(AggregateConduits[i]), // ensure key is string
+        showInLegend: true,
+      }, false);
+
+      chartForMultipleBar.addSeries({
+        color: getCovenantChoiceColor(AggregateConduits[i] + '_max'),
+        data: maxResults,
+        name: getValue(Conduits, AggregateConduits[i]) + ' max',
+        stack: String(AggregateConduits[i]),
+        showInLegend: true,
+      }, false);
     }
 
-    chartForMultipleBar.addSeries({
-      color: getCovenantChoiceColor(AggregateConduits[i] + '_max'),
-      data: maxResults,
-      name: getValue(Conduits, AggregateConduits[i]) + ' max',
-      stack: AggregateConduits[i],
-      showInLegend: true,
-    }, false);
-    
-    chartForMultipleBar.addSeries({
-      color: getCovenantChoiceColor(AggregateConduits[i] + '_min'),
-      data: minResults,
-      name: getValue(Conduits, AggregateConduits[i]) + ' min',
-      stack: AggregateConduits[i],
-      showInLegend: true,
-    }, false);
+    chartForMultipleBar.redraw();
+    updateSize(chartForMultipleBar, chartId, AggregateConduits.length, maxEntries);
+
+  } else {
+    // numeric-key format: treat each top‑level key in the nested object as an
+    // item level (or other incremental step) and stack the deltas.
+    var sample = data[jsonData];
+    var fights = Object.keys(sample).filter(f => f !== jsonBase); // exclude 'Base'
+    var levelSet = new Set();
+    fights.forEach(function(f) {
+      Object.keys(sample[f]).forEach(function(l) { levelSet.add(l); });
+    });
+    var levels = Array.from(levelSet).sort(function(a, b) {
+      return Number(a) - Number(b);
+    });
+
+    // build one series per level, where the first series is the absolute
+    // value and each subsequent series is the difference from the previous
+    // level.  convert to percent increase over base DPS to match the
+    // conduit behavior and keep bars on-scale.
+    levels.forEach(function(lvl, idx) {
+      var seriesData = [];
+      fights.forEach(function(f) {
+        var val = sample[f][lvl] || 0;
+        var baseDps = (data[jsonData][jsonBase] && data[jsonData][jsonBase][jsonDPS]) || 0;
+        var percent;
+        if (idx === 0) {
+          percent = baseDps ? ((val - baseDps) / baseDps) * 100 : 0;
+        } else {
+          var prev = sample[f][levels[idx - 1]] || 0;
+          var inc = val - prev;
+          percent = baseDps ? (inc / baseDps) * 100 : 0;
+        }
+        seriesData.push(Math.max(0, percent));
+      });
+
+      chartForMultipleBar.addSeries({
+        name: lvl,
+        color: getColor(lvl),
+        data: seriesData,
+        stack: 'levels',
+        showInLegend: true,
+      }, false);
+    });
+
+    chartForMultipleBar.redraw();
+    updateSize(chartForMultipleBar, chartId, fights.length, maxEntries);
   }
-  chartForMultipleBar.redraw();
-  updateSize(chartForMultipleBar, chartId, AggregateConduits.length, maxEntries);
 }
 
 /*

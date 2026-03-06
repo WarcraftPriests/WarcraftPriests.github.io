@@ -3,8 +3,17 @@
  * and when a chart update should happen
  */
 function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
-  if (maxEntries != null || maxEntries != undefined) {
-    maxEntries = maxEntries - 1;
+  if (maxEntries != null && maxEntries != undefined) {
+    // Highcharts 8 used `max` on a category axis as a zero‑based
+    // index and our callers passed a count; we corrected by
+    // subtracting 1.  v12 now accepts the count directly and
+    // will handle the conversion internally, so decrementing
+    // causes the axis to be one category smaller and the
+    // extremes calculation to appear broken (bars running off
+    // the edge).  The value coming from data-maxentries is
+    // already the number of buckets we want visible, so leave
+    // it alone.
+    // maxEntries = maxEntries - 1;
   }
   
   if (currSimsBtn == 'weights') {
@@ -66,11 +75,15 @@ function updateSize(chart, chartId, size, maxEntries) {
   }
 
   document.getElementById(chartId).style.height = 200 + realSize * 30 + px; // Size the chart by our data.
-  chart.setSize( 
+  // resize without animation to avoid invalid intermediate heights
+  chart.setSize(
     document.getElementById(chartId).style.width,
-    document.getElementById(chartId).style.height
+    document.getElementById(chartId).style.height,
+    false // disable animation
   );
 
+  // redraw happens automatically when setSize is called with animation
+  // disabled, but keep the explicit call just in case.
   chart.redraw();
   try {
     $WowheadPower.refreshLinks();
