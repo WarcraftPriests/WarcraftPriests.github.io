@@ -1,27 +1,27 @@
 (function(){
-    const params = getQueryParameter();
-    const selectedVersion = params.get(version);
-    const simVersion = SimRepoVersions[selectedVersion] ? selectedVersion : defaultVersion
-    baseUrl = repoTemplateUrl.replace("{version}", simVersion)
+  const params = getQueryParameter();
+  const selectedVersion = params.get(version);
+  const simVersion = SimRepoVersions[selectedVersion] ? selectedVersion : defaultVersion;
+  baseUrl = repoTemplateUrl.replace('{version}', simVersion);
 }());
 
-jQuery.get({url: baseUrl + "/internal/talents.yml", dataType: "text"})
-        .done(function (data) {
-            talentData = jsyaml.load(data);
-            //initializeButtons();
-        }
-);
+jQuery.get({url: baseUrl + '/internal/talents.yml', dataType: 'text'})
+  .done(function (data) {
+    talentData = jsyaml.load(data);
+    //initializeButtons();
+  }
+  );
 
-jQuery.get({url: baseUrl + "/config.yml", dataType: "text"})
-        .done(function (data) {
-            configData = jsyaml.load(data);
-            wowheadUrl = configData[charts].wowheadUrl
-            initializeButtons();
-        }
-);
+jQuery.get({url: baseUrl + '/config.yml', dataType: 'text'})
+  .done(function (data) {
+    configData = jsyaml.load(data);
+    wowheadUrl = configData[charts].wowheadUrl;
+    initializeButtons();
+  }
+  );
 
 (function(){
-    const params = getQueryParameter();
-    const selectedSim = params.get('sims');
-    document.title = `${Sims[selectedSim]} | ${document.title}`;
+  const params = getQueryParameter();
+  const selectedSim = params.get('sims');
+  document.title = `${Sims[selectedSim]} | ${document.title}`;
 }());

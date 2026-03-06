@@ -4,25 +4,25 @@ function setDefaultButtonValues() {
   currConsumablesBtn = defaultConsumable;
   currFightStyleBtn = defaultFightStyle;
   currVersionBtn = defaultVersion;
-  currTalentBtn = Object.keys(configData[builds])[0].replaceAll("-", "_")
+  currTalentBtn = Object.keys(configData[builds])[0].replaceAll('-', '_');
 }
 
 /*
  * Initialize all buttons by url params
  */
 function initializeButtons() {
-  setDefaultButtonValues()
+  setDefaultButtonValues();
 
   var query = getQueryParameter();
   if(query !== null) {
     if(query.has(talents)) {
       if(query.get(talents) != null
-        || query.get(talents) != "")
+        || query.get(talents) != '')
         currTalentBtn = query.get(talents);
     }
     if(query.has(sims)) {
       if( query.get(sims) != null
-        || query.get(sims) != "")
+        || query.get(sims) != '')
         currSimsBtn = query.get(sims);
     }
 
@@ -32,7 +32,7 @@ function initializeButtons() {
     }
     if(query.has(version)) {
       if(query.get(version) != null
-        || query.get(version) != "")
+        || query.get(version) != '')
         currVersionBtn = query.get(version); 
     }
   }
@@ -43,7 +43,7 @@ function initializeButtons() {
  * Initial setup of all buttons for the site
  */
 function createButtons() {
-  createVersionButtons(SimRepoVersions)
+  createVersionButtons(SimRepoVersions);
   createTalentButtons(configData[builds]);
   createSimsButtons(configData[sims]);
   createConsumableButtons(getKeys(Consumables));
@@ -53,26 +53,26 @@ function createButtons() {
 
 function getAvailableFightStyles() {
   // TODO: Make council fight style optinal?
-  let currentCouncilFightStyle = FightStyleCouncil[configData["councilTargets"]]
-  let councilFightStyles = Object.values(FightStyleCouncil)
+  let currentCouncilFightStyle = FightStyleCouncil[configData['councilTargets']];
+  let councilFightStyles = Object.values(FightStyleCouncil);
   return Object.entries(FightStyles).reduce(function(prev, [key, value]) {
-    if(councilFightStyles.includes(key) && key !== currentCouncilFightStyle) return prev
-    return { ...prev, [key]: value }
-  }, {})
+    if(councilFightStyles.includes(key) && key !== currentCouncilFightStyle) return prev;
+    return { ...prev, [key]: value };
+  }, {});
 }
 
 /*
  * Creates fight style buttons
  */
 function createFightStyleButtons(buttonArray) {
-  createButtonBasicListSelf(fightStyleDiv, buttonArray, checkButtonClick, FightStyles, fightStyle)
+  createButtonBasicListSelf(fightStyleDiv, buttonArray, checkButtonClick, FightStyles, fightStyle);
 }
 
 /*
  * Creates consumables buttons
  */
 function createConsumableButtons(buttonArray) {
-  createButtonBasicListSelf(consumablesDiv, buttonArray, checkButtonClick, Consumables, consumables)
+  createButtonBasicListSelf(consumablesDiv, buttonArray, checkButtonClick, Consumables, consumables);
 }
 
 /*
@@ -105,7 +105,7 @@ function createTalentButtons(buttonArray) {
  */
 function createSimsButtons(buttonArray) {
   const wrapper = document.createElement('div');
-  wrapper.id = "sims-btn-wrapper";
+  wrapper.id = 'sims-btn-wrapper';
   wrapper.style = `grid-template-columns: ${'auto '.repeat(maxSimButtonsPerRow)}`;
   document.getElementById(simsDiv).appendChild(wrapper);
 
@@ -119,7 +119,7 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
   let div = document.getElementById(divName);
   for (b in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if(!configData["sims"][b] || configData["sims"][b]["chart"]) {
+    if(!configData['sims'][b] || configData['sims'][b]['chart']) {
       b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       constructSimsButton(div, b, event, buttonText, curBtn);
@@ -135,7 +135,7 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
   let div = document.getElementById(divName);
   for (b in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if(!configData["sims"][b] || configData["sims"][b]["chart"]) {
+    if(!configData['sims'][b] || configData['sims'][b]['chart']) {
       b = b.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, b));
       createButtonBasic(div, b, event, buttonText, currBtn);
@@ -197,7 +197,7 @@ function isButtonSelected(buttonId) {
     || buttonId === currEnchantsBtn
     || buttonId === currConsumablesBtn
     || buttonId === currFightStyleBtn
-    || buttonId === currVersionBtn
+    || buttonId === currVersionBtn;
 }
 
 /*
@@ -208,7 +208,7 @@ function styleButtons() {
   for (var i = 0; i < btnGroup.length; i++) {
     let btn = document.getElementById(btnGroup[i].id);
     if (isButtonSelected(btn.id)) {
-      btn.classList.add("selected");
+      btn.classList.add('selected');
     }
   }
 }
@@ -225,15 +225,15 @@ function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
   button.addEventListener(click, event);
 
   const imageWrapper = document.createElement('div');
-  imageWrapper.style = "height: 100%; width: 20px;";
+  imageWrapper.style = 'height: 100%; width: 20px;';
   var icon = document.createElement('img');
-  icon.src = "images/icons/" + name + ".jpg";
-  icon.classList = "sims-btn-icon";
+  icon.src = 'images/icons/' + name + '.jpg';
+  icon.classList = 'sims-btn-icon';
   imageWrapper.appendChild(icon);
   button.appendChild(imageWrapper);
 
   const textWrapper = document.createElement('div');
-  textWrapper.style = "padding-left: 8px; text-align: left; flex: 1;"
+  textWrapper.style = 'padding-left: 8px; text-align: left; flex: 1;';
   textWrapper.appendChild(buttonText);
   button.appendChild(textWrapper);
 
@@ -253,9 +253,9 @@ function createButtonBasic(div, name, event, buttonText, currBtn) {
   button.addEventListener(click, event);
   
   var icon = document.createElement('img');
-  icon.src = "images/icons/" + name + ".jpg";
-  icon.style = "position: relative; top: 2px; width: 16px; height: 16px;";
-  var br = document.createTextNode("  ");
+  icon.src = 'images/icons/' + name + '.jpg';
+  icon.style = 'position: relative; top: 2px; width: 16px; height: 16px;';
+  var br = document.createTextNode('  ');
   button.appendChild(icon);
   button.appendChild(br);
   button.appendChild(buttonText);
@@ -269,7 +269,7 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
   button.setAttribute(onClick, handleOnClickText+ name + attributeSpacer + currBtn + attributeClose);
   button.addEventListener(click, event);
 
-  var br = document.createTextNode("  ");
+  var br = document.createTextNode('  ');
   button.appendChild(br);
   button.appendChild(buttonText);
   div.appendChild(button);
@@ -290,7 +290,7 @@ function handleOnClick(clickedButton, btn) {
   } else if(btn == fightStyle) {
     currFightStyleBtn = clickedButton;
   } else if(btn == version) {
-    currVersionBtn = clickedButton
+    currVersionBtn = clickedButton;
   }
 
   styleButtons();
@@ -308,12 +308,12 @@ function checkButtonClick() {
   removeShow(consumablesDiv);
 
   if(hasMultipleVersions()) {
-    addShow(versionDiv)
+    addShow(versionDiv);
   }
   
   for(currTalent in configData[sims]) {
     if(currTalent == currSimsBtn 
-                || currSimsBtn != null && currTalent == currSimsBtn.replaceAll("_", "-")){
+                || currSimsBtn != null && currTalent == currSimsBtn.replaceAll('_', '-')){
       if(configData[sims][currTalent][builds]){
         replaceTalentId(currTalentBtn, currFightStyleBtn);
       } else {
@@ -324,9 +324,9 @@ function checkButtonClick() {
     }
   }
 
-  const selectedVersion = currVersionBtn === defaultVersion ? "" : currVersionBtn
-  const currentVersion = getQueryParameter().get(version) || ""
-  const talents = currentVersion != selectedVersion ? "" : currTalentBtn
+  const selectedVersion = currVersionBtn === defaultVersion ? '' : currVersionBtn;
+  const currentVersion = getQueryParameter().get(version) || '';
+  const talents = currentVersion != selectedVersion ? '' : currTalentBtn;
 
   manipulateUrl({
     talents,
@@ -338,9 +338,9 @@ function checkButtonClick() {
 }
 
 function hasMultipleVersions() {
-  return Object.keys(SimRepoVersions).length > 1
+  return Object.keys(SimRepoVersions).length > 1;
 }
 
 function removeShowSpecial(div) {
-  document.getElementById(div.toString()).style.visibility = "hidden";
+  document.getElementById(div.toString()).style.visibility = 'hidden';
 }

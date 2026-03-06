@@ -7,7 +7,7 @@ function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchant
     maxEntries = maxEntries - 1;
   }
   
-  if(currSimsBtn == "weights") {
+  if(currSimsBtn == 'weights') {
     parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
     createChart(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData, maxEntries);
@@ -19,22 +19,22 @@ function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchant
  */
 function createChart( simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries) {
   jQuery.getJSON( determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice),
-      function (data) {
-        if(metaData) {
-          document.getElementById("updateData").innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
-          var simTalent = getConfigValue(configData[builds], talentChoice)
-          var header = determineChartName(simTalent.name, 
-                                           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
-                                           fightStyle);
-          document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + header + "</h3>";
-          document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
-        }
+    function (data) {
+      if(metaData) {
+        document.getElementById('updateData').innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
+        var simTalent = getConfigValue(configData[builds], talentChoice);
+        var header = determineChartName(simTalent.name, 
+          simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+          fightStyle);
+        document.getElementById('header').innerHTML = '<h3 style=\'color:#ffffff\'>' + header + '</h3>';
+        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+      }
         
-        buildData(data, simsBtn, chartId, maxEntries);
-      }.bind(this)
-    ).fail(function(xhr, status) {
-      handleJsonFailure(xhr, status)
-    });
+      buildData(data, simsBtn, chartId, maxEntries);
+    }.bind(this)
+  ).fail(function(xhr, status) {
+    handleJsonFailure(xhr, status);
+  });
 }
 
 /*
@@ -42,14 +42,14 @@ function createChart( simsBtn, fightStyle, talentChoice, chartId, metaData, maxE
  */
 function buildData(data, simsBtn, chartId, maxEntries) {
   var chart = getValue(ChartType, simsBtn);
-  if(chart == "multiple") {
-    buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries)
-  } else if(chart == "percentage") {
+  if(chart == 'multiple') {
+    buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries);
+  } else if(chart == 'percentage') {
     buildDataForPercentageChart(data, simsBtn, chartId, maxEntries);
-  } else if(chart == "dot") {
+  } else if(chart == 'dot') {
     buildChartDataDot(data, chartId);
   } else {
-    buildChartDataSingleBar(data, false, getValue(ChartPadding, simsBtn), simsBtn, chartId, maxEntries)
+    buildChartDataSingleBar(data, false, getValue(ChartPadding, simsBtn), simsBtn, chartId, maxEntries);
   }
 }
 
@@ -83,11 +83,11 @@ function updateSize(chart, chartId, size, maxEntries) {
  * Determine the chart name for the current chart, for the used parameters
  */
 function determineChartName(firstTalent, fullSimType, fightStyle) {
-  var simType = "";
-  simType = fullSimType.replaceAll("-", " ");
-  simType = simType.replaceAll("_", " ");
+  var simType = '';
+  simType = fullSimType.replaceAll('-', ' ');
+  simType = simType.replaceAll('_', ' ');
 
-  if(fullSimType.toLowerCase() == "talents_top") {
+  if(fullSimType.toLowerCase() == 'talents_top') {
     return simType
               + space + dash + space
               + fightStyle;
@@ -104,8 +104,8 @@ function determineChartName(firstTalent, fullSimType, fightStyle) {
  * Determines the description of the chart from the config.yml
  */
 function determineChartDescription(fullSimType) {
-  fullSimType = fullSimType.replaceAll("_", "-");
-  var descr = configData["sims"][fullSimType]["description"];
+  fullSimType = fullSimType.replaceAll('_', '-');
+  var descr = configData['sims'][fullSimType]['description'];
   return descr;
 }
 
@@ -124,17 +124,17 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
     simsBtn = simsBtn.replaceAll(underscore, dash);
   }
 
-  if (fightStyle.includes("twotarget")) {
-    fightStyle = "2T";
-  } else if (fightStyle.includes("threetarget")) {
-    fightStyle = "3T";
-  } else if (fightStyle.includes("fourtarget")) {
-    fightStyle = "4T";
-  } else if (fightStyle.includes("eighttarget")) {
-    fightStyle = "8T";
-  } else if (fightStyle.includes("Dungeons")) {
-    var dungeonType = configData["dungeonType"]
-    fightStyle = "Dungeons-" + dungeonType[0].toUpperCase() + dungeonType.slice(1);
+  if (fightStyle.includes('twotarget')) {
+    fightStyle = '2T';
+  } else if (fightStyle.includes('threetarget')) {
+    fightStyle = '3T';
+  } else if (fightStyle.includes('fourtarget')) {
+    fightStyle = '4T';
+  } else if (fightStyle.includes('eighttarget')) {
+    fightStyle = '8T';
+  } else if (fightStyle.includes('Dungeons')) {
+    var dungeonType = configData['dungeonType'];
+    fightStyle = 'Dungeons-' + dungeonType[0].toUpperCase() + dungeonType.slice(1);
   }
 
   if(simsBtn == talents || simsBtn == talentsTop){
@@ -150,6 +150,6 @@ function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
  * So no data could be fetched
  */
 function handleJsonFailure(xhr, status) {
-  console.log("The JSON chart failed to load, please let Publik know via discord Publik#5576");
+  console.log('The JSON chart failed to load, please let Publik know via discord Publik#5576');
   console.log(status);
 }

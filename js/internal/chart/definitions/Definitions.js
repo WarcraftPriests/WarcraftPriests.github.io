@@ -6,7 +6,7 @@ function getDefaultDotDefinition(chartId) {
   return defaultDotDefinition = {
     chart: {
       renderTo: chartId,
-      type: "scatter3d",
+      type: 'scatter3d',
       backgroundColor: null,
       animation: false,
       height: 700,
@@ -24,11 +24,11 @@ function getDefaultDotDefinition(chartId) {
       backgroundColor: darkColor,
       borderColor: mediumColor,
       borderWidth: 1,
-      align: "right",
-      verticalAlign: "middle",
-      layout: "vertical",
-      itemStyle: { "color": defaultFontColor },
-      itemHoverStyle: { "color": defaultFontColor }
+      align: 'right',
+      verticalAlign: 'middle',
+      layout: 'vertical',
+      itemStyle: { 'color': defaultFontColor },
+      itemHoverStyle: { 'color': defaultFontColor }
     },
     plotOptions: {
       series: {
@@ -38,29 +38,29 @@ function getDefaultDotDefinition(chartId) {
             color: defaultFontColor,
             fontSize: fontSize,
             fontWeight: fontWeightBold,
-            fontWeight: "400",
-            textOutline: ""
+            fontWeight: '400',
+            textOutline: ''
           }
         },
         
-      events: {
-        legendItemClick: function () {
-          return false;
-        }
+        events: {
+          legendItemClick: function () {
+            return false;
+          }
         
+        },
       },
     },
-  },
-  series: [],
-  title: {
-    text: '', //"Title placeholder",
+    series: [],
+    title: {
+      text: '', //"Title placeholder",
       style: {
         color: defaultFontColor,
         fontWeight: fontWeightBold,
       },
     },
     subtitle: {
-      text: "",
+      text: '',
       useHTML: true,
       style: {
         color: defaultFontColor,
@@ -70,8 +70,8 @@ function getDefaultDotDefinition(chartId) {
     },
     tooltip: {
       headerFormat: '',
-        pointFormatter: function () {
-          return '<table>\
+      pointFormatter: function () {
+        return '<table>\
             <thead>\
               <tr>\
                 <th ></th>\
@@ -116,7 +116,7 @@ function getDefaultDotDefinition(chartId) {
       max: 15,
       startOnTick: true,
       endOnTick: true,
-      title: "",
+      title: '',
       labels: {
         enabled: false,
       },
@@ -128,7 +128,7 @@ function getDefaultDotDefinition(chartId) {
       max: 15,
       startOnTick: true,
       endOnTick: true,
-      title: "",
+      title: '',
       labels: {
         enabled: false,
       },
@@ -140,7 +140,7 @@ function getDefaultDotDefinition(chartId) {
       max: 20,
       startOnTick: true,
       endOnTick: true,
-      title: "",
+      title: '',
       labels: {
         enabled: false,
       },
@@ -240,7 +240,7 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
       series: {
         column: {
           dataLabels: {
-              enabled: false,
+            enabled: false,
           },
         },
         line: {
@@ -292,28 +292,28 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
         var result = '<div class="chartHover">'
               + '<div class="chartHoverLine">' 
               + this.x
-              + "</div>";
+              + '</div>';
         var minValue = 0;
         var value = 0;
         for (var i = this.points.length - 1; i >= 0; i--) {
-          if(this.points[i].series.name.includes("min")) {
+          if(this.points[i].series.name.includes('min')) {
             minValue = this.points[i].y;
             value = minValue;
-          } else if (this.points[i].series.name.includes("max")) {
+          } else if (this.points[i].series.name.includes('max')) {
             value = minValue + this.points[i].y;
             minValue = 0;
           }
 
           
           result += getTooltip( value, 
-                                0, 
-                                this.points[i].series,
-                                data,
-                                false);
+            0, 
+            this.points[i].series,
+            data,
+            false);
           
         }
                   
-        result += "</div>";
+        result += '</div>';
         return result;
       },
     },
@@ -419,7 +419,7 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
           }
         }
         let lastValue = 0;
-        result.push(lastValue)
+        result.push(lastValue);
         for(i = 0; i <= 9; i++) {
           lastValue = lastValue + Number((Number(highestDPS / (data[jsonSimulatedSteps].length + 1))).toFixed(2) * (data[jsonSimulatedSteps].length / 7));
           result.push(Number(lastValue.toFixed(2)));
@@ -471,17 +471,17 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
         var result = '<div class="chartHover">'
                     + '<div class="chartHoverLine">' 
                     + this.x
-                    + "</div>";
+                    + '</div>';
   
         for (var i = this.points.length - 1; i >= 0; i--) {
           result += getTooltip( this.points[i].y, 
-                                (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
-                                this.points[i].series,
-                                data,
-                                true);
+            (( data[jsonData][jsonBase][DPS] / 100 ) * this.points[i].y), 
+            this.points[i].series,
+            data,
+            true);
         }
 
-        result += "</div>";
+        result += '</div>';
         return result;
       },
     },
@@ -622,15 +622,15 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
         var result = '<div class="chartHover">'
               + '<div class="chartHoverLine">' 
               + this.x 
-              + "</div>";
+              + '</div>';
         for (var i = this.points.length - 1; i >= 0; i--) {
           result += getTooltip( this.points[i].y, 
-                                ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
-                                this.points[i].series,
-                                data,
-                                true);
+            ((data[jsonData][jsonBase][DPS] / 100) * this.points[i].y), 
+            this.points[i].series,
+            data,
+            true);
         }
-        result += "</div>";
+        result += '</div>';
         return result;
       },
     },
@@ -638,21 +638,21 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
 }
 
 function getTooltip(percentage, dpsIncrease, series, data, showBase) {
-  result = "";
+  result = '';
   if (percentage != 0) {
     result = '<div><span class="chartHoverSpan" style="border-left: 9px solid ' 
               + series.color
-              + ";" 
+              + ';' 
               + '">' 
               + series.name;
 
     if(showBase) {
-      result += " ( " + data[jsonData][jsonBase][DPS] + " base )";
+      result += ' ( ' + data[jsonData][jsonBase][DPS] + ' base )';
     }
-    result += "</span>:&nbsp;&nbsp;";
+    result += '</span>:&nbsp;&nbsp;';
 
     if(dpsIncrease != 0) {
-      result += "+ "
+      result += '+ '
               + Intl.NumberFormat().format(dpsIncrease) 
               + space + DPS.toLowerCase()
               + space + dash + space;

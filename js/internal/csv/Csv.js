@@ -1,89 +1,89 @@
 var Headings = {
-    profile: "Profile",
-    actor: "Actor",
-    DPS: "DPS",
-    int: "Intellect",
-    haste: "Haste",
-    crit: "Critical Strike",
-    mastery: "Mastery",
-    vers: "Versatility",
-    dpsW: "DPS Weight",
+  profile: 'Profile',
+  actor: 'Actor',
+  DPS: 'DPS',
+  int: 'Intellect',
+  haste: 'Haste',
+  crit: 'Critical Strike',
+  mastery: 'Mastery',
+  vers: 'Versatility',
+  dpsW: 'DPS Weight',
 };
 
 function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
-    if (currFightStyleBtn.includes("twotarget")) {
-        currFightStyleBtn = "2T";
-    } else if (currFightStyleBtn.includes("threetarget")) {
-        currFightStyleBtn = "3T";
-    } else if (currFightStyleBtn.includes("fourtarget")) {
-        currFightStyleBtn = "4T";
-    } else if (currFightStyleBtn.includes("eighttarget")) {
-        currFightStyleBtn = "8T";
-    } else if (currFightStyleBtn.includes("Dungeons")) {
-        currFightStyleBtn = "Dungeons-Push";
-    }
+  if (currFightStyleBtn.includes('twotarget')) {
+    currFightStyleBtn = '2T';
+  } else if (currFightStyleBtn.includes('threetarget')) {
+    currFightStyleBtn = '3T';
+  } else if (currFightStyleBtn.includes('fourtarget')) {
+    currFightStyleBtn = '4T';
+  } else if (currFightStyleBtn.includes('eighttarget')) {
+    currFightStyleBtn = '8T';
+  } else if (currFightStyleBtn.includes('Dungeons')) {
+    currFightStyleBtn = 'Dungeons-Push';
+  }
     
-    $(document).ready(function() {
-        $.ajax({
-            type: "GET",
-            url: determineCsvUrl(currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn),
-            dataType: "text",
-            success: function(data) {processData(data, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn);}
-         });
+  $(document).ready(function() {
+    $.ajax({
+      type: 'GET',
+      url: determineCsvUrl(currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn),
+      dataType: 'text',
+      success: function(data) {processData(data, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn);}
     });
+  });
     
-    function processData(allText, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn) {
-        var record_num = 9;  // or however many elements there are in each row
-        var allTextLines = allText.split(/\r\n|\n/);
-        if(metaData) {
-            var simTalent = getConfigValue(configData[builds], currTalentBtn)
-            document.getElementById('header').innerHTML = "<h3 style='color:#ffffff'>" + determineChartName("", simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn) + "</h3>";
-            document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
-        }
-        var result = "</br>";
-        result += "<table>";
+  function processData(allText, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn) {
+    var record_num = 9;  // or however many elements there are in each row
+    var allTextLines = allText.split(/\r\n|\n/);
+    if(metaData) {
+      var simTalent = getConfigValue(configData[builds], currTalentBtn);
+      document.getElementById('header').innerHTML = '<h3 style=\'color:#ffffff\'>' + determineChartName('', simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn) + '</h3>';
+      document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
+    }
+    var result = '</br>';
+    result += '<table>';
 
-        for(var i = 0; i < allTextLines.length -1; i++){
-            var lines = allTextLines[i].split(',');
-            var entries = lines.splice(0, record_num);
-            result += "<tr>"
-            for (var j=0; j<record_num; j++) {
-                var flag = "<td>";
-                var flagClose = "</td>";
+    for(var i = 0; i < allTextLines.length -1; i++){
+      var lines = allTextLines[i].split(',');
+      var entries = lines.splice(0, record_num);
+      result += '<tr>';
+      for (var j=0; j<record_num; j++) {
+        var flag = '<td>';
+        var flagClose = '</td>';
 
-                if(i == 0) {
-                    flag = "<th>";
-                    flagClose = "</th>";
-                }
-
-                if(entries[j] != null || entries[j] != undefined) {
-                    result += flag + getLabel(entries[j]) + flagClose;
-                }
-            }
-            result += "</tr>";
+        if(i == 0) {
+          flag = '<th>';
+          flagClose = '</th>';
         }
 
-        result +="</table>";
-        result +="</br>";
-        result +="</br>";
-        result +="</br>";
+        if(entries[j] != null || entries[j] != undefined) {
+          result += flag + getLabel(entries[j]) + flagClose;
+        }
+      }
+      result += '</tr>';
+    }
+
+    result +='</table>';
+    result +='</br>';
+    result +='</br>';
+    result +='</br>';
         
-        if(result != null || result != undefined || result != ""){
-            document.getElementById(chartId).innerHTML = result;
-        }
+    if(result != null || result != undefined || result != ''){
+      document.getElementById(chartId).innerHTML = result;
+    }
+  }
+
+  function getLabel(key) {
+    var result = '';
+    result = Headings[key];
+    if(result == null || result == undefined || result == '' ) {
+      result = key;
     }
 
-    function getLabel(key) {
-        var result = "";
-        result = Headings[key];
-        if(result == null || result == undefined || result == "" ) {
-            result = key;
-        }
-
-        return result.replaceAll("_", " ");
-    }
+    return result.replaceAll('_', ' ');
+  }
 }
 
 function determineCsvUrl(simsBtn, baseurl, fightStyle, talentChoice) {
-    return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice.replaceAll("_", "-") + csvExtension;
+  return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice.replaceAll('_', '-') + csvExtension;
 }

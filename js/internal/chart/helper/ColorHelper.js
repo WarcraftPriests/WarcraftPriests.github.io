@@ -1,42 +1,42 @@
 var racialColor = {
-    Goblin: "#F2545B",
-    Gnome: "#4F86C6",
-    Dark_Iron_Dwarf: "#4F86C6",
-    Night_Elf_Haste: "#4F86C6",
-    Draenei: "#4F86C6",
-    Human: "#4F86C6",
-    Troll: "#F2545B",
-    Blood_Elf: "#F2545B",
-    Void_Elf: "#4F86C6",
-    Nightborne: "#F2545B",
-    Lightforged_Draenei: "#4F86C6",
-    Night_Elf_Crit: "#4F86C6",
-    Kul_Tiran: "#4F86C6",
-    Zandalari_Troll_Paku: "#F2545B",
-    Zandalari_Troll_Bwonsamdi: "#F2545B",
-    Mechagnome: "#4F86C6",
-    Undead: "#F2545B",
-    Worgen: "#4F86C6",
-    Maghar_Orc: "#F2545B",
-    Zandalari_Troll_Kimbul: "#F2545B",
-    Dwarf: "#4F86C6",
-    Tauren: "#F2545B",
-    Vulpera: "#F2545B",
-    Panda_Feast: "#F3F7F0",
-    Orc: "#F2545B",
-    Highmountain_Tauren: "#F2545B",
-    Earthen: "#F3F7F0",
-    Dracthyr: "#F3F7F0",
-}
+  Goblin: '#F2545B',
+  Gnome: '#4F86C6',
+  Dark_Iron_Dwarf: '#4F86C6',
+  Night_Elf_Haste: '#4F86C6',
+  Draenei: '#4F86C6',
+  Human: '#4F86C6',
+  Troll: '#F2545B',
+  Blood_Elf: '#F2545B',
+  Void_Elf: '#4F86C6',
+  Nightborne: '#F2545B',
+  Lightforged_Draenei: '#4F86C6',
+  Night_Elf_Crit: '#4F86C6',
+  Kul_Tiran: '#4F86C6',
+  Zandalari_Troll_Paku: '#F2545B',
+  Zandalari_Troll_Bwonsamdi: '#F2545B',
+  Mechagnome: '#4F86C6',
+  Undead: '#F2545B',
+  Worgen: '#4F86C6',
+  Maghar_Orc: '#F2545B',
+  Zandalari_Troll_Kimbul: '#F2545B',
+  Dwarf: '#4F86C6',
+  Tauren: '#F2545B',
+  Vulpera: '#F2545B',
+  Panda_Feast: '#F3F7F0',
+  Orc: '#F2545B',
+  Highmountain_Tauren: '#F2545B',
+  Earthen: '#F3F7F0',
+  Dracthyr: '#F3F7F0',
+};
 
 
 var getColor = function (key, key2) {
   var color = racialColor[key];
-  if (color == null || color == undefined || color == "") {
-    color = "#496DC9";
+  if (color == null || color == undefined || color == '') {
+    color = '#496DC9';
   }
   return color;
-}
+};
 
 function create_color(dps, min_dps, max_dps) {
   let color_min = [0, 255, 255];

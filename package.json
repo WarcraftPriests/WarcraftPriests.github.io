@@ -1,0 +1,23 @@
+{
+  "name": "warcraftpriests.github.io",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The charts use Highcharts 8.2.2. Instead of loading from the CDN during\r development (which returns 403 when opened via `file://`), we vendor the\r scripts locally.",
+  "main": "index.js",
+  "scripts": {
+    "copy-highcharts": "node scripts/copyHighcharts.js",
+    "prepare": "npm run copy-highcharts",
+    "test": "jest",
+    "lint": "eslint js/ test/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "highcharts": "^8.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.2",
+    "jest": "^29.7.0"
+  }
+}
