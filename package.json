@@ -2,7 +2,7 @@
   "name": "warcraftpriests.github.io",
   "version": "1.0.0",
   "type": "module",
-  "description": "The charts use Highcharts 8.2.2. Instead of loading from the CDN during\r development (which returns 403 when opened via `file://`), we vendor the\r scripts locally.",
+  "description": "This is the World of Warcraft Priest Sim Chart website.",
   "main": "index.js",
   "scripts": {
     "copy-highcharts": "node scripts/copyHighcharts.js",
