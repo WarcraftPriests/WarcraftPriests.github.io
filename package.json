@@ -7,9 +7,10 @@
   "scripts": {
     "copy-highcharts": "node scripts/copyHighcharts.js",
     "prepare": "npm run copy-highcharts",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint js/ test/",
-    "lint:fix": "eslint js/ test/ --fix"
+    "lint:fix": "eslint js/ test/ --fix",
+    "start": "npx http-server -p 8080"
   },
   "keywords": [],
   "author": "",

@@ -1,8 +1,45 @@
+import { AppState } from '../state/AppState.module.js';
+import { getValue, getConfigValue, ChartType, ChartPadding } from '../helper/Converter.module.js';
+import {
+  normalizeBuildKey,
+  normalizeSimResultKey,
+  normalizeFightStyleForResults
+} from '../helper/Normalizers.module.js';
+import {
+  renderChartHeader,
+  renderChartDescription,
+  renderChartUpdatedText
+} from '../helper/DomRenderHelper.module.js';
+import {
+  jsonLastUpdated,
+  jsonExtension,
+  simResultPath,
+  slash,
+  underscore,
+  dash,
+  space,
+  px,
+  updateDataInnerHtml,
+  builds,
+  talents,
+  talentsTop,
+  dungeonType
+} from '../helper/Constants.module.js';
+import {
+  buildChartDataSingleBar,
+  buildDataForPercentageChart,
+  buildChartDataMultipleBar,
+  buildChartDataDot
+} from './helper/DataHelper.module.js';
+
+// parseCSV is from Csv.js - accessed as global for now
+// handleJsonFailure is from Main.js - accessed as global for now
+
 /*
  * Decides what kind of chart should be used 
  * and when a chart update should happen
  */
-function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
+export function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
   if (currSimsBtn == 'weights') {
     parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
@@ -13,7 +50,7 @@ function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchant
 /*
  * Collects all data need for a chart an then create it
  */
-function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries) {
+export function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries) {
   jQuery.getJSON(determineJsonUrl(simsBtn, AppState.getBaseUrl(), fightStyle, talentChoice),
     function (data) {
       if (metaData) {
@@ -36,7 +73,7 @@ function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData, maxEn
 /*
  * Choose which chart to show
  */
-function buildData(data, simsBtn, chartId, maxEntries) {
+export function buildData(data, simsBtn, chartId, maxEntries) {
   var chart = getValue(ChartType, simsBtn);
   if (chart == 'multiple') {
     buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries);
@@ -52,7 +89,7 @@ function buildData(data, simsBtn, chartId, maxEntries) {
 /*
  * Updates the size of the div for the chart for the real data
  */
-function updateSize(chart, chartId, size, maxEntries) {
+export function updateSize(chart, chartId, size, maxEntries) {
   var realSize = 0;
 
   if (maxEntries != null && maxEntries != undefined) {
@@ -82,7 +119,7 @@ function updateSize(chart, chartId, size, maxEntries) {
 /*
  * Determine the chart name for the current chart, for the used parameters
  */
-function determineChartName(firstTalent, fullSimType, fightStyle) {
+export function determineChartName(firstTalent, fullSimType, fightStyle) {
   var simType = '';
   simType = fullSimType.replaceAll('-', ' ');
   simType = simType.replaceAll('_', ' ');
@@ -103,7 +140,7 @@ function determineChartName(firstTalent, fullSimType, fightStyle) {
 /*
  * Determines the description of the chart from the config.yml
  */
-function determineChartDescription(fullSimType) {
+export function determineChartDescription(fullSimType) {
   fullSimType = fullSimType.replaceAll('_', '-');
   var descr = AppState.getConfigData()['sims'][fullSimType]['description'];
   return descr;
@@ -112,7 +149,7 @@ function determineChartDescription(fullSimType) {
 /*
  * Determines the url for the github repo to get the needed sim results
  */
-function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
+export function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   talentChoice = normalizeBuildKey(talentChoice);
   simsBtn = normalizeSimResultKey(simsBtn);
   fightStyle = normalizeFightStyleForResults(fightStyle, AppState.getConfigData()[dungeonType]);

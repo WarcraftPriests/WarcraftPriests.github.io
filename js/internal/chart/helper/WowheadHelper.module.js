@@ -1,13 +1,44 @@
+import { AppState } from '../../../internal/state/AppState.module.js';
+import { getValue } from '../../../internal/helper/Converter.module.js';
+import {
+  FightStyleExternal,
+  TalentIds,
+  TrinketIds
+} from '../../../internal/helper/Converter.module.js';
+import {
+  jsonSortedDataKeys,
+  jsonIds,
+  jsonData,
+  jsonBase,
+  sims,
+  consumables,
+  alchemy,
+  enchants,
+  gems,
+  specialGear,
+  trinkets,
+  talents,
+  talentsTop,
+  racials,
+  trinketCombos,
+  wowheadSpellPath,
+  wowheadItemPath
+} from '../../../internal/helper/Constants.module.js';
+import TooltipBuilder from './TooltipBuilder.module.js';
+
 /*
  * Global object to store talent import strings (survives Highcharts sanitization)
  */
-var talentImportStrings = {};
+export var talentImportStrings = {};
 
 /*
  * Build wowhead tooltips
  */
-function buildWowheadTooltips(data, breakConidition, simsBtn) {
+export function buildWowheadTooltips(data, breakCondition, simsBtn) {
   var result = [];
+  
+  // Access wowheadUrl from window global (set by Main.js)
+  var wowheadUrl = typeof window !== 'undefined' ? window.wowheadUrl : '';
 
   for (const dpsName of data[jsonSortedDataKeys]) {
     var id = data[jsonIds][dpsName]; 
@@ -35,7 +66,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
 /*
  * Build a single line of the wowhead tooltip
  */
-function buildChartLine(dpsName, itemId, url, simsBtn, data = null) {
+export function buildChartLine(dpsName, itemId, url, simsBtn, data = null) {
   if (simsBtn == null
     || simsBtn == undefined
     || simsBtn == trinkets 
@@ -52,7 +83,8 @@ function buildChartLine(dpsName, itemId, url, simsBtn, data = null) {
   }
 }
 
-function buildChartLineForTrinketCombos(dpsName, ids) {
+export function buildChartLineForTrinketCombos(dpsName, ids) {
+  var wowheadUrl = typeof window !== 'undefined' ? window.wowheadUrl : '';
   var items = [];
   var names = dpsName.split('-');
   
@@ -80,7 +112,7 @@ function buildChartLineForTrinketCombos(dpsName, ids) {
   return TooltipBuilder.buildMultiLinkLine(items);
 }
 
-function buildWowheadTooltipsMultipleBar(data, simsBtn) {
+export function buildWowheadTooltipsMultipleBar(data, simsBtn) {
   var result = [];
   for (const currFight in data[jsonData]) {
     if (currFight === jsonBase) continue; // skip 'Base'
@@ -95,7 +127,8 @@ function buildWowheadTooltipsMultipleBar(data, simsBtn) {
   return result;
 }
 
-function buildChartLineForTrinkets(dpsName) {
+export function buildChartLineForTrinkets(dpsName) {
+  var wowheadUrl = typeof window !== 'undefined' ? window.wowheadUrl : '';
   var items = [];
   var names = dpsName.split('_');
   
@@ -111,7 +144,8 @@ function buildChartLineForTrinkets(dpsName) {
   return TooltipBuilder.buildMultiLinkLine(items);
 }
 
-function buildChartLineForTalents(dpsName) {
+export function buildChartLineForTalents(dpsName) {
+  var wowheadUrl = typeof window !== 'undefined' ? window.wowheadUrl : '';
   var talentId = getValue(TalentIds, dpsName.toUpperCase());
   var currSimsBtn = AppState.getCurrSimsBtn();
   var talentData = AppState.getTalentData();
@@ -135,7 +169,11 @@ function buildChartLineForTalents(dpsName) {
   return TooltipBuilder.buildWowheadLinkLine(dpsName, talentId, wowheadUrl + wowheadSpellPath);
 }
 
-function buildChartLineForBasic(names) {
+export function buildChartLineForBasic(names) {
+  var wowheadUrl = typeof window !== 'undefined' ? window.wowheadUrl : '';
+  // Access ConduitsIds from window global if it exists (legacy Shadowlands code)
+  var ConduitsIds = typeof window !== 'undefined' ? window.ConduitsIds : {};
+  
   var items = [];
   var counter = 0;
   var skipNext = false;
@@ -172,7 +210,7 @@ function buildChartLineForBasic(names) {
   return TooltipBuilder.buildMultiLinkLine(items);
 }
 
-function buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn, ilvl) {
+export function buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn, ilvl) {
   var currSimsBtn = simsBtn || AppState.getCurrSimsBtn();
   
   // Handle talent-type sims

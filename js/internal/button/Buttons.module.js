@@ -1,4 +1,55 @@
-function setDefaultButtonValues() {
+import { AppState } from '../state/AppState.module.js';
+import {
+  SimRepoVersions,
+  Sims,
+  Consumables,
+  FightStyles,
+  FightStyleCouncil,
+  getValue,
+  getKeys
+} from '../helper/Converter.module.js';
+import {
+  getQueryParameter,
+  manipulateUrl
+} from '../helper/Parameterized.module.js';
+import {
+  defaultSims,
+  defaultEnchant,
+  defaultConsumable,
+  defaultFightStyle,
+  defaultVersion,
+  builds,
+  sims,
+  talents,
+  fightStyle,
+  version,
+  consumables,
+  fightStyleDiv,
+  simsDiv,
+  talentDiv,
+  enchantDiv,
+  consumablesDiv,
+  versionDiv,
+  talentBuildIdDiv,
+  talentBuildDiv,
+  dash,
+  underscore,
+  maxSimButtonsPerRow,
+  buttonName,
+  buttonId,
+  buttonClass,
+  click,
+  inlineBlock,
+  none,
+  show
+} from '../helper/Constants.module.js';
+import { replaceTalentId } from '../helper/TalentBuild.module.js';
+import { updateChart } from '../chart/Chart.module.js';
+
+let currEnchantsBtn = defaultEnchant;
+let currConsumablesBtn = defaultConsumable;
+
+export function setDefaultButtonValues() {
   AppState.setCurrSimsBtn(defaultSims);
   currEnchantsBtn = defaultEnchant;
   currConsumablesBtn = defaultConsumable;
@@ -14,7 +65,7 @@ function hasQueryValue(value) {
 /*
  * Initialize all buttons by url params
  */
-function initializeButtons() {
+export function initializeButtons() {
   setDefaultButtonValues();
 
   var query = getQueryParameter();
@@ -49,7 +100,7 @@ function initializeButtons() {
 /*
  * Initial setup of all buttons for the site
  */
-function createButtons() {
+export function createButtons() {
   createVersionButtons(SimRepoVersions);
   createTalentButtons(AppState.getConfigData()[builds]);
   createSimsButtons(AppState.getConfigData()[sims]);
@@ -291,7 +342,7 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
  * stored in a variable so checkButtonClick() can use
  * that information.
  */
-function handleOnClick(clickedButton, btn) {
+export function handleOnClick(clickedButton, btn) {
   if (btn == talents) {
     AppState.setCurrTalentBtn(clickedButton);
   } else if (btn == sims) {
@@ -311,7 +362,7 @@ function handleOnClick(clickedButton, btn) {
  * Handles the calls of a button click and updates the chart if
  * necessary
  */
-function checkButtonClick() {
+export function checkButtonClick() {
   addShow(fightStyleDiv);
   addShow(simsDiv);
   addShow(talentDiv);
@@ -348,7 +399,7 @@ function checkButtonClick() {
   updateChart(AppState.getCurrTalentBtn(), AppState.getCurrSimsBtn(), currConsumablesBtn, currEnchantsBtn, AppState.getCurrFightStyleBtn(), 'Chart-Display-div', true);
 }
 
-function hasMultipleVersions() {
+export function hasMultipleVersions() {
   return Object.keys(SimRepoVersions).length > 1;
 }
 

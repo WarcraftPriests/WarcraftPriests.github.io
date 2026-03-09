@@ -1,4 +1,4 @@
-function setTextContentById(elementId, value) {
+export function setTextContentById(elementId, value) {
   var element = document.getElementById(elementId);
   if (!element) {
     return;
@@ -6,7 +6,7 @@ function setTextContentById(elementId, value) {
   element.textContent = value == null ? '' : value;
 }
 
-function renderChartHeader(headerText) {
+export function renderChartHeader(headerText) {
   var headerRoot = document.getElementById('header');
   if (!headerRoot) {
     return;
@@ -22,15 +22,15 @@ function renderChartHeader(headerText) {
   headerRoot.appendChild(heading);
 }
 
-function renderChartDescription(descriptionText) {
+export function renderChartDescription(descriptionText) {
   setTextContentById('description', descriptionText);
 }
 
-function renderChartUpdatedText(updatedText) {
+export function renderChartUpdatedText(updatedText) {
   setTextContentById('updateData', updatedText);
 }
 
-function renderCsvTable(chartId, rows) {
+export function renderCsvTable(chartId, rows) {
   var root = document.getElementById(chartId);
   if (!root) {
     return;

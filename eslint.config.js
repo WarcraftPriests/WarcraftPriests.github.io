@@ -39,6 +39,13 @@ export default [
     }
   },
   {
+    files: ['js/**/*.module.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    }
+  },
+  {
     files: ['test/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',

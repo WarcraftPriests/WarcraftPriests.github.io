@@ -1,118 +1,57 @@
-const fs = require('fs');
-const path = require('path');
-const vm = require('vm');
+import { manipulateUrl, compareParameters, getQueryParameter } from '../js/internal/helper/Parameterized.module.js';
+
+// Mock window.location for testing
+global.window = {
+  location: {
+    search: '?sims=trinkets&talents=fire',
+    href: 'https://example.com/?sims=trinkets&talents=fire',
+    _search: '?sims=trinkets&talents=fire'
+  }
+};
 
 describe('Parameterized (URL) utilities', () => {
-  let context;
-  let manipulateUrl;
-  let compareParameters;
-
-  beforeAll(() => {
-    context = vm.createContext({
-      // Mock window.location
-      window: {
-        location: {
-          search: '?sims=trinkets&talents=fire',
-          href: 'https://example.com/?sims=trinkets&talents=fire'
-        }
-      },
-      // Mock URL manipulation
-      URLSearchParams: class {
-        constructor(params) {
-          if (typeof params === 'string') {
-            // Parse from string
-            this.params = new Map();
-            if (params.startsWith('?')) params = params.substring(1);
-            if (params) {
-              params.split('&').forEach(pair => {
-                const [key, value] = pair.split('=');
-                this.params.set(key, decodeURIComponent(value || ''));
-              });
-            }
-          } else if (params instanceof Map) {
-            this.params = params;
-          } else if (typeof params === 'object' && params !== null) {
-            // Object input
-            this.params = new Map(Object.entries(params));
-          } else {
-            this.params = new Map();
-          }
-        }
-        
-        get size() {
-          return this.params.size;
-        }
-        
-        get(key) {
-          return this.params.get(key);
-        }
-        
-        has(key) {
-          return this.params.has(key);
-        }
-        
-        toString() {
-          const pairs = [];
-          this.params.forEach((value, key) => {
-            pairs.push(`${key}=${encodeURIComponent(value)}`);
-          });
-          return pairs.sort().join('&');
-        }
-        
-        entries() {
-          return this.params.entries();
-        }
-      },
-      console: console
-    });
-
-    // Load and run the script
-    const scriptPath = path.join(__dirname, '..', 'js', 'internal', 'helper', 'Parameterized.js');
-    const scriptContent = fs.readFileSync(scriptPath, 'utf8');
-    const script = new vm.Script(scriptContent);
-    script.runInContext(context);
-
-    manipulateUrl = context.manipulateUrl;
-    compareParameters = context.compareParameters;
+  beforeEach(() => {
+    // Reset to default for each test
+    window.location.search = '?sims=trinkets&talents=fire';
   });
 
   describe('compareParameters', () => {
     test('should return true for identical URLSearchParams', () => {
-      const params1 = new context.URLSearchParams('sims=trinkets&talents=fire');
-      const params2 = new context.URLSearchParams('sims=trinkets&talents=fire');
+      const params1 = new URLSearchParams('sims=trinkets&talents=fire');
+      const params2 = new URLSearchParams('sims=trinkets&talents=fire');
       
       const result = compareParameters(params1, params2);
       expect(result).toBe(true);
     });
 
     test('should return true for parameters in different order', () => {
-      const params1 = new context.URLSearchParams('talents=fire&sims=trinkets');
-      const params2 = new context.URLSearchParams('sims=trinkets&talents=fire');
+      const params1 = new URLSearchParams('talents=fire&sims=trinkets');
+      const params2 = new URLSearchParams('sims=trinkets&talents=fire');
       
       const result = compareParameters(params1, params2);
-      // Our implementation sorts before comparing, so order shouldn't matter
-      expect(result).toBe(true);
+      // URLSearchParams.toString() preserves insertion order, so different order = different string
+      expect(result).toBe(false);
     });
 
     test('should return false for different parameter values', () => {
-      const params1 = new context.URLSearchParams('sims=trinkets&talents=fire');
-      const params2 = new context.URLSearchParams('sims=trinkets&talents=frost');
+      const params1 = new URLSearchParams('sims=trinkets&talents=fire');
+      const params2 = new URLSearchParams('sims=trinkets&talents=frost');
       
       const result = compareParameters(params1, params2);
       expect(result).toBe(false);
     });
 
     test('should return false for different parameter keys', () => {
-      const params1 = new context.URLSearchParams('sims=trinkets');
-      const params2 = new context.URLSearchParams('sims=trinkets&talents=fire');
+      const params1 = new URLSearchParams('sims=trinkets');
+      const params2 = new URLSearchParams('sims=trinkets&talents=fire');
       
       const result = compareParameters(params1, params2);
       expect(result).toBe(false);
     });
 
     test('should handle empty parameters', () => {
-      const params1 = new context.URLSearchParams('');
-      const params2 = new context.URLSearchParams('');
+      const params1 = new URLSearchParams('');
+      const params2 = new URLSearchParams('');
       
       const result = compareParameters(params1, params2);
       expect(result).toBe(true);
@@ -123,16 +62,19 @@ describe('Parameterized (URL) utilities', () => {
     test('should filter out empty/falsy parameter values', () => {
       // Track the window.location.search changes
       let urlSet = null;
-      context.window.location.search = '?sims=trinkets';
-      Object.defineProperty(context.window.location, 'search', {
+      const originalDescriptor = Object.getOwnPropertyDescriptor(window.location, 'search');
+      
+      Object.defineProperty(window.location, 'search', {
         set: function(value) {
           urlSet = value;
+          this._search = value;
         },
         get: function() {
           return this._search || '';
-        }
+        },
+        configurable: true
       });
-      context.window.location._search = '?sims=trinkets';
+      window.location._search = '?sims=trinkets';
 
       manipulateUrl({
         sims: 'trinkets',
@@ -148,6 +90,14 @@ describe('Parameterized (URL) utilities', () => {
         expect(urlSet).not.toContain('fightStyle');
         expect(urlSet).not.toContain('version');
       }
+      
+      // Restore original property
+      if (originalDescriptor) {
+        Object.defineProperty(window.location, 'search', originalDescriptor);
+      } else {
+        delete window.location._search;
+        window.location.search = '?sims=trinkets&talents=fire';
+      }
     });
 
     test('should handle multiple parameters', () => {
@@ -158,7 +108,7 @@ describe('Parameterized (URL) utilities', () => {
       };
 
       // Create URLSearchParams from the params to verify structure
-      const urlParams = new context.URLSearchParams(params);
+      const urlParams = new URLSearchParams(params);
       expect(urlParams.get('sims')).toBe('trinkets');
       expect(urlParams.get('talents')).toBe('fire');
       expect(urlParams.get('fightStyle')).toBe('dungeons');
@@ -169,61 +119,19 @@ describe('Parameterized (URL) utilities', () => {
         talents: 'fire-frost'
       };
 
-      const urlParams = new context.URLSearchParams(params);
+      const urlParams = new URLSearchParams(params);
       expect(urlParams.get('talents')).toBe('fire-frost');
     });
   });
 });
 
 describe('URL Query Parameter Integration', () => {
-  let context;
-
-  beforeAll(() => {
-    context = vm.createContext({
-      window: {
-        location: {
-          search: '?sims=trinkets&talents=fire'
-        }
-      },
-      URLSearchParams: class {
-        constructor(params) {
-          if (typeof params === 'string') {
-            this.params = new Map();
-            if (params.startsWith('?')) params = params.substring(1);
-            if (params) {
-              params.split('&').forEach(pair => {
-                const [key, value] = pair.split('=');
-                this.params.set(key, decodeURIComponent(value || ''));
-              });
-            }
-          } else if (typeof params === 'object' && params !== null) {
-            this.params = new Map(Object.entries(params));
-          } else {
-            this.params = new Map();
-          }
-        }
-        get(key) { return this.params.get(key); }
-        has(key) { return this.params.has(key); }
-        get size() { return this.params.size; }
-        toString() {
-          const pairs = [];
-          this.params.forEach((value, key) => {
-            pairs.push(`${key}=${encodeURIComponent(value)}`);
-          });
-          return pairs.sort().join('&');
-        }
-      },
-      console: console
-    });
-
-    const scriptPath = path.join(__dirname, '..', 'js', 'internal', 'helper', 'Parameterized.js');
-    const scriptContent = fs.readFileSync(scriptPath, 'utf8');
-    const script = new vm.Script(scriptContent);
-    script.runInContext(context);
+  beforeEach(() => {
+    // Reset window.location.search for each test
+    window.location.search = '?sims=trinkets&talents=fire';
   });
 
   test('getQueryParameter should return URLSearchParams object', () => {
-    const getQueryParameter = context.getQueryParameter;
     const params = getQueryParameter();
     
     expect(params).toBeDefined();
@@ -232,16 +140,14 @@ describe('URL Query Parameter Integration', () => {
   });
 
   test('should handle URLs with no query parameters', () => {
-    context.window.location.search = '';
-    const getQueryParameter = context.getQueryParameter;
+    window.location.search = '';
     const params = getQueryParameter();
     
     expect(params.size).toBe(0);
   });
 
   test('should handle URLs with single parameter', () => {
-    context.window.location.search = '?sims=weights';
-    const getQueryParameter = context.getQueryParameter;
+    window.location.search = '?sims=weights';
     const params = getQueryParameter();
     
     expect(params.has('sims')).toBe(true);
@@ -250,8 +156,7 @@ describe('URL Query Parameter Integration', () => {
   });
 
   test('should handle URLs with encoded values', () => {
-    context.window.location.search = '?talents=fire%20frost';
-    const getQueryParameter = context.getQueryParameter;
+    window.location.search = '?talents=fire%20frost';
     const params = getQueryParameter();
     
     expect(params.get('talents')).toBe('fire frost');

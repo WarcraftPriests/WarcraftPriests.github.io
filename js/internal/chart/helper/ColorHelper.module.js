@@ -30,7 +30,7 @@ var racialColor = {
 };
 
 
-var getColor = function (key, key2) {
+export var getColor = function (key, key2) {
   var color = racialColor[key];
   if (color == null || color == undefined || color == '') {
     color = '#496DC9';
@@ -38,7 +38,7 @@ var getColor = function (key, key2) {
   return color;
 };
 
-function create_color(dps, min_dps, max_dps) {
+export function create_color(dps, min_dps, max_dps) {
   let color_min = [0, 255, 255];
   let color_mid = [255, 255, 0];
   let color_max = [255, 0, 0];

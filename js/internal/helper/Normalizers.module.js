@@ -1,18 +1,18 @@
-function normalizeSimResultKey(rawSimType) {
+export function normalizeSimResultKey(rawSimType) {
   if (rawSimType == null) {
     return rawSimType;
   }
   return rawSimType.replaceAll('_', '-');
 }
 
-function normalizeBuildKey(rawBuildKey) {
+export function normalizeBuildKey(rawBuildKey) {
   if (rawBuildKey == null) {
     return rawBuildKey;
   }
   return rawBuildKey.replaceAll('_', '-');
 }
 
-function normalizeFightStyleForResults(rawFightStyle, selectedDungeonType) {
+export function normalizeFightStyleForResults(rawFightStyle, selectedDungeonType) {
   if (rawFightStyle == null) {
     return rawFightStyle;
   }
@@ -37,7 +37,7 @@ function normalizeFightStyleForResults(rawFightStyle, selectedDungeonType) {
   return rawFightStyle;
 }
 
-function normalizeFightStyleForTalentBuild(rawFightStyle) {
+export function normalizeFightStyleForTalentBuild(rawFightStyle) {
   if (rawFightStyle == null) {
     return rawFightStyle;
   }

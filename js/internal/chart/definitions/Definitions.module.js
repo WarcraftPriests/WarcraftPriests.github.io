@@ -1,9 +1,45 @@
+import * as Constants from '../../helper/Constants.module.js';
+
+// Destructure commonly used constants for convenience
+const {
+  defaultBackgroundColor,
+  defaultFontColor,
+  defaultAxisColor,
+  lightColor,
+  mediumColor,
+  darkColor,
+  gridLineColor,
+  fontSize,
+  fontWeightBold,
+  legendTitleTextDps,
+  tooltipHeaderFormat,
+  tooltipPointFormat,
+  plotOptionsPointFormat,
+  alignRight,
+  alignMiddle,
+  stackingNormal,
+  legendTitleTextSteps,
+  chartType,
+  defaultHeader,
+  whiteText,
+  legendLayoutVertical,
+  legendTitleTextItemLevel,
+  increase,
+  decrease,
+  dpsIncrease,
+  dash,
+  space,
+  DPS,
+  jsonData,
+  jsonBase
+} = Constants;
+
 /*
  * Dot chart definition used for:
  * - Stats
  */
-function getDefaultDotDefinition(chartId) {
-  return defaultDotDefinition = {
+export function getDefaultDotDefinition(chartId) {
+  return {
     chart: {
       renderTo: chartId,
       type: 'scatter3d',
@@ -159,8 +195,8 @@ function getDefaultDotDefinition(chartId) {
  * - Covenants Choice
  * - ...
  */
-function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
-  return stackedCharDefinition = {
+export function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
+  return {
     chart: {
       renderTo: chartId,
       type: chartType,
@@ -344,8 +380,8 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
  * - Trinkets
  * - ....
  */
-function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
-  return percentageChartDefinition = {
+export function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
+  return {
     chart: {
       renderTo: chartId,
       type: chartType,
@@ -543,8 +579,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
  * - Trinket Combos
  * - ....
  */
-function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend, xPadding, chartId, maxEntries) {
-  return singleLineBarDefinition = {
+export function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, showLegend, xPadding, chartId, maxEntries) {
+  return {
     chart: {
       renderTo: chartId,
       type: chartType,
@@ -692,8 +728,8 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
   };   
 }
 
-function getTooltip(percentage, dpsIncrease, series, data, showBase) {
-  result = '';
+export function getTooltip(percentage, dpsIncrease, series, data, showBase) {
+  var result = '';
   if (percentage != 0) {
     result = '<div><span class="chartHoverSpan" style="border-left: 9px solid ' 
               + series.color

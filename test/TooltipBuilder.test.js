@@ -1,61 +1,43 @@
-const fs = require('fs');
-const path = require('path');
-const vm = require('vm');
+import  TooltipBuilder from '../js/internal/chart/helper/TooltipBuilder.module.js';
+
+// Mock document for testing
+global.document = {
+  createElement: (tag) => {
+    const elem = {
+      tagName: tag.toLowerCase(),
+      style: {},
+      children: [],
+      textContent: '',
+      className: '',
+      title: '',
+      href: '',
+      target: '',
+      appendChild: function(child) {
+        this.children.push(child);
+      },
+      get outerHTML() {
+        const styleStr = Object.keys(this.style).length > 0
+          ? ` style="${Object.entries(this.style).map(([k, v]) => `${k}: ${v}`).join('; ')}"`
+          : '';
+        const classStr = this.className ? ` class="${this.className}"` : '';
+        const titleStr = this.title ? ` title="${this.title}"` : '';
+        const hrefStr = this.href ? ` href="${this.href}"` : '';
+        const targetStr = this.target ? ` target="${this.target}"` : '';
+        
+        const childrenHTML = this.children.map(c => {
+          if (typeof c === 'string') return c;
+          return c.outerHTML || c.textContent || '';
+        }).join('');
+        
+        return `<${this.tagName}${classStr}${titleStr}${hrefStr}${targetStr}${styleStr}>${this.textContent}${childrenHTML}</${this.tagName}>`;
+      }
+    };
+    return elem;
+  },
+  createTextNode: (text) => text
+};
 
 describe('TooltipBuilder', () => {
-  let context;
-  let TooltipBuilder;
-
-  beforeAll(() => {
-    // Create a VM context with DOM mocks
-    context = vm.createContext({
-      document: {
-        createElement: (tag) => {
-          const elem = {
-            tagName: tag.toLowerCase(),
-            style: {},
-            children: [],
-            textContent: '',
-            className: '',
-            title: '',
-            href: '',
-            target: '',
-            appendChild: function(child) {
-              this.children.push(child);
-            },
-            get outerHTML() {
-              const styleStr = Object.keys(this.style).length > 0
-                ? ` style="${Object.entries(this.style).map(([k, v]) => `${k}: ${v}`).join('; ')}"`
-                : '';
-              const classStr = this.className ? ` class="${this.className}"` : '';
-              const titleStr = this.title ? ` title="${this.title}"` : '';
-              const hrefStr = this.href ? ` href="${this.href}"` : '';
-              const targetStr = this.target ? ` target="${this.target}"` : '';
-              
-              const childrenHTML = this.children.map(c => {
-                if (typeof c === 'string') return c;
-                return c.outerHTML || c.textContent || '';
-              }).join('');
-              
-              return `<${this.tagName}${classStr}${titleStr}${hrefStr}${targetStr}${styleStr}>${this.textContent}${childrenHTML}</${this.tagName}>`;
-            }
-          };
-          return elem;
-        },
-        createTextNode: (text) => text
-      },
-      console: console
-    });
-
-    // Load and run TooltipBuilder
-    const scriptPath = path.join(__dirname, '..', 'js', 'internal', 'chart', 'helper', 'TooltipBuilder.js');
-    const scriptContent = fs.readFileSync(scriptPath, 'utf8');
-    const script = new vm.Script(scriptContent);
-    script.runInContext(context);
-
-    TooltipBuilder = context.TooltipBuilder;
-  });
-
   describe('createWowheadLink', () => {
     test('should create a link with basic properties', () => {
       const link = TooltipBuilder.createWowheadLink('Test Item', 'https://www.wowhead.com/item=', '12345');

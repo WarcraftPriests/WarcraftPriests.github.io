@@ -1,7 +1,65 @@
+import { AppState } from '../../../internal/state/AppState.module.js';
+import { getValue, LegendTitles } from '../../../internal/helper/Converter.module.js';
+import {
+  jsonSortedDataKeys,
+  jsonSimulatedSteps,
+  jsonData,
+  jsonBase,
+  jsonDPS,
+  jsonIds,
+  dpsIncrease,
+  DPS
+} from '../../../internal/helper/Constants.module.js';
+import { create_color } from './ColorHelper.module.js';
+import {
+  clearChartSeries,
+  buildSingleBarSeriesData,
+  buildNumericPercentageSeries,
+  buildStepPercentageSeries,
+  areStepsNumeric,
+  getSortedNumericLevels,
+  buildNumericMultiBarSeries,
+  isMinMaxSeriesPayload,
+  buildMinMaxMultiBarSeries
+} from './SeriesHelper.module.js';
+import {
+  buildWowheadTooltips,
+  buildWowheadTooltipsMultipleBar
+} from './WowheadHelper.module.js';
+import {
+  getSingleBarDefinition,
+  getChartDefinitionPercentage,
+  getMultipleBarChartDefinition,
+  getDefaultDotDefinition
+} from '../definitions/Definitions.module.js';
+
+function applyChartSize(chart, chartId, size, maxEntries) {
+  var realSize = 0;
+
+  if (maxEntries != null && maxEntries != undefined) {
+    realSize = maxEntries;
+  } else {
+    realSize = size;
+  }
+
+  document.getElementById(chartId).style.height = 200 + realSize * 30 + 'px';
+  chart.setSize(
+    document.getElementById(chartId).style.width,
+    document.getElementById(chartId).style.height,
+    false
+  );
+  chart.redraw();
+  try {
+    $WowheadPower.refreshLinks();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 /*
  * Prepare data for single bar chart
  */
-function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId, maxEntries) {
+export function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId, maxEntries) {
   var chartForSingle = new Highcharts.Chart(getSingleBarDefinition( 
     buildWowheadTooltips(data, true, simsBtn, showInLegend),
     data,
@@ -21,13 +79,13 @@ function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId,
     name: DPS,
     showInLegend: showInLegend,
   }, false);
-  updateSize(chartForSingle, chartId, result.length, maxEntries);
+  applyChartSize(chartForSingle, chartId, result.length, maxEntries);
 }
 
 /*
  * Prepare data for percentage bar chart
  */
-function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
+export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
   var chartForPercentage = new Highcharts.Chart(getChartDefinitionPercentage( 
     buildWowheadTooltips(data, false, simsBtn), 
     data,
@@ -60,7 +118,7 @@ function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
       }, false);
     });
 
-    updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
+    applyChartSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
   } else {
     // fallback to original behaviour for non-numeric steps
     var fallbackSeries = buildStepPercentageSeries(data, steps);
@@ -71,14 +129,14 @@ function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
         showInLegend: true,
       }, false);
     });
-    updateSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
+    applyChartSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
   }
 }
 
 /*
  * Prepare data for multiple bar chart
  */
-function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
+export function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
   var chartForMultipleBar = new Highcharts.Chart(getMultipleBarChartDefinition(
     buildWowheadTooltipsMultipleBar(data, simsBtn), 
     data,
@@ -106,7 +164,7 @@ function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
     });
 
     chartForMultipleBar.redraw();
-    updateSize(chartForMultipleBar, chartId, AggregateConduits.length, maxEntries);
+    applyChartSize(chartForMultipleBar, chartId, minMaxSeries.length / 2, maxEntries);
 
   } else {
     // numeric-key format: treat each top‑level key in the nested object as an
@@ -135,14 +193,14 @@ function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
     });
 
     chartForMultipleBar.redraw();
-    updateSize(chartForMultipleBar, chartId, fights.length, maxEntries);
+    applyChartSize(chartForMultipleBar, chartId, fights.length, maxEntries);
   }
 }
 
 /*
  * Prepare data for dot chart
  */
-function buildChartDataDot(githubData, chartId) {
+export function buildChartDataDot(githubData, chartId) {
   let critLabel = false;
   let versLabel = false;
   let hasteLabel = false;
@@ -213,7 +271,7 @@ function buildChartDataDot(githubData, chartId) {
     let dataLabel = undefined;
  
     if (sortedData.includes('10')) {
-      if (sortedData.split(underscore)[0].includes('10')
+      if (sortedData.split('_')[0].includes('10')
           && !masteryLabel) {
         dataLabel = {
           enabled: true,

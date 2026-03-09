@@ -1,9 +1,11 @@
-var SimRepoVersions = {
-  master: 'Live',
+// ES module version of Converter.js for incremental migration.
+
+export const SimRepoVersions = {
+  master: 'Live'
   // ptr: "PTR",
 };
-  
-var Sims = {
+
+export const Sims = {
   consumables: 'Consumables',
   enchants: 'Enchants',
   racials: 'Racials',
@@ -18,36 +20,36 @@ var Sims = {
   alchemy: 'Alchemy',
   gems: 'Gems',
   special_gear: 'Special Gear',
-  gem_combos: 'Gem Combos',
+  gem_combos: 'Gem Combos'
 };
-  
-var Consumables = {
+
+export const Consumables = {
   potion: 'Potion',
-  food: 'Food',
+  food: 'Food'
 };
-  
-var FightStyles = {
+
+export const FightStyles = {
   Composite: 'Composite',
   Single: 'Single Target',
   Dungeons: 'Dungeons',
   twotarget: '2 Target',
   threetarget: '3 Target',
   fourtarget: '4 Target',
-  eighttarget: '8 Target',
+  eighttarget: '8 Target'
 };
 
-var FightStyleCouncil = {
+export const FightStyleCouncil = {
   3: 'threetarget',
   4: 'fourtarget'
 };
-  
-var FightStyleExternal = {
+
+export const FightStyleExternal = {
   composite: 'Raid',
   single: 'Single Target',
-  dungeons: 'Dungeons',
+  dungeons: 'Dungeons'
 };
 
-var LegendTitles = {
+export const LegendTitles = {
   enchants: 'Increase in %',
   racials: 'Increase in %',
   stats: 'Increase in %',
@@ -58,18 +60,18 @@ var LegendTitles = {
   legendary_items: 'Item level',
   legendary_combos: 'Increase in %',
   alchemy: 'Increase in %',
-  consumables: 'Increase in %',
+  consumables: 'Increase in %'
 };
 
-var ChartType = {
+export const ChartType = {
   trinkets: 'percentage',
   alchemy: 'percentage',
   enchants: 'percentage',
   gems: 'percentage',
-  stats: 'dot',
+  stats: 'dot'
 };
 
-var ChartPadding = {
+export const ChartPadding = {
   talents: -80,
   talents_top: -80,
   talent_builds: -80,
@@ -81,10 +83,10 @@ var ChartPadding = {
   alchemy: -40,
   gems: -40,
   gem_combos: -40,
-  special_gear: -40,
+  special_gear: -40
 };
 
-var LookupType = {
+export const LookupType = {
   alchemy: 'item',
   apl: 'none',
   consumables: 'item',
@@ -101,12 +103,11 @@ var LookupType = {
   weights: 'none'
 };
 
-//Todo fix coming when clean up label for talents
-var TalentIds = {
-  hv: '1234123',
+export const TalentIds = {
+  hv: '1234123'
 };
 
-var TrinketIds = {
+export const TrinketIds = {
   Spymasters_Web: '220202',
   Signet_of_the_Priory: '219308',
   Synergistic_Brewterializer: '219299',
@@ -146,24 +147,22 @@ var TrinketIds = {
   Screams_of_a_Forgotten_Sky: '242399',
   Arazs_Ritual_Forge: '242402',
   Perfidious_Projector: '242403',
-  Astral_Gladiators_Badge_of_Ferocity: '230638',
+  Astral_Gladiators_Badge_of_Ferocity: '230638'
 };
 
-var getValue = function(list, key) {
+export function getValue(list, key) {
   return list[key.toString().replaceAll('-', '_')];
-};
+}
 
-var getConfigValue = function(list, key) {
+export function getConfigValue(list, key) {
   return list[key.toString().replaceAll('_', '-')];
-};
+}
 
-var getKeys = function(list) {
-  let result = [];
-  let values = Object.values(list);
-  let keys = Object.entries(list);
-  for (i = 0; i < values.length; i++) {
+export function getKeys(list) {
+  const result = [];
+  const keys = Object.entries(list);
+  for (let i = 0; i < keys.length; i++) {
     result.push(keys[i][0]);
   }
-  
   return result;
-};
+}

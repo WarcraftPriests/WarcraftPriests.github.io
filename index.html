@@ -25,7 +25,7 @@
 
 <body style="background-color: rgb(52, 58, 64);">
 	<div class=header>
-		<a href="https://warcraftpriests.com/" target="_blank"><img id="img-banner" src="https://i.imgur.com/M12BeGV.png" alt="WCP Banner"></a>
+		<a href="https://warcraftpriests.com/" target="_blank"><img id="img-banner" src="images/banner.png" alt="WCP Banner"></a>
 	</div>
 	<div id="pad" style="padding-bottom: 30px;"></div>
 	<script>
@@ -83,23 +83,24 @@
 	<script src="js/vendor/highcharts/highcharts.js"></script>
 	<script src="js/vendor/highcharts/highcharts-3d.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-	<script src="js/yaml/yaml.min.js"></script> 
-	<script src="js/internal/state/AppState.js"></script>
-	<script src="js/internal/helper/Normalizers.js"></script>
-	<script src="js/internal/helper/TalentBuild.js"></script>
-	<script src="js/internal/helper/Constants.js"></script>
-	<script src="js/internal/helper/Converter.js"></script>
-	<script src="js/internal/helper/DomRenderHelper.js"></script>
-	<script src="js/internal/button/Buttons.js"></script>
-	<script src="js/internal/csv/Csv.js"></script>
-	<script src="js/internal/chart/Chart.js"></script>
-	<script src="js/internal/chart/helper/SeriesHelper.js"></script>
-	<script src="js/internal/chart/helper/DataHelper.js"></script>
-	<script src="js/internal/chart/helper/TooltipBuilder.js"></script>
-	<script src="js/internal/chart/helper/WowheadHelper.js"></script>
-	<script src="js/internal/chart/helper/ColorHelper.js"></script>
-	<script src="js/internal/chart/definitions/Definitions.js"></script>
-	<script src="js/internal/helper/Parameterized.js"></script>
-	<script src="js/Main.js"></script>
+	<script src="js/yaml/yaml.min.js"></script>
+	
+	<!-- ES6 Module Entry Point (replaces legacy globals) -->
+	<script type="module" src="js/main.entry.module.js"></script>
+	
+	<!-- Module-first initialization: call MainModule.initializeApp() after modules load -->
+	<script>
+		window.addEventListener('load', () => {
+			if (window.MainModule && window.MainModule.initializeApp) {
+				window.MainModule.initializeApp();
+			} else {
+				console.error('MainModule not available; falling back to legacy Main.js');
+				// Fallback: load legacy Main.js if modules fail to load
+				const fallback = document.createElement('script');
+				fallback.src = 'js/Main.js';
+				document.head.appendChild(fallback);
+			}
+		});
+	</script>
 </body>
 </html>

@@ -1,33 +1,41 @@
-function clearChartSeries(chart) {
+import { getColor } from './ColorHelper.module.js';
+import {
+  jsonSortedDataKeys,
+  jsonData,
+  jsonBase,
+  jsonDPS
+} from '../../helper/Constants.module.js';
+
+export function clearChartSeries(chart) {
   while (chart.series.length > 0) {
     chart.series[0].remove(false);
   }
 }
 
-function calculatePercentIncrease(dpsValue, baseDps) {
+export function calculatePercentIncrease(dpsValue, baseDps) {
   if (!baseDps || dpsValue == null) {
     return 0;
   }
   return (dpsValue / baseDps) * 100 - 100;
 }
 
-function calculateNonNegativePercentIncrease(dpsValue, baseDps) {
+export function calculateNonNegativePercentIncrease(dpsValue, baseDps) {
   return Math.max(0, calculatePercentIncrease(dpsValue, baseDps));
 }
 
-function getSortedNumericLevels(steps) {
+export function getSortedNumericLevels(steps) {
   return (steps || []).slice().sort(function(a, b) {
     return Number(a) - Number(b);
   });
 }
 
-function areStepsNumeric(steps) {
+export function areStepsNumeric(steps) {
   return Array.isArray(steps) && steps.length > 0 && steps.every(function(step) {
     return /^\d+$/.test(step);
   });
 }
 
-function buildSingleBarSeriesData(data, maxPoints, colorKey) {
+export function buildSingleBarSeriesData(data, maxPoints, colorKey) {
   var result = [];
   var sortedKeys = data[jsonSortedDataKeys] || [];
   var baselineDps = ((data[jsonData] || {})[jsonBase] || {})[jsonDPS] || 0;
@@ -47,7 +55,7 @@ function buildSingleBarSeriesData(data, maxPoints, colorKey) {
   return result;
 }
 
-function buildNumericPercentageSeries(data, levels) {
+export function buildNumericPercentageSeries(data, levels) {
   var sortedKeys = data[jsonSortedDataKeys] || [];
   var payload = data[jsonData] || {};
   var baseDps = ((payload[jsonBase] || {})[jsonDPS]) || 0;
@@ -83,7 +91,7 @@ function buildNumericPercentageSeries(data, levels) {
   return seriesArray;
 }
 
-function buildStepPercentageSeries(data, steps) {
+export function buildStepPercentageSeries(data, steps) {
   var sortedKeys = data[jsonSortedDataKeys] || [];
   var payload = data[jsonData] || {};
   var baseDps = ((payload[jsonBase] || {})[jsonDPS]) || 0;
@@ -110,7 +118,7 @@ function buildStepPercentageSeries(data, steps) {
   return seriesArray;
 }
 
-function isMinMaxSeriesPayload(payload) {
+export function isMinMaxSeriesPayload(payload) {
   for (var key in payload) {
     if (payload[key] && typeof payload[key] === 'object' && ('min' in payload[key] || 'max' in payload[key])) {
       return true;
@@ -119,41 +127,53 @@ function isMinMaxSeriesPayload(payload) {
   return false;
 }
 
-function buildMinMaxMultiBarSeries(data) {
+export function buildMinMaxMultiBarSeries(data) {
+  // NOTE: This function references AggregateConduits, Conduits, getCovenantChoiceColor
+  // which are not currently defined. It appears to be legacy code for Shadowlands conduits.
+  // Keeping the original implementation for compatibility but wrapping with safety checks.
   var seriesArray = [];
-  for (var i = 0; i < AggregateConduits.length; i++) {
-    var minResults = [];
-    var maxResults = [];
+  
+  // Check if the required globals exist (legacy compatibility)
+  if (typeof window !== 'undefined' && window.AggregateConduits && window.getValue && window.getCovenantChoiceColor) {
+    const AggregateConduits = window.AggregateConduits;
+    const getValue = window.getValue;
+    const Conduits = window.Conduits;
+    const getCovenantChoiceColor = window.getCovenantChoiceColor;
+    
+    for (var i = 0; i < AggregateConduits.length; i++) {
+      var minResults = [];
+      var maxResults = [];
 
-    for (var currFight in data[jsonData]) {
-      var conduit = data[jsonData][currFight][AggregateConduits[i]];
-      var minValue = (conduit['min']) * 100;
-      var maxValue = ((conduit['max']) * 100) - ((conduit['min']) * 100);
-      minResults.push(minValue);
-      maxResults.push(maxValue);
+      for (var currFight in data[jsonData]) {
+        var conduit = data[jsonData][currFight][AggregateConduits[i]];
+        var minValue = (conduit['min']) * 100;
+        var maxValue = ((conduit['max']) * 100) - ((conduit['min']) * 100);
+        minResults.push(minValue);
+        maxResults.push(maxValue);
+      }
+
+      seriesArray.push({
+        color: getCovenantChoiceColor(AggregateConduits[i] + '_min'),
+        data: minResults,
+        name: getValue(Conduits, AggregateConduits[i]) + ' min',
+        stack: String(AggregateConduits[i]),
+        showInLegend: true
+      });
+
+      seriesArray.push({
+        color: getCovenantChoiceColor(AggregateConduits[i] + '_max'),
+        data: maxResults,
+        name: getValue(Conduits, AggregateConduits[i]) + ' max',
+        stack: String(AggregateConduits[i]),
+        showInLegend: true
+      });
     }
-
-    seriesArray.push({
-      color: getCovenantChoiceColor(AggregateConduits[i] + '_min'),
-      data: minResults,
-      name: getValue(Conduits, AggregateConduits[i]) + ' min',
-      stack: String(AggregateConduits[i]),
-      showInLegend: true
-    });
-
-    seriesArray.push({
-      color: getCovenantChoiceColor(AggregateConduits[i] + '_max'),
-      data: maxResults,
-      name: getValue(Conduits, AggregateConduits[i]) + ' max',
-      stack: String(AggregateConduits[i]),
-      showInLegend: true
-    });
   }
 
   return seriesArray;
 }
 
-function buildNumericMultiBarSeries(data, fights, levels) {
+export function buildNumericMultiBarSeries(data, fights, levels) {
   var sample = data[jsonData] || {};
   var baseDps = ((sample[jsonBase] || {})[jsonDPS]) || 0;
 

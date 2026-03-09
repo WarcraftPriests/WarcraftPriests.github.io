@@ -1,8 +1,8 @@
-function getQueryParameter() {
+export function getQueryParameter() {
   return new URLSearchParams(window.location.search);
 }
 
-function manipulateUrl(params) {
+export function manipulateUrl(params) {
   var oldParm = getQueryParameter();
   const nonEmptyParams = Object.entries(params).reduce((prev, [key, value]) => {
     return value ? { ...prev, [key]: value } : prev;
@@ -15,7 +15,7 @@ function manipulateUrl(params) {
   }
 }
 
-function compareParameters(oldParm, newParms) {
+export function compareParameters(oldParm, newParms) {
   if (oldParm.toString().localeCompare(newParms.toString()) == 0) {
     return true;
   }
