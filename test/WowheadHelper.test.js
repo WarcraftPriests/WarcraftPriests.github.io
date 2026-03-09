@@ -32,7 +32,7 @@ describe('buildChartLineForTrinketCombos', () => {
       FightStyleExternal: {},
       TalentIds: {},
       talentData: { builds: {}, generated: {} },
-      TrinketIds: {}, // Not used anymore, but defined for completeness
+      TrinketIds: {},
       // Mock AppState
       AppState: {
         getCurrSimsBtn: () => null,
@@ -41,14 +41,40 @@ describe('buildChartLineForTrinketCombos', () => {
         getJsonSortedDataKeys: () => 'sortedDataKeys',
         getJsonData: () => 'data'
       },
-      // Mock buildChartLineWithWowheadLine to return a simple string for testing
-      buildChartLineWithWowheadLine: (dpsName, itemId, url, currentResult) => {
-        return currentResult + `<a href="${url}${itemId}">${dpsName}</a>`;
+      // Mock document for DOM operations
+      document: {
+        createElement: (tag) => {
+          const elem = {
+            tagName: tag,
+            style: {},
+            children: [],
+            textContent: '',
+            appendChild: function(child) {
+              this.children.push(child);
+            },
+            get outerHTML() {
+              if (this.tagName === 'a') {
+                return `<a href="${this.href}"${this.target ? ` target="${this.target}"` : ''}>${this.textContent}</a>`;
+              } else if (this.tagName === 'div') {
+                return `<div>${this.children.map(c => typeof c === 'string' ? c : c.outerHTML || c.textContent || '').join('')}</div>`;
+              }
+              return this.textContent;
+            }
+          };
+          return elem;
+        },
+        createTextNode: (text) => text
       },
-      console: console // Allow console access
+      console: console
     });
 
-    // Load and run the script in the context
+    // Load TooltipBuilder first
+    const tooltipBuilderPath = path.join(__dirname, '..', 'js', 'internal', 'chart', 'helper', 'TooltipBuilder.js');
+    const tooltipBuilderContent = fs.readFileSync(tooltipBuilderPath, 'utf8');
+    const tooltipBuilderScript = new vm.Script(tooltipBuilderContent);
+    tooltipBuilderScript.runInContext(context);
+
+    // Load WowheadHelper
     const scriptPath = path.join(__dirname, '..', 'js', 'internal', 'chart', 'helper', 'WowheadHelper.js');
     const scriptContent = fs.readFileSync(scriptPath, 'utf8');
     const script = new vm.Script(scriptContent);
@@ -65,16 +91,14 @@ describe('buildChartLineForTrinketCombos', () => {
     };
 
     const dpsName = 'trinket_a_300-trinket_b_310';
-    const currentResult = '';
 
-    const result = buildChartLineForTrinketCombos(dpsName, currentResult, ids);
+    const result = buildChartLineForTrinketCombos(dpsName, ids);
 
     // The result should contain the links with correct href and text
-    expect(result).toContain('href="https://www.wowhead.com/item=12345"');
+    expect(result).toContain('href="https://www.wowhead.com/item=12345');
     expect(result).toContain('ta (300)');
-    expect(result).toContain('href="https://www.wowhead.com/item=67890"');
+    expect(result).toContain('href="https://www.wowhead.com/item=67890');
     expect(result).toContain('tb (310)');
-    expect(result).toContain('  '); // The space added after first
   });
 
   test('should handle single trinket combo', () => {
@@ -83,13 +107,11 @@ describe('buildChartLineForTrinketCombos', () => {
     };
 
     const dpsName = 'trinket_c_320';
-    const currentResult = '';
 
-    const result = buildChartLineForTrinketCombos(dpsName, currentResult, ids);
+    const result = buildChartLineForTrinketCombos(dpsName, ids);
 
-    expect(result).toContain('href="https://www.wowhead.com/item=11111"');
+    expect(result).toContain('href="https://www.wowhead.com/item=11111');
     expect(result).toContain('tc (320)');
-    expect(result).toContain('  '); // Space added even for single
   });
 
   test('should handle missing id gracefully', () => {
@@ -98,13 +120,12 @@ describe('buildChartLineForTrinketCombos', () => {
     };
 
     const dpsName = 'trinket_a_300-trinket_missing_310';
-    const currentResult = '';
 
-    const result = buildChartLineForTrinketCombos(dpsName, currentResult, ids);
+    const result = buildChartLineForTrinketCombos(dpsName, ids);
 
-    expect(result).toContain('href="https://www.wowhead.com/item=12345"');
+    expect(result).toContain('href="https://www.wowhead.com/item=12345');
     expect(result).toContain('ta (300)');
-    expect(result).toContain('href="https://www.wowhead.com/item=undefined"');
+    expect(result).toContain('href="https://www.wowhead.com/item=undefined');
     expect(result).toContain('tm (310)');
   });
 });
@@ -140,14 +161,44 @@ describe('buildWowheadTooltips', () => {
         getTalentData: () => ({ builds: {}, generated: {} }),
         getConfigData: () => ({ sims: { trinkets: {} } })
       },
-      // Mock buildChartLine to return simplified string
+      // Mock document for DOM operations
+      document: {
+        createElement: (tag) => {
+          const elem = {
+            tagName: tag,
+            style: {},
+            children: [],
+            textContent: '',
+            appendChild: function(child) {
+              this.children.push(child);
+            },
+            get outerHTML() {
+              if (this.tagName === 'a') {
+                return `<a href="${this.href}">${this.textContent}</a>`;
+              } else if (this.tagName === 'div') {
+                return `<div>${this.children.map(c => typeof c === 'string' ? c : c.outerHTML || c.textContent || '').join('')}</div>`;
+              }
+              return this.textContent;
+            }
+          };
+          return elem;
+        },
+        createTextNode: (text) => text
+      },
+      // Mock buildChartLine to return simplified string  
       buildChartLine: (dpsName, id, url, simsBtn) => {
         return `[${dpsName}:${id}]`;
       },
       console: console
     });
 
-    // Load and run the script in the context
+    // Load TooltipBuilder first
+    const tooltipBuilderPath = path.join(__dirname, '..', 'js', 'internal', 'chart', 'helper', 'TooltipBuilder.js');
+    const tooltipBuilderContent = fs.readFileSync(tooltipBuilderPath, 'utf8');
+    const tooltipBuilderScript = new vm.Script(tooltipBuilderContent);
+    tooltipBuilderScript.runInContext(context);
+
+    // Load WowheadHelper
     const scriptPath = path.join(__dirname, '..', 'js', 'internal', 'chart', 'helper', 'WowheadHelper.js');
     const scriptContent = fs.readFileSync(scriptPath, 'utf8');
     const script = new vm.Script(scriptContent);
