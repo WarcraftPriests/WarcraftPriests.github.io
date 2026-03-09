@@ -16,7 +16,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
       id = '';
     }
 
-    var simConfig = configData[sims][simsBtn.replaceAll('_', '-')];
+    var simConfig = AppState.getConfigData()[sims][simsBtn.replaceAll('_', '-')];
     var url = wowheadUrl + wowheadItemPath;
     if (simsBtn == consumables || simsBtn == alchemy || simsBtn == enchants || simsBtn == gems || simsBtn == specialGear) {
       url = wowheadUrl + wowheadItemPath;
@@ -148,9 +148,10 @@ function buildChartLineForBasic(names, currentResult) {
 
 function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult, ilvl = 289) {
   var result = currentResult;
+  var currSimsBtn = AppState.getCurrSimsBtn();
   if (currSimsBtn == talents || currSimsBtn == talentsTop || currSimsBtn == talentsTop.replaceAll('-', '_')) {
-    var link = talentData['builds'][dpsName];
-    var generatedLink = talentData['generated'][dpsName];
+    var link = AppState.getTalentData()['builds'][dpsName];
+    var generatedLink = AppState.getTalentData()['generated'][dpsName];
     if (link) {
       talentImportStrings[dpsName] = link;
       result += '<a class="tooltipLink" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';

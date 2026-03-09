@@ -11,14 +11,14 @@ var Headings = {
 };
 
 function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
-  currFightStyleBtn = normalizeFightStyleForResults(currFightStyleBtn, configData[dungeonType]);
+  currFightStyleBtn = normalizeFightStyleForResults(currFightStyleBtn, AppState.getConfigData()[dungeonType]);
     
   $(document).ready(function() {
     $.ajax({
       type: 'GET',
-      url: determineCsvUrl(currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn),
+      url: determineCsvUrl(currSimsBtn, AppState.getBaseUrl(), currFightStyleBtn, currTalentBtn),
       dataType: 'text',
-      success: function(data) {processData(data, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn);}
+      success: function(data) {processData(data, currSimsBtn, AppState.getBaseUrl(), currFightStyleBtn, currTalentBtn);}
     });
   });
     
@@ -26,7 +26,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
     var recordNum = 9;
     var allTextLines = allText.split(/\r\n|\n/);
     if (metaData) {
-      var simTalent = getConfigValue(configData[builds], currTalentBtn);
+      var simTalent = getConfigValue(AppState.getConfigData()[builds], currTalentBtn);
       renderChartHeader(determineChartName('', simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn));
       renderChartDescription(determineChartDescription(currSimsBtn));
     }

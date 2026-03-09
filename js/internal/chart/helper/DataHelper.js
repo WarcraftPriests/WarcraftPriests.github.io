@@ -251,11 +251,11 @@ function buildChartDataDot(githubData, chartId) {
       }
     }
 
-    const statMastery = ((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
-    const statVers = ((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
-    const statHaste = ((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
-    const statCrit = ((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length;
-    const sumStatValues = configData['stats']['total'];
+    const statMastery = ((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length;
+    const statVers = ((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length;
+    const statHaste = ((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length;
+    const statCrit = ((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length;
+    const sumStatValues = AppState.getConfigData()['stats']['total'];
 
     series.data.push({
       x: Math.sqrt(3) / 2 * (parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, '')) + 1 / 3 * parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))),
@@ -272,9 +272,9 @@ function buildChartDataDot(githubData, chartId) {
       statVers: statVers,
       statHaste: statHaste,
       statCrit: statCrit,
-      statMasteryPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
-      statVersPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
-      statHastePercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
+      statMasteryPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
+      statVersPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
+      statHastePercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
       statCritPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
       marker: {
         radius: radius,

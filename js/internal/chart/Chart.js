@@ -14,11 +14,11 @@ function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchant
  * Collects all data need for a chart an then create it
  */
 function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries) {
-  jQuery.getJSON(determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice),
+  jQuery.getJSON(determineJsonUrl(simsBtn, AppState.getBaseUrl(), fightStyle, talentChoice),
     function (data) {
       if (metaData) {
         renderChartUpdatedText(updateDataInnerHtml + data[jsonLastUpdated]);
-        var simTalent = getConfigValue(configData[builds], talentChoice);
+        var simTalent = getConfigValue(AppState.getConfigData()[builds], talentChoice);
         var header = determineChartName(simTalent.name,
           simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1),
           fightStyle);
@@ -105,7 +105,7 @@ function determineChartName(firstTalent, fullSimType, fightStyle) {
  */
 function determineChartDescription(fullSimType) {
   fullSimType = fullSimType.replaceAll('_', '-');
-  var descr = configData['sims'][fullSimType]['description'];
+  var descr = AppState.getConfigData()['sims'][fullSimType]['description'];
   return descr;
 }
 
@@ -115,7 +115,7 @@ function determineChartDescription(fullSimType) {
 function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   talentChoice = normalizeBuildKey(talentChoice);
   simsBtn = normalizeSimResultKey(simsBtn);
-  fightStyle = normalizeFightStyleForResults(fightStyle, configData[dungeonType]);
+  fightStyle = normalizeFightStyleForResults(fightStyle, AppState.getConfigData()[dungeonType]);
 
   if (simsBtn == talents || simsBtn == talentsTop) {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;

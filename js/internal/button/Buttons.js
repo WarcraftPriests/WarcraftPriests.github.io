@@ -1,10 +1,10 @@
 function setDefaultButtonValues() {
-  currSimsBtn = defaultSims;
+  AppState.setCurrSimsBtn(defaultSims);
   currEnchantsBtn = defaultEnchant;
   currConsumablesBtn = defaultConsumable;
-  currFightStyleBtn = defaultFightStyle;
-  currVersionBtn = defaultVersion;
-  currTalentBtn = Object.keys(configData[builds])[0].replaceAll('-', '_');
+  AppState.setCurrFightStyleBtn(defaultFightStyle);
+  AppState.setCurrVersionBtn(defaultVersion);
+  AppState.setCurrTalentBtn(Object.keys(AppState.getConfigData()[builds])[0].replaceAll('-', '_'));
 }
 
 function hasQueryValue(value) {
@@ -22,24 +22,24 @@ function initializeButtons() {
     if (query.has(talents)) {
       const queriedTalent = query.get(talents);
       if (hasQueryValue(queriedTalent)) {
-        currTalentBtn = queriedTalent;
+        AppState.setCurrTalentBtn(queriedTalent);
       }
     }
     if (query.has(sims)) {
       const queriedSims = query.get(sims);
       if (hasQueryValue(queriedSims)) {
-        currSimsBtn = queriedSims;
+        AppState.setCurrSimsBtn(queriedSims);
       }
     }
 
     if (query.has(fightStyle)) {
       if (Object.hasOwn(getAvailableFightStyles(), query.get(fightStyle)))
-        currFightStyleBtn = query.get(fightStyle); 
+        AppState.setCurrFightStyleBtn(query.get(fightStyle)); 
     }
     if (query.has(version)) {
       const queriedVersion = query.get(version);
       if (hasQueryValue(queriedVersion)) {
-        currVersionBtn = queriedVersion;
+        AppState.setCurrVersionBtn(queriedVersion);
       }
     }
   }
@@ -51,8 +51,8 @@ function initializeButtons() {
  */
 function createButtons() {
   createVersionButtons(SimRepoVersions);
-  createTalentButtons(configData[builds]);
-  createSimsButtons(configData[sims]);
+  createTalentButtons(AppState.getConfigData()[builds]);
+  createSimsButtons(AppState.getConfigData()[sims]);
   createConsumableButtons(getKeys(Consumables));
   createFightStyleButtons(getKeys(getAvailableFightStyles()));
   checkButtonClick();
@@ -60,7 +60,7 @@ function createButtons() {
 
 function getAvailableFightStyles() {
   // TODO: Make council fight style optinal?
-  let currentCouncilFightStyle = FightStyleCouncil[configData['councilTargets']];
+  let currentCouncilFightStyle = FightStyleCouncil[AppState.getConfigData()['councilTargets']];
   let councilFightStyles = Object.values(FightStyleCouncil);
   return Object.entries(FightStyles).reduce(function(prev, [key, value]) {
     if (councilFightStyles.includes(key) && key !== currentCouncilFightStyle) return prev;
@@ -126,7 +126,7 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
   let div = document.getElementById(divName);
   for (const key in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if (!configData['sims'][key] || configData['sims'][key]['chart']) {
+    if (!AppState.getConfigData()['sims'][key] || AppState.getConfigData()['sims'][key]['chart']) {
       const normalizedKey = key.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, normalizedKey));
       constructSimsButton(div, normalizedKey, event, buttonText, curBtn);
@@ -142,7 +142,7 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
   let div = document.getElementById(divName);
   for (const key in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if (!configData['sims'][key] || configData['sims'][key]['chart']) {
+    if (!AppState.getConfigData()['sims'][key] || AppState.getConfigData()['sims'][key]['chart']) {
       const normalizedKey = key.replaceAll(dash, underscore);
       var buttonText = document.createTextNode(getValue(labelArray, normalizedKey));
       createButtonBasic(div, normalizedKey, event, buttonText, currBtn);
@@ -206,12 +206,12 @@ function removeShow(div) {
  * groups.
  */
 function isButtonSelected(buttonId) {
-  return buttonId === currTalentBtn
-    || buttonId === currSimsBtn
+  return buttonId === AppState.getCurrTalentBtn()
+    || buttonId === AppState.getCurrSimsBtn()
     || buttonId === currEnchantsBtn
     || buttonId === currConsumablesBtn
-    || buttonId === currFightStyleBtn
-    || buttonId === currVersionBtn;
+    || buttonId === AppState.getCurrFightStyleBtn()
+    || buttonId === AppState.getCurrVersionBtn();
 }
 
 /*
@@ -293,15 +293,15 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
  */
 function handleOnClick(clickedButton, btn) {
   if (btn == talents) {
-    currTalentBtn = clickedButton;
+    AppState.setCurrTalentBtn(clickedButton);
   } else if (btn == sims) {
-    currSimsBtn = clickedButton;
+    AppState.setCurrSimsBtn(clickedButton);
   } else if (btn == consumables) {
     currConsumablesBtn = clickedButton;
   } else if (btn == fightStyle) {
-    currFightStyleBtn = clickedButton;
+    AppState.setCurrFightStyleBtn(clickedButton);
   } else if (btn == version) {
-    currVersionBtn = clickedButton;
+    AppState.setCurrVersionBtn(clickedButton);
   }
 
   styleButtons();
@@ -322,11 +322,11 @@ function checkButtonClick() {
     addShow(versionDiv);
   }
   
-  for (const currTalent in configData[sims]) {
-    if (currTalent == currSimsBtn 
-                || currSimsBtn != null && currTalent == currSimsBtn.replaceAll('_', '-')) {
-      if (configData[sims][currTalent][builds]) {
-        replaceTalentId(currTalentBtn, currFightStyleBtn);
+  for (const currTalent in AppState.getConfigData()[sims]) {
+    if (currTalent == AppState.getCurrSimsBtn() 
+                || AppState.getCurrSimsBtn() != null && currTalent == AppState.getCurrSimsBtn().replaceAll('_', '-')) {
+      if (AppState.getConfigData()[sims][currTalent][builds]) {
+        replaceTalentId(AppState.getCurrTalentBtn(), AppState.getCurrFightStyleBtn());
       } else {
         removeShow(talentDiv);
         removeShowSpecial(talentBuildIdDiv);
@@ -335,17 +335,17 @@ function checkButtonClick() {
     }
   }
 
-  const selectedVersion = currVersionBtn === defaultVersion ? '' : currVersionBtn;
+  const selectedVersion = AppState.getCurrVersionBtn() === defaultVersion ? '' : AppState.getCurrVersionBtn();
   const currentVersion = getQueryParameter().get(version) || '';
-  const talents = currentVersion != selectedVersion ? '' : currTalentBtn;
+  const talents = currentVersion != selectedVersion ? '' : AppState.getCurrTalentBtn();
 
   manipulateUrl({
     talents,
-    sims: currSimsBtn,
-    fightStyle: currFightStyleBtn,
+    sims: AppState.getCurrSimsBtn(),
+    fightStyle: AppState.getCurrFightStyleBtn(),
     version: selectedVersion
   });
-  updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, 'Chart-Display-div', true);
+  updateChart(AppState.getCurrTalentBtn(), AppState.getCurrSimsBtn(), currConsumablesBtn, currEnchantsBtn, AppState.getCurrFightStyleBtn(), 'Chart-Display-div', true);
 }
 
 function hasMultipleVersions() {

@@ -24,7 +24,7 @@ function ensureTalentBuildTemplates() {
 function replaceTalentId(currTalent, currFightStyle) {
   ensureTalentBuildTemplates();
   let selectedFightStyle = normalizeFightStyleForTalentBuild(currFightStyle);
-  const talentId = configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string'];
+  const talentId = AppState.getConfigData()['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string'];
 
   /* `builds.talentID.talents.fightStyle` */
   document.getElementById(talentBuildIdDiv).innerHTML = talentBuildIdTemplate.replaceAll('%talentId%', talentId);
