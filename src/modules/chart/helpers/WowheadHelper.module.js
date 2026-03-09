@@ -1,10 +1,10 @@
-import { AppState } from '../../../internal/state/AppState.module.js';
-import { getValue } from '../../../internal/helper/Converter.module.js';
+import { AppState } from '../../../services/state/AppState.module.js';
+import { getValue } from '../../../utils/Converter.module.js';
 import {
   FightStyleExternal,
   TalentIds,
   TrinketIds
-} from '../../../internal/helper/Converter.module.js';
+} from '../../../utils/Converter.module.js';
 import {
   jsonSortedDataKeys,
   jsonIds,
@@ -23,7 +23,7 @@ import {
   trinketCombos,
   wowheadSpellPath,
   wowheadItemPath
-} from '../../../internal/helper/Constants.module.js';
+} from '../../../utils/Constants.module.js';
 import TooltipBuilder from './TooltipBuilder.module.js';
 
 /*

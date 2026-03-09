@@ -1,4 +1,4 @@
-import { getValue, getConfigValue, getKeys, Sims, Consumables, FightStyles, FightStyleCouncil, FightStyleExternal, ChartType, ChartPadding, LegendTitles, LookupType, SimRepoVersions } from '../js/internal/helper/Converter.module.js';
+import { getValue, getConfigValue, getKeys, Sims, Consumables, FightStyles, FightStyleCouncil, FightStyleExternal, ChartType, ChartPadding, LegendTitles, LookupType, SimRepoVersions } from '../src/utils/Converter.module.js';
 
 describe('Converter Module', () => {
   describe('getValue Function', () => {
@@ -366,3 +366,5 @@ describe('Converter Module', () => {
     });
   });
 });
+
+

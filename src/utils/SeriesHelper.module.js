@@ -4,7 +4,7 @@ import {
   jsonData,
   jsonBase,
   jsonDPS
-} from '../../helper/Constants.module.js';
+} from './Constants.module.js';
 
 export function clearChartSeries(chart) {
   while (chart.series.length > 0) {
@@ -196,3 +196,4 @@ export function buildNumericMultiBarSeries(data, fights, levels) {
     };
   });
 }
+

@@ -1,5 +1,5 @@
-import { buildChartLineForTrinketCombos, buildWowheadTooltips } from '../js/internal/chart/helper/WowheadHelper.module.js';
-import * as Constants from '../js/internal/helper/Constants.module.js';
+import { buildChartLineForTrinketCombos, buildWowheadTooltips } from '../src/modules/chart/helpers/WowheadHelper.module.js';
+import * as Constants from '../src/utils/Constants.module.js';
 
 // Mock document for DOM operations
 global.window = {
@@ -122,3 +122,4 @@ describe('buildWowheadTooltips', () => {
     expect(typeof buildWowheadTooltips).toBe('function');
   });
 });
+

@@ -1,6 +1,6 @@
-import * as Chart from '../js/internal/chart/Chart.module.js';
-import * as Converter from '../js/internal/helper/Converter.module.js';
-import * as Normalizers from '../js/internal/helper/Normalizers.module.js';
+import * as Chart from '../src/modules/chart/Chart.module.js';
+import * as Converter from '../src/utils/Converter.module.js';
+import * as Normalizers from '../src/utils/Normalizers.module.js';
 
 describe('Chart Module', () => {
   test('should export updateChart function', () => {
@@ -51,3 +51,5 @@ describe('Chart Module', () => {
     });
   });
 });
+
+

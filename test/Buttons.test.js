@@ -9,8 +9,8 @@ global.$ = function(selector) {
   };
 };
 
-import * as Buttons from '../js/internal/button/Buttons.module.js';
-import * as Constants from '../js/internal/helper/Constants.module.js';
+import * as Buttons from '../src/modules/buttons/Buttons.module.js';
+import * as Constants from '../src/utils/Constants.module.js';
 
 describe('Buttons Module', () => {
   test('should export initializeButtons function', () => {
@@ -45,3 +45,5 @@ describe('Buttons Module', () => {
     });
   });
 });
+
+

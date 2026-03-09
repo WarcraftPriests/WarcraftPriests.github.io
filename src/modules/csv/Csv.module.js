@@ -1,7 +1,7 @@
-import { AppState } from '../state/AppState.module.js';
-import { normalizeFightStyleForResults } from '../helper/Normalizers.module.js';
-import { getConfigValue, getValue, Sims } from '../helper/Converter.module.js';
-import { renderChartHeader, renderChartDescription, renderCsvTable } from '../helper/DomRenderHelper.module.js';
+import { AppState } from '../../services/state/AppState.module.js';
+import { normalizeFightStyleForResults } from '../../utils/Normalizers.module.js';
+import { getConfigValue, getValue, Sims } from '../../utils/Converter.module.js';
+import { renderChartHeader, renderChartDescription, renderCsvTable } from '../../utils/DomRenderHelper.module.js';
 import {
   dungeonType,
   builds,
@@ -9,7 +9,7 @@ import {
   simResultPath,
   underscore,
   csvExtension
-} from '../helper/Constants.module.js';
+} from '../../utils/Constants.module.js';
 
 export const Headings = {
   profile: 'Profile',
@@ -77,3 +77,4 @@ export function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId,
 export function determineCsvUrl(simsBtn, baseurl, fightStyle, talentChoice) {
   return baseurl + slash + simsBtn + simResultPath + fightStyle + underscore + talentChoice.replaceAll('_', '-') + csvExtension;
 }
+

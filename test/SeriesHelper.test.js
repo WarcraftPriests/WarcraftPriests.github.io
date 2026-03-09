@@ -1,5 +1,5 @@
-import * as SeriesHelper from '../js/internal/chart/helper/SeriesHelper.module.js';
-import * as Constants from '../js/internal/helper/Constants.module.js';
+import * as SeriesHelper from '../src/modules/chart/helpers/SeriesHelper.module.js';
+import * as Constants from '../src/utils/Constants.module.js';
 
 describe('SeriesHelper', () => {
   test('detects numeric steps and sorts levels', () => {
@@ -39,3 +39,5 @@ describe('SeriesHelper', () => {
     expect(series[1].data[0]).toBeCloseTo(10);
   });
 });
+
+

@@ -1,9 +1,9 @@
-import { AppState } from './internal/state/AppState.module.js';
-import { getQueryParameter } from './internal/helper/Parameterized.module.js';
-import { initializeButtons } from './internal/button/Buttons.module.js';
-import { copyURI } from './internal/helper/TalentBuild.module.js';
-import { SimRepoVersions, Sims } from './internal/helper/Converter.module.js';
-import { version, defaultVersion, repoTemplateUrl, charts } from './internal/helper/Constants.module.js';
+import { AppState } from './services/state/AppState.module.js';
+import { getQueryParameter } from './services/url/Parameterized.module.js';
+import { initializeButtons } from './modules/buttons/Buttons.module.js';
+import { copyURI } from './modules/talents/TalentBuild.module.js';
+import { SimRepoVersions, Sims } from './utils/Converter.module.js';
+import { version, defaultVersion, repoTemplateUrl, charts } from './utils/Constants.module.js';
 
 function resolveSimVersion(params) {
   const selectedVersion = params.get(version);

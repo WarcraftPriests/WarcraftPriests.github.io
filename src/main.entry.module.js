@@ -1,4 +1,4 @@
-import { AppState } from './internal/state/AppState.module.js';
+import { AppState } from './services/state/AppState.module.js';
 import {
   SimRepoVersions,
   Sims,
@@ -15,34 +15,34 @@ import {
   getValue,
   getConfigValue,
   getKeys
-} from './internal/helper/Converter.module.js';
-import * as Constants from './internal/helper/Constants.module.js';
+} from './utils/Converter.module.js';
+import * as Constants from './utils/Constants.module.js';
 import {
   normalizeSimResultKey,
   normalizeBuildKey,
   normalizeFightStyleForResults,
   normalizeFightStyleForTalentBuild
-} from './internal/helper/Normalizers.module.js';
+} from './utils/Normalizers.module.js';
 import {
   getQueryParameter,
   manipulateUrl,
   compareParameters
-} from './internal/helper/Parameterized.module.js';
+} from './services/url/Parameterized.module.js';
 import {
   getColor,
   create_color
-} from './internal/chart/helper/ColorHelper.module.js';
-import * as SeriesHelper from './internal/chart/helper/SeriesHelper.module.js';
-import TooltipBuilder from './internal/chart/helper/TooltipBuilder.module.js';
-import * as WowheadHelper from './internal/chart/helper/WowheadHelper.module.js';
-import * as DomRenderHelper from './internal/helper/DomRenderHelper.module.js';
-import * as Definitions from './internal/chart/definitions/Definitions.module.js';
-import * as DataHelper from './internal/chart/helper/DataHelper.module.js';
-import * as Chart from './internal/chart/Chart.module.js';
-import * as Csv from './internal/csv/Csv.module.js';
-import * as TalentBuild from './internal/helper/TalentBuild.module.js';
-import * as Buttons from './internal/button/Buttons.module.js';
-import MainModule from './Main.module.js';
+} from './modules/chart/helpers/ColorHelper.module.js';
+import * as SeriesHelper from './modules/chart/helpers/SeriesHelper.module.js';
+import TooltipBuilder from './modules/chart/helpers/TooltipBuilder.module.js';
+import * as WowheadHelper from './modules/chart/helpers/WowheadHelper.module.js';
+import * as DomRenderHelper from './utils/DomRenderHelper.module.js';
+import * as Definitions from './modules/chart/definitions/Definitions.module.js';
+import * as DataHelper from './modules/chart/helpers/DataHelper.module.js';
+import * as Chart from './modules/chart/Chart.module.js';
+import * as Csv from './modules/csv/Csv.module.js';
+import * as TalentBuild from './modules/talents/TalentBuild.module.js';
+import * as Buttons from './modules/buttons/Buttons.module.js';
+import MainModule from './app.module.js';
 
 // Bridge module exports into globals so legacy scripts can continue working
 // while we migrate files one by one.

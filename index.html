@@ -80,13 +80,13 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- load Highcharts from local vendor directory to avoid CDN issues during development -->
-	<script src="js/vendor/highcharts/highcharts.js"></script>
-	<script src="js/vendor/highcharts/highcharts-3d.js"></script>
+	<script src="src/vendor/highcharts/highcharts.js"></script>
+	<script src="src/vendor/highcharts/highcharts-3d.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-	<script src="js/yaml/yaml.min.js"></script>
+	<script src="src/vendor/yaml/yaml.min.js"></script>
 	
 	<!-- ES6 Module Entry Point (replaces legacy globals) -->
-	<script type="module" src="js/main.entry.module.js"></script>
+	<script type="module" src="src/main.entry.module.js"></script>
 	
 	<!-- Module-first initialization: call MainModule.initializeApp() after modules load -->
 	<script>
@@ -94,11 +94,7 @@
 			if (window.MainModule && window.MainModule.initializeApp) {
 				window.MainModule.initializeApp();
 			} else {
-				console.error('MainModule not available; falling back to legacy Main.js');
-				// Fallback: load legacy Main.js if modules fail to load
-				const fallback = document.createElement('script');
-				fallback.src = 'js/Main.js';
-				document.head.appendChild(fallback);
+				console.error('MainModule not available; module bootstrap failed.');
 			}
 		});
 	</script>

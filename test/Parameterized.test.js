@@ -1,4 +1,4 @@
-import { manipulateUrl, compareParameters, getQueryParameter } from '../js/internal/helper/Parameterized.module.js';
+import { manipulateUrl, compareParameters, getQueryParameter } from '../src/services/url/Parameterized.module.js';
 
 // Mock window.location for testing
 global.window = {
@@ -162,3 +162,5 @@ describe('URL Query Parameter Integration', () => {
     expect(params.get('talents')).toBe('fire frost');
   });
 });
+
+

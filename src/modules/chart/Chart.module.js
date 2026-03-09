@@ -1,15 +1,15 @@
-import { AppState } from '../state/AppState.module.js';
-import { getValue, getConfigValue, ChartType, ChartPadding } from '../helper/Converter.module.js';
+import { AppState } from '../../services/state/AppState.module.js';
+import { getValue, getConfigValue, ChartType, ChartPadding } from '../../utils/Converter.module.js';
 import {
   normalizeBuildKey,
   normalizeSimResultKey,
   normalizeFightStyleForResults
-} from '../helper/Normalizers.module.js';
+} from '../../utils/Normalizers.module.js';
 import {
   renderChartHeader,
   renderChartDescription,
   renderChartUpdatedText
-} from '../helper/DomRenderHelper.module.js';
+} from '../../utils/DomRenderHelper.module.js';
 import {
   jsonLastUpdated,
   jsonExtension,
@@ -24,13 +24,13 @@ import {
   talents,
   talentsTop,
   dungeonType
-} from '../helper/Constants.module.js';
+} from '../../utils/Constants.module.js';
 import {
   buildChartDataSingleBar,
   buildDataForPercentageChart,
   buildChartDataMultipleBar,
   buildChartDataDot
-} from './helper/DataHelper.module.js';
+} from './helpers/DataHelper.module.js';
 
 // parseCSV is from Csv.js - accessed as global for now
 // handleJsonFailure is from Main.js - accessed as global for now
@@ -170,3 +170,4 @@ function handleJsonFailure(xhr, status) {
   console.log('The JSON chart failed to load, please let Publik know via discord Publik#5576');
   console.log(status);
 }
+

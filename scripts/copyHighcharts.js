@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const files = ['highcharts.js', 'highcharts-3d.js'];
 const srcDir = path.join(__dirname, '..', 'node_modules', 'highcharts');
-const dstDir = path.join(__dirname, '..', 'js', 'vendor', 'highcharts');
+const dstDir = path.join(__dirname, '..', 'src', 'vendor', 'highcharts');
 
 if (!fs.existsSync(dstDir)) {
   fs.mkdirSync(dstDir, { recursive: true });

@@ -1,5 +1,5 @@
-import { AppState } from '../../../internal/state/AppState.module.js';
-import { getValue, LegendTitles } from '../../../internal/helper/Converter.module.js';
+import { AppState } from '../services/state/AppState.module.js';
+import { getValue, LegendTitles } from './Converter.module.js';
 import {
   jsonSortedDataKeys,
   jsonSimulatedSteps,
@@ -9,7 +9,7 @@ import {
   jsonIds,
   dpsIncrease,
   DPS
-} from '../../../internal/helper/Constants.module.js';
+} from './Constants.module.js';
 import { create_color } from './ColorHelper.module.js';
 import {
   clearChartSeries,

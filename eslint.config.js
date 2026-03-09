@@ -1,7 +1,7 @@
 export default [
   {
-    files: ['js/**/*.js'],
-    ignores: ['js/yaml/**', 'js/vendor/**'],
+    files: ['src/**/*.js'],
+    ignores: ['src/vendor/**'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'script',
@@ -39,7 +39,7 @@ export default [
     }
   },
   {
-    files: ['js/**/*.module.js'],
+    files: ['src/**/*.module.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module'

@@ -8,8 +8,8 @@
     "copy-highcharts": "node scripts/copyHighcharts.js",
     "prepare": "npm run copy-highcharts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "lint": "eslint js/ test/",
-    "lint:fix": "eslint js/ test/ --fix",
+    "lint": "eslint src/ test/",
+    "lint:fix": "eslint src/ test/ --fix",
     "start": "npx http-server -p 8080"
   },
   "keywords": [],

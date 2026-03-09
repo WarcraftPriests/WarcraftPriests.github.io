@@ -1,4 +1,4 @@
-import { AppState } from '../state/AppState.module.js';
+import { AppState } from '../../services/state/AppState.module.js';
 import {
   SimRepoVersions,
   Sims,
@@ -7,11 +7,11 @@ import {
   FightStyleCouncil,
   getValue,
   getKeys
-} from '../helper/Converter.module.js';
+} from '../../utils/Converter.module.js';
 import {
   getQueryParameter,
   manipulateUrl
-} from '../helper/Parameterized.module.js';
+} from '../../services/url/Parameterized.module.js';
 import {
   defaultSims,
   defaultEnchant,
@@ -42,8 +42,8 @@ import {
   inlineBlock,
   none,
   show
-} from '../helper/Constants.module.js';
-import { replaceTalentId } from '../helper/TalentBuild.module.js';
+} from '../../utils/Constants.module.js';
+import { replaceTalentId } from '../talents/TalentBuild.module.js';
 import { updateChart } from '../chart/Chart.module.js';
 
 let currEnchantsBtn = defaultEnchant;
@@ -406,3 +406,4 @@ export function hasMultipleVersions() {
 function removeShowSpecial(div) {
   document.getElementById(div.toString()).style.visibility = 'hidden';
 }
+

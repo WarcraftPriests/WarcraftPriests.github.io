@@ -1,4 +1,4 @@
-import  TooltipBuilder from '../js/internal/chart/helper/TooltipBuilder.module.js';
+import  TooltipBuilder from '../src/modules/chart/helpers/TooltipBuilder.module.js';
 
 // Mock document for testing
 global.document = {
@@ -182,3 +182,5 @@ describe('TooltipBuilder', () => {
     });
   });
 });
+
+

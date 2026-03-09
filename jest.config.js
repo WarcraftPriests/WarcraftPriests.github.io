@@ -8,7 +8,7 @@ export default {
     '**/test/**/*.test.js'
   ],
   collectCoverageFrom: [
-    'js/**/*.module.js'
+    'src/**/*.module.js'
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 };

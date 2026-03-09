@@ -9,9 +9,9 @@ global.$ = function(selector) {
   };
 };
 
-import * as Main from '../js/Main.module.js';
-import * as Chart from '../js/internal/chart/Chart.module.js';
-import * as Buttons from '../js/internal/button/Buttons.module.js';
+import * as Main from '../src/main.entry.module.js';
+import * as Chart from '../src/modules/chart/Chart.module.js';
+import * as Buttons from '../src/modules/buttons/Buttons.module.js';
 
 describe('Integration Tests', () => {
   test('should import Main module successfully', () => {
@@ -49,3 +49,5 @@ describe('Integration Tests', () => {
     });
   });
 });
+
+

@@ -1,4 +1,4 @@
-import { normalizeSimResultKey, normalizeBuildKey, normalizeFightStyleForResults, normalizeFightStyleForTalentBuild } from '../js/internal/helper/Normalizers.module.js';
+import { normalizeSimResultKey, normalizeBuildKey, normalizeFightStyleForResults, normalizeFightStyleForTalentBuild } from '../src/utils/Normalizers.module.js';
 
 describe('Normalizers helper', () => {
   test('normalizes sim and build keys', () => {
@@ -19,3 +19,5 @@ describe('Normalizers helper', () => {
     expect(normalizeFightStyleForTalentBuild('Composite')).toBe('composite');
   });
 });
+
+

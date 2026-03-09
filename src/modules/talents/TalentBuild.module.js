@@ -1,7 +1,7 @@
-import { AppState } from '../state/AppState.module.js';
-import { normalizeFightStyleForTalentBuild } from './Normalizers.module.js';
-import { talentBuildIdDiv, talentBuildContentDiv } from './Constants.module.js';
-import { talentImportStrings } from '../chart/helper/WowheadHelper.module.js';
+import { AppState } from '../../services/state/AppState.module.js';
+import { normalizeFightStyleForTalentBuild } from '../../utils/Normalizers.module.js';
+import { talentBuildIdDiv, talentBuildContentDiv } from '../../utils/Constants.module.js';
+import { talentImportStrings } from '../chart/helpers/WowheadHelper.module.js';
 
 var talentBuildIdTemplate = null;
 var talentBuildContentTemplate = null;
@@ -48,3 +48,4 @@ export function copyURI(evt) {
     // Clipboard write failed silently to match legacy behavior.
   });
 }
+
