@@ -350,6 +350,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
       renderTo: chartId,
       type: chartType,
       backgroundColor: defaultBackgroundColor,
+      spacingRight: 40,
+      marginRight: 40,
     },
 
     title: {
@@ -416,6 +418,11 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
       },
       stackLabels: {
         enabled: true,
+        overflow: 'allow',
+        crop: false,
+        allowOverlap: true,
+        align: 'right',
+        x: -6,
         formatter: function() {
           return this.total ? this.total.toFixed(2) + '%' : '';
         },
@@ -429,26 +436,8 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
       /* numeric zero is required in v12, string values are ignored */
       min: 0,
       allowDecimals: true,
-      tickPositioner: function() {
-        var result = [];
-        var highestDPS = 0;
-        let baselineDPS = data[jsonData][jsonBase];
-        for (currStep of data[jsonSimulatedSteps]) {
-          for (sortedData of data[jsonSortedDataKeys]) {
-            var percentage = ((data[jsonData][sortedData.trim()][currStep]) / baselineDPS.DPS) * 100 - 100;
-            if (percentage > highestDPS) {
-              highestDPS = percentage;
-            }
-          }
-        }
-        let lastValue = 0;
-        result.push(lastValue);
-        for (i = 0; i <= 9; i++) {
-          lastValue = lastValue + Number((Number(highestDPS / (data[jsonSimulatedSteps].length + 1))).toFixed(2) * (data[jsonSimulatedSteps].length / 7));
-          result.push(Number(lastValue.toFixed(2)));
-        }
-        return result;
-      },
+      endOnTick: true,
+      maxPadding: 0.25,
       title: {
         text: yAxisTitle,
         color: defaultFontColor,
@@ -484,6 +473,32 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
     tooltip: {
       shared: true,
       useHTML: true,
+      outside: false,
+      positioner: function (labelWidth, labelHeight, point) {
+        var chart = this.chart;
+        var plotLeft = chart.plotLeft;
+        var plotTop = chart.plotTop;
+        var plotWidth = chart.plotWidth;
+        var plotHeight = chart.plotHeight;
+        
+        // For horizontal bar charts, position tooltip to the left if it would overflow
+        var tooltipX = point.plotX + plotLeft + 10;
+        var tooltipY = point.plotY + plotTop - labelHeight / 2;
+        
+        // If tooltip would go off the right edge, position it to the left of the point
+        if (tooltipX + labelWidth > plotLeft + plotWidth) {
+          tooltipX = point.plotX + plotLeft - labelWidth - 10;
+        }
+        
+        // Keep tooltip within vertical bounds
+        if (tooltipY < plotTop) {
+          tooltipY = plotTop;
+        } else if (tooltipY + labelHeight > plotTop + plotHeight) {
+          tooltipY = plotTop + plotHeight - labelHeight;
+        }
+        
+        return { x: tooltipX, y: tooltipY };
+      },
       headerFormat: tooltipHeaderFormat, 
       style: {
         color: defaultFontColor,

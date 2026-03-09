@@ -275,7 +275,7 @@ function buildChartDataDot(githubData, chartId) {
       statMasteryPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[0].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
       statVersPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[1].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
       statHastePercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[2].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
-      statCritPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * configData['stats']['steps']) + configData['stats']['base'] / configData['stats']['include'].length)),
+      statCritPercent: Math.round((100 / sumStatValues) * (((parseInt(sortedData.split('_')[3].replace(/[^.\d]/g, ''))) * AppState.getConfigData()['stats']['steps']) + AppState.getConfigData()['stats']['base'] / AppState.getConfigData()['stats']['include'].length)),
       marker: {
         radius: radius,
         lineColor: line_color,
