@@ -25,6 +25,7 @@ describe('buildChartLineForTrinketCombos', () => {
       racials: 'racials',
       talents: 'talents',
       talentsTop: 'talents_top',
+      trinketCombos: 'trinket_combos',
       currSimsBtn: null,
       configData: { sims: {} },
       getValue: (obj, key) => obj ? obj[key] : undefined,

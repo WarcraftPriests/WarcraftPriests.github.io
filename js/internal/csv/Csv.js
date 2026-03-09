@@ -11,17 +11,7 @@ var Headings = {
 };
 
 function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
-  if (currFightStyleBtn.includes('twotarget')) {
-    currFightStyleBtn = '2T';
-  } else if (currFightStyleBtn.includes('threetarget')) {
-    currFightStyleBtn = '3T';
-  } else if (currFightStyleBtn.includes('fourtarget')) {
-    currFightStyleBtn = '4T';
-  } else if (currFightStyleBtn.includes('eighttarget')) {
-    currFightStyleBtn = '8T';
-  } else if (currFightStyleBtn.includes('Dungeons')) {
-    currFightStyleBtn = 'Dungeons-Push';
-  }
+  currFightStyleBtn = normalizeFightStyleForResults(currFightStyleBtn, configData[dungeonType]);
     
   $(document).ready(function() {
     $.ajax({
@@ -56,7 +46,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
           flagClose = '</th>';
         }
 
-        if (entries[j] != null || entries[j] != undefined) {
+        if (entries[j] != null && entries[j] != undefined) {
           result += flag + getLabel(entries[j]) + flagClose;
         }
       }
@@ -68,7 +58,7 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
     result += '</br>';
     result += '</br>';
         
-    if (result != null || result != undefined || result != '') {
+    if (result != null && result != undefined && result != '') {
       document.getElementById(chartId).innerHTML = result;
     }
   }

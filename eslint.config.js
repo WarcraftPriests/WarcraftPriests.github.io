@@ -1,19 +1,24 @@
 export default [
   {
-    files: ['js/**/*.js', 'test/**/*.js'],
+    files: ['js/**/*.js'],
     ignores: ['js/yaml/**', 'js/vendor/**'],
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: 'module',
+      sourceType: 'script',
       globals: {
         window: 'readonly',
         document: 'readonly',
-        console: 'readonly'
+        console: 'readonly',
+        jQuery: 'readonly',
+        $: 'readonly',
+        jsyaml: 'readonly',
+        Highcharts: 'readonly',
+        $WowheadPower: 'readonly'
       }
     },
     rules: {
-      'no-unused-vars': 'off', // Disable since some functions are used externally
-      'no-undef': 'off', // Disable since code uses many globals
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],
       'indent': ['error', 2],
@@ -31,6 +36,21 @@ export default [
       'space-around-operator': 'off',
       // Enforce no space before function call parentheses
       'func-call-spacing': ['error', 'never']
+    }
+  },
+  {
+    files: ['test/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'commonjs',
+      globals: {
+        describe: 'readonly',
+        beforeAll: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        __dirname: 'readonly',
+        console: 'readonly'
+      }
     }
   }
 ];

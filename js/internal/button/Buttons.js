@@ -7,6 +7,10 @@ function setDefaultButtonValues() {
   currTalentBtn = Object.keys(configData[builds])[0].replaceAll('-', '_');
 }
 
+function hasQueryValue(value) {
+  return value != null && value !== '';
+}
+
 /*
  * Initialize all buttons by url params
  */
@@ -16,14 +20,16 @@ function initializeButtons() {
   var query = getQueryParameter();
   if (query !== null) {
     if (query.has(talents)) {
-      if (query.get(talents) != null
-        || query.get(talents) != '')
-        currTalentBtn = query.get(talents);
+      const queriedTalent = query.get(talents);
+      if (hasQueryValue(queriedTalent)) {
+        currTalentBtn = queriedTalent;
+      }
     }
     if (query.has(sims)) {
-      if (query.get(sims) != null
-        || query.get(sims) != '')
-        currSimsBtn = query.get(sims);
+      const queriedSims = query.get(sims);
+      if (hasQueryValue(queriedSims)) {
+        currSimsBtn = queriedSims;
+      }
     }
 
     if (query.has(fightStyle)) {
@@ -31,9 +37,10 @@ function initializeButtons() {
         currFightStyleBtn = query.get(fightStyle); 
     }
     if (query.has(version)) {
-      if (query.get(version) != null
-        || query.get(version) != '')
-        currVersionBtn = query.get(version); 
+      const queriedVersion = query.get(version);
+      if (hasQueryValue(queriedVersion)) {
+        currVersionBtn = queriedVersion;
+      }
     }
   }
   createButtons();
@@ -80,9 +87,9 @@ function createConsumableButtons(buttonArray) {
  */
 function createVersionButtons(buttonArray) {
   let div = document.getElementById(versionDiv);
-  for (b in buttonArray) {
-    var buttonText = document.createTextNode(buttonArray[b]);
-    createButtonBasicNoImage(div, b, checkButtonClick, buttonText, version);
+  for (const key in buttonArray) {
+    var buttonText = document.createTextNode(buttonArray[key]);
+    createButtonBasicNoImage(div, key, checkButtonClick, buttonText, version);
   }
   styleButtons();
 }
@@ -92,10 +99,10 @@ function createVersionButtons(buttonArray) {
  */
 function createTalentButtons(buttonArray) {
   let div = document.getElementById(talentDiv);
-  for (b in buttonArray) {
-    var buttonText = document.createTextNode(buttonArray[b].name);
-    b = b.replaceAll(dash, underscore);
-    createButtonBasic(div, b, checkButtonClick, buttonText, talents);
+  for (const key in buttonArray) {
+    var buttonText = document.createTextNode(buttonArray[key].name);
+    const normalizedKey = key.replaceAll(dash, underscore);
+    createButtonBasic(div, normalizedKey, checkButtonClick, buttonText, talents);
   }
   styleButtons();
 }
@@ -117,12 +124,12 @@ function createSimsButtons(buttonArray) {
  */
 function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
   let div = document.getElementById(divName);
-  for (b in buttonArray) {
+  for (const key in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if (!configData['sims'][b] || configData['sims'][b]['chart']) {
-      b = b.replaceAll(dash, underscore);
-      var buttonText = document.createTextNode(getValue(labelArray, b));
-      constructSimsButton(div, b, event, buttonText, curBtn);
+    if (!configData['sims'][key] || configData['sims'][key]['chart']) {
+      const normalizedKey = key.replaceAll(dash, underscore);
+      var buttonText = document.createTextNode(getValue(labelArray, normalizedKey));
+      constructSimsButton(div, normalizedKey, event, buttonText, curBtn);
     }
   }
   styleButtons();
@@ -133,12 +140,12 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
  */
 function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn) {
   let div = document.getElementById(divName);
-  for (b in buttonArray) {
+  for (const key in buttonArray) {
     // Load button if it is a non sim type button or the chart is enabled
-    if (!configData['sims'][b] || configData['sims'][b]['chart']) {
-      b = b.replaceAll(dash, underscore);
-      var buttonText = document.createTextNode(getValue(labelArray, b));
-      createButtonBasic(div, b, event, buttonText, currBtn);
+    if (!configData['sims'][key] || configData['sims'][key]['chart']) {
+      const normalizedKey = key.replaceAll(dash, underscore);
+      var buttonText = document.createTextNode(getValue(labelArray, normalizedKey));
+      createButtonBasic(div, normalizedKey, event, buttonText, currBtn);
     }
   }
   styleButtons();
@@ -150,11 +157,18 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
  */
 function createButtonBasicListSelf(divName, buttonArray, event, labelArray, currBtn) {
   let div = document.getElementById(divName);
-  for (b in buttonArray) {
-    var buttonText = document.createTextNode(getValue(labelArray, buttonArray[b]));
-    createButtonBasic(div, buttonArray[b], event, buttonText, currBtn);
+  for (const buttonKey of buttonArray) {
+    var buttonText = document.createTextNode(getValue(labelArray, buttonKey));
+    createButtonBasic(div, buttonKey, event, buttonText, currBtn);
   }
   styleButtons();
+}
+
+function bindButtonClick(button, name, currBtn, event) {
+  button.addEventListener(click, function() {
+    handleOnClick(name, currBtn);
+    event();
+  });
 }
 
 /*
@@ -221,8 +235,7 @@ function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
-  button.addEventListener(click, event);
+  bindButtonClick(button, name, currBtn, event);
 
   const imageWrapper = document.createElement('div');
   imageWrapper.style = 'height: 100%; width: 20px;';
@@ -249,8 +262,7 @@ function createButtonBasic(div, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
-  button.addEventListener(click, event);
+  bindButtonClick(button, name, currBtn, event);
   
   var icon = document.createElement('img');
   icon.src = 'images/icons/' + name + '.jpg';
@@ -266,8 +278,7 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  button.setAttribute(onClick, handleOnClickText + name + attributeSpacer + currBtn + attributeClose);
-  button.addEventListener(click, event);
+  bindButtonClick(button, name, currBtn, event);
 
   var br = document.createTextNode('  ');
   button.appendChild(br);
@@ -311,7 +322,7 @@ function checkButtonClick() {
     addShow(versionDiv);
   }
   
-  for (currTalent in configData[sims]) {
+  for (const currTalent in configData[sims]) {
     if (currTalent == currSimsBtn 
                 || currSimsBtn != null && currTalent == currSimsBtn.replaceAll('_', '-')) {
       if (configData[sims][currTalent][builds]) {

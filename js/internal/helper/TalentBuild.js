@@ -1,6 +1,9 @@
+var talentBuildIdTemplate = null;
+var talentBuildContentTemplate = null;
+
 $('.talentBuild').click(function () {
-  $header = $(this);
-  $content = $header.next();
+  const $header = $(this);
+  const $content = $header.next();
   //$content = $temp.next();
   $content.slideToggle(500, function () {
     $header.text(function () {
@@ -9,25 +12,23 @@ $('.talentBuild').click(function () {
   });
 });
 
-function replaceTalentId(currTalent, currFightStyle) {
-  let selectedFightStyle = undefined;
-  if (currFightStyle == 'twotarget') {
-    selectedFightStyle = '2t';
-  } else if (currFightStyle == 'threetarget') {
-    selectedFightStyle = '3t';
-  } else if (currFightStyle == 'fourtarget') {
-    selectedFightStyle = '4t';
-  } else if (currFightStyle == 'eighttarget') {
-    selectedFightStyle = '8t';
-  } else if (currFightStyle == 'dungeons') {
-    selectedFightStyle = 'dungeons';
-  } else {
-    selectedFightStyle = currFightStyle.toLowerCase();
+function ensureTalentBuildTemplates() {
+  if (talentBuildIdTemplate == null) {
+    talentBuildIdTemplate = document.getElementById(talentBuildIdDiv).innerHTML;
   }
+  if (talentBuildContentTemplate == null) {
+    talentBuildContentTemplate = document.getElementById(talentBuildContentDiv).innerHTML;
+  }
+}
+
+function replaceTalentId(currTalent, currFightStyle) {
+  ensureTalentBuildTemplates();
+  let selectedFightStyle = normalizeFightStyleForTalentBuild(currFightStyle);
+  const talentId = configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string'];
 
   /* `builds.talentID.talents.fightStyle` */
-  document.getElementById(talentBuildIdDiv).innerHTML = document.getElementById(talentBuildIdDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string']);
-  document.getElementById(talentBuildContentDiv).innerHTML = document.getElementById(talentBuildContentDiv).innerHTML.replaceAll('%talentId%', configData['builds'][currTalent.replaceAll('_', '-')]['talents'][selectedFightStyle]['string']);
+  document.getElementById(talentBuildIdDiv).innerHTML = talentBuildIdTemplate.replaceAll('%talentId%', talentId);
+  document.getElementById(talentBuildContentDiv).innerHTML = talentBuildContentTemplate.replaceAll('%talentId%', talentId);
 }
 
 function copyURI(evt) {

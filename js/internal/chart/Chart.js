@@ -3,19 +3,6 @@
  * and when a chart update should happen
  */
 function updateChart(currTalentBtn, currSimsBtn, currConsumablesBtn, currEnchantsBtn, currFightStyleBtn, chartId, metaData, maxEntries) {
-  if (maxEntries != null && maxEntries != undefined) {
-    // Highcharts 8 used `max` on a category axis as a zero‑based
-    // index and our callers passed a count; we corrected by
-    // subtracting 1.  v12 now accepts the count directly and
-    // will handle the conversion internally, so decrementing
-    // causes the axis to be one category smaller and the
-    // extremes calculation to appear broken (bars running off
-    // the edge).  The value coming from data-maxentries is
-    // already the number of buckets we want visible, so leave
-    // it alone.
-    // maxEntries = maxEntries - 1;
-  }
-  
   if (currSimsBtn == 'weights') {
     parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData);
   } else {
@@ -68,7 +55,7 @@ function buildData(data, simsBtn, chartId, maxEntries) {
 function updateSize(chart, chartId, size, maxEntries) {
   var realSize = 0;
 
-  if (maxEntries != null || maxEntries != undefined) {
+  if (maxEntries != null && maxEntries != undefined) {
     realSize = maxEntries;
   } else {
     realSize = size;
@@ -126,29 +113,9 @@ function determineChartDescription(fullSimType) {
  * Determines the url for the github repo to get the needed sim results
  */
 function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
-  /*
-   * Special cases!
-   */
-  if (talentChoice.includes(underscore)) {
-    talentChoice = talentChoice.replaceAll(underscore, dash);
-  }
-
-  if (simsBtn.includes(underscore)) {
-    simsBtn = simsBtn.replaceAll(underscore, dash);
-  }
-
-  if (fightStyle.includes('twotarget')) {
-    fightStyle = '2T';
-  } else if (fightStyle.includes('threetarget')) {
-    fightStyle = '3T';
-  } else if (fightStyle.includes('fourtarget')) {
-    fightStyle = '4T';
-  } else if (fightStyle.includes('eighttarget')) {
-    fightStyle = '8T';
-  } else if (fightStyle.includes('Dungeons')) {
-    var dungeonType = configData['dungeonType'];
-    fightStyle = 'Dungeons-' + dungeonType[0].toUpperCase() + dungeonType.slice(1);
-  }
+  talentChoice = normalizeBuildKey(talentChoice);
+  simsBtn = normalizeSimResultKey(simsBtn);
+  fightStyle = normalizeFightStyleForResults(fightStyle, configData[dungeonType]);
 
   if (simsBtn == talents || simsBtn == talentsTop) {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;

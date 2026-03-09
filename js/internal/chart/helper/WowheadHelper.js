@@ -9,16 +9,18 @@ var talentImportStrings = {};
 function buildWowheadTooltips(data, breakConidition, simsBtn) {
   var result = [];
 
-  for (dpsName of data[jsonSortedDataKeys]) {
+  for (const dpsName of data[jsonSortedDataKeys]) {
     var id = data[jsonIds][dpsName]; 
     
     if (id == null) {
       id = '';
     }
 
+    var simConfig = configData[sims][simsBtn.replaceAll('_', '-')];
+    var url = wowheadUrl + wowheadItemPath;
     if (simsBtn == consumables || simsBtn == alchemy || simsBtn == enchants || simsBtn == gems || simsBtn == specialGear) {
       url = wowheadUrl + wowheadItemPath;
-    } else if (configData[sims][simsBtn.replaceAll('_', '-')]['lookupType'] == 'spell') {
+    } else if (simConfig && simConfig['lookupType'] == 'spell') {
       url = wowheadUrl + wowheadSpellPath;
     } else {
       url = wowheadUrl + wowheadItemPath;
@@ -34,7 +36,7 @@ function buildWowheadTooltips(data, breakConidition, simsBtn) {
  * Build a single line of the wowhead tooltip
  */
 function buildChartLine(dpsName, itemId, url, simsBtn, data = null) {
-  result = '';
+  var result = '';
   result += '<div style="display:inline-block; margin-bottom:-3px">';
   if (simsBtn == null
     || simsBtn == undefined
@@ -43,9 +45,9 @@ function buildChartLine(dpsName, itemId, url, simsBtn, data = null) {
     || simsBtn == enchants
     || simsBtn == racials) {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
-  } else if (simsBtn != null && simsBtn != undefined && (simsBtn == talents || simsBtn == talentsTop)) {
+  } else if (simsBtn != null && simsBtn != undefined && (simsBtn == talents || simsBtn == talentsTop || simsBtn == talentsTop.replaceAll('-', '_'))) {
     result = buildChartLineForTalents(dpsName, result);
-  } else if (simsBtn != null && simsBtn != undefined && simsBtn == 'trinket_combos') {
+  } else if (simsBtn != null && simsBtn != undefined && simsBtn == trinketCombos) {
     result = buildChartLineForTrinketCombos(dpsName, result, data ? data[jsonIds] : null);
   } else {
     result = buildChartLineWithWowheadLine(dpsName, itemId, url, result);
@@ -57,14 +59,14 @@ function buildChartLineForTrinketCombos(dpsName, currentResult, ids) {
   var currResult = '';
   var counter = 0;
   var names = dpsName.split('-');
-  for (name of names) {
+  for (const name of names) {
     var splittedName = name.split('_');
     var slicedName = name.slice(0, name.lastIndexOf('_'));
     var trinketId = ids[slicedName];
     var ilvl = splittedName[splittedName.length - 1];
     var currName = slicedName.split('_');
     var finalName = '';
-    for (tempName of currName) {
+    for (const tempName of currName) {
       finalName = finalName + tempName.charAt(0);
     }
     finalName = finalName + ' (' + ilvl + ')';
@@ -80,7 +82,7 @@ function buildChartLineForTrinketCombos(dpsName, currentResult, ids) {
 
 function buildWowheadTooltipsMultipleBar(data, simsBtn) {
   var result = [];
-  for (currFight in data[jsonData]) {
+  for (const currFight in data[jsonData]) {
     if (currFight === jsonBase) continue; // skip 'Base'
     // if the key isn't a known fight style, just show the raw name
     var label = getValue(FightStyleExternal, currFight);
@@ -96,7 +98,7 @@ function buildWowheadTooltipsMultipleBar(data, simsBtn) {
 function buildChartLineForTrinkets(dpsName, currentResult) {
   var currResult = '';
   var names = dpsName.split('_');
-  for (name of names) {
+  for (const name of names) {
     currResult = buildChartLineWithWowheadLine(name, getValue(TalentIds, name.toUpperCase()), wowheadUrl + wowheadSpellPath, currResult, dpsName);
   }
 
@@ -115,7 +117,7 @@ function buildChartLineForBasic(names, currentResult) {
   var nextName = '';
   var skipNext = false;
   var nextId = '';
-  for (name of names) {
+  for (const name of names) {
     counter++;
     if (!(/^\d+$/.test(name))) {
       if (skipNext) {
@@ -146,20 +148,20 @@ function buildChartLineForBasic(names, currentResult) {
 
 function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult, ilvl = 289) {
   var result = currentResult;
-  if (currSimsBtn == 'talents' || currSimsBtn == 'talents_top') {
-    link = talentData['builds'][dpsName];
-    generated_link = talentData['generated'][dpsName];
+  if (currSimsBtn == talents || currSimsBtn == talentsTop || currSimsBtn == talentsTop.replaceAll('-', '_')) {
+    var link = talentData['builds'][dpsName];
+    var generatedLink = talentData['generated'][dpsName];
     if (link) {
       talentImportStrings[dpsName] = link;
       result += '<a class="tooltipLink" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';
-    } else if (generated_link) {
-      talentImportStrings[dpsName] = generated_link;
+    } else if (generatedLink) {
+      talentImportStrings[dpsName] = generatedLink;
       result += '<a class="tooltipLink" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';
     } else {
       result += dpsName;
     }
   } else {
-    if (currSimsBtn == 'trinkets' || currSimsBtn == 'trinket_combos') {
+    if (currSimsBtn == trinkets || currSimsBtn == trinketCombos) {
       result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '?ilvl=' + ilvl + '"';
     } else {
       result += '<a style="color: white; font-size: 16px; padding: 3px; cursor: default" href="' + url + itemId + '"';
