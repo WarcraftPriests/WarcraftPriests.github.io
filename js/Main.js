@@ -25,3 +25,8 @@ jQuery.get({url: baseUrl + '/config.yml', dataType: 'text'})
   const selectedSim = params.get('sims');
   document.title = `${Sims[selectedSim]} | ${document.title}`;
 }());
+
+// Add delegated event listener for talent import links in chart tooltips
+$(document).on('click', '.tooltipLink', function(event) {
+  copyURI(event);
+});

@@ -32,7 +32,13 @@ function replaceTalentId(currTalent, currFightStyle) {
 
 function copyURI(evt) {
   evt.preventDefault();
-  navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
+  const talentName = evt.target.textContent.trim();
+  const importString = talentImportStrings[talentName];
+  if (!importString) {
+    alert('Error: Talent import string not found');
+    return;
+  }
+  navigator.clipboard.writeText(importString).then(() => {
     alert('Talent id copied to the clipboard');
   }, () => {
     /* clipboard write failed */

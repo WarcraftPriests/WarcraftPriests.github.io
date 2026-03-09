@@ -1,4 +1,9 @@
 /*
+ * Global object to store talent import strings (survives Highcharts sanitization)
+ */
+var talentImportStrings = {};
+
+/*
  * Build wowhead tooltips
  */
 function buildWowheadTooltips(data, breakConidition, simsBtn) {
@@ -145,9 +150,11 @@ function buildChartLineWithWowheadLine(dpsName, itemId, url, currentResult, ilvl
     link = talentData['builds'][dpsName];
     generated_link = talentData['generated'][dpsName];
     if (link) {
-      result += '<a class="tooltipLink" href="' + link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';
+      talentImportStrings[dpsName] = link;
+      result += '<a class="tooltipLink" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';
     } else if (generated_link) {
-      result += '<a class="tooltipLink" href="' + generated_link + '" onclick="copyURI(event)" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';
+      talentImportStrings[dpsName] = generated_link;
+      result += '<a class="tooltipLink" title="Click here to copy Talent Import string"> ' + dpsName + ' </a>';
     } else {
       result += dpsName;
     }

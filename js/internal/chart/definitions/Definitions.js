@@ -148,6 +148,9 @@ function getDefaultDotDefinition(chartId) {
       gridLineWidth: 1,
       gridLineColor: mediumColor,
     },
+    accessibility: {
+      enabled: true,
+    },
   };
 }
 
@@ -327,6 +330,9 @@ function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle, yAxis
         result += '</div>';
         return result;
       },
+    },
+    accessibility: {
+      enabled: true,
     },
   };   
 }
@@ -509,6 +515,9 @@ function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisT
         return result;
       },
     },
+    accessibility: {
+      enabled: true,
+    },
   };   
 }
 
@@ -661,6 +670,9 @@ function getSingleBarDefinition(wowheadTooltips, data, legendTitle, yAxisTitle, 
         result += '</div>';
         return result;
       },
+    },
+    accessibility: {
+      enabled: true,
     },
   };   
 }
