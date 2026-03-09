@@ -49,14 +49,19 @@ export default [
     files: ['test/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: {
         describe: 'readonly',
         beforeAll: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
         test: 'readonly',
         expect: 'readonly',
-        __dirname: 'readonly',
-        console: 'readonly'
+        console: 'readonly',
+        document: 'readonly',
+        window: 'readonly',
+        $: 'readonly',
+        AppState: 'readonly'
       }
     }
   }
