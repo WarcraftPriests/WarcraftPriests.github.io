@@ -23,44 +23,28 @@ function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaDa
   });
     
   function processData(allText, currSimsBtn, baseUrl, currFightStyleBtn, currTalentBtn) {
-    var record_num = 9;  // or however many elements there are in each row
+    var recordNum = 9;
     var allTextLines = allText.split(/\r\n|\n/);
     if (metaData) {
       var simTalent = getConfigValue(configData[builds], currTalentBtn);
-      document.getElementById('header').innerHTML = '<h3 style=\'color:#ffffff\'>' + determineChartName('', simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn) + '</h3>';
-      document.getElementById('description').innerHTML = determineChartDescription(currSimsBtn);
+      renderChartHeader(determineChartName('', simTalent.name, getValue(Sims, currSimsBtn), currFightStyleBtn));
+      renderChartDescription(determineChartDescription(currSimsBtn));
     }
-    var result = '</br>';
-    result += '<table>';
 
+    var rows = [];
     for (var i = 0; i < allTextLines.length - 1; i++) {
       var lines = allTextLines[i].split(',');
-      var entries = lines.splice(0, record_num);
-      result += '<tr>';
-      for (var j = 0; j < record_num; j++) {
-        var flag = '<td>';
-        var flagClose = '</td>';
-
-        if (i == 0) {
-          flag = '<th>';
-          flagClose = '</th>';
-        }
-
+      var entries = lines.splice(0, recordNum);
+      var row = [];
+      for (var j = 0; j < recordNum; j++) {
         if (entries[j] != null && entries[j] != undefined) {
-          result += flag + getLabel(entries[j]) + flagClose;
+          row.push(getLabel(entries[j]));
         }
       }
-      result += '</tr>';
+      rows.push(row);
     }
 
-    result += '</table>';
-    result += '</br>';
-    result += '</br>';
-    result += '</br>';
-        
-    if (result != null && result != undefined && result != '') {
-      document.getElementById(chartId).innerHTML = result;
-    }
+    renderCsvTable(chartId, rows);
   }
 
   function getLabel(key) {

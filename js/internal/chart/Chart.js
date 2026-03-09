@@ -17,13 +17,13 @@ function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData, maxEn
   jQuery.getJSON(determineJsonUrl(simsBtn, baseUrl, fightStyle, talentChoice),
     function (data) {
       if (metaData) {
-        document.getElementById('updateData').innerHTML = updateDataInnerHtml + data[jsonLastUpdated];
+        renderChartUpdatedText(updateDataInnerHtml + data[jsonLastUpdated]);
         var simTalent = getConfigValue(configData[builds], talentChoice);
-        var header = determineChartName(simTalent.name, 
-          simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1), 
+        var header = determineChartName(simTalent.name,
+          simsBtn.charAt(0).toUpperCase() + simsBtn.slice(1),
           fightStyle);
-        document.getElementById('header').innerHTML = '<h3 style=\'color:#ffffff\'>' + header + '</h3>';
-        document.getElementById('description').innerHTML = determineChartDescription(simsBtn);
+        renderChartHeader(header);
+        renderChartDescription(determineChartDescription(simsBtn));
       }
         
       buildData(data, simsBtn, chartId, maxEntries);
