@@ -449,6 +449,15 @@ div#Chart-Display-div {
   white-space: nowrap;
 }
 
+#sims-btn-wrapper .button.selected {
+  background: var(--bg-selected);
+  border: 1px solid var(--border-selected);
+}
+
+#sims-btn-wrapper .button.selected:hover {
+  background: var(--bg-selected-hover);
+}
+
 .sims-btn-icon {
   width: 16px;
   height: 16px;
