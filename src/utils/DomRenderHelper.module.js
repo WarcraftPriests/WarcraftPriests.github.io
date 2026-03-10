@@ -23,7 +23,12 @@ export function renderChartHeader(headerText) {
 }
 
 export function renderChartDescription(descriptionText) {
-  setTextContentById('description', descriptionText);
+  var element = document.getElementById('description');
+  if (!element) {
+    return;
+  }
+  // Use innerHTML to allow HTML formatting like <br> tags in descriptions
+  element.innerHTML = descriptionText == null ? '' : descriptionText;
 }
 
 export function renderGuideLink(guideData) {
