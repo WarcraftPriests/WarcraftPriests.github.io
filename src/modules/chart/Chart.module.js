@@ -1,5 +1,11 @@
 import { AppState } from '../../services/state/AppState.module.js';
-import { getValue, getConfigValue, ChartType, ChartPadding } from '../../utils/Converter.module.js';
+import {
+  getValue,
+  getConfigValue,
+  ChartType,
+  ChartPadding,
+  IcyVeinsGuideBySim
+} from '../../utils/Converter.module.js';
 import {
   normalizeBuildKey,
   normalizeSimResultKey,
@@ -8,6 +14,7 @@ import {
 import {
   renderChartHeader,
   renderChartDescription,
+  renderGuideLink,
   renderChartUpdatedText
 } from '../../utils/DomRenderHelper.module.js';
 import {
@@ -61,6 +68,7 @@ export function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData
           fightStyle);
         renderChartHeader(header);
         renderChartDescription(determineChartDescription(simsBtn));
+        renderGuideLink(determineGuideLink(simsBtn, fightStyle));
       }
         
       buildData(data, simsBtn, chartId, maxEntries);
@@ -144,6 +152,20 @@ export function determineChartDescription(fullSimType) {
   fullSimType = fullSimType.replaceAll('_', '-');
   var descr = AppState.getConfigData()['sims'][fullSimType]['description'];
   return descr;
+}
+
+export function determineGuideLink(simType, fightStyle) {
+  var normalizedSimType = (simType || '').replaceAll('-', '_').toLowerCase();
+  var normalizedFightStyle = (fightStyle || '').toLowerCase();
+
+  if (normalizedFightStyle === 'dungeons') {
+    return {
+      label: 'Mythic+ Tips',
+      url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-mythic-plus-tips'
+    };
+  }
+
+  return IcyVeinsGuideBySim[normalizedSimType] || IcyVeinsGuideBySim.default;
 }
 
 /*

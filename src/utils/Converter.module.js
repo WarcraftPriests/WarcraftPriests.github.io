@@ -59,6 +59,73 @@ export const FightStyleExternal = {
   dungeons: 'Dungeons'
 };
 
+export const IcyVeinsGuideBySim = {
+  default: {
+    label: 'General Shadow Priest PvE Guide',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-guide'
+  },
+  talents: {
+    label: 'Talents and Builds',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-talents-builds'
+  },
+  talents_top: {
+    label: 'Talents and Builds',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-talents-builds'
+  },
+  talent_builds: {
+    label: 'Talents and Builds',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-talents-builds'
+  },
+  stats: {
+    label: 'Stat Priority',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-stat-priority'
+  },
+  weights: {
+    label: 'Stat Priority',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-stat-priority'
+  },
+  enchants: {
+    label: 'Gems, Enchants, and Consumables',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
+  },
+  consumables: {
+    label: 'Gems, Enchants, and Consumables',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
+  },
+  gems: {
+    label: 'Gems, Enchants, and Consumables',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
+  },
+  gem_combos: {
+    label: 'Gems, Enchants, and Consumables',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
+  },
+  alchemy: {
+    label: 'Gems, Enchants, and Consumables',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
+  },
+  trinkets: {
+    label: 'Gear and Best in Slot',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
+  },
+  trinket_combos: {
+    label: 'Gear and Best in Slot',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
+  },
+  tiersets: {
+    label: 'Gear and Best in Slot',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
+  },
+  special_gear: {
+    label: 'Gear and Best in Slot',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
+  },
+  racials: {
+    label: 'Rotation',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-rotation-cooldowns-abilities'
+  }
+};
+
 export const LegendTitles = {
   enchants: 'Increase in %',
   racials: 'Increase in %',

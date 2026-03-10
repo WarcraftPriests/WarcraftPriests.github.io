@@ -26,6 +26,34 @@ export function renderChartDescription(descriptionText) {
   setTextContentById('description', descriptionText);
 }
 
+export function renderGuideLink(guideData) {
+  var root = document.getElementById('guide-link');
+  if (!root) {
+    return;
+  }
+
+  while (root.firstChild) {
+    root.removeChild(root.firstChild);
+  }
+
+  if (!guideData || !guideData.url) {
+    return;
+  }
+
+  var hint = document.createElement('span');
+  hint.textContent = 'Want more context?';
+
+  var link = document.createElement('a');
+  link.href = guideData.url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.className = 'guideLinkAnchor';
+  link.textContent = 'Read Icy Veins: ' + (guideData.label || 'Guide');
+
+  root.appendChild(hint);
+  root.appendChild(link);
+}
+
 export function renderChartUpdatedText(updatedText) {
   setTextContentById('updateData', updatedText);
 }

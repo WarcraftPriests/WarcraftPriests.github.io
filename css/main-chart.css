@@ -351,6 +351,29 @@ section a { color: var(--accent); }
   margin: 0;
 }
 
+.guideLinkContent {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: -8px 0 14px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+.guideLinkAnchor {
+  color: #cba5ff;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(203, 165, 255, 0.45);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.guideLinkAnchor:hover {
+  color: #f0ddff;
+  border-color: rgba(240, 221, 255, 0.8);
+}
+
 .chartContent {
   width: 100%;
   text-align: center;
