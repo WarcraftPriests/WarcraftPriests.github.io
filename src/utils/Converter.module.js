@@ -38,6 +38,16 @@ export const FightStyles = {
   eighttarget: '8 Target'
 };
 
+export const FightStyleTooltips = {
+  Composite: 'Mixed encounter with adds, movement, and multiple targets modeled after the current Raid Season',
+  Single: 'Single target encounter lasting 5 minutes',
+  Dungeons: 'Mythic+ dungeon simulation using DungeonSlice encounter model',
+  twotarget: 'Two targets continuously available for 5 minutes',
+  threetarget: 'Three targets continuously available for 5 minutes',
+  fourtarget: 'Four targets continuously available for 5 minutes',
+  eighttarget: 'Eight targets available for 1 minute (AoE burst scenario)'
+};
+
 export const FightStyleCouncil = {
   3: 'threetarget',
   4: 'fourtarget'

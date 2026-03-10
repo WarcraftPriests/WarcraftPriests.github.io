@@ -3,8 +3,8 @@ import { normalizeFightStyleForTalentBuild } from '../../utils/Normalizers.modul
 import { talentBuildIdDiv, talentBuildContentDiv } from '../../utils/Constants.module.js';
 import { talentImportStrings } from '../chart/helpers/WowheadHelper.module.js';
 
-var talentBuildIdTemplate = null;
-var talentBuildContentTemplate = null;
+let talentBuildIdTemplate = null;
+let talentBuildContentTemplate = null;
 
 $('.talentBuild').click(function() {
   const $header = $(this);
@@ -36,8 +36,20 @@ export function replaceTalentId(currTalent, currFightStyle) {
 
 export function copyURI(evt) {
   evt.preventDefault();
-  const talentName = evt.target.textContent.trim();
-  const importString = talentImportStrings[talentName];
+  const target = evt.target instanceof HTMLElement
+    ? evt.target.closest('[data-import-string], .tooltipLink')
+    : null;
+
+  const directImportString = target && target.dataset
+    ? target.dataset.importString
+    : '';
+
+  const talentName = target && target.textContent
+    ? target.textContent.trim()
+    : '';
+
+  const importString = directImportString || talentImportStrings[talentName];
+
   if (!importString) {
     alert('Error: Talent import string not found');
     return;

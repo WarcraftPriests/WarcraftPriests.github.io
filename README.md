@@ -13,7 +13,10 @@ Install dependencies with npm and copy the Highcharts sources:
 npm install         # pulls highcharts and http-server into node_modules
 npm run copy-highcharts # copies the two JS files into src/vendor/highcharts
 ```
-The `prepare` script runs automatically after `npm install`, so the copy step happens on every fresh checkout.
+The `prepare` script runs automatically after `npm install`, so asset setup happens on every fresh checkout:
+
+- Highcharts files are copied into `src/vendor/highcharts`
+- Tailwind is compiled into `css/tailwind.generated.css`
 
 ### Running locally
 
@@ -24,6 +27,15 @@ npm start           # starts http-server on http://localhost:8080
 ```
 
 Then open `http://localhost:8080` in your browser. ES6 modules now load correctly.
+
+### Tailwind workflow
+
+Tailwind now compiles locally (no CDN runtime script). Useful commands:
+
+```sh
+npm run build:tailwind   # one-time build for production/static deploy
+npm run watch:tailwind   # rebuild Tailwind on file changes
+```
 
 ### Testing & linting
 

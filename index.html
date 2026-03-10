@@ -1,96 +1,256 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
 	<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/tailwind.generated.css">
 	<link rel="stylesheet" href="css/main-chart.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/brands.css" integrity="sha384-1KLgFVb/gHrlDGLFPgMbeedi6tQBLcWvyNUN+YKXbD7ZFbjX6BLpMDf0PJ32XJfX" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
 	<title>Shadow Priest Charts</title>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLDG4XKB3H"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
-
 	  gtag('config', 'G-NLDG4XKB3H');
 	</script>
-</head>
-
-<body style="background-color: rgb(52, 58, 64);">
-	<div class=header>
-		<a href="https://warcraftpriests.com/" target="_blank"><img id="img-banner" src="images/banner.png" alt="WCP Banner"></a>
-	</div>
-	<div id="pad" style="padding-bottom: 30px;"></div>
 	<script>
-		var whTooltips = {
-			colorLinks: true,
-			iconizeLinks: true,
-			renameLinks: false
-		};
+		var whTooltips = { colorLinks: true, iconizeLinks: true, renameLinks: false };
 	</script>
 	<script src="https://wow.zamimg.com/widgets/power.js"></script>
-	<div id="disclaimer">
-		<section>
-			<b id="updateData"></b>
-		</section>
-	</div>
+</head>
 
-	<div id="version-div" class=dropdown-content> </div>
-	<div id="talent-div" class=dropdown-content> </div>
-	<div id="sims-div" class=dropdown-content> </div>
-	<div id="enchants-div" class="dropdown-content"> </div>
-	<div id="consumables-div" class="dropdown-content"> </div>
-	<div id="blank-div" class="dropdown-content"> </div>
-	<div id="fightStyle-div" class=dropdown-content> </div>
-	<div id="empty"></div>
-	<div id="container"></div>
-	<div class="pad"><i> - All sim data is subject to a certain error percentage and should be taken with a grain of salt.</i></div>
-	<div class="wrapper" id="wrapper">
-		<div id="header"></div>
-		<div id="description" class="descriptionContent"></div>
-		<div style="display: block; padding: 5px"></div>
-		<div id="talent-build-div" class="talentBuild"> 
-			<span>Show Talent Build</span>
+<body class="dashboard-body">
+
+	<!-- ── Mobile top bar ── -->
+	<header class="topbar">
+		<button id="sidebar-open" type="button" aria-label="Open filters" class="topbar-hamburger">
+			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+		</button>
+		<a href="https://warcraftpriests.github.io/" target="_blank" rel="noopener noreferrer" class="topbar-logo">
+			<span class="topbar-logo-title">Warcraft Priests</span>
+			<span class="topbar-logo-subtitle">Sim Charts</span>
+		</a>
+		<span class="topbar-spacer"></span>
+	</header>
+
+	<!-- ── Sidebar overlay (mobile) ── -->
+	<div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+	<!-- ── Sidebar ── -->
+	<aside id="sidebar" class="sidebar" aria-label="Chart filters">
+		<div class="sidebar-head">
+			<a href="https://warcraftpriests.github.io/" target="_blank" rel="noopener noreferrer" class="sidebar-brand">
+				<span class="sidebar-brand-title">Warcraft Priests</span>
+				<span class="sidebar-brand-subtitle">Shadow Priest Sim Charts</span>
+			</a>
+			<button id="sidebar-close" type="button" aria-label="Close filters" class="sidebar-close-btn">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+			</button>
 		</div>
-		<div id="talent-build-content-div" class="talentBuildContent">
-			<div id="talent-build-id-div" class="talentBuildId">
-				<span><a class="tooltipLink" href="%talentId%" onclick="copyURI(event)" title="Click here to copy Talent Import string">Talent Import String: %talentId%</a></span>
+
+		<nav class="sidebar-scroll">
+			<!-- Version -->
+			<div class="filter-group">
+				<h3 class="filter-label">Version</h3>
+				<div id="version-div" class="dropdown-content filter-buttons"> </div>
 			</div>
-			<div><iframe src="https://www.raidbots.com/simbot/render/talents/%talentId%?level=70&amp;width=208&amp;mini=1" width="208" height="125"></iframe></div>
+
+			<!-- Talent Build -->
+			<div class="filter-group">
+				<h3 class="filter-label">Talent Build</h3>
+				<div id="talent-div" class="dropdown-content filter-buttons"> </div>
+			</div>
+
+			<!-- Sim Type -->
+			<div class="filter-group">
+				<h3 class="filter-label">Sim Type</h3>
+				<div id="sims-div" class="dropdown-content filter-buttons"> </div>
+			</div>
+
+			<!-- Enchants -->
+			<div class="filter-group">
+				<h3 class="filter-label">Enchants</h3>
+				<div id="enchants-div" class="dropdown-content filter-buttons"> </div>
+			</div>
+
+			<!-- Consumables -->
+			<div class="filter-group">
+				<h3 class="filter-label">Consumables</h3>
+				<div id="consumables-div" class="dropdown-content filter-buttons"> </div>
+			</div>
+
+			<!-- Fight Style -->
+			<div class="filter-group">
+				<h3 class="filter-label">Fight Style</h3>
+				<div id="fightStyle-div" class="dropdown-content filter-buttons"> </div>
+			</div>
+
+			<!-- Hidden / reserved -->
+			<div id="blank-div" class="dropdown-content" style="display:none"> </div>
+		</nav>
+
+		<!-- Sidebar footer with social links -->
+		<div class="sidebar-foot">
+			<div class="sidebar-socials">
+				<a href="https://www.discord.gg/warcraftpriests" class="fab sidebar-social-link fa-discord" title="Discord" aria-label="Discord"></a>
+				<a href="https://github.com/WarcraftPriests" class="fab sidebar-social-link fa-github" title="GitHub" aria-label="GitHub"></a>
+				<a href="https://www.youtube.com/WarcraftPriests/" class="fab sidebar-social-link fa-youtube" title="YouTube" aria-label="YouTube"></a>
+				<a href="https://www.twitch.tv/WarcraftPriests" class="fab sidebar-social-link fa-twitch" title="Twitch" aria-label="Twitch"></a>
+				<a href="https://www.twitter.com/WarcraftPriests" class="fab sidebar-social-link fa-twitter" title="Twitter" aria-label="Twitter"></a>
+				<a href="https://www.patreon.com/warcraftpriests" class="fab sidebar-social-link fa-patreon" title="Patreon" aria-label="Patreon"></a>
+				<a href="https://www.facebook.com/WarcraftPriests/" class="fab sidebar-social-link fa-facebook" title="Facebook" aria-label="Facebook"></a>
+			</div>
 		</div>
-		<div id="Chart-Display-div" class="chartContent"></div>
-	</div>
-	<div class="footer">
-		<a href="https://warcraftpriests.com/"><img class="wcp" src="images/wcplogo.svg" alt="WarcraftPriests website"></a>
-		<a href="https://www.youtube.com/WarcraftPriests/" class="fab fa-youtube"></a>
-		<a href="https://www.facebook.com/WarcraftPriests/" class="fab fa-facebook"></a>
-		<a href="https://www.twitch.tv/WarcraftPriests" class="fab fa-twitch"></a>
-		<a href="https://www.twitter.com/WarcraftPriests" class="fab fa-twitter"></a>
-		<a href="https://www.patreon.com/warcraftpriests" class="fab fa-patreon"></a>
-		<a href="https://github.com/WarcraftPriests" class="fab fa-github"></a>
-		<a href="https://www.discord.gg/warcraftpriests" class="fab fa-discord"></a>
-	</div>
+	</aside>
+
+	<!-- ── Main content ── -->
+	<main id="main-content" class="main-content">
+		<!-- Status bar -->
+		<div class="status-bar">
+			<b id="updateData"></b>
+			<button id="sidebar-toggle" type="button" class="sidebar-toggle-btn" aria-label="Toggle filters">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+				<span>Filters</span>
+			</button>
+		</div>
+
+		<div id="container"></div>
+
+		<!-- Chart shell -->
+		<div class="wrapper" id="wrapper">
+			<div id="header" class="chart-header"></div>
+			<div id="description" class="descriptionContent"></div>
+
+			<div id="talent-build-div" class="talentBuild">
+				<span>Show Talent Build</span>
+			</div>
+			<div id="talent-build-content-div" class="talentBuildContent">
+				<div id="talent-build-id-div" class="talentBuildId">
+					<code class="talentBuildCode" title="%talentId%">%talentId%</code>
+					<button type="button" class="talentBuildCopy tooltipLink" data-import-string="%talentId%" onclick="copyURI(event)" title="Copy Talent Import String">Copy Import String</button>
+				</div>
+				<div><iframe src="https://www.raidbots.com/simbot/render/talents/%talentId%?level=70&amp;width=320&amp;mini=1" width="320" height="190" scrolling="no"></iframe></div>
+			</div>
+
+			<div id="Chart-Display-div" class="chartContent"></div>
+		</div>
+
+		<div id="empty"></div>
+
+		<footer class="main-footer">
+			<i>All sim data is subject to a certain error percentage and should be taken with a grain of salt.</i>
+			<span class="footer-sep">|</span>
+			<a href="https://warcraftpriests.github.io/" class="footer-link">
+				<img class="wcp" src="images/wcplogo.svg" alt="WarcraftPriests">
+				warcraftpriests.github.io
+			</a>
+		</footer>
+	</main>
+
+	<div id="pad" style="display:none"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!-- load Highcharts from local vendor directory to avoid CDN issues during development -->
 	<script src="src/vendor/highcharts/highcharts.js"></script>
 	<script src="src/vendor/highcharts/highcharts-3d.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 	<script src="src/vendor/yaml/yaml.min.js"></script>
-	
-	<!-- ES6 Module Entry Point (replaces legacy globals) -->
+
 	<script type="module" src="src/main.entry.module.js"></script>
-	
-	<!-- Module-first initialization: call MainModule.initializeApp() after modules load -->
+
 	<script>
+		/* ── Sidebar drawer ── */
+		function setupSidebar() {
+			const sidebar  = document.getElementById('sidebar');
+			const overlay  = document.getElementById('sidebar-overlay');
+			const openBtn  = document.getElementById('sidebar-open');
+			const toggleBtn = document.getElementById('sidebar-toggle');
+			const closeBtn = document.getElementById('sidebar-close');
+			if (!sidebar || !overlay) return;
+
+			const prefKey = 'wcp-sidebar-collapsed';
+			const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
+
+			function open() {
+				if (isDesktop()) {
+					document.body.classList.remove('sidebar-collapsed');
+					localStorage.setItem(prefKey, '0');
+					return;
+				}
+				sidebar.classList.add('open');
+				overlay.classList.add('visible');
+				document.body.classList.add('sidebar-is-open');
+			}
+
+			function close() {
+				if (isDesktop()) {
+					document.body.classList.add('sidebar-collapsed');
+					localStorage.setItem(prefKey, '1');
+					return;
+				}
+				sidebar.classList.remove('open');
+				overlay.classList.remove('visible');
+				document.body.classList.remove('sidebar-is-open');
+			}
+
+			function toggle() {
+				if (isDesktop()) {
+					const collapsed = document.body.classList.toggle('sidebar-collapsed');
+					localStorage.setItem(prefKey, collapsed ? '1' : '0');
+					return;
+				}
+				if (sidebar.classList.contains('open')) {
+					close();
+				} else {
+					open();
+				}
+			}
+
+			function syncLayoutMode() {
+				if (isDesktop()) {
+					sidebar.classList.remove('open');
+					overlay.classList.remove('visible');
+					document.body.classList.remove('sidebar-is-open');
+					if (localStorage.getItem(prefKey) === '1') {
+						document.body.classList.add('sidebar-collapsed');
+					} else {
+						document.body.classList.remove('sidebar-collapsed');
+					}
+				} else {
+					document.body.classList.remove('sidebar-collapsed');
+					close();
+				}
+			}
+
+			openBtn?.addEventListener('click', open);
+			toggleBtn?.addEventListener('click', toggle);
+			closeBtn?.addEventListener('click', close);
+			overlay.addEventListener('click', close);
+			window.addEventListener('resize', syncLayoutMode);
+
+			/* Auto-close on mobile after a filter button click */
+			sidebar.addEventListener('click', (e) => {
+				if (window.innerWidth >= 1024) return;
+				if (!(e.target instanceof HTMLElement)) return;
+				if (!e.target.closest('.button')) return;
+				setTimeout(close, 120);
+			});
+
+			syncLayoutMode();
+		}
+
 		window.addEventListener('load', () => {
+			setupSidebar();
+
 			if (window.MainModule && window.MainModule.initializeApp) {
 				window.MainModule.initializeApp();
 			} else {

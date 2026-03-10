@@ -1,7 +1,7 @@
 /*
  * Color definitions
  */
-export const defaultBackgroundColor = '#343a40';
+export const defaultBackgroundColor = 'transparent';
 export const defaultFontColor = '#f8f9fa';
 export const defaultAxisColor = '#828282';
 export const lightColor = '#eeeeee';

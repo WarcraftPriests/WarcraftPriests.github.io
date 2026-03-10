@@ -4,6 +4,7 @@ import {
   Sims,
   Consumables,
   FightStyles,
+  FightStyleTooltips,
   FightStyleCouncil,
   getValue,
   getKeys
@@ -123,7 +124,7 @@ function getAvailableFightStyles() {
  * Creates fight style buttons
  */
 function createFightStyleButtons(buttonArray) {
-  createButtonBasicListSelf(fightStyleDiv, buttonArray, checkButtonClick, FightStyles, fightStyle);
+  createButtonBasicListSelf(fightStyleDiv, buttonArray, checkButtonClick, FightStyles, fightStyle, FightStyleTooltips);
 }
 
 /*
@@ -206,11 +207,12 @@ function createButtonBasicList(divName, buttonArray, event, labelArray, currBtn)
  * Abstraction layer for creating buttons out of an Array
  * special case for consumables, fightStyle and covenants
  */
-function createButtonBasicListSelf(divName, buttonArray, event, labelArray, currBtn) {
+function createButtonBasicListSelf(divName, buttonArray, event, labelArray, currBtn, tooltips) {
   let div = document.getElementById(divName);
   for (const buttonKey of buttonArray) {
     var buttonText = document.createTextNode(getValue(labelArray, buttonKey));
-    createButtonBasic(div, buttonKey, event, buttonText, currBtn);
+    const tooltip = tooltips ? getValue(tooltips, buttonKey) : null;
+    createButtonBasic(div, buttonKey, event, buttonText, currBtn, tooltip);
   }
   styleButtons();
 }
@@ -309,10 +311,13 @@ function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
  * - single button
  * - array button
  */
-function createButtonBasic(div, name, event, buttonText, currBtn) {
+function createButtonBasic(div, name, event, buttonText, currBtn, tooltip) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
+  if (tooltip) {
+    button.setAttribute('title', tooltip);
+  }
   bindButtonClick(button, name, currBtn, event);
   
   var icon = document.createElement('img');
