@@ -129,10 +129,17 @@ export function updateSize(chart, chartId, size, maxEntries) {
  */
 export function determineChartName(firstTalent, fullSimType, fightStyle) {
   var simType = '';
-  simType = fullSimType.replaceAll('-', ' ');
+  simType = (fullSimType || '').replaceAll('-', ' ');
   simType = simType.replaceAll('_', ' ');
+  simType = simType
+    .split(' ')
+    .filter(function(word) { return word !== ''; })
+    .map(function(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(' ');
 
-  if (fullSimType.toLowerCase() == 'talents_top') {
+  if ((fullSimType || '').toLowerCase() == 'talents_top') {
     return simType
               + space + dash + space
               + fightStyle;
