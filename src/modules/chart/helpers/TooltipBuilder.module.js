@@ -23,13 +23,11 @@ function createWrapper() {
  * @param {number|string} ilvl - Item level (optional)
  * @returns {HTMLAnchorElement}
  */
-export function createWowheadLink(text, url, itemId, ilvl) {
+export function createWowheadLink(text, url, itemId, ilvl, options) {
+  options = options || {};
   var link = document.createElement('a');
   link.textContent = text; // Automatically escapes
-  link.style.color = 'white';
-  link.style.fontSize = '16px';
-  link.style.padding = '3px';
-  link.style.cursor = 'default';
+  link.className = options.className || 'wowheadLink';
   link.target = '_blank';
   
   if (ilvl != null && ilvl !== '') {
@@ -72,6 +70,38 @@ export function createSpacer() {
 }
 
 /**
+ * Creates a separator span for multi-link lines
+ * @param {string} text - Separator text
+ * @param {string} className - Optional css class
+ * @returns {HTMLSpanElement}
+ */
+export function createSeparator(text, className) {
+  var separator = document.createElement('span');
+  separator.textContent = text;
+  if (className) {
+    separator.className = className;
+  }
+  return separator;
+}
+
+/**
+ * Wraps an element with an optional class for layout control
+ * @param {HTMLElement|Text} content - Content to wrap
+ * @param {string} className - Optional css class
+ * @returns {HTMLElement|Text}
+ */
+export function wrapElement(content, className) {
+  if (!className) {
+    return content;
+  }
+
+  var wrapper = document.createElement('span');
+  wrapper.className = className;
+  wrapper.appendChild(content);
+  return wrapper;
+}
+
+/**
  * Builds a complete tooltip line with wrapper div
  * Returns HTML string for Highcharts compatibility
  * @param {HTMLElement|Text|Array<HTMLElement|Text>} content - Content to wrap
@@ -99,8 +129,8 @@ export function buildTooltipLine(content) {
  * @param {number|string} ilvl - Item level (optional)
  * @returns {string} HTML string
  */
-export function buildWowheadLinkLine(displayName, itemId, url, ilvl) {
-  var link = createWowheadLink(displayName, url, itemId, ilvl);
+export function buildWowheadLinkLine(displayName, itemId, url, ilvl, options) {
+  var link = createWowheadLink(displayName, url, itemId, ilvl, options);
   return buildTooltipLine(link);
 }
 
@@ -129,19 +159,37 @@ export function buildTextLine(text) {
  * @param {Array<{text: string, itemId: string, url: string, ilvl: string}>} items - Array of item configs
  * @returns {string} HTML string
  */
-export function buildMultiLinkLine(items) {
+export function buildMultiLinkLine(items, options) {
+  options = options || {};
+
   var elements = [];
+  var separatorText = options.separatorText != null ? options.separatorText : '  ';
   
   items.forEach(function(item, index) {
-    var link = createWowheadLink(item.text, item.url, item.itemId, item.ilvl);
-    elements.push(link);
+    var link = createWowheadLink(item.text, item.url, item.itemId, item.ilvl, {
+      className: options.linkClassName || 'wowheadLink'
+    });
+    elements.push(wrapElement(link, options.itemClassName));
     
     // Add spacer between items (but not after last)
     if (index < items.length - 1) {
-      elements.push(createSpacer());
+      if (options.separatorClassName || separatorText !== '  ') {
+        elements.push(createSeparator(separatorText, options.separatorClassName));
+      } else {
+        elements.push(createSpacer());
+      }
     }
   });
-  
+
+  if (options.lineClassName) {
+    var lineWrapper = document.createElement('span');
+    lineWrapper.className = options.lineClassName;
+    elements.forEach(function(element) {
+      lineWrapper.appendChild(element);
+    });
+    return buildTooltipLine(lineWrapper);
+  }
+
   return buildTooltipLine(elements);
 }
 
@@ -152,6 +200,8 @@ export default {
   createTalentLink,
   createTextNode,
   createSpacer,
+  createSeparator,
+  wrapElement,
   buildTooltipLine,
   buildWowheadLinkLine,
   buildTalentLinkLine,

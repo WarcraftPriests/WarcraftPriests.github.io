@@ -13,18 +13,18 @@ global.document = {
       style: {},
       children: [],
       textContent: '',
+      className: '',
       href: '',
       target: '',
       appendChild: function(child) {
         this.children.push(child);
       },
       get outerHTML() {
-        if (this.tagName === 'a') {
-          return `<a href="${this.href}"${this.target ? ` target="${this.target}"` : ''}>${this.textContent}</a>`;
-        } else if (this.tagName === 'div') {
-          return `<div>${this.children.map(c => typeof c === 'string' ? c : c.outerHTML || c.textContent || '').join('')}</div>`;
-        }
-        return this.textContent;
+        const classStr = this.className ? ` class="${this.className}"` : '';
+        const hrefStr = this.href ? ` href="${this.href}"` : '';
+        const targetStr = this.target ? ` target="${this.target}"` : '';
+        const childrenHTML = this.children.map(c => typeof c === 'string' ? c : c.outerHTML || c.textContent || '').join('');
+        return `<${this.tagName}${classStr}${hrefStr}${targetStr}>${this.textContent}${childrenHTML}</${this.tagName}>`;
       }
     };
     return elem;

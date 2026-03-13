@@ -109,7 +109,13 @@ export function buildChartLineForTrinketCombos(dpsName, ids) {
     });
   }
   
-  return TooltipBuilder.buildMultiLinkLine(items);
+  return TooltipBuilder.buildMultiLinkLine(items, {
+    lineClassName: 'trinketComboLine',
+    itemClassName: 'trinketComboItem',
+    linkClassName: 'wowheadLink trinketComboLink',
+    separatorText: ' + ',
+    separatorClassName: 'trinketComboSeparator'
+  });
 }
 
 export function buildWowheadTooltipsMultipleBar(data, simsBtn) {

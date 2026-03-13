@@ -8,7 +8,8 @@ import {
   jsonDPS,
   jsonIds,
   dpsIncrease,
-  DPS
+  DPS,
+  trinketCombos
 } from '../../../utils/Constants.module.js';
 import { create_color } from './ColorHelper.module.js';
 import {
@@ -35,6 +36,7 @@ import {
 
 function applyChartSize(chart, chartId, size, maxEntries) {
   var realSize = 0;
+  var rowHeight = 30;
 
   if (maxEntries != null && maxEntries != undefined) {
     realSize = maxEntries;
@@ -42,7 +44,16 @@ function applyChartSize(chart, chartId, size, maxEntries) {
     realSize = size;
   }
 
-  document.getElementById(chartId).style.height = 200 + realSize * 30 + 'px';
+  var isMobile = typeof window !== 'undefined'
+    && window.matchMedia
+    && window.matchMedia('(max-width: 600px)').matches;
+  var currentSimsBtn = AppState.getCurrSimsBtn ? AppState.getCurrSimsBtn() : '';
+  if (isMobile && currentSimsBtn === trinketCombos) {
+    // Trinket combos are rendered as two lines per label on mobile.
+    rowHeight = 44;
+  }
+
+  document.getElementById(chartId).style.height = 200 + realSize * rowHeight + 'px';
   chart.setSize(
     document.getElementById(chartId).style.width,
     document.getElementById(chartId).style.height,

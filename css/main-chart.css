@@ -321,6 +321,12 @@ img { display: block; max-width: 100%; }
   border-color: var(--text-dim);
 }
 
+@media (max-width: 1023px) {
+  .sidebar-toggle-btn {
+    display: none;
+  }
+}
+
 section {
   color: var(--text);
   width: 100%;
@@ -592,6 +598,28 @@ div#Chart-Display-div {
   text-decoration: none;
 }
 
+.wowheadLink {
+  display: inline-block;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 3px;
+  text-decoration: none;
+  cursor: default;
+}
+
+.trinketComboLine {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.trinketComboSeparator {
+  color: #8f98ab;
+  font-size: 13px;
+  padding: 0 2px;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    SOCIAL ICON BUTTONS
    ═══════════════════════════════════════════════════════════════ */
@@ -729,5 +757,39 @@ text.highcharts-title { display: none; }
   .fab { width: 30px; height: 30px; font-size: 14px; }
   .topbar-logo-title { font-size: 0.8rem; }
   .topbar-logo-subtitle { font-size: 0.66rem; }
-  .status-bar { align-items: flex-start; }
+  .status-bar {
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+
+  #updateData {
+    margin-left: 0;
+    font-size: 11px;
+    color: var(--text-dim);
+    opacity: 0.86;
+    letter-spacing: 0.01em;
+  }
+
+  .trinketComboLine {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 0 0 3px;
+    margin: 0 0 4px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.24);
+  }
+
+  .trinketComboSeparator {
+    display: none;
+  }
+
+  .trinketComboLink {
+    font-size: 12px;
+    line-height: 1.2;
+    padding: 2px 2px;
+    color: #e1e8ff;
+    text-shadow: 0 0 1px rgba(9, 14, 26, 0.9);
+  }
+
 }
