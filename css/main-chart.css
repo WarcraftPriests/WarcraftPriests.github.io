@@ -394,6 +394,11 @@ div#Chart-Display-div {
   justify-items: center;
 }
 
+div#Chart-Display-div.is-loading {
+  opacity: 0.62;
+  transition: opacity var(--transition-fast);
+}
+
 /* ═══════════════════════════════════════════════════════════════
    BUTTONS
    ═══════════════════════════════════════════════════════════════ */

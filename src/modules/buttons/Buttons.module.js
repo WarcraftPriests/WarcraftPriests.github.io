@@ -47,8 +47,22 @@ import {
 import { replaceTalentId } from '../talents/TalentBuild.module.js';
 import { updateChart } from '../chart/Chart.module.js';
 
+const CHART_UPDATE_DEBOUNCE_MS = 100;
+
 let currEnchantsBtn = defaultEnchant;
 let currConsumablesBtn = defaultConsumable;
+let chartUpdateDebounceTimer = null;
+
+function triggerChartUpdateDebounced() {
+  if (chartUpdateDebounceTimer) {
+    clearTimeout(chartUpdateDebounceTimer);
+  }
+
+  chartUpdateDebounceTimer = setTimeout(function() {
+    chartUpdateDebounceTimer = null;
+    checkButtonClick();
+  }, CHART_UPDATE_DEBOUNCE_MS);
+}
 
 export function setDefaultButtonValues() {
   AppState.setCurrSimsBtn(defaultSims);
@@ -217,9 +231,16 @@ function createButtonBasicListSelf(divName, buttonArray, event, labelArray, curr
   styleButtons();
 }
 
-function bindButtonClick(button, name, currBtn, event) {
+function bindButtonClick(button, name, currBtn, event, options) {
+  var useDebouncedUpdate = options && options.useDebouncedUpdate === true;
+
   button.addEventListener(click, function() {
     handleOnClick(name, currBtn);
+    if (useDebouncedUpdate) {
+      triggerChartUpdateDebounced();
+      return;
+    }
+
     event();
   });
 }
@@ -288,7 +309,7 @@ function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  bindButtonClick(button, name, currBtn, event);
+  bindButtonClick(button, name, currBtn, event, { useDebouncedUpdate: true });
 
   const imageWrapper = document.createElement('div');
   imageWrapper.style = 'height: 100%; width: 20px;';
@@ -318,7 +339,7 @@ function createButtonBasic(div, name, event, buttonText, currBtn, tooltip) {
   if (tooltip) {
     button.setAttribute('title', tooltip);
   }
-  bindButtonClick(button, name, currBtn, event);
+  bindButtonClick(button, name, currBtn, event, { useDebouncedUpdate: true });
   
   var icon = document.createElement('img');
   icon.src = 'images/icons/' + name + '.jpg';
@@ -334,7 +355,7 @@ function createButtonBasicNoImage(div, name, event, buttonText, currBtn) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
-  bindButtonClick(button, name, currBtn, event);
+  bindButtonClick(button, name, currBtn, event, { useDebouncedUpdate: true });
 
   var br = document.createTextNode('  ');
   button.appendChild(br);

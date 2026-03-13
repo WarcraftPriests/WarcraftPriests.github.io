@@ -34,6 +34,105 @@ import {
   getDefaultDotDefinition
 } from '../definitions/Definitions.module.js';
 
+function findChartById(chartId) {
+  var charts = Highcharts.charts || [];
+  for (var i = 0; i < charts.length; i++) {
+    if (charts[i] && charts[i].renderTo && charts[i].renderTo.id === chartId) {
+      return charts[i];
+    }
+  }
+  return null;
+}
+
+function getOrCreateChartInstance(chartId, chartDefinition, expectedType) {
+  var existingChart = findChartById(chartId);
+
+  if (existingChart) {
+    var existingType = ((existingChart.options || {}).chart || {}).type;
+    if (existingType === expectedType) {
+      try {
+        existingChart.update(chartDefinition, false, true, false);
+        return existingChart;
+      } catch (error) {
+        console.log(error);
+        existingChart.destroy();
+      }
+    } else {
+      existingChart.destroy();
+    }
+  }
+
+  return new Highcharts.Chart(chartDefinition);
+}
+
+function areEqualStringArrays(first, second) {
+  if (!Array.isArray(first) || !Array.isArray(second) || first.length !== second.length) {
+    return false;
+  }
+
+  for (var i = 0; i < first.length; i++) {
+    if (first[i] !== second[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function canFastPatchBarChart(chart, categories, seriesPayload) {
+  if (!chart || ((chart.options.chart || {}).type !== 'bar')) {
+    return false;
+  }
+
+  var existingCategories = ((chart.xAxis || [])[0] || {}).categories || [];
+  if (!areEqualStringArrays(existingCategories, categories)) {
+    return false;
+  }
+
+  return chart.series.length === seriesPayload.length;
+}
+
+function applyFastSeriesPatch(chart, seriesPayload) {
+  try {
+    for (var i = 0; i < seriesPayload.length; i++) {
+      var currentSeries = chart.series[i];
+      var nextSeries = seriesPayload[i];
+
+      if (!currentSeries || !nextSeries) {
+        return false;
+      }
+
+      currentSeries.update({
+        name: nextSeries.name,
+        color: nextSeries.color,
+        stack: nextSeries.stack,
+        showInLegend: nextSeries.showInLegend
+      }, false);
+
+      currentSeries.setData(nextSeries.data, false, false, false);
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+function tryFastPatchExistingBarChart(chartId, categories, seriesPayload) {
+  var existingChart = findChartById(chartId);
+
+  if (!canFastPatchBarChart(existingChart, categories, seriesPayload)) {
+    return null;
+  }
+
+  if (!applyFastSeriesPatch(existingChart, seriesPayload)) {
+    return null;
+  }
+
+  return existingChart;
+}
+
 function applyChartSize(chart, chartId, size, maxEntries) {
   var realSize = 0;
   var rowHeight = 30;
@@ -71,25 +170,33 @@ function applyChartSize(chart, chartId, size, maxEntries) {
  * Prepare data for single bar chart
  */
 export function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, chartId, maxEntries) {
-  var chartForSingle = new Highcharts.Chart(getSingleBarDefinition( 
-    buildWowheadTooltips(data, true, simsBtn, showInLegend),
+  var wowheadTooltips = buildWowheadTooltips(data, true, simsBtn, showInLegend);
+  var currName = data.name.split(' - ').pop();
+  currName = currName.replace(/\s/g, '');
+  let result = buildSingleBarSeriesData(data, 100, currName);
+  var seriesPayload = [{
+    data: result,
+    name: DPS,
+    showInLegend: showInLegend,
+  }];
+
+  var patchedSingleChart = tryFastPatchExistingBarChart(chartId, wowheadTooltips, seriesPayload);
+  if (patchedSingleChart) {
+    applyChartSize(patchedSingleChart, chartId, result.length, maxEntries);
+    return;
+  }
+
+  var chartForSingle = getOrCreateChartInstance(chartId, getSingleBarDefinition( 
+    wowheadTooltips,
     data,
     getValue(LegendTitles, simsBtn),
     dpsIncrease,
     showInLegend,
     xPadding,
     chartId, 
-    maxEntries));
+    maxEntries), 'bar');
   clearChartSeries(chartForSingle);
-  var currName = data.name.split(' - ').pop();
-  currName = currName.replace(/\s/g, '');
-  let result = buildSingleBarSeriesData(data, 100, currName);
-
-  chartForSingle.addSeries({
-    data: result,
-    name: DPS,
-    showInLegend: showInLegend,
-  }, false);
+  chartForSingle.addSeries(seriesPayload[0], false);
   applyChartSize(chartForSingle, chartId, result.length, maxEntries);
 }
 
@@ -97,15 +204,8 @@ export function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, c
  * Prepare data for percentage bar chart
  */
 export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
-  var chartForPercentage = new Highcharts.Chart(getChartDefinitionPercentage( 
-    buildWowheadTooltips(data, false, simsBtn), 
-    data,
-    getValue(LegendTitles, simsBtn),
-    dpsIncrease,
-    chartId,
-    maxEntries));
-
-  clearChartSeries(chartForPercentage);
+  var wowheadTooltips = buildWowheadTooltips(data, false, simsBtn);
+  var seriesPayload = [];
 
   // if the step names are purely numeric we'll treat them as item
   // levels and stack the _incremental_ percent increases rather than
@@ -122,40 +222,52 @@ export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) 
     // add in reverse order so lowest level appears leftmost on horizontal bar
     seriesArray.reverse();
     seriesArray.forEach(function(series) {
-      chartForPercentage.addSeries({
+      seriesPayload.push({
         data: series.data,
         name: series.name,
         showInLegend: true,
-      }, false);
+      });
     });
-
-    applyChartSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
   } else {
     // fallback to original behaviour for non-numeric steps
     var fallbackSeries = buildStepPercentageSeries(data, steps);
     fallbackSeries.forEach(function(series) {
-      chartForPercentage.addSeries({
+      seriesPayload.push({
         data: series.data,
         name: series.name,
         showInLegend: true,
-      }, false);
+      });
     });
-    applyChartSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
   }
+
+  var patchedPercentageChart = tryFastPatchExistingBarChart(chartId, wowheadTooltips, seriesPayload);
+  if (patchedPercentageChart) {
+    applyChartSize(patchedPercentageChart, chartId, data[jsonSortedDataKeys].length, maxEntries);
+    return;
+  }
+
+  var chartForPercentage = getOrCreateChartInstance(chartId, getChartDefinitionPercentage( 
+    wowheadTooltips, 
+    data,
+    getValue(LegendTitles, simsBtn),
+    dpsIncrease,
+    chartId,
+    maxEntries), 'bar');
+
+  clearChartSeries(chartForPercentage);
+  seriesPayload.forEach(function(series) {
+    chartForPercentage.addSeries(series, false);
+  });
+
+  applyChartSize(chartForPercentage, chartId, data[jsonSortedDataKeys].length, maxEntries);
 }
 
 /*
  * Prepare data for multiple bar chart
  */
 export function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
-  var chartForMultipleBar = new Highcharts.Chart(getMultipleBarChartDefinition(
-    buildWowheadTooltipsMultipleBar(data, simsBtn), 
-    data,
-    getValue(LegendTitles, simsBtn),
-    dpsIncrease,
-    chartId,
-    maxEntries));
-  clearChartSeries(chartForMultipleBar);
+  var wowheadTooltips = buildWowheadTooltipsMultipleBar(data, simsBtn);
+  var seriesPayload = [];
 
   // determine whether the payload is the old min/max conduit format or a
   // simple mapping of numeric keys (item levels) to values.
@@ -165,13 +277,30 @@ export function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
   if (isMinMax) {
     var minMaxSeries = buildMinMaxMultiBarSeries(data);
     minMaxSeries.forEach(function(series) {
-      chartForMultipleBar.addSeries({
+      seriesPayload.push({
         color: series.color,
         data: series.data,
         name: series.name,
         stack: series.stack,
         showInLegend: true,
-      }, false);
+      });
+    });
+    var patchedMinMaxChart = tryFastPatchExistingBarChart(chartId, wowheadTooltips, seriesPayload);
+    if (patchedMinMaxChart) {
+      applyChartSize(patchedMinMaxChart, chartId, minMaxSeries.length / 2, maxEntries);
+      return;
+    }
+
+    var chartForMultipleBar = getOrCreateChartInstance(chartId, getMultipleBarChartDefinition(
+      wowheadTooltips,
+      data,
+      getValue(LegendTitles, simsBtn),
+      dpsIncrease,
+      chartId,
+      maxEntries), 'bar');
+    clearChartSeries(chartForMultipleBar);
+    seriesPayload.forEach(function(series) {
+      chartForMultipleBar.addSeries(series, false);
     });
 
     chartForMultipleBar.redraw();
@@ -194,13 +323,31 @@ export function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
     // conduit behavior and keep bars on-scale.
     var numericSeries = buildNumericMultiBarSeries(data, fights, levels);
     numericSeries.forEach(function(series) {
-      chartForMultipleBar.addSeries({
+      seriesPayload.push({
         name: series.name,
         color: series.color,
         data: series.data,
         stack: 'levels',
         showInLegend: true,
-      }, false);
+      });
+    });
+
+    var patchedNumericMultiBarChart = tryFastPatchExistingBarChart(chartId, wowheadTooltips, seriesPayload);
+    if (patchedNumericMultiBarChart) {
+      applyChartSize(patchedNumericMultiBarChart, chartId, fights.length, maxEntries);
+      return;
+    }
+
+    var chartForMultipleBar = getOrCreateChartInstance(chartId, getMultipleBarChartDefinition(
+      wowheadTooltips,
+      data,
+      getValue(LegendTitles, simsBtn),
+      dpsIncrease,
+      chartId,
+      maxEntries), 'bar');
+    clearChartSeries(chartForMultipleBar);
+    seriesPayload.forEach(function(series) {
+      chartForMultipleBar.addSeries(series, false);
     });
 
     chartForMultipleBar.redraw();
@@ -217,37 +364,41 @@ export function buildChartDataDot(githubData, chartId) {
   let hasteLabel = false;
   let masteryLabel = false;
 
-  var chartForStats = new Highcharts.Chart(getDefaultDotDefinition(chartId));
-  (function (H) {
-    function dragStart(eStart) {
-      eStart = chartForStats.pointer.normalize(eStart);
+  var chartForStats = getOrCreateChartInstance(chartId, getDefaultDotDefinition(chartId), 'scatter3d');
+  if (!chartForStats.__dragBindingsInitialized) {
+    (function (H) {
+      function dragStart(eStart) {
+        eStart = chartForStats.pointer.normalize(eStart);
 
-      var posX = eStart.chartX,
-        posY = eStart.chartY,
-        alpha = chartForStats.options.chart.options3d.alpha,
-        beta = chartForStats.options.chart.options3d.beta,
-        sensitivity = 5; // lower is more sensitive
+        var posX = eStart.chartX,
+          posY = eStart.chartY,
+          alpha = chartForStats.options.chart.options3d.alpha,
+          beta = chartForStats.options.chart.options3d.beta,
+          sensitivity = 5; // lower is more sensitive
 
-      function drag(e) {
-        e = chartForStats.pointer.normalize(e);
+        function drag(e) {
+          e = chartForStats.pointer.normalize(e);
 
-        chartForStats.update({
-          chart: {
-            options3d: {
-              alpha: alpha + (e.chartY - posY) / sensitivity,
-              beta: beta + (posX - e.chartX) / sensitivity
+          chartForStats.update({
+            chart: {
+              options3d: {
+                alpha: alpha + (e.chartY - posY) / sensitivity,
+                beta: beta + (posX - e.chartX) / sensitivity
+              }
             }
-          }
-        }, undefined, undefined, false);
+          }, undefined, undefined, false);
+        }
+        chartForStats.unbindDragMouse = H.addEvent(document, 'mousemove', drag);
+        chartForStats.unbindDragTouch = H.addEvent(document, 'touchmove', drag);
+        H.addEvent(document, 'mouseup', chartForStats.unbindDragMouse);
+        H.addEvent(document, 'touchend', chartForStats.unbindDragTouch);
       }
-      chartForStats.unbindDragMouse = H.addEvent(document, 'mousemove', drag);
-      chartForStats.unbindDragTouch = H.addEvent(document, 'touchmove', drag);
-      H.addEvent(document, 'mouseup', chartForStats.unbindDragMouse);
-      H.addEvent(document, 'touchend', chartForStats.unbindDragTouch);
-    }
-    H.addEvent(chartForStats.container, 'mousedown', dragStart);
-    H.addEvent(chartForStats.container, 'touchstart', dragStart);
-  }(Highcharts));
+      H.addEvent(chartForStats.container, 'mousedown', dragStart);
+      H.addEvent(chartForStats.container, 'touchstart', dragStart);
+    }(Highcharts));
+
+    chartForStats.__dragBindingsInitialized = true;
+  }
 
   
   let light_color = '#eeeeee';
