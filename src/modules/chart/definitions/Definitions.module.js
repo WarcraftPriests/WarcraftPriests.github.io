@@ -3,6 +3,7 @@ import * as Constants from '../../../utils/Constants.module.js';
 // Destructure commonly used constants for convenience
 const {
   defaultBackgroundColor,
+  jsonSortedDataKeys,
   defaultFontColor,
   defaultAxisColor,
   lightColor,
@@ -547,18 +548,40 @@ export function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle,
         // increase relative to the base DPS. iterate from bottom to top
         // (lowest level first) for natural order.
         var result = '<div class="chartHover">'
-                    + '<div class="chartHoverLine">' 
+                    + '<div class="chartHoverLine">'
                     + this.x
                     + '</div>';
-        var running = 0;
-        for (var i = 0; i < this.points.length; i++) {
-          if (this.points[i].y != 0) {
-            running += this.points[i].y;
-            result += getTooltip(running,
-              ((data[jsonData][jsonBase][DPS] / 100) * running),
-              this.points[i].series,
-              data,
-              true);
+
+        var allNumericLevels = this.points.length > 0
+          && this.points.every(function(p) { return /^\d+$/.test(p.series.name); });
+
+        if (allNumericLevels) {
+          var baseDps = ((data[jsonData][jsonBase] || {})[DPS]) || 0;
+          var pointIndex = this.points[0].point.index;
+          var itemName = (data[jsonSortedDataKeys] || [])[pointIndex] || '';
+          var itemPayload = itemName ? (data[jsonData][itemName] || {}) : {};
+          var sortedPoints = this.points.slice().sort(function(a, b) {
+            return Number(b.series.name) - Number(a.series.name);
+          });
+          for (var i = 0; i < sortedPoints.length; i++) {
+            var level = sortedPoints[i].series.name;
+            var actualDps = itemPayload[level];
+            if (actualDps > 0) {
+              var actualPercent = baseDps > 0 ? ((actualDps - baseDps) / baseDps) * 100 : 0;
+              result += getTooltipForLevel(level, actualDps, actualPercent, sortedPoints[i].series);
+            }
+          }
+        } else {
+          var running = 0;
+          for (var k = 0; k < this.points.length; k++) {
+            if (this.points[k].y != 0) {
+              running += this.points[k].y;
+              result += getTooltip(running,
+                ((data[jsonData][jsonBase][DPS] / 100) * running),
+                this.points[k].series,
+                data,
+                true);
+            }
           }
         }
 
@@ -757,4 +780,18 @@ export function getTooltip(percentage, dpsIncrease, series, data, showBase) {
   }
 
   return result;
+}
+
+export function getTooltipForLevel(level, totalDps, totalPercent, series) {
+  return '<div><span class="chartHoverSpan" style="border-left: 9px solid '
+    + series.color
+    + ';">'
+    + 'ilvl ' + level
+    + '</span>:&nbsp;&nbsp;'
+    + Intl.NumberFormat().format(Math.round(totalDps))
+    + ' ' + DPS.toLowerCase()
+    + ' ' + dash + ' '
+    + totalPercent.toFixed(2)
+    + '%'
+    + '</div>';
 }
