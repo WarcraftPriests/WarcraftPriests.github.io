@@ -66,15 +66,15 @@ export const IcyVeinsGuideBySim = {
   },
   talents: {
     label: 'Talents and Builds',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-talents-builds'
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents'
   },
   talents_top: {
     label: 'Talents and Builds',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-talents-builds'
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents'
   },
   talent_builds: {
     label: 'Talents and Builds',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-talents-builds'
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents'
   },
   stats: {
     label: 'Stat Priority',
