@@ -23,15 +23,32 @@ export const Headings = {
   dpsW: 'DPS Weight',
 };
 
+function getDungeonFallbackFightStyle(normalizedFightStyle) {
+  if (normalizedFightStyle === 'Dungeons-Route') return 'Dungeons-Slice';
+  if (normalizedFightStyle === 'Dungeons-Slice') return 'Dungeons-Route';
+  return null;
+}
+
 export function parseCSV(currSimsBtn, currFightStyleBtn, currTalentBtn, chartId, metaData) {
   currFightStyleBtn = normalizeFightStyleForResults(currFightStyleBtn, AppState.getConfigData()[dungeonType]);
+  var fallbackFightStyleBtn = getDungeonFallbackFightStyle(currFightStyleBtn);
 
   $(document).ready(function() {
     $.ajax({
       type: 'GET',
       url: determineCsvUrl(currSimsBtn, AppState.getBaseUrl(), currFightStyleBtn, currTalentBtn),
       dataType: 'text',
-      success: function(data) { processData(data, currSimsBtn, currTalentBtn); }
+      success: function(data) { processData(data, currSimsBtn, currTalentBtn); },
+      error: function() {
+        if (fallbackFightStyleBtn) {
+          $.ajax({
+            type: 'GET',
+            url: determineCsvUrl(currSimsBtn, AppState.getBaseUrl(), fallbackFightStyleBtn, currTalentBtn),
+            dataType: 'text',
+            success: function(data) { processData(data, currSimsBtn, currTalentBtn); }
+          });
+        }
+      }
     });
   });
 

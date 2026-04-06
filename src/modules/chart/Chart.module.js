@@ -400,6 +400,18 @@ restoreChartCacheFromSession();
 // parseCSV is from Csv.js - accessed as global for now
 // handleJsonFailure is from Main.js - accessed as global for now
 
+function getDungeonFallbackJsonUrl(simsBtn, fightStyle, talentChoice) {
+  if (!fightStyle || !String(fightStyle).toLowerCase().includes('dungeons')) {
+    return null;
+  }
+  var configuredType = AppState.getConfigData()[dungeonType];
+  var fallbackType = configuredType === 'route' ? 'slice' : configuredType === 'slice' ? 'route' : null;
+  if (!fallbackType) {
+    return null;
+  }
+  return determineJsonUrl(simsBtn, AppState.getBaseUrl(), fightStyle, talentChoice, fallbackType);
+}
+
 /*
  * Decides what kind of chart should be used 
  * and when a chart update should happen
@@ -487,6 +499,20 @@ export function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData
       if (status === 'abort' || requestId !== latestChartRequestId) {
         return;
       }
+      var fallbackUrl = getDungeonFallbackJsonUrl(simsBtn, fightStyle, talentChoice);
+      if (fallbackUrl) {
+        jQuery.getJSON(fallbackUrl, function(data) {
+          cacheChartData(fallbackUrl, data);
+          if (requestId !== latestChartRequestId) { return; }
+          applyChartData(data, simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries);
+          setChartLoadingState(chartId, false);
+          prefetchLikelyNextDatasets(simsBtn, fightStyle, talentChoice);
+        }).fail(function(xhr2, status2) {
+          setChartLoadingState(chartId, false);
+          handleJsonFailure(xhr2, status2);
+        });
+        return;
+      }
       setChartLoadingState(chartId, false);
       handleJsonFailure(xhr, status);
     });
@@ -516,6 +542,21 @@ export function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData
 
   request.fail(function(xhr, status) {
     if (status === 'abort' || requestId !== latestChartRequestId) {
+      return;
+    }
+    var fallbackUrl = getDungeonFallbackJsonUrl(simsBtn, fightStyle, talentChoice);
+    if (fallbackUrl) {
+      var fallbackRequest = jQuery.getJSON(fallbackUrl, function(data) {
+        cacheChartData(fallbackUrl, data);
+        if (requestId !== latestChartRequestId) { return; }
+        applyChartData(data, simsBtn, fightStyle, talentChoice, chartId, metaData, maxEntries);
+        setChartLoadingState(chartId, false);
+        prefetchLikelyNextDatasets(simsBtn, fightStyle, talentChoice);
+      }).fail(function(xhr2, status2) {
+        setChartLoadingState(chartId, false);
+        handleJsonFailure(xhr2, status2);
+      });
+      activeChartRequest = fallbackRequest;
       return;
     }
     setChartLoadingState(chartId, false);
@@ -627,10 +668,11 @@ export function determineGuideLink(simType, fightStyle) {
 /*
  * Determines the url for the github repo to get the needed sim results
  */
-export function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice) {
+export function determineJsonUrl(simsBtn, baseurl, fightStyle, talentChoice, overrideDungeonType) {
   talentChoice = normalizeBuildKey(talentChoice);
   simsBtn = normalizeSimResultKey(simsBtn);
-  fightStyle = normalizeFightStyleForResults(fightStyle, AppState.getConfigData()[dungeonType]);
+  var dungeonTypeValue = overrideDungeonType !== undefined ? overrideDungeonType : AppState.getConfigData()[dungeonType];
+  fightStyle = normalizeFightStyleForResults(fightStyle, dungeonTypeValue);
 
   if (simsBtn == talents || simsBtn == talentsTop) {
     return baseurl + slash + simsBtn + simResultPath + fightStyle + jsonExtension;
