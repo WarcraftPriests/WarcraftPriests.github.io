@@ -47,7 +47,7 @@ function defineChart(id, overrides) {
 }
 
 export const CHART_TYPES = Object.freeze(['percentage', 'dot', 'multiple']);
-export const TOOLTIP_LINE_STRATEGIES = Object.freeze(['wowhead', 'talent', 'trinket_combo']);
+export const TOOLTIP_LINE_STRATEGIES = Object.freeze(['wowhead', 'talent', 'trinket_combo', 'omnium_folio']);
 export const TOOLTIP_URL_STRATEGIES = Object.freeze(['auto', 'item', 'spell', 'none']);
 
 export const ChartRegistry = [
@@ -140,6 +140,7 @@ export const ChartRegistry = [
     legendTitle: 'Increase in %',
     chartType: 'percentage',
     lookupType: 'none',
+    tooltipLineStrategy: 'omnium_folio',
     tooltipUrlStrategy: 'item'
   })
 ];
@@ -179,7 +180,7 @@ export function getChartXAxisLabelOffset(chartId) {
     return -80;
   }
 
-  if (strategy === 'wowhead' || strategy === 'trinket_combo') {
+  if (strategy === 'wowhead' || strategy === 'trinket_combo' || strategy === 'omnium_folio') {
     return -40;
   }
 

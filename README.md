@@ -23,7 +23,7 @@ The `prepare` script runs automatically after `npm install`, so asset setup happ
 Because the site uses ES6 modules, it must be served over HTTP (not `file://` protocol). Start the dev server:
 
 ```sh
-npm start           # starts http-server on http://localhost:8080
+npm start           # starts http-server (no cache) on http://localhost:8080
 ```
 
 Then open `http://localhost:8080` in your browser. ES6 modules now load correctly.

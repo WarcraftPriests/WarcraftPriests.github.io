@@ -26,6 +26,20 @@ import TooltipBuilder from './TooltipBuilder.module.js';
  */
 export var talentImportStrings = {};
 
+var omniumFolioSpellIds = {
+  ruf: '1279599',
+  rouf: '1279599',
+  rol: '1287665',
+  rocp: '1279609',
+  roo: '1279614',
+  rore: '1279615',
+  roe: '1289063',
+  romc: '1287771',
+  rovto: '1279596',
+  robh: '1287774',
+  rovw: '1287770'
+};
+
 /*
  * Build wowhead tooltips
  */
@@ -73,7 +87,52 @@ export function buildChartLine(dpsName, itemId, url, simsBtn, data = null, toolt
     return buildChartLineForTrinketCombos(dpsName, data ? data[jsonIds] : null);
   }
 
+  if (strategy === 'omnium_folio') {
+    return buildChartLineForOmniumFolio(dpsName);
+  }
+
   return buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn);
+}
+
+function getOmniumFolioSpellId(abbreviation) {
+  var key = abbreviation.toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (omniumFolioSpellIds[key]) {
+    return omniumFolioSpellIds[key];
+  }
+
+  return '0';
+}
+
+export function buildChartLineForOmniumFolio(dpsName) {
+  var wowheadUrl = typeof window !== 'undefined' ? window.wowheadUrl : '';
+  var abbreviations = (dpsName || '')
+    .toString()
+    .match(/[A-Za-z0-9]+/g);
+
+  if (!abbreviations) {
+    abbreviations = [];
+  }
+
+  if (abbreviations.length === 0) {
+    return TooltipBuilder.buildTextLine(dpsName);
+  }
+
+  var items = abbreviations.map(function(abbreviation) {
+    return {
+      text: abbreviation,
+      itemId: getOmniumFolioSpellId(abbreviation),
+      url: wowheadUrl + wowheadSpellPath,
+      ilvl: null
+    };
+  });
+
+  return TooltipBuilder.buildMultiLinkLine(items, {
+    lineClassName: 'trinketComboLine',
+    itemClassName: 'trinketComboItem',
+    linkClassName: 'wowheadLink trinketComboLink',
+    separatorText: ' + ',
+    separatorClassName: 'trinketComboSeparator'
+  });
 }
 
 export function buildChartLineForTrinketCombos(dpsName, ids) {

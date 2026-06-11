@@ -1,4 +1,9 @@
-import { buildChartLine, buildChartLineForTrinketCombos, buildWowheadTooltips } from '../src/modules/chart/helpers/WowheadHelper.module.js';
+import {
+  buildChartLine,
+  buildChartLineForOmniumFolio,
+  buildChartLineForTrinketCombos,
+  buildWowheadTooltips
+} from '../src/modules/chart/helpers/WowheadHelper.module.js';
 import * as Constants from '../src/utils/Constants.module.js';
 
 // Mock document for DOM operations
@@ -127,6 +132,52 @@ describe('buildWowheadTooltips', () => {
     const result = buildChartLine('No Link Name', '12345', 'https://www.wowhead.com/item=', 'trinkets', null, 'none');
     expect(result).toContain('No Link Name');
     expect(result).not.toContain('href=');
+  });
+});
+
+describe('buildChartLineForOmniumFolio', () => {
+  test('should use hardcoded spell id for known abbreviation', () => {
+    const result = buildChartLineForOmniumFolio('RoUF');
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('RoUF');
+  });
+
+  test('should fall back to spell id 0 for unknown abbreviation', () => {
+    const result = buildChartLineForOmniumFolio('abc');
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=0"');
+    expect(result).toContain('abc');
+  });
+
+  test('should support combo labels split by plus dash or underscore', () => {
+    const result = buildChartLineForOmniumFolio('RoUF+xyz-foo_bar');
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=0"');
+    expect((result.match(/href=/g) || []).length).toBe(4);
+    expect(result).toContain('trinketComboSeparator');
+  });
+
+  test('should map known underscore combo labels from chart rows', () => {
+    const result = buildChartLineForOmniumFolio('RoUF_RoL_RoCP');
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1287665"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279609"');
+    expect(result).not.toContain('href="https://www.wowhead.com/spell=0"');
+    expect((result.match(/href=/g) || []).length).toBe(3);
+  });
+
+  test('should create four links for four-rune combo labels', () => {
+    const result = buildChartLineForOmniumFolio('RoUF_RoL_RoCP_RoO');
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1287665"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279609"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279614"');
+    expect(result).not.toContain('href="https://www.wowhead.com/spell=0"');
+    expect((result.match(/href=/g) || []).length).toBe(4);
   });
 });
 
