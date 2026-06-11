@@ -133,6 +133,23 @@ describe('buildWowheadTooltips', () => {
     expect(result).toContain('No Link Name');
     expect(result).not.toContain('href=');
   });
+
+  test('buildChartLine should force omnium combo parsing for dashed sim key variants', () => {
+    const result = buildChartLine(
+      'RoUF_RoL_RoCP_RoO',
+      '0',
+      'https://www.wowhead.com/item=',
+      'omnium-folio',
+      null,
+      'item'
+    );
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1287665"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279609"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279614"');
+    expect((result.match(/href=/g) || []).length).toBe(4);
+  });
 });
 
 describe('buildChartLineForOmniumFolio', () => {

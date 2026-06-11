@@ -78,6 +78,8 @@ export function buildChartLine(dpsName, itemId, url, simsBtn, data = null, toolt
   }
 
   var strategy = getChartTooltipLineStrategy(simsBtn);
+  var isOmniumSim = typeof simsBtn === 'string' && simsBtn.toLowerCase().includes('omnium');
+  var looksLikeOmniumCombo = typeof dpsName === 'string' && /ro[a-z0-9]+(?:[_+\/-]ro[a-z0-9]+)+/i.test(dpsName);
 
   if (strategy === 'talent') {
     return buildChartLineForTalents(dpsName);
@@ -87,7 +89,7 @@ export function buildChartLine(dpsName, itemId, url, simsBtn, data = null, toolt
     return buildChartLineForTrinketCombos(dpsName, data ? data[jsonIds] : null);
   }
 
-  if (strategy === 'omnium_folio') {
+  if (strategy === 'omnium_folio' || (isOmniumSim && looksLikeOmniumCombo)) {
     return buildChartLineForOmniumFolio(dpsName);
   }
 
