@@ -20,7 +20,8 @@ export const Sims = {
   alchemy: 'Alchemy',
   gems: 'Gems',
   special_gear: 'Special Gear',
-  gem_combos: 'Gem Combos'
+  gem_combos: 'Gem Combos',
+  omnium_folio: 'Omnium Folio'
 };
 
 export const Consumables = {
@@ -123,6 +124,10 @@ export const IcyVeinsGuideBySim = {
   racials: {
     label: 'Rotation',
     url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-rotation-cooldowns-abilities'
+  },
+  omnium_folio: {
+    label: 'Gear and Best in Slot',
+    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
   }
 };
 
@@ -137,7 +142,8 @@ export const LegendTitles = {
   legendary_items: 'Item level',
   legendary_combos: 'Increase in %',
   alchemy: 'Increase in %',
-  consumables: 'Increase in %'
+  consumables: 'Increase in %',
+  omnium_folio: 'Increase in %',
 };
 
 export const ChartType = {
@@ -145,6 +151,7 @@ export const ChartType = {
   alchemy: 'percentage',
   enchants: 'percentage',
   gems: 'percentage',
+  omnium_folio: 'percentage',
   stats: 'dot'
 };
 
@@ -160,7 +167,8 @@ export const ChartPadding = {
   alchemy: -40,
   gems: -40,
   gem_combos: -40,
-  special_gear: -40
+  special_gear: -40,
+  omnium_folio: -40
 };
 
 export const LookupType = {
@@ -177,7 +185,8 @@ export const LookupType = {
   talent_builds: 'none',
   trinket_combos: 'none',
   trinkets: 'none',
-  weights: 'none'
+  weights: 'none',
+  omnium_folio: 'none'
 };
 
 export const TalentIds = {

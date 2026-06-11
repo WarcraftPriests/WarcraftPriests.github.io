@@ -45,7 +45,8 @@ global.AppState = {
       'gems': {},
       'special-gear': {},
       'racials': {},
-      'talents': {}
+      'talents': {},
+      'omnium-folio': {}
     } 
   }),
   getJsonSortedDataKeys: () => 'sortedDataKeys',

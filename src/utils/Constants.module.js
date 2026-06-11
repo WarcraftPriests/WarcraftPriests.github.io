@@ -93,6 +93,7 @@ export const gear = 'gear';
 export const stats = 'stats';
 export const trinketCombos = 'trinket_combos';
 export const specialGear = 'special_gear';
+export const omniumFolio = 'omnium_folio';
 
 /*
  * Button related definitions
