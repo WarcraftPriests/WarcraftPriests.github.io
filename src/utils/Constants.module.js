@@ -35,7 +35,6 @@ export const dpsIncrease = 'Increase in %';
  * Other definitions
  */
 export const updateDataInnerHtml = 'Last Updated: ';
-export const divText = 'div';
 export const buttonContainerText = 'button-container';
 export const buttonText = 'button';
 export const dash = '-';
@@ -56,7 +55,6 @@ export const repoTemplateUrl = 'https://raw.githubusercontent.com/WarcraftPriest
 export const wowheadSpellPath = 'spell=';
 export const wowheadItemPath = 'item=';
 export const config = 'config.yml';
-export const textType = 'text';
 
 /*
  * Json data schema definitions
@@ -78,22 +76,10 @@ export const talentsTop = 'talents-top';
 export const talents = 'talents';
 export const composite = 'Composite';
 export const fightStyle = 'fightStyle';
-export const racials = 'racials';
-export const alchemy = 'alchemy';
-export const gems = 'gems';
-export const gemCombos = 'gem_combos';
-export const vw_cthun = 'vw_cthun';
-export const ar_vf_cthun_flay_me = 'ar_vf_cthun_flay_me';
-export const ar_vf_yogg_cthun_me = 'ar_vf_yogg_cthun_me';
 export const ring = 'ring';
 export const food = 'food';
 export const sims = 'sims';
-export const apl = 'apl';
-export const gear = 'gear';
-export const stats = 'stats';
 export const trinketCombos = 'trinket_combos';
-export const specialGear = 'special_gear';
-export const omniumFolio = 'omnium_folio';
 
 /*
  * Button related definitions
@@ -110,9 +96,7 @@ export const talentBuildContentDiv = 'talent-build-content-div';
 export const buttonName = 'button';
 export const buttonId = 'id';
 export const buttonClass = 'class';
-export const onClick = 'onClick';
 export const click = 'click';
-export const handleOnClickText = 'handleOnClick(\'';
 export const show = 'show';
 export const enchants = 'enchants';
 export const consumables = 'consumables';
@@ -120,12 +104,7 @@ export const weights = 'weights';
 export const maxSimButtonsPerRow = 6;
 
 export const pointer = 'pointer';
-export const attributeSpacer = '\', \'';
-export const attributeClose = '\')';
 export const span = 'span';
-export const classLabel = 'class';
-export const divider = 'divider';
-export const fivePixel = '5px';
 export const auto = 'auto';
 export const inlineBlock = 'inline-block';
 

@@ -1,4 +1,4 @@
-import { buildChartLineForTrinketCombos, buildWowheadTooltips } from '../src/modules/chart/helpers/WowheadHelper.module.js';
+import { buildChartLine, buildChartLineForTrinketCombos, buildWowheadTooltips } from '../src/modules/chart/helpers/WowheadHelper.module.js';
 import * as Constants from '../src/utils/Constants.module.js';
 
 // Mock document for DOM operations
@@ -121,6 +121,12 @@ describe('buildWowheadTooltips', () => {
     // This test simply verifies that the function was imported successfully
     expect(buildWowheadTooltips).toBeDefined();
     expect(typeof buildWowheadTooltips).toBe('function');
+  });
+
+  test('buildChartLine should return plain text when tooltipUrlType is none', () => {
+    const result = buildChartLine('No Link Name', '12345', 'https://www.wowhead.com/item=', 'trinkets', null, 'none');
+    expect(result).toContain('No Link Name');
+    expect(result).not.toContain('href=');
   });
 });
 

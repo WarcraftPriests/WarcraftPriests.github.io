@@ -1,5 +1,6 @@
 import { AppState } from '../../../services/state/AppState.module.js';
 import { getValue, LegendTitles } from '../../../utils/Converter.module.js';
+import { getChartLegendTitle } from '../definitions/ChartRegistry.module.js';
 import {
   jsonSortedDataKeys,
   jsonSimulatedSteps,
@@ -33,6 +34,10 @@ import {
   getMultipleBarChartDefinition,
   getDefaultDotDefinition
 } from '../definitions/Definitions.module.js';
+
+function getLegendTitleForSim(simsBtn) {
+  return getChartLegendTitle(simsBtn) || getValue(LegendTitles, simsBtn);
+}
 
 function findChartById(chartId) {
   var charts = Highcharts.charts || [];
@@ -189,7 +194,7 @@ export function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, c
   var chartForSingle = getOrCreateChartInstance(chartId, getSingleBarDefinition( 
     wowheadTooltips,
     data,
-    getValue(LegendTitles, simsBtn),
+    getLegendTitleForSim(simsBtn),
     dpsIncrease,
     showInLegend,
     xPadding,
@@ -249,7 +254,7 @@ export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) 
   var chartForPercentage = getOrCreateChartInstance(chartId, getChartDefinitionPercentage( 
     wowheadTooltips, 
     data,
-    getValue(LegendTitles, simsBtn),
+    getLegendTitleForSim(simsBtn),
     dpsIncrease,
     chartId,
     maxEntries), 'bar');
@@ -294,7 +299,7 @@ export function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
     var chartForMultipleBar = getOrCreateChartInstance(chartId, getMultipleBarChartDefinition(
       wowheadTooltips,
       data,
-      getValue(LegendTitles, simsBtn),
+      getLegendTitleForSim(simsBtn),
       dpsIncrease,
       chartId,
       maxEntries), 'bar');
@@ -341,7 +346,7 @@ export function buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries) {
     var chartForMultipleBar = getOrCreateChartInstance(chartId, getMultipleBarChartDefinition(
       wowheadTooltips,
       data,
-      getValue(LegendTitles, simsBtn),
+      getLegendTitleForSim(simsBtn),
       dpsIncrease,
       chartId,
       maxEntries), 'bar');

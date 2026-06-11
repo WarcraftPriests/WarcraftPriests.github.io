@@ -9,6 +9,11 @@ import {
   FightStyleCouncil
 } from '../../utils/Converter.module.js';
 import {
+  getChartRegistryEntry,
+  getChartXAxisLabelOffset,
+  DefaultGuide
+} from './definitions/ChartRegistry.module.js';
+import {
   normalizeBuildKey,
   normalizeSimResultKey,
   normalizeFightStyleForResults
@@ -56,6 +61,29 @@ const lastRevalidateAtByUrl = new Map();
 let latestChartRequestId = 0;
 let activeChartRequest = null;
 let activePrefetchCount = 0;
+
+function normalizeSimTypeKey(simType) {
+  return (simType || '').toString().replaceAll('-', '_').toLowerCase();
+}
+
+function getChartBehaviorMetadata(simType) {
+  var normalizedSimType = normalizeSimTypeKey(simType);
+  var registryEntry = getChartRegistryEntry(normalizedSimType);
+  var xAxisLabelOffset = getChartXAxisLabelOffset(normalizedSimType);
+
+  return {
+    normalizedSimType: normalizedSimType,
+    chartType: registryEntry && registryEntry.chartType !== undefined
+      ? registryEntry.chartType
+      : getValue(ChartType, normalizedSimType),
+    xAxisLabelOffset: xAxisLabelOffset !== undefined
+      ? xAxisLabelOffset
+      : getValue(ChartPadding, normalizedSimType),
+    guide: registryEntry && registryEntry.guide !== undefined
+      ? registryEntry.guide
+      : IcyVeinsGuideBySim[normalizedSimType]
+  };
+}
 
 function isPerfLoggingEnabled() {
   return typeof window !== 'undefined' && window.__WCP_CHART_PERF === true;
@@ -572,7 +600,8 @@ export function createChart(simsBtn, fightStyle, talentChoice, chartId, metaData
  * Choose which chart to show
  */
 export function buildData(data, simsBtn, chartId, maxEntries) {
-  var chart = getValue(ChartType, simsBtn);
+  var metadata = getChartBehaviorMetadata(simsBtn);
+  var chart = metadata.chartType;
   if (chart == 'multiple') {
     buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries);
   } else if (chart == 'percentage') {
@@ -580,7 +609,7 @@ export function buildData(data, simsBtn, chartId, maxEntries) {
   } else if (chart == 'dot') {
     buildChartDataDot(data, chartId);
   } else {
-    buildChartDataSingleBar(data, false, getValue(ChartPadding, simsBtn), simsBtn, chartId, maxEntries);
+    buildChartDataSingleBar(data, false, metadata.xAxisLabelOffset, simsBtn, chartId, maxEntries);
   }
 }
 
@@ -652,7 +681,7 @@ export function determineChartDescription(fullSimType) {
 }
 
 export function determineGuideLink(simType, fightStyle) {
-  var normalizedSimType = (simType || '').replaceAll('-', '_').toLowerCase();
+  var metadata = getChartBehaviorMetadata(simType);
   var normalizedFightStyle = (fightStyle || '').toLowerCase();
 
   if (normalizedFightStyle === 'dungeons') {
@@ -662,7 +691,7 @@ export function determineGuideLink(simType, fightStyle) {
     };
   }
 
-  return IcyVeinsGuideBySim[normalizedSimType] || IcyVeinsGuideBySim.default;
+  return metadata.guide || IcyVeinsGuideBySim.default || DefaultGuide;
 }
 
 /*

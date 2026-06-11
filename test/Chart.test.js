@@ -23,6 +23,11 @@ describe('Chart Module', () => {
     expect(typeof Chart.determineJsonUrl).toBe('function');
   });
 
+  test('should export determineGuideLink function', () => {
+    expect(Chart.determineGuideLink).toBeDefined();
+    expect(typeof Chart.determineGuideLink).toBe('function');
+  });
+
   describe('Converter integration', () => {
     test('should access getValue from Converter', () => {
       expect(Converter.getValue).toBeDefined();
@@ -48,6 +53,20 @@ describe('Chart Module', () => {
     test('should have normalizers available', () => {
       expect(Normalizers.normalizeSimResultKey).toBeDefined();
       expect(Normalizers.normalizeFightStyleForResults).toBeDefined();
+    });
+  });
+
+  describe('Registry-driven chart behavior', () => {
+    test('should resolve guide link for dashed sim key', () => {
+      const result = Chart.determineGuideLink('omnium-folio', 'Composite');
+      expect(result).toBeDefined();
+      expect(result.label).toBe('Gear and Best in Slot');
+    });
+
+    test('should prefer dungeon-specific guide link for dungeons fight style', () => {
+      const result = Chart.determineGuideLink('omnium_folio', 'Dungeons');
+      expect(result).toBeDefined();
+      expect(result.label).toBe('Mythic+ Tips');
     });
   });
 });

@@ -9,6 +9,7 @@ import {
   getValue,
   getKeys
 } from '../../utils/Converter.module.js';
+import { getChartRegistryEntry } from '../chart/definitions/ChartRegistry.module.js';
 import {
   getQueryParameter,
   manipulateUrl
@@ -194,8 +195,11 @@ function createSimsButtonList(divName, buttonArray, event, labelArray, curBtn) {
     // Load button if it is a non sim type button or the chart is enabled
     if (!AppState.getConfigData()['sims'][key] || AppState.getConfigData()['sims'][key]['chart']) {
       const normalizedKey = key.replaceAll(dash, underscore);
-      var buttonText = document.createTextNode(getValue(labelArray, normalizedKey));
-      constructSimsButton(div, normalizedKey, event, buttonText, curBtn);
+      const simMetadata = getChartRegistryEntry(normalizedKey);
+      const label = simMetadata && simMetadata.label ? simMetadata.label : getValue(labelArray, normalizedKey);
+      const iconName = simMetadata && simMetadata.iconName ? simMetadata.iconName : normalizedKey;
+      var buttonText = document.createTextNode(label);
+      constructSimsButton(div, normalizedKey, event, buttonText, curBtn, iconName);
     }
   }
   styleButtons();
@@ -305,7 +309,7 @@ function styleButtons() {
  * Creates a button specifically with the customizations necessary to correctly
  * render the sim-related buttons.
  */
-function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
+function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn, iconName) {
   let button = document.createElement(buttonName.toUpperCase());
   button.setAttribute(buttonId, name);
   button.setAttribute(buttonClass, buttonName);
@@ -314,7 +318,7 @@ function constructSimsButton(buttonWrapper, name, event, buttonText, currBtn) {
   const imageWrapper = document.createElement('div');
   imageWrapper.style = 'height: 100%; width: 20px;';
   var icon = document.createElement('img');
-  icon.src = 'images/icons/' + name + '.jpg';
+  icon.src = 'images/icons/' + iconName + '.jpg';
   icon.classList = 'sims-btn-icon';
   imageWrapper.appendChild(icon);
   button.appendChild(imageWrapper);

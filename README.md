@@ -59,3 +59,31 @@ The application has been migrated to **ES6 modules** for better code organizatio
 - **`src/vendor/`**: Vendored browser libraries (Highcharts and YAML)
 
 All modules are strict-mode compliant and use explicit imports/exports.
+
+## Adding a new chart
+
+Charts are now metadata-driven through the chart registry:
+
+- Registry file: `src/modules/chart/definitions/ChartRegistry.module.js`
+- Icon folder: `images/icons/`
+
+### Minimal checklist
+
+1. Add a new chart entry to `ChartRegistry` with these fields:
+	- `id` (snake_case)
+	- `label`
+	- `iconName`
+	- `guide`
+	- optional: `chartType`, `xAxisLabelOffset`, `legendTitle`, `lookupType`
+	- optional: `tooltipLineStrategy` (`wowhead`, `talent`, `trinket_combo`)
+	- optional: `tooltipUrlStrategy` (`auto`, `item`, `spell`, `none`)
+2. Add icon image at `images/icons/<iconName>.jpg`.
+3. Ensure the sim key exists in your runtime config (`sims` section in config data).
+4. Run tests:
+	- `npm test -- --runInBand test/ChartRegistry.test.js`
+	- `npm test -- --runInBand`
+
+### When custom code is still needed
+
+- Add chart-specific helper code only for truly unique rendering behavior.
+- Most charts should not require edits in `Converter.module.js`, `Chart.module.js`, `DataHelper.module.js`, or `WowheadHelper.module.js`.

@@ -1,28 +1,26 @@
 // ES module version of Converter.js for incremental migration.
 
+import {
+  ChartRegistry,
+  DefaultGuide,
+  getChartXAxisLabelOffset
+} from '../modules/chart/definitions/ChartRegistry.module.js';
+
+function buildLookupByField(registry, fieldName) {
+  return registry.reduce(function(result, entry) {
+    if (entry[fieldName] !== undefined) {
+      result[entry.id] = entry[fieldName];
+    }
+    return result;
+  }, {});
+}
+
 export const SimRepoVersions = {
   master: 'Live'
   // ptr: "PTR",
 };
 
-export const Sims = {
-  consumables: 'Consumables',
-  enchants: 'Enchants',
-  racials: 'Racials',
-  stats: 'Stats',
-  talents_top: 'Talents',
-  talents: 'Talents',
-  talent_builds: 'Talent Builds',
-  trinkets: 'Trinkets',
-  weights: 'Weights',
-  trinket_combos: 'Trinket Combos',
-  tiersets: 'Tiersets',
-  alchemy: 'Alchemy',
-  gems: 'Gems',
-  special_gear: 'Special Gear',
-  gem_combos: 'Gem Combos',
-  omnium_folio: 'Omnium Folio'
-};
+export const Sims = buildLookupByField(ChartRegistry, 'label');
 
 export const Consumables = {
   potion: 'Potion',
@@ -61,132 +59,30 @@ export const FightStyleExternal = {
 };
 
 export const IcyVeinsGuideBySim = {
-  default: {
-    label: 'General Shadow Priest PvE Guide',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-guide'
-  },
-  talents: {
-    label: 'Talents and Builds',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents'
-  },
-  talents_top: {
-    label: 'Talents and Builds',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents'
-  },
-  talent_builds: {
-    label: 'Talents and Builds',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-spec-builds-talents'
-  },
-  stats: {
-    label: 'Stat Priority',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-stat-priority'
-  },
-  weights: {
-    label: 'Stat Priority',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-stat-priority'
-  },
-  enchants: {
-    label: 'Gems, Enchants, and Consumables',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
-  },
-  consumables: {
-    label: 'Gems, Enchants, and Consumables',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
-  },
-  gems: {
-    label: 'Gems, Enchants, and Consumables',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
-  },
-  gem_combos: {
-    label: 'Gems, Enchants, and Consumables',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
-  },
-  alchemy: {
-    label: 'Gems, Enchants, and Consumables',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gems-enchants-consumables'
-  },
-  trinkets: {
-    label: 'Gear and Best in Slot',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
-  },
-  trinket_combos: {
-    label: 'Gear and Best in Slot',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
-  },
-  tiersets: {
-    label: 'Gear and Best in Slot',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
-  },
-  special_gear: {
-    label: 'Gear and Best in Slot',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
-  },
-  racials: {
-    label: 'Rotation',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-rotation-cooldowns-abilities'
-  },
-  omnium_folio: {
-    label: 'Gear and Best in Slot',
-    url: 'https://www.icy-veins.com/wow/shadow-priest-pve-dps-gear-best-in-slot'
-  }
+  default: DefaultGuide,
+  ...buildLookupByField(ChartRegistry, 'guide')
 };
 
 export const LegendTitles = {
-  enchants: 'Increase in %',
-  racials: 'Increase in %',
-  stats: 'Increase in %',
-  talents_top: 'Increase in %',
-  talents: 'Increase in %',
-  talent_builds: 'Increase in %',
-  trinkets: 'Item level',
+  ...buildLookupByField(ChartRegistry, 'legendTitle'),
   legendary_items: 'Item level',
-  legendary_combos: 'Increase in %',
-  alchemy: 'Increase in %',
-  consumables: 'Increase in %',
-  omnium_folio: 'Increase in %',
+  legendary_combos: 'Increase in %'
 };
 
-export const ChartType = {
-  trinkets: 'percentage',
-  alchemy: 'percentage',
-  enchants: 'percentage',
-  gems: 'percentage',
-  omnium_folio: 'percentage',
-  stats: 'dot'
-};
+export const ChartType = buildLookupByField(ChartRegistry, 'chartType');
 
-export const ChartPadding = {
-  talents: -80,
-  talents_top: -80,
-  talent_builds: -80,
-  racials: -40,
-  enchants: -40,
-  trinket_combos: -40,
-  tiersets: -40,
-  consumables: -40,
-  alchemy: -40,
-  gems: -40,
-  gem_combos: -40,
-  special_gear: -40,
-  omnium_folio: -40
-};
+export const ChartPadding = ChartRegistry.reduce(function(result, entry) {
+  var offset = getChartXAxisLabelOffset(entry.id);
+  if (offset !== undefined) {
+    result[entry.id] = offset;
+  }
+  return result;
+}, {});
 
 export const LookupType = {
-  alchemy: 'item',
+  ...buildLookupByField(ChartRegistry, 'lookupType'),
   apl: 'none',
-  consumables: 'item',
-  enchants: 'item',
-  gear: 'item',
-  racials: 'spell',
-  special_gear: 'spell',
-  stats: 'none',
-  talents_top: 'none',
-  talents: 'none',
-  talent_builds: 'none',
-  trinket_combos: 'none',
-  trinkets: 'none',
-  weights: 'none',
-  omnium_folio: 'none'
+  gear: 'item'
 };
 
 export const TalentIds = {

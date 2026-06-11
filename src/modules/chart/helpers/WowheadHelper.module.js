@@ -6,24 +6,18 @@ import {
   TrinketIds
 } from '../../../utils/Converter.module.js';
 import {
+  getChartTooltipLineStrategy,
+  resolveChartTooltipUrlType
+} from '../definitions/ChartRegistry.module.js';
+import {
   jsonSortedDataKeys,
   jsonIds,
   jsonData,
   jsonBase,
   sims,
-  consumables,
-  alchemy,
-  enchants,
-  gems,
-  specialGear,
   trinkets,
-  talents,
-  talentsTop,
-  racials,
-  trinketCombos,
   wowheadSpellPath,
-  wowheadItemPath,
-  omniumFolio
+  wowheadItemPath
 } from '../../../utils/Constants.module.js';
 import TooltipBuilder from './TooltipBuilder.module.js';
 
@@ -49,16 +43,13 @@ export function buildWowheadTooltips(data, breakCondition, simsBtn) {
     }
 
     var simConfig = AppState.getConfigData()[sims][simsBtn.replaceAll('_', '-')];
-    var url = wowheadUrl + wowheadItemPath;
-    if (simsBtn == consumables || simsBtn == alchemy || simsBtn == enchants || simsBtn == gems || simsBtn == specialGear || simsBtn == omniumFolio) {
-      url = wowheadUrl + wowheadItemPath;
-    } else if (simConfig && simConfig['lookupType'] == 'spell') {
-      url = wowheadUrl + wowheadSpellPath;
-    } else {
-      url = wowheadUrl + wowheadItemPath;
-    }
+    var lookupType = simConfig ? simConfig['lookupType'] : null;
+    var tooltipUrlType = resolveChartTooltipUrlType(simsBtn, lookupType);
+    var url = tooltipUrlType === 'spell'
+      ? wowheadUrl + wowheadSpellPath
+      : wowheadUrl + wowheadItemPath;
 
-    result.push(buildChartLine(dpsName, id, url, simsBtn, data));
+    result.push(buildChartLine(dpsName, id, url, simsBtn, data, tooltipUrlType));
   }
 
   return result;
@@ -67,21 +58,22 @@ export function buildWowheadTooltips(data, breakCondition, simsBtn) {
 /*
  * Build a single line of the wowhead tooltip
  */
-export function buildChartLine(dpsName, itemId, url, simsBtn, data = null) {
-  if (simsBtn == null
-    || simsBtn == undefined
-    || simsBtn == trinkets
-    || simsBtn == consumables
-    || simsBtn == enchants
-    || simsBtn == racials) {
-    return buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn);
-  } else if (simsBtn != null && simsBtn != undefined && (simsBtn == talents || simsBtn == talentsTop || simsBtn == talentsTop.replaceAll('-', '_'))) {
-    return buildChartLineForTalents(dpsName);
-  } else if (simsBtn != null && simsBtn != undefined && simsBtn == trinketCombos) {
-    return buildChartLineForTrinketCombos(dpsName, data ? data[jsonIds] : null);
-  } else {
-    return buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn);
+export function buildChartLine(dpsName, itemId, url, simsBtn, data = null, tooltipUrlType = null) {
+  if (tooltipUrlType === 'none') {
+    return TooltipBuilder.buildTextLine(dpsName);
   }
+
+  var strategy = getChartTooltipLineStrategy(simsBtn);
+
+  if (strategy === 'talent') {
+    return buildChartLineForTalents(dpsName);
+  }
+
+  if (strategy === 'trinket_combo') {
+    return buildChartLineForTrinketCombos(dpsName, data ? data[jsonIds] : null);
+  }
+
+  return buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn);
 }
 
 export function buildChartLineForTrinketCombos(dpsName, ids) {
@@ -157,7 +149,7 @@ export function buildChartLineForTalents(dpsName) {
   var currSimsBtn = AppState.getCurrSimsBtn();
   var talentData = AppState.getTalentData();
 
-  if (currSimsBtn == talents || currSimsBtn == talentsTop || currSimsBtn == talentsTop.replaceAll('-', '_')) {
+  if (getChartTooltipLineStrategy(currSimsBtn) === 'talent') {
     var link = talentData['builds'][dpsName];
     var generatedLink = talentData['generated'][dpsName];
 
@@ -218,15 +210,7 @@ export function buildChartLineForBasic(names) {
 }
 
 export function buildChartLineWithWowheadLine(dpsName, itemId, url, simsBtn, ilvl) {
-  var currSimsBtn = simsBtn || AppState.getCurrSimsBtn();
-
-  // Handle talent-type sims
-  if (currSimsBtn == talents || currSimsBtn == talentsTop || currSimsBtn == talentsTop.replaceAll('-', '_')) {
-    return buildChartLineForTalents(dpsName);
-  }
-
-  // Handle trinkets with item level
-  if (currSimsBtn == trinkets || currSimsBtn == trinketCombos) {
+  if (simsBtn == trinkets) {
     return TooltipBuilder.buildWowheadLinkLine(dpsName, itemId, url, ilvl || 289);
   }
 
