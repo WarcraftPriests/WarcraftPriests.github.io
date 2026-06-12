@@ -605,7 +605,7 @@ export function buildData(data, simsBtn, chartId, maxEntries) {
   if (chart == 'multiple') {
     buildChartDataMultipleBar(data, simsBtn, chartId, maxEntries);
   } else if (chart == 'percentage') {
-    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries);
+    buildDataForPercentageChart(data, simsBtn, chartId, maxEntries, metadata.xAxisLabelOffset);
   } else if (chart == 'dot') {
     buildChartDataDot(data, chartId);
   } else {
@@ -626,9 +626,10 @@ export function updateSize(chart, chartId, size, maxEntries) {
   }
 
   document.getElementById(chartId).style.height = 200 + realSize * 30 + px; // Size the chart by our data.
+  // style.width can be empty on initial load; pass null to use computed width.
   // resize without animation to avoid invalid intermediate heights
   chart.setSize(
-    document.getElementById(chartId).style.width,
+    null,
     document.getElementById(chartId).style.height,
     false // disable animation
   );

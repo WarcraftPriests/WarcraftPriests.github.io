@@ -1,4 +1,4 @@
-import { buildChartLine, buildChartLineForTrinketCombos, buildWowheadTooltips } from '../src/modules/chart/helpers/WowheadHelper.module.js';
+import { buildChartLine, buildChartLineForOmniumFolio, buildChartLineForTrinketCombos, buildWowheadTooltips } from '../src/modules/chart/helpers/WowheadHelper.module.js';
 import * as Constants from '../src/utils/Constants.module.js';
 
 // Mock document for DOM operations
@@ -127,6 +127,29 @@ describe('buildWowheadTooltips', () => {
     const result = buildChartLine('No Link Name', '12345', 'https://www.wowhead.com/item=', 'trinkets', null, 'none');
     expect(result).toContain('No Link Name');
     expect(result).not.toContain('href=');
+  });
+});
+
+describe('buildChartLineForOmniumFolio', () => {
+  test('should build one spell tooltip per omnium folio token', () => {
+    const dpsName = 'RoUF_RoL_RoCP_RoO';
+    const result = buildChartLineForOmniumFolio(dpsName);
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1287665"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279609"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279614"');
+    expect(result).toContain('>RoUF<');
+    expect(result).toContain('>RoL<');
+    expect(result).toContain('>RoCP<');
+    expect(result).toContain('>RoO<');
+  });
+
+  test('buildChartLine should route omnium_folio strategy to spell links', () => {
+    const result = buildChartLine('RoUF_RoL', '', 'https://www.wowhead.com/item=', 'omnium_folio', null, 'item');
+
+    expect(result).toContain('href="https://www.wowhead.com/spell=1279599"');
+    expect(result).toContain('href="https://www.wowhead.com/spell=1287665"');
   });
 });
 

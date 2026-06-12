@@ -381,14 +381,29 @@ export function getMultipleBarChartDefinition(wowheadTooltips, data, legendTitle
  * - Trinkets
  * - ....
  */
-export function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries) {
+export function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle, yAxisTitle, chartId, maxEntries, xPadding, simType) {
+  var resolvedXPadding = xPadding !== undefined ? xPadding : -40;
+  var normalizedSimType = (simType || '').toString().replaceAll('-', '_').toLowerCase();
+  var isOmniumFolio = normalizedSimType === 'omnium_folio';
+  var isSmallScreen = typeof window !== 'undefined'
+    && window.matchMedia
+    && window.matchMedia('(max-width: 900px)').matches;
+  var chartMarginLeft = isOmniumFolio ? (isSmallScreen ? 300 : 340) : undefined;
+  var chartMarginRight = isSmallScreen ? 24 : 40;
+  var chartSpacingRight = isSmallScreen ? 24 : 40;
+  var resolvedLabelXPadding = resolvedXPadding;
+  var resolvedLabelFontSize = isOmniumFolio && isSmallScreen ? 13 : 14;
+  var resolvedLabelAlign = isOmniumFolio ? 'right' : undefined;
+  var hideLegendOnSmallScreen = isOmniumFolio && isSmallScreen;
+
   return {
     chart: {
       renderTo: chartId,
       type: chartType,
       backgroundColor: defaultBackgroundColor,
-      spacingRight: 40,
-      marginRight: 40,
+      spacingRight: chartSpacingRight,
+      marginRight: chartMarginRight,
+      marginLeft: chartMarginLeft,
     },
 
     title: {
@@ -429,11 +444,12 @@ export function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle,
       max: maxEntries,
       labels: {
         useHTML: true,
-        x: -40,
+        align: resolvedLabelAlign,
+        x: resolvedLabelXPadding,
         style: {
           color: defaultFontColor,
           fontWeight: fontWeightBold,
-          fontSize: 14,
+          fontSize: resolvedLabelFontSize,
           events: {
             legendItemClick: function () { return false; }
           },
@@ -482,6 +498,7 @@ export function getChartDefinitionPercentage(wowheadTooltips, data, legendTitle,
     },
  
     legend: {
+      enabled: !hideLegendOnSmallScreen,
       layout: legendLayoutVertical,
       align: alignRight,
       borderColor: mediumColor,

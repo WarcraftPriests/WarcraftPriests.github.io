@@ -67,16 +67,18 @@ describe('Chart registry contracts', () => {
   test('should resolve xAxisLabelOffset with strategy defaults', () => {
     expect(getChartXAxisLabelOffset('talents')).toBe(-80);
     expect(getChartXAxisLabelOffset('trinket_combos')).toBe(-40);
-    expect(getChartXAxisLabelOffset('omnium_folio')).toBe(-40);
+    expect(getChartXAxisLabelOffset('omnium_folio')).toBe(-34);
   });
 
   test('should resolve tooltip strategy helpers with fallback behavior', () => {
     expect(getChartTooltipLineStrategy('talents')).toBe('talent');
     expect(getChartTooltipLineStrategy('trinket_combos')).toBe('trinket_combo');
+    expect(getChartTooltipLineStrategy('omnium_folio')).toBe('omnium_folio');
     expect(getChartTooltipLineStrategy('unknown-chart')).toBe('wowhead');
 
     expect(resolveChartTooltipUrlType('special_gear', 'spell')).toBe('item');
     expect(resolveChartTooltipUrlType('racials', 'item')).toBe('spell');
+    expect(resolveChartTooltipUrlType('omnium_folio', 'none')).toBe('spell');
     expect(resolveChartTooltipUrlType('trinkets', 'item')).toBe('item');
     expect(resolveChartTooltipUrlType('trinkets', 'none')).toBe('item');
     expect(resolveChartTooltipUrlType('unknown-chart', 'spell')).toBe('spell');

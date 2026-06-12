@@ -138,6 +138,42 @@ function tryFastPatchExistingBarChart(chartId, categories, seriesPayload) {
   return existingChart;
 }
 
+function scheduleOmniumFirstLoadReflow(chart) {
+  if (!chart || typeof window === 'undefined') {
+    return;
+  }
+
+  if (chart.__wcpOmniumReflowTimers && Array.isArray(chart.__wcpOmniumReflowTimers)) {
+    chart.__wcpOmniumReflowTimers.forEach(function(timerId) {
+      clearTimeout(timerId);
+    });
+  }
+
+  chart.__wcpOmniumReflowTimers = [];
+
+  function runReflow() {
+    try {
+      chart.reflow();
+      chart.redraw(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  window.requestAnimationFrame(runReflow);
+
+  chart.__wcpOmniumReflowTimers.push(setTimeout(runReflow, 120));
+  chart.__wcpOmniumReflowTimers.push(setTimeout(runReflow, 320));
+
+  if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function() {
+      runReflow();
+    }).catch(function() {
+      // ignore font readiness errors
+    });
+  }
+}
+
 function applyChartSize(chart, chartId, size, maxEntries) {
   var realSize = 0;
   var rowHeight = 30;
@@ -158,12 +194,22 @@ function applyChartSize(chart, chartId, size, maxEntries) {
   }
 
   document.getElementById(chartId).style.height = 200 + realSize * rowHeight + 'px';
+
+  // style.width is often empty on initial page load. Passing null lets
+  // Highcharts use the container's computed width and avoids stale geometry.
   chart.setSize(
-    document.getElementById(chartId).style.width,
+    null,
     document.getElementById(chartId).style.height,
     false
   );
   chart.redraw();
+
+  // Omnium labels are HTML-heavy and can shift once fonts/layout settle.
+  // Trigger multiple deferred reflows so fresh reload matches resize behavior.
+  if (currentSimsBtn === 'omnium_folio' && typeof window !== 'undefined') {
+    scheduleOmniumFirstLoadReflow(chart);
+  }
+
   try {
     $WowheadPower.refreshLinks();
   } catch (error) {
@@ -208,7 +254,7 @@ export function buildChartDataSingleBar(data, showInLegend, xPadding, simsBtn, c
 /*
  * Prepare data for percentage bar chart
  */
-export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) {
+export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries, xPadding) {
   var wowheadTooltips = buildWowheadTooltips(data, false, simsBtn);
   var seriesPayload = [];
 
@@ -257,7 +303,9 @@ export function buildDataForPercentageChart(data, simsBtn, chartId, maxEntries) 
     getLegendTitleForSim(simsBtn),
     dpsIncrease,
     chartId,
-    maxEntries), 'bar');
+    maxEntries,
+    xPadding,
+    simsBtn), 'bar');
 
   clearChartSeries(chartForPercentage);
   seriesPayload.forEach(function(series) {
