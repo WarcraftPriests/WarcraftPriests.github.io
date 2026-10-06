@@ -16,8 +16,8 @@ function buildLookupByField(registry, fieldName) {
 }
 
 export const SimRepoVersions = {
-  master: 'Live'
-  // ptr: "PTR",
+  master: 'Live',
+  ptr: "PTR",
 };
 
 export const Sims = buildLookupByField(ChartRegistry, 'label');
